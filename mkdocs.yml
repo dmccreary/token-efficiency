@@ -1,0 +1,8 @@
+site_name: Token Efficiency
+site_description: A guide to understanding and improving token efficiency in language models.
+
+nav:
+  - Home: index.md
+  - Course Description: course-description.md
+  - Learning Graph:
+      - Course Description Assessment: learning-graph/course-description-assessment.md
