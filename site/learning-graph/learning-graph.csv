@@ -56,22 +56,22 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 55,Output Premium,52|53,ECON
 56,Unit Economics,51,ECON
 57,Cost Per Request,56|11,ECON
-58,Cost Per Feature,57,ECON
-59,Cost Per User,57,ECON
-60,Cost Per Outcome,57,ECON
+58,Cost Per Feature,57|210,ECON
+59,Cost Per User,57|211,ECON
+60,Cost Per Outcome,57|212,ECON
 61,Cost Attribution,58|59|60,ECON
 62,Token Budget,6|56,ECON
 63,Monthly Token Spend,56,ECON
 64,Forecasting Token Cost,63,ECON
-65,Cost-Quality Tradeoff,56,ECON
-66,Cost-Latency Tradeoff,56,ECON
+65,Cost-Quality Tradeoff,56|271,ECON
+66,Cost-Latency Tradeoff,56|273,ECON
 67,Pareto Frontier,65|66,ECON
 68,Pricing Tier,51,ECON
 69,Volume Discount,68,ECON
 70,Batch Discount,68|421,ECON
 71,Enterprise Pricing,68,ECON
 72,Free Tier Limit,68,ECON
-73,Rate Limit,56,ECON
+73,Rate Limit,76,ECON
 74,Quota Management,73,ECON
 75,Burn Rate,63|74,ECON
 76,Anthropic API,2,ANTH
@@ -82,7 +82,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 81,Claude Haiku,78,ANTH
 82,Anthropic SDK,76,ANTH
 83,API Key Management,76,ANTH
-84,Anthropic Prompt Caching,9|77,ANTH
+84,Anthropic Prompt Caching,9|77|311,ANTH
 85,Cache Control Parameter,84,ANTH
 86,Cache Breakpoint,84,ANTH
 87,Cache TTL,84,ANTH
@@ -136,13 +136,13 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 135,Gemini Tool Config,134,GOOG
 136,Gemini Streaming,24|126,GOOG
 137,Gemini Batch Mode,421|126,GOOG
-138,Gemini Caching,126|9,GOOG
+138,Gemini Caching,311|126,GOOG
 139,Vertex AI,126,GOOG
 140,Google AI Studio,126,GOOG
 141,Gemini Safety Settings,126,GOOG
 142,Gemini Multimodal Input,126,GOOG
 143,Gemini Code Execution,126,GOOG
-144,Gemini Grounding,126,GOOG
+144,Gemini Grounding,126|331,GOOG
 145,Gemini Token Counting,11|126,GOOG
 146,AI Coding Harness,2,HARN
 147,Agentic Loop,146,HARN
@@ -158,7 +158,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 157,Harness Token Overhead,156|158,HARN
 158,Session Token Accumulation,22|146,HARN
 159,Per-Session Token Cost,158|56,HARN
-160,Conversation Compaction,23,HARN
+160,Conversation Compaction,23|358,HARN
 161,Auto Compaction,160,HARN
 162,Manual Compaction,160,HARN
 163,Tool Call Iteration,148,HARN
@@ -211,14 +211,14 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 210,Feature Tag,202,OBS
 211,User Identifier,202,OBS
 212,Outcome Field,202,OBS
-213,Trace Identifier,202,OBS
-214,Span Identifier,202,OBS
+213,Trace Identifier,240|202,OBS
+214,Span Identifier,240|202,OBS
 215,Request Identifier,202,OBS
 216,Session Identifier,202|158,OBS
 217,PII Redaction,197|437,OBS
 218,Prompt Truncation In Logs,217|18,OBS
 219,Log Sampling,196,OBS
-220,Log Retention Policy,196,OBS
+220,Log Retention Policy,196|444,OBS
 221,Observability,196,OBS
 222,OpenTelemetry,221,OBS
 223,OTel LLM Conventions,222|196,OBS
@@ -227,7 +227,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 226,Histogram Metric,224,OBS
 227,Dashboard,221,OBS
 228,Cost Dashboard,227|209,OBS
-229,Hit Rate Dashboard,227,OBS
+229,Hit Rate Dashboard,227|315,OBS
 230,Latency Dashboard,227|208,OBS
 231,Token Volume Chart,227|11,OBS
 232,Time Series Aggregation,224|226,OBS
@@ -250,7 +250,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 249,Per-Feature Cost Roll-Up,242|58|210,OBS
 250,Per-User Cost Roll-Up,242|59|211,OBS
 251,Per-Model Cost Roll-Up,242|203,OBS
-252,Prompt Template Grouping,242|204,OBS
+252,Prompt Template Grouping,242|296|204,OBS
 253,Cohort Analysis,250,OBS
 254,Funnel Analysis,242,OBS
 255,Histogram Of Token Counts,226|11,OBS
@@ -299,7 +299,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 298,Prompt Variable,296,OPT
 299,Variable Interpolation,298,OPT
 300,Prompt Compression Tool,288,OPT
-301,Selective Compression,300,OPT
+301,Selective Compression,300|319,OPT
 302,Prompt Length Budget,286|62,OPT
 303,Output Length Budget,26|62,OPT
 304,Concise Output Instruction,303,OPT
@@ -308,7 +308,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 307,Comment Removal,305,OPT
 308,Schema Minimization,305|93,OPT
 309,Symbol Substitution,305,OPT
-310,Reusable Prompt Block,296,OPT
+310,Reusable Prompt Block,296|319,OPT
 311,Prompt Caching,9,OPT
 312,Cache Key,311,OPT
 313,Cache Hit,311,OPT
@@ -327,7 +327,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 326,Cache Eviction,87|317,OPT
 327,Implicit Caching,311,OPT
 328,Explicit Caching,311|85,OPT
-329,Cache Aware Routing,311,OPT
+329,Cache Aware Routing,311|371,OPT
 330,Cache Stampede,311,OPT
 331,Retrieval Augmented Generation,16|18,RAG
 332,Embedding,2,RAG
@@ -356,7 +356,7 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 355,Retrieval Recall,340,RAG
 356,Context Window Budget,16|62,RAG
 357,Sliding Window,356,RAG
-358,Conversation Summarization,23,RAG
+358,Conversation Summarization,23|288,RAG
 359,Compaction Strategy,358|160,RAG
 360,Hierarchical Summary,358,RAG
 361,Memory File,167,RAG
@@ -419,8 +419,8 @@ ConceptID,ConceptLabel,Dependencies,TaxonomyID
 418,Budget Notification,234|401,BUDG
 419,Manager Weekly Report,414,BUDG
 420,Budget Versus Outcome,414|212,BUDG
-421,Batch API,56,BUDG
-422,Asynchronous API,56,BUDG
+421,Batch API,76,BUDG
+422,Asynchronous API,76,BUDG
 423,Batch Job Submission,421,BUDG
 424,Batch Job Status,421,BUDG
 425,Batch Window,421,BUDG

@@ -10,93 +10,9 @@
     "license": "CC BY-NC-SA 4.0 DEED"
   },
   "groups": {
-    "ANTH": {
-      "classifierName": "Anthropic Claude",
-      "color": "MistyRose",
-      "font": {
-        "color": "black"
-      }
-    },
-    "HARN": {
-      "classifierName": "Harness Tools",
-      "color": "PeachPuff",
-      "font": {
-        "color": "black"
-      }
-    },
-    "ROUT": {
-      "classifierName": "Routing and Output Control",
-      "color": "LightYellow",
-      "font": {
-        "color": "black"
-      }
-    },
-    "AB": {
-      "classifierName": "A/B Testing and Experimentation",
-      "color": "Honeydew",
-      "font": {
-        "color": "black"
-      }
-    },
-    "RAG": {
-      "classifierName": "Retrieval and Context Management",
-      "color": "PaleTurquoise",
-      "font": {
-        "color": "black"
-      }
-    },
-    "BUDG": {
-      "classifierName": "Agent Budgets and Batch APIs",
-      "color": "SteelBlue",
-      "font": {
-        "color": "black"
-      }
-    },
-    "GOOG": {
-      "classifierName": "Google Gemini",
-      "color": "Lavender",
-      "font": {
-        "color": "black"
-      }
-    },
     "FOUND": {
       "classifierName": "Foundation Concepts",
-      "color": "LavenderBlush",
-      "font": {
-        "color": "black"
-      }
-    },
-    "OBS": {
-      "classifierName": "Logging and Observability",
-      "color": "Thistle",
-      "font": {
-        "color": "black"
-      }
-    },
-    "OPT": {
-      "classifierName": "Prompt and Cache Optimization",
-      "color": "MintCream",
-      "font": {
-        "color": "black"
-      }
-    },
-    "OAI": {
-      "classifierName": "OpenAI Ecosystem",
-      "color": "LightCoral",
-      "font": {
-        "color": "black"
-      }
-    },
-    "CAP": {
-      "classifierName": "Capstone and Practice",
-      "color": "Plum",
-      "font": {
-        "color": "black"
-      }
-    },
-    "SKIL": {
-      "classifierName": "Skills System",
-      "color": "Gainsboro",
+      "color": "PaleTurquoise",
       "font": {
         "color": "black"
       }
@@ -108,9 +24,93 @@
         "color": "black"
       }
     },
+    "ANTH": {
+      "classifierName": "Anthropic Claude",
+      "color": "PaleGreen",
+      "font": {
+        "color": "black"
+      }
+    },
+    "OAI": {
+      "classifierName": "OpenAI Ecosystem",
+      "color": "LightYellow",
+      "font": {
+        "color": "black"
+      }
+    },
+    "GOOG": {
+      "classifierName": "Google Gemini",
+      "color": "MistyRose",
+      "font": {
+        "color": "black"
+      }
+    },
+    "HARN": {
+      "classifierName": "Harness Tools",
+      "color": "LightCoral",
+      "font": {
+        "color": "black"
+      }
+    },
+    "SKIL": {
+      "classifierName": "Skills System",
+      "color": "SteelBlue",
+      "font": {
+        "color": "black"
+      }
+    },
+    "OBS": {
+      "classifierName": "Logging and Observability",
+      "color": "Gainsboro",
+      "font": {
+        "color": "black"
+      }
+    },
+    "AB": {
+      "classifierName": "A/B Testing and Experimentation",
+      "color": "Lavender",
+      "font": {
+        "color": "black"
+      }
+    },
+    "OPT": {
+      "classifierName": "Prompt and Cache Optimization",
+      "color": "LavenderBlush",
+      "font": {
+        "color": "black"
+      }
+    },
+    "RAG": {
+      "classifierName": "Retrieval and Context Management",
+      "color": "Thistle",
+      "font": {
+        "color": "black"
+      }
+    },
+    "ROUT": {
+      "classifierName": "Routing and Output Control",
+      "color": "MintCream",
+      "font": {
+        "color": "black"
+      }
+    },
+    "BUDG": {
+      "classifierName": "Agent Budgets and Batch APIs",
+      "color": "Plum",
+      "font": {
+        "color": "black"
+      }
+    },
     "PRIV": {
       "classifierName": "Privacy and Compliance",
-      "color": "PaleGreen",
+      "color": "PeachPuff",
+      "font": {
+        "color": "black"
+      }
+    },
+    "CAP": {
+      "classifierName": "Capstone and Practice",
+      "color": "Honeydew",
       "font": {
         "color": "black"
       }
@@ -2812,12 +2812,24 @@
       "to": 57
     },
     {
+      "from": 58,
+      "to": 210
+    },
+    {
       "from": 59,
       "to": 57
     },
     {
+      "from": 59,
+      "to": 211
+    },
+    {
       "from": 60,
       "to": 57
+    },
+    {
+      "from": 60,
+      "to": 212
     },
     {
       "from": 61,
@@ -2852,8 +2864,16 @@
       "to": 56
     },
     {
+      "from": 65,
+      "to": 271
+    },
+    {
       "from": 66,
       "to": 56
+    },
+    {
+      "from": 66,
+      "to": 273
     },
     {
       "from": 67,
@@ -2889,7 +2909,7 @@
     },
     {
       "from": 73,
-      "to": 56
+      "to": 76
     },
     {
       "from": 74,
@@ -2946,6 +2966,10 @@
     {
       "from": 84,
       "to": 77
+    },
+    {
+      "from": 84,
+      "to": 311
     },
     {
       "from": 85,
@@ -3261,11 +3285,11 @@
     },
     {
       "from": 138,
-      "to": 126
+      "to": 311
     },
     {
       "from": 138,
-      "to": 9
+      "to": 126
     },
     {
       "from": 139,
@@ -3290,6 +3314,10 @@
     {
       "from": 144,
       "to": 126
+    },
+    {
+      "from": 144,
+      "to": 331
     },
     {
       "from": 145,
@@ -3394,6 +3422,10 @@
     {
       "from": 160,
       "to": 23
+    },
+    {
+      "from": 160,
+      "to": 358
     },
     {
       "from": 161,
@@ -3681,7 +3713,15 @@
     },
     {
       "from": 213,
+      "to": 240
+    },
+    {
+      "from": 213,
       "to": 202
+    },
+    {
+      "from": 214,
+      "to": 240
     },
     {
       "from": 214,
@@ -3722,6 +3762,10 @@
     {
       "from": 220,
       "to": 196
+    },
+    {
+      "from": 220,
+      "to": 444
     },
     {
       "from": 221,
@@ -3766,6 +3810,10 @@
     {
       "from": 229,
       "to": 227
+    },
+    {
+      "from": 229,
+      "to": 315
     },
     {
       "from": 230,
@@ -3918,6 +3966,10 @@
     {
       "from": 252,
       "to": 242
+    },
+    {
+      "from": 252,
+      "to": 296
     },
     {
       "from": 252,
@@ -4168,6 +4220,10 @@
       "to": 300
     },
     {
+      "from": 301,
+      "to": 319
+    },
+    {
       "from": 302,
       "to": 286
     },
@@ -4222,6 +4278,10 @@
     {
       "from": 310,
       "to": 296
+    },
+    {
+      "from": 310,
+      "to": 319
     },
     {
       "from": 311,
@@ -4338,6 +4398,10 @@
     {
       "from": 329,
       "to": 311
+    },
+    {
+      "from": 329,
+      "to": 371
     },
     {
       "from": 330,
@@ -4502,6 +4566,10 @@
     {
       "from": 358,
       "to": 23
+    },
+    {
+      "from": 358,
+      "to": 288
     },
     {
       "from": 359,
@@ -4901,11 +4969,11 @@
     },
     {
       "from": 421,
-      "to": 56
+      "to": 76
     },
     {
       "from": 422,
-      "to": 56
+      "to": 76
     },
     {
       "from": 423,
