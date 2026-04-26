@@ -1,0 +1,43 @@
+{
+  "title": "BPE Tokenization Pipeline",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization",
+  "description": "Interactive MicroSim for bpe tokenization pipeline",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "adult",
+      "professional"
+    ],
+    "subjectArea": "Computer Science / Generative AI",
+    "topic": "BPE Tokenization Pipeline",
+    "learningObjectives": [
+      "Explain the role of each stage in the tokenization pipeline and identify which stage is responsible for which class of cross-vendor token-count differences."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "duration": "15-20 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 600
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "02-sampling-tokenization-embeddings"
+}

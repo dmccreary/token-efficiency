@@ -1,0 +1,43 @@
+{
+  "title": "Token Lifecycle from Input to Output",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization",
+  "description": "Interactive MicroSim for token lifecycle from input to output",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "adult",
+      "professional"
+    ],
+    "subjectArea": "Computer Science / Generative AI",
+    "topic": "Token Lifecycle from Input to Output",
+    "learningObjectives": [
+      "Explain how raw text is converted to tokens, processed in parallel, and emitted autoregressively, including which stages are billed as input versus output."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "duration": "15-20 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 600
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "01-llms-tokens-generation-basics"
+}

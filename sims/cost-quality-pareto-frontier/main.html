@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Cost-Quality Pareto Frontier</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Cost-Quality Pareto Frontier</span><span class="subtitle">Apply quality and cost constraints to find the survivor set</span></div>
+<div class="status" id="status">Frontier (green) shows non-dominated configurations. Slide constraints to filter the survivor set.</div>
+<div class="timeline" style="height: 380px"><canvas id="chart"></canvas></div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block">Quality requirement floor: <span id="qVal">0</span><input type="range" id="qSlider" min="0" max="100" step="1" value="0" style="width:200px"></label>
+<label class="control-block">Cost ceiling per request: $<span id="cVal">1.00</span><input type="range" id="cSlider" min="0.001" max="1.0" step="0.001" value="1.0" style="width:200px"></label>
+</div>
+</div>
+</main>
+<script src="cost-quality-pareto-frontier.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "title": "Task Skill Binding Flow",
+  "creator": "Dan McCreary",
+  "subject": "High School Geometry",
+  "description": "Interactive MicroSim for task skill binding flow",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "subjectArea": "Mathematics",
+    "topic": "Task Skill Binding Flow",
+    "learningObjectives": [
+      "TODO: Add learning objectives"
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "duration": "10-15 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 450
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": false
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "08-skills-system"
+}

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Measuring, analyzing, and reducing the cost of generative AI — a vendor-pluralistic, open-source intelligent textbook for software engineers, ML engineers, and engineering managers.">
       
       
       
@@ -20,7 +20,7 @@
     
     
       
-        <title>Token Efficiency</title>
+        <title>Token Efficiency - Token Efficiency</title>
       
     
     
@@ -48,6 +48,8 @@
     
       <link rel="stylesheet" href="css/mascot.css">
     
+      <link rel="stylesheet" href="css/extra.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-mkdocs" class="md-skip">
+        <a href="#welcome" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Token Efficiency
             
           </span>
         </div>
@@ -187,6 +189,8 @@
           
             
               
+                
+              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -259,18 +263,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#about-this-book" class="md-nav__link">
     <span class="md-ellipsis">
-      Commands
+      About This Book
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
+  <a href="#what-youll-find-inside" class="md-nav__link">
     <span class="md-ellipsis">
-      Project layout
+      What You'll Find Inside
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-this-book-is-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who This Book Is For
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use This Book
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
     </span>
   </a>
   
@@ -913,6 +953,363 @@
   
   
     <li class="md-nav__item">
+      <a href="sims/batch-job-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Batch Job Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/bpe-tokenization-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BPE Tokenization Pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/budget-hierarchy-roll-up/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Budget Hierarchy Roll-Up
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/burn-rate-monthly-forecast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Burn Rate Monthly Forecast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cache-hit-rate-health/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache Hit Rate Health
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cheap-first-cascade-escalation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cheap-First Cascade with Escalation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/context-budget-long-session/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context Window Budget Allocation Over a Long Session
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/continuous-cost-operating-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Continuous Cost Operating Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/conversation-message-structure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conversation Message Structure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cost-attribution-rollup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cost Attribution Rollup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cost-optimization-loop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cost Optimization Loop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cost-quality-pareto-frontier/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cost-Quality Pareto Frontier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cross-vendor-caching-comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-Vendor Caching Comparison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/cross-vendor-token-drift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-Vendor Token Count Drift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/embedding-space-concept/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedding Space Concept
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/openai-function-calling-loop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Function Calling Loop with Tool Choice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/interactive-tokenizer-explorer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interactive Tokenizer Explorer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="sims/graph-viewer/" class="md-nav__link">
         
   
@@ -934,11 +1331,473 @@
   
   
     <li class="md-nav__item">
+      <a href="sims/llm-logging-pipeline-privacy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM Logging Pipeline with Privacy Filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/llm-ops-dashboard-layout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM Ops Dashboard Layout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/memory-architecture-long-short/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Long-Term and Short-Term Memory Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/openai-token-usage-anatomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenAI Token Usage Object Anatomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/output-control-settings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Output Control Settings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/pareto-feature-cost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pareto Analysis of Per-Feature Cost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/rag-precision-recall-k/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Precision/Recall Tradeoff for K Selection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/privacy-compliance-pipeline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy Compliance Pipeline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/prompt-anatomy-budget/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prompt Anatomy Budget
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/prompt-trim-before-after/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prompt Trim Before/After
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/rag-pipeline-cost-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RAG Pipeline Cost Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="sims/ab-test-sample-size-calculator/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/sampling-parameter-explorer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sampling Parameter Explorer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/serial-vs-parallel-tradeoff/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serial vs Parallel Tradeoff
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/session-token-accumulation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Token Accumulation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/skill-refactoring-before-after/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Refactoring Before/After
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/stable-prefix-volatile-suffix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Stable Prefix / Volatile Suffix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/sync-async-batch-api-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sync, Async, and Batch API Flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/task-skill-binding-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Task to Skill Binding Flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/token-distribution-long-tail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token Distribution Long Tail
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/token-lifecycle-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token Lifecycle from Input to Output
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/token-spike-alert-drilldown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token Spike Alert with Drill-Down
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sims/tool-use-loop-cost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tool Use Loop with Cost Annotations
   </span>
   
 
@@ -976,7 +1835,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    Case Studies
   </span>
   
 
@@ -985,6 +1844,90 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Case Studies
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-studies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Case Studies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-studies/textbook-dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Textbook Dashboard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -1144,6 +2087,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1152,7 +2115,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1171,18 +2136,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#about-this-book" class="md-nav__link">
     <span class="md-ellipsis">
-      Commands
+      About This Book
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
+  <a href="#what-youll-find-inside" class="md-nav__link">
     <span class="md-ellipsis">
-      Project layout
+      What You'll Find Inside
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-this-book-is-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who This Book Is For
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use This Book
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
     </span>
   </a>
   
@@ -1203,24 +2204,60 @@
                   
 
 
-<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+<style>
+.md-content__inner h1 {display: none !important;}
+</style>
+
+<h1 id="welcome">Welcome</h1>
+<figure>
+<p><img alt="Token Efficiency" src="img/cover.png" width="100%" /></p>
+</figure>
+<p>Welcome to <strong>Token Efficiency</strong> — a practical, open-source intelligent textbook on measuring, analyzing, and reducing the cost of generative AI.</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Every Token Counts — and Counting Is Fun</p>
+<p><img src="./img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Hi, I'm Pemba — your guide. We're going to look at where the tokens in modern AI systems actually go, why your bill is what it is, and how to drive it down without sacrificing quality. Cheap systems are happy systems. Let's count some tokens.</p>
+</div>
+<h2 id="about-this-book">About This Book</h2>
+<p>In many organizations today, the token usage costs of generative AI tools are becoming a dominant factor in operating expenses. A single poorly-designed prompt, a verbose system message, an unbounded context window, or an over-eager agent loop can multiply costs by ten or one hundred times without producing better outcomes. Yet very few engineers and managers have a rigorous, end-to-end understanding of where tokens come from, how they are billed, and how to systematically drive them down without hurting quality.</p>
+<p>This course closes that gap. It begins with a clear, practical mental model of how large language models consume input and output tokens, and builds up — through pricing economics, vendor ecosystems, agentic harnesses, structured logging, dashboards, A/B testing, prompt engineering, prompt caching, RAG tuning, context window management, model routing, and agent budget policies — to a complete, defensible token-efficiency operating model you can run on your own systems.</p>
+<p>The book is <strong>deliberately vendor-pluralistic</strong>. It covers the three dominant ecosystems that engineering teams encounter today — Anthropic Claude, OpenAI, and Google Gemini — side by side, so you can compare them on cost-quality tradeoffs and design vendor-neutral abstractions where appropriate.</p>
+<h2 id="what-youll-find-inside">What You'll Find Inside</h2>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
+<li><strong>20 chapters</strong> organized in prerequisite order, from token mechanics through capstone projects</li>
+<li><strong>475 interconnected concepts</strong> in a validated learning graph that guarantees no chapter introduces a term before its prerequisites</li>
+<li><strong>40+ interactive MicroSims</strong> — browser-based simulations for the tokenizer pipeline, cache hit-rate dynamics, the Pareto frontier, agent budget meters, and more</li>
+<li><strong>End-of-chapter quizzes</strong> that test understanding at the appropriate Bloom's Taxonomy level</li>
+<li><strong>Cited references</strong> linking to vendor documentation and authoritative sources</li>
+<li><strong>Pemba the Red Panda</strong>, the book's pedagogical mascot, who shows up at the moments you need her most</li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre></div></td></tr></table></div>
+<h2 id="who-this-book-is-for">Who This Book Is For</h2>
+<p>The primary audience:</p>
+<ul>
+<li><strong>Software engineers</strong> building features on top of LLM APIs</li>
+<li><strong>Machine learning engineers</strong> and platform engineers responsible for generative AI infrastructure</li>
+<li><strong>Technical leads and engineering managers</strong> who own the cost and performance of AI features in production</li>
+<li><strong>FinOps practitioners</strong> translating LLM bills into per-feature, per-user, and per-outcome unit economics</li>
+</ul>
+<p>Secondary audience:</p>
+<ul>
+<li><strong>Graduate students</strong> in computer science, data science, or information systems who want practical exposure to the economics of large language models</li>
+</ul>
+<p><strong>Prerequisites:</strong> working knowledge of one programming language (Python preferred), familiarity with REST APIs and JSON, basic command-line and Git skills, and conceptual exposure to LLMs at the level of <em>"I have used ChatGPT, Claude, or a similar tool."</em></p>
+<h2 id="how-to-use-this-book">How to Use This Book</h2>
+<p>Use the navigation menu on the left to explore:</p>
+<ul>
+<li><strong><a href="chapters/">Chapters</a></strong> — main educational content, designed to be read in order</li>
+<li><strong><a href="sims/">MicroSims</a></strong> — interactive simulations referenced throughout the chapters</li>
+<li><strong><a href="case-studies/">Case Studies</a></strong> — applied examples and worked dashboards</li>
+<li><strong><a href="learning-graph/">Learning Graph</a></strong> — interactive concept-dependency visualization across all 475 concepts</li>
+<li><strong><a href="about/">About</a></strong> — author bio, citation formats, license, and the motivation behind the book</li>
+</ul>
+<p>If you're new to LLM economics, read the chapters in order — each one builds on the prior. If you're already familiar with the basics, skim Chapters 1–3 and jump to whichever optimization technique matches your current backlog.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Start with <strong><a href="chapters/01-llms-tokens-generation-basics/">Chapter 1: LLMs, Tokens, and Generation Basics</a></strong> to install the mental model the rest of the book depends on. By the end of Chapter 3 you'll be able to read any LLM API call and predict its cost. By the end of Chapter 14 you'll know how to cache it. By the end of Chapter 18 you'll know how to budget it.</p>
+<h2 id="license">License</h2>
+<p>This work is released under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)</a>. Source code, MicroSim implementations, and supporting scripts are available under the same terms in the <a href="https://github.com/dmccreary/token-efficiency">project repository</a>.</p>
 
 
 
@@ -1228,8 +2265,13 @@ docs/
 
 
 
+  
+  
 
 
+
+
+  
 
 
 
@@ -1275,6 +2317,8 @@ docs/
         <script src="js/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="js/extra.js"></script>
       
     
   </body>
