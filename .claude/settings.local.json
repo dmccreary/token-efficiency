@@ -7,7 +7,12 @@
       "Bash(./validate-learning-graph.sh learning-graph.json)",
       "Bash(python taxonomy-distribution.py learning-graph.csv taxonomy-distribution.md)",
       "Bash(python3 -c \"import json; print\\(json.load\\(open\\('docs/learning-graph/learning-graph.json'\\)\\)['metadata']['title']\\)\")",
-      "Bash(sed -i '' s/TITLE/__TRACKED_VAR__/g docs/sims/graph-viewer/main.html)"
+      "Bash(sed -i '' s/TITLE/__TRACKED_VAR__/g docs/sims/graph-viewer/main.html)",
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/neutral.png)",
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/welcome.png)",
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/thinking.png)",
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/tip.png)",
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/warning.png)"
     ]
   }
 }

@@ -110,7 +110,7 @@ Visual elements (left to right):
 4. Arrow labeled "generate next token" leading to a "Tokens (Output)" box where chips appear one at a time with a small index counter: [Bamboo][ leaves][...]
 5. Arrow labeled "detokenize" leading to a "Generated Text" box that fills in word-by-word
 
-Visual style: Block diagram with arrows. Input tokens shown in cool blue, output tokens shown in warm orange to reinforce the pricing asymmetry. Each output token chip has a small "$" badge larger than the input chips.
+Visual style: Block diagram with arrows. Input tokens shown in cool blue, output tokens shown in warm orange to reinforce the pricing asymmetry. Each output token chip has a small "\$" badge larger than the input chips.
 
 Annotations:
 - Above input section: "Read once, in parallel — cheaper"
