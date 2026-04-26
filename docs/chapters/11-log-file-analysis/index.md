@@ -293,3 +293,8 @@ Chapter 12 takes those backlog items and tests them rigorously with proper A/B m
 !!! mascot-celebration "End of Chapter 11"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     The backlog is in hand. Next chapter teaches you how to test each backlog item rigorously before shipping — because a 30% cost reduction that drops quality 10 points is a regression, not a win.
+
+
+---
+
+[See Annotated References](./references.md)

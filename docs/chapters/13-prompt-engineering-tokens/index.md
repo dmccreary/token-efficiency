@@ -312,3 +312,8 @@ Chapter 14 takes the next step: structuring those prompts so they cache.
 !!! mascot-celebration "End of Chapter 13"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Prompts trimmed at the source. Now we structure them to cache — the single highest-leverage cost optimization in the whole book.
+
+
+---
+
+[See Annotated References](./references.md)

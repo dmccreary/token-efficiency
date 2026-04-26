@@ -269,3 +269,8 @@ Chapter 13 begins the optimization-techniques half of the book, starting with pr
 !!! mascot-celebration "End of Chapter 12"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     The measurement scaffolding is complete: logs, dashboards, alerts, log analysis, A/B testing. Now we get to the fun part — actual cost-reduction techniques, starting with prompt engineering.
+
+
+---
+
+[See Annotated References](./references.md)

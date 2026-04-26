@@ -307,3 +307,8 @@ Chapter 8 covers Skills — the harness primitive that lets you keep huge knowle
 !!! mascot-celebration "End of Chapter 7"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Sessions, loops, compaction, subagents — you can now reason about the long-running agent workloads where tokens accumulate fastest. Next chapter dives into Skills, the cleanest mechanism for keeping the harness system prompt small while still giving the agent access to deep knowledge.
+
+
+---
+
+[See Annotated References](./references.md)

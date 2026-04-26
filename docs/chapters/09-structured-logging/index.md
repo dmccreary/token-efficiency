@@ -283,3 +283,8 @@ Chapter 10 takes these logs and builds dashboards and alerts on top of them.
 !!! mascot-celebration "End of Chapter 9"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     The schema is in place. Every later chapter — dashboards, log-file forensics, A/B tests, budgets — assumes you have these fields on every record. Now we'll build the dashboards that turn the logs into signal.
+
+
+---
+
+[See Annotated References](./references.md)

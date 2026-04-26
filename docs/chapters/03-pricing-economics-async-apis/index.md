@@ -423,3 +423,8 @@ Chapter 4 takes this generic framing and zooms in on the first vendor specifical
 !!! mascot-celebration "End of Chapter 3"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Three chapters in, you have the full vocabulary: tokens, tokenizers, pricing, unit economics, budgets, frontiers, and API modes. The next three chapters apply this framework to each major vendor. Cheap systems are arithmetic systems — and you've just learned the arithmetic.
+
+
+---
+
+[See Annotated References](./references.md)

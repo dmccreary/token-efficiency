@@ -355,3 +355,8 @@ Every chapter from here forward will optimize one or more of those nouns and ver
 !!! mascot-celebration "End of Chapter 1"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     You've installed the mental model. Tokens are the unit of account, prompts are the structure, the context window is the container, and `max_tokens` and stop sequences are the cost ceiling. Cheap systems are happy systems — and now you can spot where the cheap ones differ from the expensive ones. On to tokenization in Chapter 2.
+
+
+---
+
+[See Annotated References](./references.md)

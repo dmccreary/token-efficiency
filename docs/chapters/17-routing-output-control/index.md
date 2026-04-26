@@ -303,3 +303,8 @@ Chapter 18 puts a per-session ceiling on the whole picture — agent budget poli
 !!! mascot-celebration "End of Chapter 17"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Routing and output bounded. Next chapter installs the safety net under the whole stack: agent budget policies that cap how much any session, engineer, or PR can spend.
+
+
+---
+
+[See Annotated References](./references.md)

@@ -375,3 +375,8 @@ Chapter 3 takes all of this and translates it into actual dollars: per-million-t
 !!! mascot-celebration "End of Chapter 2"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     You can now predict token counts, explain the merge pipeline, tune sampling, and spot the structural reason embeddings are a pricing bargain. Next chapter, we attach dollar amounts to all of it. Every token counts — and now you can count them accurately.
+
+
+---
+
+[See Annotated References](./references.md)

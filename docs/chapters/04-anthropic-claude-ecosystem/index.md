@@ -349,3 +349,8 @@ Chapter 5 walks the same path for OpenAI: same framework, different surface, dif
 !!! mascot-celebration "End of Chapter 4"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Claude is your first vendor. Cache the system prompt, cap the thinking budget, log the stop reason, and you're already operating one of the leanest LLM stacks available. Next stop: OpenAI, where the levers are similar but the names and idiosyncrasies differ.
+
+
+---
+
+[See Annotated References](./references.md)

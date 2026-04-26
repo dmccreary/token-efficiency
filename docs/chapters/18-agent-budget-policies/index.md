@@ -303,3 +303,8 @@ Chapter 19 zooms back out to operational concerns for any production deployment:
 !!! mascot-celebration "End of Chapter 18"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Brakes installed at every level. Next chapter handles the operational side: batch jobs run safely, plus the privacy and compliance frameworks that govern what data can be sent to the model.
+
+
+---
+
+[See Annotated References](./references.md)

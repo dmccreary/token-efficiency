@@ -315,3 +315,8 @@ Chapter 16 takes the long-running session view: how to keep multi-hour conversat
 !!! mascot-celebration "End of Chapter 15"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     RAG tuned, retrieved tokens earning their place. Next chapter handles the long-running session problem — how to keep conversations affordable when they stretch across hours.
+
+
+---
+
+[See Annotated References](./references.md)

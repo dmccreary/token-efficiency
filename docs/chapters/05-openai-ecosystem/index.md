@@ -273,3 +273,8 @@ Chapter 6 covers the third major vendor — Google Gemini — and then synthesiz
 !!! mascot-celebration "End of Chapter 5"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     OpenAI mapped. The patterns are familiar (chat-style messages, function calling, batch discount, streaming, vision) and the field names are different (prompt/completion instead of input/output). One more vendor — Gemini — and you'll have all three covered.
+
+
+---
+
+[See Annotated References](./references.md)
