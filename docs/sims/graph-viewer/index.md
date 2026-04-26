@@ -1,3 +1,8 @@
+---
+title: Learning Graph Viewer
+description: Interactive viewer for exploring the course learning graph with search, category filtering, pan/zoom navigation, and live node/edge statistics.
+---
+
 # Learning Graph Viewer
 
 This interactive viewer allows you to explore the learning graph for this course.
