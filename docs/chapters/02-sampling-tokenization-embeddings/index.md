@@ -295,7 +295,7 @@ A **model family** is a vendor's named grouping of related models that share an 
 
 The cost-optimization point of view on model families is simple: within a family, the smaller models are dramatically cheaper than the larger models — often 10× cheaper per token — and frequently good enough for a large fraction of real tasks. The model-routing pattern in Chapter 17 is essentially "send everything to the small family member first; escalate to the large one only when needed."
 
-Within a family, the tokenizer is the same. Across families (and across vendors), it usually is not. This is one more reason cross-vendor benchmarking requires care: the same prompt does not have the same token count, so "$X per million tokens" is not directly comparable.
+Within a family, the tokenizer is the same. Across families (and across vendors), it usually is not. This is one more reason cross-vendor benchmarking requires care: the same prompt does not have the same token count, so "\$X per million tokens" is not directly comparable.
 
 ## Embeddings
 

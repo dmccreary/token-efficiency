@@ -1,5 +1,42 @@
 # Token Optimization — Project Notes
 
+## Math and Equations
+
+This project uses **MathJax 3** via the `pymdownx.arithmatex` extension in `generic` mode. Configuration lives in `mkdocs.yml` (markdown_extensions + extra_javascript) and `docs/js/mathjax.js`. **Do not change that pipeline** without first verifying the [Mascot Style Guide](docs/learning-graph/mascot-test.md) and any chapter with equations still render correctly under `mkdocs serve`.
+
+### Required delimiters
+
+When generating chapter content or any markdown that contains math, use these delimiters exactly:
+
+- **Inline math** — `\( ... \)`  (e.g. `the input price is \( P_i \)`)
+- **Display math** — `\[ ... \]`  on their own lines, blank line before and after
+
+**Do not use:**
+
+- `$ ... $` for inline or `$$ ... $$` for display — these are not enabled in this project's arithmatex config and may collide with literal dollar signs in cost examples (which appear *constantly* in this textbook)
+- Bare `[ ... ]` without backslashes — markdown will render the brackets as literal text and MathJax will never see the contents
+
+### Worked example (correct form)
+
+```markdown
+The cost of a single request is:
+
+\[
+\text{Cost} = \frac{T_i \cdot P_i + T_c \cdot P_c + T_o \cdot P_o}{1{,}000{,}000}
+\]
+
+For a request with \( T_i = 500 \), \( T_c = 10{,}000 \), \( T_o = 1{,}000 \) at
+mid-tier prices, this yields about \$0.0195 per call.
+```
+
+### Why this matters (footgun callout)
+
+Bare `[ ... ]` and `$ ... $` math fail **silently** — no build error, no console warning, just the literal LaTeX shows up on the page. The damage is invisible until a reader reports it. Always preview math-bearing pages with `mkdocs serve` before declaring a chapter complete.
+
+### Dollar signs in prose
+
+When writing about prices in prose (not inside math), escape the dollar sign or wrap it: `\$3 per million tokens` or use the figure inside a math expression. This avoids any future collision if `$...$` math is ever enabled.
+
 ## Learning Mascot: Pemba the Red Panda
 
 ### Guiding Theme

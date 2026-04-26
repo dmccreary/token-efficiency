@@ -64,7 +64,7 @@ Vendors price LLM usage in dollars per million tokens, abbreviated `$/MTok`. Thi
 
 There is no single per-million-token price for a model, though — there are at least three, and sometimes more:
 
-- **Input token price** — the rate charged for tokens you send (your prompt, system message, retrieved context, conversation history). Typically ranges from $0.10/MTok for the smallest models to $15/MTok for the largest.
+- **Input token price** — the rate charged for tokens you send (your prompt, system message, retrieved context, conversation history). Typically ranges from \$0.10/MTok for the smallest models to \$15/MTok for the largest.
 - **Output token price** — the rate charged for tokens the model generates back. Typically 3×–5× the input price for the same model. This ratio is the **output premium** — the structural multiplier that makes generation more expensive than ingestion.
 - **Cached input price** — the rate charged for input tokens that hit the vendor's prompt cache (Chapter 14). Typically about 10% of the uncached input price, sometimes as low as 5%.
 
@@ -78,7 +78,7 @@ Before showing the cost equation, here are the variables: \( T_i \) is uncached 
 \text{Cost} = \frac{T_i \cdot P_i + T_c \cdot P_c + T_o \cdot P_o}{1{,}000{,}000}
 \]
 
-For a concrete example, consider a request to a mid-tier model priced at $3/MTok input, $0.30/MTok cached input, $15/MTok output. The request sends 10,000 tokens of system prompt (cached), 500 tokens of new user message (uncached), and produces a 1,000-token response:
+For a concrete example, consider a request to a mid-tier model priced at \$3/MTok input, \$0.30/MTok cached input, \$15/MTok output. The request sends 10,000 tokens of system prompt (cached), 500 tokens of new user message (uncached), and produces a 1,000-token response:
 
 \[
 \text{Cost} = \frac{500 \cdot 3 + 10{,}000 \cdot 0.30 + 1{,}000 \cdot 15}{1{,}000{,}000} = \frac{1{,}500 + 3{,}000 + 15{,}000}{1{,}000{,}000} = \$0.0195
@@ -90,10 +90,10 @@ The table below summarizes the four billing categories you'll see on every moder
 
 | Category | Example Rate | Share of Cost in the Worked Example | Typical Cost Lever |
 |----------|--------------|-------------------------------------|--------------------|
-| Uncached input | $3.00/MTok | 8% | Prompt compression (Ch. 13) |
-| Cached input | $0.30/MTok | 15% | Stable prefix design (Ch. 14) |
-| Output | $15.00/MTok | 77% | `max_tokens`, model routing (Ch. 17) |
-| Reasoning (output) | $15.00/MTok | n/a (none in this example) | Thinking budget cap (Ch. 17) |
+| Uncached input | \$3.00/MTok | 8% | Prompt compression (Ch. 13) |
+| Cached input | \$0.30/MTok | 15% | Stable prefix design (Ch. 14) |
+| Output | \$15.00/MTok | 77% | `max_tokens`, model routing (Ch. 17) |
+| Reasoning (output) | \$15.00/MTok | n/a (none in this example) | Thinking budget cap (Ch. 17) |
 
 !!! mascot-thinking "Where the Money Actually Goes"
     <img src="../../img/mascot/thinking.png" class="mascot-admonition-img" alt="Pemba thinking">
@@ -122,7 +122,7 @@ Computing any of these metrics requires **cost attribution** — the practice of
 - `request_id` / `trace_id` — for joining multi-call features back together
 - `outcome` — whether the call succeeded or failed in a business sense (not just HTTP-200; some 200s are bad outputs)
 
-Without these tags, a $50,000 monthly bill is just $50,000. With them, you can tell whether one feature is responsible for 80% of the spend, whether one customer is unprofitable, or whether a recent prompt change improved cost-per-outcome. Chapter 9 builds the structured logging schema that makes this practical.
+Without these tags, a \$50,000 monthly bill is just \$50,000. With them, you can tell whether one feature is responsible for 80% of the spend, whether one customer is unprofitable, or whether a recent prompt change improved cost-per-outcome. Chapter 9 builds the structured logging schema that makes this practical.
 
 #### Diagram: Cost Attribution Roll-Up
 
@@ -180,7 +180,7 @@ A **token budget** is a pre-declared cap on how many tokens (or dollars) a parti
 
 **Monthly token spend** is the simplest and least informative metric — total tokens (or dollars) consumed in a calendar month. It's the number on the invoice. By itself it tells you nothing about whether spend is healthy; it has to be compared against unit economics or against a budget to mean anything.
 
-**Forecasting token cost** is the practice of projecting next month's spend (or next quarter's, or the rest of the current month's) from current usage trends. The basic forecast is a linear extrapolation from **burn rate** — the average dollars-per-day or tokens-per-hour you are currently consuming. A burn rate of $1,500/day forecasts a $45,000 month. More sophisticated forecasts adjust for known seasonality (weekday vs. weekend, marketing campaigns) and known growth (if monthly active users are growing 20% per month, multiply the linear forecast accordingly).
+**Forecasting token cost** is the practice of projecting next month's spend (or next quarter's, or the rest of the current month's) from current usage trends. The basic forecast is a linear extrapolation from **burn rate** — the average dollars-per-day or tokens-per-hour you are currently consuming. A burn rate of \$1,500/day forecasts a \$45,000 month. More sophisticated forecasts adjust for known seasonality (weekday vs. weekend, marketing campaigns) and known growth (if monthly active users are growing 20% per month, multiply the linear forecast accordingly).
 
 The chart below shows the relationship between burn rate, monthly forecast, and budget:
 
@@ -204,14 +204,14 @@ Learning objective: Calculate a monthly cost forecast from a partial-month burn 
 
 Chart type: Combination chart
 - X-axis: Day of month (1–30)
-- Y-axis (left): Daily spend ($)
-- Y-axis (right): Cumulative spend ($)
+- Y-axis (left): Daily spend (\$)
+- Y-axis (right): Cumulative spend (\$)
 
 Data series:
 1. Daily spend (blue bars) — actual daily spend up to today (day 18 in default state)
 2. Cumulative spend (solid green line) — running total
 3. Forecast cumulative spend (dashed green line) — extrapolation from current burn rate to day 30
-4. Budget line (red horizontal at $30,000)
+4. Budget line (red horizontal at \$30,000)
 
 Interactive controls:
 - Slider: "Today is day N" (1–30, default 18) — changes which day is "now" and re-extrapolates
@@ -229,7 +229,7 @@ Default values:
 - Today: day 18
 - Burn multiplier: 1.0
 - Seasonality: off
-- Budget: $30,000
+- Budget: \$30,000
 
 Implementation: Chart.js, responsive width
 </details>
@@ -267,18 +267,18 @@ Bloom Verb: judge
 Learning objective: Judge which model configurations are worth considering for a given workload and which are strictly dominated.
 
 Chart type: Scatter plot with overlaid frontier line
-- X-axis: Cost per request ($, log scale, 0.001 to 1.0)
+- X-axis: Cost per request (\$, log scale, 0.001 to 1.0)
 - Y-axis: Quality score (0–100)
 
 Data points (representative model configurations):
-- "Tiny model": cost $0.001, quality 60
-- "Small model, no caching": cost $0.005, quality 75
-- "Small model, with caching": cost $0.002, quality 75
-- "Mid model, no caching": cost $0.020, quality 85
-- "Mid model, with caching": cost $0.008, quality 85
-- "Large model": cost $0.100, quality 92
-- "Large model + thinking": cost $0.300, quality 95
-- Several deliberately-dominated points: "Mid model expensive prompt": $0.030, quality 80; "Small model verbose prompt": $0.015, quality 70
+- "Tiny model": cost \$0.001, quality 60
+- "Small model, no caching": cost \$0.005, quality 75
+- "Small model, with caching": cost \$0.002, quality 75
+- "Mid model, no caching": cost \$0.020, quality 85
+- "Mid model, with caching": cost \$0.008, quality 85
+- "Large model": cost \$0.100, quality 92
+- "Large model + thinking": cost \$0.300, quality 95
+- Several deliberately-dominated points: "Mid model expensive prompt": \$0.030, quality 80; "Small model verbose prompt": \$0.015, quality 70
 
 Frontier line: Connect the non-dominated points (Tiny → Small+caching → Mid+caching → Large → Large+thinking)
 
@@ -304,11 +304,11 @@ Vendor pricing is rarely a single rate card. Real bills depend on which tier you
 
 A **pricing tier** is a published rate card associated with a particular customer segment — typically free, developer/standard, and enterprise. Higher tiers offer not just lower per-token rates but also higher rate limits, priority access, and dedicated capacity.
 
-A **volume discount** is an automatic per-token rate reduction that kicks in once monthly spend exceeds defined thresholds — for example, the first $10,000 at full rate, the next $40,000 at 90% of rate, anything above $50,000 at 75% of rate. Volume discounts are typically not negotiated; they're documented in the rate card.
+A **volume discount** is an automatic per-token rate reduction that kicks in once monthly spend exceeds defined thresholds — for example, the first \$10,000 at full rate, the next \$40,000 at 90% of rate, anything above \$50,000 at 75% of rate. Volume discounts are typically not negotiated; they're documented in the rate card.
 
 A **batch discount** is a structural discount (typically 50%) granted for workloads sent through the vendor's batch API rather than the synchronous API. The discount is the vendor's reward for letting them schedule your work flexibly during off-peak compute capacity. Any workload that doesn't need a real-time response should be on this path. We cover the batch API mechanics in the next section.
 
-**Enterprise pricing** refers to negotiated contracts that override the public rate card — typically offering committed-use discounts (you commit to a minimum monthly spend in exchange for a flat lower rate), dedicated capacity, custom rate limits, and contractual SLAs. Enterprise pricing matters for organizations spending more than ~$50K/month; below that, the negotiation effort isn't worth the discount.
+**Enterprise pricing** refers to negotiated contracts that override the public rate card — typically offering committed-use discounts (you commit to a minimum monthly spend in exchange for a flat lower rate), dedicated capacity, custom rate limits, and contractual SLAs. Enterprise pricing matters for organizations spending more than ~\$50K/month; below that, the negotiation effort isn't worth the discount.
 
 A **free tier limit** is the volume of usage available at no cost on the free tier — typically a small number of requests per day or month, intended for evaluation. Free tiers are not for production workloads; rate limits are aggressive and the vendor reserves the right to deprioritize free traffic during capacity crunches.
 
@@ -399,13 +399,13 @@ Implementation: Mermaid sequence diagram, three diagrams arranged horizontally o
 
 ### A Worked Comparison
 
-Suppose a company runs nightly document summarization on 100,000 documents per day, averaging 2,000 input tokens and 200 output tokens per document. At synchronous mid-tier pricing ($3/MTok input, $15/MTok output):
+Suppose a company runs nightly document summarization on 100,000 documents per day, averaging 2,000 input tokens and 200 output tokens per document. At synchronous mid-tier pricing (\$3/MTok input, \$15/MTok output):
 
 \[
 \text{Daily cost (sync)} = 100{,}000 \cdot \frac{2{,}000 \cdot 3 + 200 \cdot 15}{1{,}000{,}000} = 100{,}000 \cdot \$0.009 = \$900/\text{day}
 \]
 
-That's roughly $27,000/month. Moving the same workload to the batch API at a 50% discount drops it to $13,500/month — a $13,500/month savings for a one-line code change. The work is the same, the model is the same, the quality is the same; only the scheduling flexibility differs. This is the cleanest cost optimization in the entire book.
+That's roughly \$27,000/month. Moving the same workload to the batch API at a 50% discount drops it to \$13,500/month — a \$13,500/month savings for a one-line code change. The work is the same, the model is the same, the quality is the same; only the scheduling flexibility differs. This is the cleanest cost optimization in the entire book.
 
 ## Putting It All Together
 
@@ -415,7 +415,7 @@ Chapter 4 takes this generic framing and zooms in on the first vendor specifical
 
 ??? question "Quick Self-Check — Click to Reveal Answers"
     1. **What is the output premium, and why does it exist?** The ratio of output token price to input token price (typically 3×–5×). It exists because output tokens are produced one at a time autoregressively while input tokens are processed in parallel — output is structurally more expensive compute.
-    2. **A request uses 5,000 input tokens and 500 output tokens at $1/MTok input and $5/MTok output. Cost?** $0.005 + $0.0025 = $0.0075.
+    2. **A request uses 5,000 input tokens and 500 output tokens at \$1/MTok input and \$5/MTok output. Cost?** \$0.005 + \$0.0025 = \$0.0075.
     3. **Why is cost-per-outcome more useful than cost-per-request?** Cost-per-request can drop while quality also drops (for example, switching to a worse model). Cost-per-outcome divides by success rate, so it catches quality regressions.
     4. **What does the batch API cost relative to the synchronous API for the same work?** Typically 50% — the batch discount is the structural reward for letting the vendor schedule the work flexibly.
     5. **You have a workload that runs once a day and processes 50,000 documents. Should it be sync, async, or batch?** Batch — there is no real-time requirement, and the 50% discount is essentially free money.
