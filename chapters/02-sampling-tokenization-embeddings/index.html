@@ -12,10 +12,10 @@
         <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/chapters/02-sampling-tokenization-embeddings/">
       
       
-        <link rel="prev" href="../01-llms-tokens-generation-basics/">
+        <link rel="prev" href="../01-llms-tokens-generation-basics/references/">
       
       
-        <link rel="next" href="../03-pricing-economics-async-apis/">
+        <link rel="next" href="references/">
       
       
       <link rel="icon" href="../../img/favicon.ico">
@@ -347,83 +347,43 @@
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
-        
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
         
       
     
@@ -472,16 +432,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../01-llms-tokens-generation-basics/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../01-llms-tokens-generation-basics/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     1. LLMs, Tokens, and Generation Basics
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -495,324 +482,53 @@
   
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    2. Sampling, Tokenization, and Embeddings
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    2. Sampling, Tokenization, and Embeddings
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
     
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    
       
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      Summary
-    </span>
-  </a>
-  
-</li>
+        
+          
+        
       
-        <li class="md-nav__item">
-  <a href="#concepts-covered" class="md-nav__link">
-    <span class="md-ellipsis">
-      Concepts Covered
-    </span>
-  </a>
-  
-</li>
+        
       
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
+    
+    
+    
       
-        <li class="md-nav__item">
-  <a href="#why-go-deeper" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why Go Deeper
-    </span>
-  </a>
-  
-</li>
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        <li class="md-nav__item">
-  <a href="#subword-tokenization-in-depth" class="md-nav__link">
-    <span class="md-ellipsis">
-      Subword Tokenization in Depth
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Subword Tokenization in Depth">
-      <ul class="md-nav__list">
         
-          <li class="md-nav__item">
-  <a href="#from-characters-to-subwords" class="md-nav__link">
-    <span class="md-ellipsis">
-      From Characters to Subwords
-    </span>
-  </a>
-  
-</li>
         
-          <li class="md-nav__item">
-  <a href="#bpe-merge-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      BPE Merge Rules
-    </span>
-  </a>
-  
-</li>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
         
-          <li class="md-nav__item">
-  <a href="#pre-tokenization-whitespace-and-unicode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-Tokenization, Whitespace, and Unicode
-    </span>
-  </a>
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
   
-    <nav class="md-nav" aria-label="Pre-Tokenization, Whitespace, and Unicode">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#diagram-bpe-tokenization-pipeline" class="md-nav__link">
-    <span class="md-ellipsis">
-      Diagram: BPE Tokenization Pipeline
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#special-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      Special Tokens
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#counting-tokens-accurately" class="md-nav__link">
-    <span class="md-ellipsis">
-      Counting Tokens Accurately
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Counting Tokens Accurately">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#token-counting-apis-vs-local-estimation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Token Counting APIs vs. Local Estimation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-token-to-char-ratio-heuristic" class="md-nav__link">
-    <span class="md-ellipsis">
-      The Token-to-Char Ratio Heuristic
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#token-count-caching" class="md-nav__link">
-    <span class="md-ellipsis">
-      Token Count Caching
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edge-cases-code-and-multilingual-text" class="md-nav__link">
-    <span class="md-ellipsis">
-      Edge Cases: Code and Multilingual Text
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Edge Cases: Code and Multilingual Text">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-tokenization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code Tokenization
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multilingual-tokenization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multilingual Tokenization
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sampling-how-the-model-picks-the-next-token" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sampling: How the Model Picks the Next Token
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Sampling: How the Model Picks the Next Token">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#logprobs-and-the-output-distribution" class="md-nav__link">
-    <span class="md-ellipsis">
-      Logprobs and the Output Distribution
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#temperature-and-top-p-sampling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Temperature and Top-P Sampling
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Temperature and Top-P Sampling">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#diagram-sampling-parameter-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      Diagram: Sampling Parameter Explorer
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#model-families" class="md-nav__link">
-    <span class="md-ellipsis">
-      Model Families
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#embeddings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Embeddings
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Embeddings">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#diagram-embedding-space-concept" class="md-nav__link">
-    <span class="md-ellipsis">
-      Diagram: Embedding Space Concept
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#putting-it-all-together" class="md-nav__link">
-    <span class="md-ellipsis">
-      Putting It All Together
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
   
 
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            2. Sampling, Tokenization, and Embeddings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
             
               
@@ -822,15 +538,71 @@
   
   
     <li class="md-nav__item">
-      <a href="../03-pricing-economics-async-apis/" class="md-nav__link">
+      <a href="references/" class="md-nav__link">
         
+  
+  <span class="md-ellipsis">
+    Annotated References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../03-pricing-economics-async-apis/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     3. Pricing, Economics, and Async API Modes
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -842,16 +614,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../04-anthropic-claude-ecosystem/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../04-anthropic-claude-ecosystem/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     4. The Anthropic Claude Ecosystem
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -863,16 +662,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../05-openai-ecosystem/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../05-openai-ecosystem/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     5. The OpenAI Ecosystem
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -884,16 +710,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../06-google-gemini-ecosystem/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../06-google-gemini-ecosystem/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     6. The Google Gemini Ecosystem
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -905,16 +758,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../07-coding-harnesses-agentic-loops/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../07-coding-harnesses-agentic-loops/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     7. AI Coding Harnesses and Agentic Loops
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -926,16 +806,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../08-skills-system/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../08-skills-system/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     8. The Skills System
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -947,16 +854,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../09-structured-logging/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../09-structured-logging/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     9. Structured Logging for LLM Calls
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -968,16 +902,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../10-observability-dashboards-alerting/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../10-observability-dashboards-alerting/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     10. Observability, Dashboards, and Alerting
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -989,16 +950,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../11-log-file-analysis/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../11-log-file-analysis/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     11. Log File Analysis and Cost Hotspots
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1010,16 +998,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../12-ab-testing-methodology/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../12-ab-testing-methodology/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     12. A/B Testing Methodology for LLMs
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1031,16 +1046,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../13-prompt-engineering-tokens/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../13-prompt-engineering-tokens/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     13. Prompt Engineering for Token Efficiency
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1052,16 +1094,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../14-prompt-caching-patterns/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../14-prompt-caching-patterns/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     14. Prompt Caching Patterns
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1073,16 +1142,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../15-rag-optimization/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../15-rag-optimization/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     15. Retrieval-Augmented Generation Optimization
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1094,16 +1190,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../16-context-window-management/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../16-context-window-management/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     16. Context Window Management
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1115,16 +1238,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../17-routing-output-control/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../17-routing-output-control/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     17. Model Routing and Output Control
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1136,16 +1286,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../18-agent-budget-policies/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../18-agent-budget-policies/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     18. Agent Budget Policies and Session Limits
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1157,16 +1334,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../19-batch-privacy-compliance/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../19-batch-privacy-compliance/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     19. Batch Job Operations, Privacy, and Compliance
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1178,16 +1382,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../20-capstone-projects-practice/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../20-capstone-projects-practice/" class="md-nav__link">
+      
   
   <span class="md-ellipsis">
     20. Capstone Projects and Continuous Practice
   </span>
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1497,6 +1728,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -1525,6 +1760,46 @@
   
 
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2199,6 +2474,8 @@ Notice the structural advantage: embedding APIs have no output tokens, so they s
 <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../img/mascot/celebration.png" data-desc-position="bottom"><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating"></a>
 You can now predict token counts, explain the merge pipeline, tune sampling, and spot the structural reason embeddings are a pricing bargain. Next chapter, we attach dollar amounts to all of it. Every token counts — and now you can count them accurately.</p>
 </div>
+<hr>
+<p><a href="references/">See Annotated References</a></p>
 
 
 
@@ -2237,7 +2514,7 @@ You can now predict token counts, explain the merge pipeline, tune sampling, and
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../01-llms-tokens-generation-basics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. LLMs, Tokens, and Generation Basics">
+          <a href="../01-llms-tokens-generation-basics/references/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Annotated References">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2247,20 +2524,20 @@ You can now predict token counts, explain the merge pipeline, tune sampling, and
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. LLMs, Tokens, and Generation Basics
+                Annotated References
               </div>
             </div>
           </a>
         
         
           
-          <a href="../03-pricing-economics-async-apis/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Pricing, Economics, and Async API Modes">
+          <a href="references/" class="md-footer__link md-footer__link--next" aria-label="Next: Annotated References">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Pricing, Economics, and Async API Modes
+                Annotated References
               </div>
             </div>
             <div class="md-footer__button md-icon">

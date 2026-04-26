@@ -1,0 +1,3038 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An interactive intelligent textbook on measuring, analyzing, and reducing the cost of generative AI — vendor-pluralistic across Anthropic Claude, OpenAI, and Google Gemini.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/faq/">
+      
+      
+        <link rel="prev" href="../learning-graph/faq-coverage-gaps/">
+      
+      
+        <link rel="next" href="../glossary/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>FAQ - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/mascot.css">
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="FAQ - Token Efficiency">
+      
+        <meta property="og:description" content="An interactive intelligent textbook on measuring, analyzing, and reducing the cost of generative AI — vendor-pluralistic across Anthropic Claude, OpenAI, and Google Gemini.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/assets/images/social/faq.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/faq/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="FAQ - Token Efficiency">
+      
+        <meta name="twitter:description" content="An interactive intelligent textbook on measuring, analyzing, and reducing the cost of generative AI — vendor-pluralistic across Anthropic Claude, OpenAI, and Google Gemini.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/assets/images/social/faq.png">
+      
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#token-optimization-faq" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FAQ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-this-course-about" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is this course about?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#who-is-this-course-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is this course for?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-will-i-be-able-to-do-after-finishing-the-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      What will I be able to do after finishing the course?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-do-i-need-to-know-before-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      What do I need to know before starting?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-is-the-textbook-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      How is the textbook structured?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-long-does-it-take-to-complete-the-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      How long does it take to complete the course?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-makes-this-course-different-from-other-llm-courses" class="md-nav__link">
+    <span class="md-ellipsis">
+      What makes this course different from other LLM courses?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-i-need-to-pay-for-api-access-to-follow-along" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do I need to pay for API access to follow along?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-navigate-the-textbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I navigate the textbook?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-microsim-and-why-does-this-textbook-have-so-many" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a MicroSim and why does this textbook have so many?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-do-i-find-definitions-of-technical-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where do I find definitions of technical terms?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#who-is-pemba-and-why-is-there-a-red-panda-on-every-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is Pemba and why is there a red panda on every page?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concepts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a token?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-input-tokens-and-output-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between input tokens and output tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-output-tokens-more-expensive-than-input-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are output tokens more expensive than input tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a context window?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-prompt-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is prompt caching?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-tokenizer-and-why-does-it-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a tokenizer and why does it matter?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-byte-pair-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is byte-pair encoding?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a system prompt?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-a-prompt-and-a-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between a prompt and a conversation?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-ai-coding-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an AI coding harness?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-agentic-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agentic loop?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Skill?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-a-harness-decide-which-skill-to-invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does a harness decide which Skill to invoke?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-structured-logging-for-llm-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is structured logging for LLM calls?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-cost-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is cost attribution?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-cost-quality-tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the cost-quality tradeoff?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-ab-testing-in-the-context-of-prompts-and-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is A/B testing in the context of prompts and models?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-rag-and-how-does-it-affect-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is RAG and how does it affect cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-model-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is model routing?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-batch-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a batch API?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-agent-budget-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agent budget policy?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-cache-hit-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a cache hit rate?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-synchronous-streaming-and-batch-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between synchronous, streaming, and batch modes?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-it-mean-to-be-vendor-pluralistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does it mean to be vendor-pluralistic?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-relationship-between-latency-cost-and-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the relationship between latency, cost, and quality?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-observability-in-the-context-of-llm-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is observability in the context of LLM systems?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-a-chat-completion-and-an-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between a chat completion and an agent?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-detail-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Detail Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Detail Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-count-tokens-before-sending-a-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I count tokens before sending a request?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-fields-should-a-structured-llm-log-line-contain" class="md-nav__link">
+    <span class="md-ellipsis">
+      What fields should a structured LLM log line contain?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-prompt-caching-work-in-the-anthropic-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does prompt caching work in the Anthropic API?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-are-the-published-per-million-token-prices" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are the published per-million-token prices?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-the-response-usage-object-look-like-across-vendors" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does the response usage object look like across vendors?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-max_tokens-and-a-stop-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between max_tokens and a stop sequence?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-extended-thinking-affect-token-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does extended thinking affect token cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-json-mode-and-how-does-it-change-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is JSON mode and how does it change cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-claude-haiku-sonnet-and-opus" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between Claude Haiku, Sonnet, and Opus?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-gpt-4o-gpt-4o-mini-and-the-o-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between GPT-4o, GPT-4o-mini, and the o-series?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-gemini-pro-flash-and-ultra" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between Gemini Pro, Flash, and Ultra?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-opentelemetry-and-should-i-use-it-for-llm-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is OpenTelemetry and should I use it for LLM logging?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-prompt-hash-and-why-log-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a prompt hash and why log it?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-sample-size-calculation-for-an-ab-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a sample size calculation for an A/B test?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-statistical-power-and-statistical-significance" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between statistical power and statistical significance?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-guardrail-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a guardrail metric?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-p95-token-usage-and-why-log-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a P95 token usage and why log it?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-embeddings-and-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between embeddings and tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-reranking-in-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is reranking in RAG?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-conversation-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is conversation compaction?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-challenge-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Challenge Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Challenge Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-prompt-cache-hit-rate-lower-than-expected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my prompt cache hit rate lower than expected?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-agent-session-running-up-huge-bills-overnight" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my agent session running up huge bills overnight?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-openai-bill-not-match-my-anthropic-bill-on-the-same-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my OpenAI bill not match my Anthropic bill on the same task?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-my-cached-tokens-being-charged-at-full-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are my cached tokens being charged at full rate?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-do-my-ab-test-results-keep-flipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why do my A/B test results keep flipping?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-context-window-full-when-i-havent-sent-that-much-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my context window full when I haven't sent that much text?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-skill-not-loading-when-i-expect-it-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my Skill not loading when I expect it to?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-my-output-tokens-so-much-higher-than-my-input-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are my output tokens so much higher than my input tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-rag-pipeline-cost-so-much-per-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my RAG pipeline cost so much per query?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-cost-dashboard-show-a-spike-at-2-am-every-day" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my cost dashboard show a spike at 2 AM every day?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-batch-job-sitting-in-pending-forever" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my batch job sitting in pending forever?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-prompt-sometimes-hit-the-cache-and-sometimes-miss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my prompt sometimes hit the cache and sometimes miss?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practice-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practice Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practice Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-use-prompt-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I use prompt caching?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-use-a-batch-api-instead-of-synchronous-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I use a batch API instead of synchronous calls?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-escalate-from-a-cheap-model-to-an-expensive-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I escalate from a cheap model to an expensive one?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-write-a-good-skill-trigger-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I write a good Skill trigger description?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-bound-an-agent-sessions-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I bound an agent session's cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-choose-between-anthropic-openai-and-google-for-a-given-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I choose between Anthropic, OpenAI, and Google for a given task?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-keep-my-llm-logs-privacy-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I keep my LLM logs privacy-safe?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-refactor-a-prose-heavy-skill-into-a-script-backed-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I refactor a prose-heavy Skill into a script-backed one?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-run-a-credible-ab-test-on-a-prompt-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I run a credible A/B test on a prompt change?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-attribute-cost-to-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I attribute cost to features?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-know-if-a-cost-optimization-actually-worked" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I know if a cost optimization actually worked?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-often-should-i-review-my-token-cost-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      How often should I review my token cost dashboard?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-topic-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Topic Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Topic Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-vendor-neutral-logging-schema-that-works-across-claude-openai-and-gemini" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a vendor-neutral logging schema that works across Claude, OpenAI, and Gemini?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-does-extended-thinking-pay-for-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      When does extended thinking pay for itself?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-architect-a-cost-aware-multi-vendor-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I architect a cost-aware multi-vendor router?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-evaluate-vendor-lock-in-risk-when-adopting-anthropic-prompt-caching-or-gemini-long-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I evaluate vendor lock-in risk when adopting Anthropic prompt caching or Gemini long context?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-token-budget-policy-for-an-autonomous-coding-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a token budget policy for an autonomous coding harness?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-build-a-continuous-cost-optimization-loop-for-a-production-llm-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I build a continuous cost optimization loop for a production LLM system?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-skill-from-scratch-with-optimal-token-economics" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a Skill from scratch with optimal token economics?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-balance-the-cost-quality-latency-tradeoff-for-a-user-facing-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I balance the cost-quality-latency tradeoff for a user-facing product?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-this-course-about" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is this course about?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#who-is-this-course-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is this course for?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-will-i-be-able-to-do-after-finishing-the-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      What will I be able to do after finishing the course?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-do-i-need-to-know-before-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      What do I need to know before starting?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-is-the-textbook-structured" class="md-nav__link">
+    <span class="md-ellipsis">
+      How is the textbook structured?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-long-does-it-take-to-complete-the-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      How long does it take to complete the course?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-makes-this-course-different-from-other-llm-courses" class="md-nav__link">
+    <span class="md-ellipsis">
+      What makes this course different from other LLM courses?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-i-need-to-pay-for-api-access-to-follow-along" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do I need to pay for API access to follow along?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-navigate-the-textbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I navigate the textbook?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-microsim-and-why-does-this-textbook-have-so-many" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a MicroSim and why does this textbook have so many?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-do-i-find-definitions-of-technical-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where do I find definitions of technical terms?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#who-is-pemba-and-why-is-there-a-red-panda-on-every-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      Who is Pemba and why is there a red panda on every page?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concepts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a token?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-input-tokens-and-output-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between input tokens and output tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-output-tokens-more-expensive-than-input-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are output tokens more expensive than input tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a context window?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-prompt-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is prompt caching?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-tokenizer-and-why-does-it-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a tokenizer and why does it matter?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-byte-pair-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is byte-pair encoding?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a system prompt?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-a-prompt-and-a-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between a prompt and a conversation?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-ai-coding-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an AI coding harness?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-agentic-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agentic loop?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Skill?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-a-harness-decide-which-skill-to-invoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does a harness decide which Skill to invoke?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-structured-logging-for-llm-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is structured logging for LLM calls?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-cost-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is cost attribution?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-cost-quality-tradeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the cost-quality tradeoff?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-ab-testing-in-the-context-of-prompts-and-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is A/B testing in the context of prompts and models?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-rag-and-how-does-it-affect-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is RAG and how does it affect cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-model-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is model routing?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-batch-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a batch API?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-an-agent-budget-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agent budget policy?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-cache-hit-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a cache hit rate?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-synchronous-streaming-and-batch-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between synchronous, streaming, and batch modes?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-it-mean-to-be-vendor-pluralistic" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does it mean to be vendor-pluralistic?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-relationship-between-latency-cost-and-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the relationship between latency, cost, and quality?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-observability-in-the-context-of-llm-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is observability in the context of LLM systems?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-a-chat-completion-and-an-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between a chat completion and an agent?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-detail-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Detail Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Detail Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-count-tokens-before-sending-a-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I count tokens before sending a request?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-fields-should-a-structured-llm-log-line-contain" class="md-nav__link">
+    <span class="md-ellipsis">
+      What fields should a structured LLM log line contain?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-prompt-caching-work-in-the-anthropic-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does prompt caching work in the Anthropic API?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-are-the-published-per-million-token-prices" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are the published per-million-token prices?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-the-response-usage-object-look-like-across-vendors" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does the response usage object look like across vendors?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-max_tokens-and-a-stop-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between max_tokens and a stop sequence?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-does-extended-thinking-affect-token-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      How does extended thinking affect token cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-json-mode-and-how-does-it-change-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is JSON mode and how does it change cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-claude-haiku-sonnet-and-opus" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between Claude Haiku, Sonnet, and Opus?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-gpt-4o-gpt-4o-mini-and-the-o-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between GPT-4o, GPT-4o-mini, and the o-series?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-gemini-pro-flash-and-ultra" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between Gemini Pro, Flash, and Ultra?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-opentelemetry-and-should-i-use-it-for-llm-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is OpenTelemetry and should I use it for LLM logging?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-prompt-hash-and-why-log-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a prompt hash and why log it?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-sample-size-calculation-for-an-ab-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a sample size calculation for an A/B test?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-statistical-power-and-statistical-significance" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between statistical power and statistical significance?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-guardrail-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a guardrail metric?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-p95-token-usage-and-why-log-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a P95 token usage and why log it?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-difference-between-embeddings-and-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the difference between embeddings and tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-reranking-in-rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is reranking in RAG?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-conversation-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is conversation compaction?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-challenge-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Challenge Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Challenge Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-prompt-cache-hit-rate-lower-than-expected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my prompt cache hit rate lower than expected?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-agent-session-running-up-huge-bills-overnight" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my agent session running up huge bills overnight?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-openai-bill-not-match-my-anthropic-bill-on-the-same-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my OpenAI bill not match my Anthropic bill on the same task?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-my-cached-tokens-being-charged-at-full-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are my cached tokens being charged at full rate?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-do-my-ab-test-results-keep-flipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why do my A/B test results keep flipping?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-context-window-full-when-i-havent-sent-that-much-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my context window full when I haven't sent that much text?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-skill-not-loading-when-i-expect-it-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my Skill not loading when I expect it to?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-are-my-output-tokens-so-much-higher-than-my-input-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why are my output tokens so much higher than my input tokens?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-rag-pipeline-cost-so-much-per-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my RAG pipeline cost so much per query?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-cost-dashboard-show-a-spike-at-2-am-every-day" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my cost dashboard show a spike at 2 AM every day?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-my-batch-job-sitting-in-pending-forever" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why is my batch job sitting in pending forever?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-my-prompt-sometimes-hit-the-cache-and-sometimes-miss" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why does my prompt sometimes hit the cache and sometimes miss?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practice-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practice Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practice Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-use-prompt-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I use prompt caching?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-use-a-batch-api-instead-of-synchronous-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I use a batch API instead of synchronous calls?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-should-i-escalate-from-a-cheap-model-to-an-expensive-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      When should I escalate from a cheap model to an expensive one?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-write-a-good-skill-trigger-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I write a good Skill trigger description?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-bound-an-agent-sessions-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I bound an agent session's cost?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-choose-between-anthropic-openai-and-google-for-a-given-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I choose between Anthropic, OpenAI, and Google for a given task?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-keep-my-llm-logs-privacy-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I keep my LLM logs privacy-safe?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-refactor-a-prose-heavy-skill-into-a-script-backed-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I refactor a prose-heavy Skill into a script-backed one?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-run-a-credible-ab-test-on-a-prompt-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I run a credible A/B test on a prompt change?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-attribute-cost-to-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I attribute cost to features?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-know-if-a-cost-optimization-actually-worked" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I know if a cost optimization actually worked?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-often-should-i-review-my-token-cost-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      How often should I review my token cost dashboard?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-topic-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Topic Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Topic Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-vendor-neutral-logging-schema-that-works-across-claude-openai-and-gemini" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a vendor-neutral logging schema that works across Claude, OpenAI, and Gemini?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-does-extended-thinking-pay-for-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      When does extended thinking pay for itself?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-architect-a-cost-aware-multi-vendor-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I architect a cost-aware multi-vendor router?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-evaluate-vendor-lock-in-risk-when-adopting-anthropic-prompt-caching-or-gemini-long-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I evaluate vendor lock-in risk when adopting Anthropic prompt caching or Gemini long context?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-token-budget-policy-for-an-autonomous-coding-harness" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a token budget policy for an autonomous coding harness?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-build-a-continuous-cost-optimization-loop-for-a-production-llm-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I build a continuous cost optimization loop for a production LLM system?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-design-a-skill-from-scratch-with-optimal-token-economics" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I design a Skill from scratch with optimal token economics?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-do-i-balance-the-cost-quality-latency-tradeoff-for-a-user-facing-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do I balance the cost-quality-latency tradeoff for a user-facing product?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/faq.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="token-optimization-faq">Token Optimization FAQ</h1>
+<p>This FAQ answers the questions engineers, technical leads, and FinOps practitioners ask most often when learning to measure and reduce the token cost of generative AI systems. Questions are grouped by category and progress from getting-oriented to advanced practice. Each answer links to the chapter or reference where the concept is developed in depth.</p>
+<h2 id="getting-started-questions">Getting Started Questions</h2>
+<h3 id="what-is-this-course-about">What is this course about?</h3>
+<p>Token Optimization teaches you to measure, analyze, and reduce the cost of generative AI systems without sacrificing quality. It covers tokenization, per-vendor pricing, structured logging, observability dashboards, A/B testing of prompts and models, prompt caching, RAG tuning, model routing, agent budget policies, and batch APIs. The course is deliberately vendor-pluralistic — every concept is shown across the three major ecosystems engineers encounter today: Anthropic Claude, OpenAI, and Google Gemini. The curriculum closes with a capstone project where you instrument a real or simulated application end-to-end and demonstrate a measurable token reduction. See the full <a href="../course-description/">course description</a> for prerequisites, learning outcomes, and the complete topic list.</p>
+<h3 id="who-is-this-course-for">Who is this course for?</h3>
+<p>The primary audience is software engineers, machine learning engineers, platform engineers, technical leads, FinOps practitioners, and engineering managers responsible for the cost and performance of generative AI systems in production. The secondary audience is graduate students in computer science, data science, or information systems who want practical exposure to the economics of large language models. The material assumes you have used a chat-style LLM tool, can read JSON, and are comfortable on the command line — but it does not assume any prior background in transformer architecture or model training. See the <a href="../course-description/">course description</a> for the full prerequisite list.</p>
+<h3 id="what-will-i-be-able-to-do-after-finishing-the-course">What will I be able to do after finishing the course?</h3>
+<p>You will be able to instrument any LLM-using application with structured logging, build cost-per-feature and cost-per-user dashboards, run a controlled A/B test on prompts or models, configure prompt caching and verify cache hits, design a model-routing layer that escalates from cheap to expensive models on demand, and write an agent budget policy that prevents runaway sessions. You will also be able to author Skills that delegate deterministic work to scripts instead of generating it token by token. The full set of <a href="../course-description/">Bloom's Taxonomy outcomes</a> is in the course description, organized by Remember, Understand, Apply, Analyze, Evaluate, and Create.</p>
+<h3 id="what-do-i-need-to-know-before-starting">What do I need to know before starting?</h3>
+<p>You need working knowledge of at least one programming language (Python is preferred because most code samples use the official vendor SDKs), familiarity with REST APIs and JSON, and basic command-line and Git skills. You should have used a chat-style LLM tool such as Claude, ChatGPT, or Gemini at least casually. Helpful but not required: experience with logging frameworks, cloud cost dashboards, or experiment-tracking tools. You do <strong>not</strong> need to know how transformers work internally — the course teaches the minimum mental model needed to reason about token economics. See <a href="../chapters/01-llms-tokens-generation-basics/">Chapter 1</a> for that mental model.</p>
+<h3 id="how-is-the-textbook-structured">How is the textbook structured?</h3>
+<p>The textbook is organized into 20 chapters that progress from foundational mental models to advanced practice. Chapters 1–3 cover tokens, tokenization, and pricing economics. Chapters 4–6 walk through the three vendor ecosystems (Anthropic, OpenAI, Google). Chapters 7–8 cover coding harnesses and the Skills system. Chapters 9–11 cover structured logging, observability, and log file analysis. Chapter 12 covers A/B testing methodology. Chapters 13–18 cover the major optimization levers: prompt engineering, prompt caching, RAG tuning, context window management, routing, and agent budgets. Chapter 19 covers batch APIs and privacy. Chapter 20 is the capstone. Browse the <a href="../chapters/">chapter index</a> to jump to any chapter.</p>
+<h3 id="how-long-does-it-take-to-complete-the-course">How long does it take to complete the course?</h3>
+<p>The textbook is sized for a one-semester graduate course or a four-to-six-week self-paced study at roughly 6–10 hours per week. Each chapter is designed to be readable in a single sitting, with embedded MicroSims and quizzes that reinforce the concepts. The capstone project in <a href="../chapters/20-capstone-projects-practice/">Chapter 20</a> is the largest single time investment — plan for 15–25 hours including instrumentation, A/B testing, and the final report.</p>
+<h3 id="what-makes-this-course-different-from-other-llm-courses">What makes this course different from other LLM courses?</h3>
+<p>Most LLM courses focus on capability — what models can do — and treat cost as an afterthought. This course inverts that. It treats token cost as a first-class engineering concern, gives you the measurement and optimization tools to drive it down systematically, and refuses to recommend a single vendor. The vendor-pluralistic stance is deliberate: real production systems often mix Anthropic, OpenAI, and Google calls, and the optimization patterns differ enough to matter. See the <a href="../course-description/">course description</a> for the topics not covered (model training, GPU optimization, image/audio generation).</p>
+<h3 id="do-i-need-to-pay-for-api-access-to-follow-along">Do I need to pay for API access to follow along?</h3>
+<p>You will get the most out of the course by running the code examples against real APIs, but the per-example cost is small — typically a few cents per chapter exercise. The optimization-focused exercises in Chapters 13–18 are designed to be run on the cheapest tier of each vendor (Claude Haiku, GPT-4o-mini, Gemini Flash), where a full chapter's worth of experiments costs well under one dollar. The batch API exercises in <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a> cost half of that thanks to the batch discount. The capstone can be sized to your own budget.</p>
+<h3 id="how-do-i-navigate-the-textbook">How do I navigate the textbook?</h3>
+<p>The left sidebar lists all chapters in order. The right sidebar lists section headers within the current chapter. Cross-references inside the text link to other chapters, the <a href="../glossary/">glossary</a>, or relevant MicroSims. Use the search box at the top of every page to jump to any concept by name. The <a href="../learning-graph/">learning graph</a> shows the dependency structure of all 475 concepts in the course — useful when you want to see what depends on what.</p>
+<h3 id="what-is-a-microsim-and-why-does-this-textbook-have-so-many">What is a MicroSim and why does this textbook have so many?</h3>
+<p>A MicroSim is a small, browser-based interactive simulation embedded directly in a chapter — usually built with p5.js or Chart.js — that lets you manipulate the parameters of a concept and see the result update in real time. Where a static diagram shows one cache hit rate, a MicroSim lets you slide the cache TTL and watch the hit rate change. They exist because token economics is full of nonlinear effects (cache hit rates, batch discounts, output premiums) that are easier to feel than to read about. Browse the full set in the <a href="../sims/">sims index</a>.</p>
+<h3 id="where-do-i-find-definitions-of-technical-terms">Where do I find definitions of technical terms?</h3>
+<p>The <a href="../glossary/">glossary</a> defines every technical term used in the textbook — over 580 entries covering tokens, pricing, APIs, harnesses, observability, statistics, and more. Each glossary entry includes a one-sentence definition and a concrete example. When you see an unfamiliar term in a chapter, search the glossary first. If a term is used only briefly in one chapter, the chapter usually defines it inline.</p>
+<h3 id="who-is-pemba-and-why-is-there-a-red-panda-on-every-page">Who is Pemba and why is there a red panda on every page?</h3>
+<p>Pemba is the textbook's mascot — a russet-and-cream red panda with wire-rim engineer's glasses who appears in admonition boxes throughout the chapters to flag key concepts, common mistakes, and worth-celebrating wins. The red panda was chosen because red pandas eat one bamboo leaf at a time, savoring it, which is exactly how good token engineering works: small, deliberate choices compound into systems that ship and stay shipped. Pemba's catchphrase is "Every token counts — and counting is fun." See the <a href="../learning-graph/mascot-test/">mascot style guide</a> for the full character bible.</p>
+<h2 id="core-concepts">Core Concepts</h2>
+<h3 id="what-is-a-token">What is a token?</h3>
+<p>A token is the atomic unit a large language model reads and writes. It is not a character and not a word — it is a chunk of text produced by the model's tokenizer, typically corresponding to a common word, a frequent prefix or suffix, a punctuation mark, or a fragment of a less-frequent word. English prose averages roughly four characters per token, so a 1,000-word page is around 1,300 tokens. Models bill in tokens, not characters or words, which is why understanding tokenization is the first step in cost engineering. See <a href="../chapters/01-llms-tokens-generation-basics/">Chapter 1</a> for the full mental model and <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> for the byte-pair encoding details.</p>
+<h3 id="what-is-the-difference-between-input-tokens-and-output-tokens">What is the difference between input tokens and output tokens?</h3>
+<p>Input tokens are everything you send to the model: the system prompt, prior conversation turns, the current user message, retrieved context, tool definitions, and tool results. Output tokens are everything the model generates back, including the visible answer and any thinking or tool-call content it produces. The distinction matters because <strong>output tokens are billed at a higher rate than input tokens</strong> on every major vendor — typically three to five times the input rate. This is the single most important pricing fact in the course. See <a href="../chapters/03-pricing-economics-async-apis/">Chapter 3</a> for the full pricing model.</p>
+<h3 id="why-are-output-tokens-more-expensive-than-input-tokens">Why are output tokens more expensive than input tokens?</h3>
+<p>Output tokens are autoregressive: the model must generate each one sequentially, conditioned on every previous token, and it cannot batch the work or run it in parallel within a single response. Input tokens, in contrast, can be processed in a single forward pass. The compute and latency profile of generation is therefore much heavier per token, and vendors price accordingly. This is why <strong>output length controls</strong> like <code>max_tokens</code> and concise-output instructions are some of the highest-ROI optimizations available. See <a href="../chapters/17-routing-output-control/">Chapter 17</a> for the full set of output controls.</p>
+<h3 id="what-is-a-context-window">What is a context window?</h3>
+<p>A context window is the maximum total number of tokens — input plus output — that a model can process in a single request. Different models have different limits: 200K tokens is common for current Claude and GPT models, while Gemini Pro extends to 1 million tokens. The context window is a hard ceiling: if you exceed it, the request fails outright. It is also a soft cost ceiling, because long contexts get expensive fast — a 100K-token input billed at $3 per million costs $0.30 per call before the model writes a single output token. See <a href="../chapters/16-context-window-management/">Chapter 16</a> for compaction and sliding-window strategies.</p>
+<h3 id="what-is-prompt-caching">What is prompt caching?</h3>
+<p>Prompt caching is a vendor feature that lets you mark stable prefixes of a prompt — typically a long system prompt, a tool definition list, or a retrieved-document block — so the vendor stores the prefilled state and reuses it on subsequent requests that share the same prefix. Cached input tokens bill at roughly 10% of the normal input rate on Anthropic, with similar discounts on OpenAI and Gemini. For high-volume features that share a long static prefix, prompt caching can cut steady-state cost by an order of magnitude. It is the single highest-leverage optimization in this textbook. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for cache key design, hit-rate measurement, and the invariants that silently break caching.</p>
+<h3 id="what-is-a-tokenizer-and-why-does-it-matter">What is a tokenizer and why does it matter?</h3>
+<p>A tokenizer is the algorithm that converts text into the integer token IDs the model actually sees. Each model family has its own tokenizer, trained on its own corpus, and the same English sentence can produce different token counts on different vendors — sometimes by 20% or more. This matters because (1) you bill on the destination vendor's tokenizer, not a generic one, so cross-vendor cost comparisons require care, and (2) <strong>tokenizer drift</strong> can quietly inflate cost when you migrate between vendors. See <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> for the byte-pair-encoding mechanics and the per-vendor tokenizer comparison.</p>
+<h3 id="what-is-byte-pair-encoding">What is byte-pair encoding?</h3>
+<p>Byte-pair encoding (BPE) is the most common tokenization algorithm used by current LLMs. It starts from individual bytes and iteratively merges the most frequent adjacent pairs in a training corpus, producing a vocabulary of common subwords. The result is that frequent words get one token, rarer words get split into two or three tokens, and unusual sequences (long URLs, dense code, non-English scripts) get split into many. BPE is why a 1,000-character English paragraph is roughly 250 tokens but a 1,000-character base64 string can be 700+ tokens. See <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> for the full algorithm and worked examples.</p>
+<h3 id="what-is-a-system-prompt">What is a system prompt?</h3>
+<p>A system prompt is the instruction block that appears at the start of every request and tells the model who it is, how to behave, what tools it has, and what constraints to respect. It is sent on every request, so a bloated 4,000-token system prompt that says "be helpful" silently multiplies the cost of every call. System prompt hygiene — pruning dead context, compressing instructions, removing redundant boilerplate — is one of the highest-leverage cheap optimizations. See <a href="../chapters/13-prompt-engineering-tokens/">Chapter 13</a> for prompt engineering techniques and <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for caching long system prompts.</p>
+<h3 id="what-is-the-difference-between-a-prompt-and-a-conversation">What is the difference between a prompt and a conversation?</h3>
+<p>A prompt is a single request to the model — a system prompt plus a user message plus any context. A conversation is a sequence of prompts and responses where each new request includes the full prior history as input. This is the <strong>silent compounding cost</strong> of multi-turn dialogue: every assistant turn adds to the input token count of every subsequent turn, so an agent on its tenth iteration is paying input-token cost on the entire prior history each time. See <a href="../chapters/16-context-window-management/">Chapter 16</a> for compaction strategies that bound this growth.</p>
+<h3 id="what-is-an-ai-coding-harness">What is an AI coding harness?</h3>
+<p>An AI coding harness is an interactive tool that wraps a language model with file-system access, shell execution, and editor controls so the model can read, modify, and ship code in a developer's environment. The three covered in this course are <strong>Claude Code</strong> (Anthropic), <strong>OpenAI Codex CLI</strong> (OpenAI), and <strong>Google Antigravity</strong> (Google). Each layers a system prompt, a tool loop, and session state on top of the underlying model — and each generates dramatically more tokens per task than a plain chat call, because the agentic loop replays history on every iteration. See <a href="../chapters/07-coding-harnesses-agentic-loops/">Chapter 7</a> for the full comparison.</p>
+<h3 id="what-is-an-agentic-loop">What is an agentic loop?</h3>
+<p>An agentic loop is the control structure in which a model issues a tool call, the harness executes it, results return, and the model issues the next call, iterating until a stop condition is met. Each iteration replays the entire prior history as input — meaning a ten-iteration loop pays input-token cost ten times for the same context. This is where token spend silently compounds, and it is why <strong>agent budget policies</strong> (covered in <a href="../chapters/18-agent-budget-policies/">Chapter 18</a>) are non-negotiable in production.</p>
+<h3 id="what-is-a-skill">What is a Skill?</h3>
+<p>A Skill is a unit of harness-loaded capability comprising a short trigger description, a markdown body, and optionally bundled scripts and assets. Only the trigger description sits in the model's context window at all times; the body and scripts are loaded on demand when the harness decides the Skill is relevant. This design keeps baseline context cost low while still giving the model access to a large library of capabilities. Moving deterministic prose inside a Skill into shell or Python scripts can typically reduce per-invocation token usage by roughly 30%. See <a href="../chapters/08-skills-system/">Chapter 8</a> for the full Skills architecture.</p>
+<h3 id="how-does-a-harness-decide-which-skill-to-invoke">How does a harness decide which Skill to invoke?</h3>
+<p>The harness reads only the short trigger descriptions of every Skill in its library — not the full bodies — and the model selects which Skill matches the current task based on those descriptions. The selected Skill's body is then lazy-loaded into context. This is why the trigger description must be specific enough to fire reliably (avoid false negatives) and short enough to keep baseline context cost low. Skill misfires — Skills loaded but not used, or needed but not loaded — show up directly as wasted tokens in the session log. See <a href="../chapters/08-skills-system/">Chapter 8</a> for trigger-description authoring patterns.</p>
+<h3 id="what-is-structured-logging-for-llm-calls">What is structured logging for LLM calls?</h3>
+<p>Structured logging is the practice of emitting a single JSON log line per LLM call containing model, prompt hash, input tokens, output tokens, cached tokens, latency, cost, feature tag, user identifier, and outcome. The log line is the source of truth for every downstream cost question — you cannot build a cost dashboard, run an A/B test, or attribute spend to a feature without it. Privacy-safe variants redact or hash the prompt itself while keeping the metadata. See <a href="../chapters/09-structured-logging/">Chapter 9</a> for the canonical schema.</p>
+<h3 id="what-is-cost-attribution">What is cost attribution?</h3>
+<p>Cost attribution is the process of taking a stream of raw token-cost events and rolling them up by feature, user, model, prompt template, or business outcome — answering questions like "which feature is the most expensive per active user?" or "which prompt template is responsible for last week's spend spike?" Without attribution, you only know the bill total; with it, you know where to optimize. See <a href="../chapters/10-observability-dashboards-alerting/">Chapter 10</a> for dashboard design and <a href="../chapters/11-log-file-analysis/">Chapter 11</a> for ad-hoc analysis patterns.</p>
+<h3 id="what-is-the-cost-quality-tradeoff">What is the cost-quality tradeoff?</h3>
+<p>The cost-quality tradeoff is the empirical relationship between how much you spend on a task and how well the task gets done. Cheaper models, shorter prompts, and tighter context all reduce cost — and at some point reduce quality. The job of an optimization engineer is to find the <strong>Pareto frontier</strong>: the set of configurations where you cannot reduce cost without losing quality, and cannot improve quality without spending more. Inside the frontier, money is being wasted. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for the A/B testing framework that lets you measure this rigorously.</p>
+<h3 id="what-is-ab-testing-in-the-context-of-prompts-and-models">What is A/B testing in the context of prompts and models?</h3>
+<p>A/B testing for LLMs is a controlled experiment that splits live traffic between a control variant (the current prompt or model) and a treatment variant (the proposed change) and measures cost, quality, latency, and satisfaction on each. The output is a statistically defensible answer to "did the change make things better or worse?" — separating real cost reductions from noise, and catching quality regressions that a developer's eye-test would miss. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for hypothesis design, sample size calculation, and stopping rules.</p>
+<h3 id="what-is-rag-and-how-does-it-affect-cost">What is RAG and how does it affect cost?</h3>
+<p>Retrieval-Augmented Generation (RAG) is a pattern where a retrieval system finds relevant documents and injects them into the prompt as context before the model generates an answer. RAG pushes cost in two directions: it adds input tokens (the retrieved chunks), and it sometimes reduces output tokens (because the model doesn't need to hallucinate as much). The cost-optimization questions for RAG are therefore: how big should chunks be, how many should be retrieved (top-k), and which retrieved chunks should be dropped because they don't actually help the answer? See <a href="../chapters/15-rag-optimization/">Chapter 15</a>.</p>
+<h3 id="what-is-model-routing">What is model routing?</h3>
+<p>Model routing is a pattern where a request is first classified by difficulty or task type, then sent to the cheapest model that can handle it — typically a small fast model like Claude Haiku, GPT-4o-mini, or Gemini Flash — with an escalation path to a larger model when confidence is low. A well-tuned routing layer often delivers 60–80% cost savings on workloads where most requests are easy and only a few need the expensive model. See <a href="../chapters/17-routing-output-control/">Chapter 17</a> for cheap-first cascades and confidence-based fallbacks.</p>
+<h3 id="what-is-a-batch-api">What is a batch API?</h3>
+<p>A batch API is an asynchronous endpoint where you submit many requests at once and receive results within a vendor-specified window — typically 24 hours for Anthropic, OpenAI, and Google — in exchange for a 50% discount on token cost. Batch APIs are ideal for any workload that doesn't need real-time response: nightly classification, bulk evaluation, embedding generation, offline analysis. The batch discount alone can pay for an entire optimization initiative. See <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a>.</p>
+<h3 id="what-is-an-agent-budget-policy">What is an agent budget policy?</h3>
+<p>An agent budget policy is a documented set of limits on agent token consumption — per session, per tool call, per repository, per pull request — enforced by the harness or middleware. Without a policy, a single misbehaving agent can run up four-figure bills overnight. With one, the same agent gracefully degrades when the budget is exhausted: it summarizes, reports, or stops, instead of looping. See <a href="../chapters/18-agent-budget-policies/">Chapter 18</a> for policy design and graceful-degradation patterns.</p>
+<h3 id="what-is-a-cache-hit-rate">What is a cache hit rate?</h3>
+<p>A cache hit rate is the fraction of input tokens served from prompt cache rather than billed at the full input rate. It is the single most important health metric for any application that uses prompt caching. A target hit rate above 80% is achievable for features with a long stable prefix; a hit rate below 50% usually indicates that something — model identifier, tool list, system prompt revision — is silently invalidating the cache key. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for cache invariant debugging.</p>
+<h3 id="what-is-the-difference-between-synchronous-streaming-and-batch-modes">What is the difference between synchronous, streaming, and batch modes?</h3>
+<p><strong>Synchronous</strong> mode sends a request and waits for the full response before returning — simplest, used for short calls. <strong>Streaming</strong> mode returns output tokens as they generate, allowing UIs to display partial results — same cost as synchronous but better perceived latency. <strong>Batch</strong> mode submits many requests at once for asynchronous processing within a delivery window — half the cost but minutes-to-hours of latency. The choice is driven by latency requirements, not cost alone. See <a href="../chapters/03-pricing-economics-async-apis/">Chapter 3</a> and <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a>.</p>
+<h3 id="what-does-it-mean-to-be-vendor-pluralistic">What does it mean to be vendor-pluralistic?</h3>
+<p>Vendor-pluralistic means the course gives equal weight to Anthropic Claude, OpenAI, and Google Gemini, and teaches you patterns that work across all three rather than betting on one. Production systems often mix vendors — using one for cheap classification, another for long-context, a third for code — and the cost-optimization patterns differ enough to require fluency in all of them. See <a href="../chapters/04-anthropic-claude-ecosystem/">Chapter 4</a>, <a href="../chapters/05-openai-ecosystem/">Chapter 5</a>, and <a href="../chapters/06-google-gemini-ecosystem/">Chapter 6</a> for the vendor-specific deep dives.</p>
+<h3 id="what-is-the-relationship-between-latency-cost-and-quality">What is the relationship between latency, cost, and quality?</h3>
+<p>These three form a triangle that no single configuration optimizes simultaneously. A bigger model is usually higher quality but higher cost and higher latency. A streaming response feels faster but costs the same. A batch job is cheap but slow. The optimization engineer's job is to know which corner the current product needs and configure accordingly — and to <strong>measure all three</strong> so you can defend the tradeoff. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for the metric framework.</p>
+<h3 id="what-is-observability-in-the-context-of-llm-systems">What is observability in the context of LLM systems?</h3>
+<p>Observability is the practice of designing your system so that any cost, quality, or performance question can be answered from emitted telemetry — logs, metrics, traces — without needing to redeploy. For LLM systems specifically, this means structured per-request logs, dashboards rolled up by feature and user, and alerts that fire when burn rate, cache hit rate, or error rate cross a threshold. See <a href="../chapters/10-observability-dashboards-alerting/">Chapter 10</a>.</p>
+<h3 id="what-is-the-difference-between-a-chat-completion-and-an-agent">What is the difference between a chat completion and an agent?</h3>
+<p>A chat completion is a single round-trip: you send a prompt, the model returns text. An agent is a loop: the model returns a tool call, the harness executes it, the result feeds back, and the model decides what to do next — possibly for many iterations. The cost profile is dramatically different. A single chat completion is bounded by <code>max_tokens</code>; an agent's cost is bounded by the budget policy, the loop iteration limit, or — if you have neither — your credit card limit. See <a href="../chapters/07-coding-harnesses-agentic-loops/">Chapter 7</a>.</p>
+<h2 id="technical-detail-questions">Technical Detail Questions</h2>
+<h3 id="how-do-i-count-tokens-before-sending-a-request">How do I count tokens before sending a request?</h3>
+<p>Each vendor provides a tokenizer you can call locally or via an API. For OpenAI, use the <code>tiktoken</code> library. For Anthropic, use the <code>client.messages.count_tokens</code> endpoint or the official SDK helper. For Google Gemini, use the <code>count_tokens</code> method on the model object. Counting tokens before sending lets you reject oversize requests early, choose between cheap and expensive models on the fly, and verify that prompt-compression changes actually reduced token count. See <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> for code examples for each vendor.</p>
+<h3 id="what-fields-should-a-structured-llm-log-line-contain">What fields should a structured LLM log line contain?</h3>
+<p>The canonical schema is: <code>model</code>, <code>prompt_hash</code>, <code>input_tokens</code>, <code>output_tokens</code>, <code>cached_tokens</code>, <code>latency_ms</code>, <code>cost_usd</code>, <code>feature</code>, <code>user_id</code> (hashed), <code>outcome</code>, <code>trace_id</code>, and <code>request_id</code>. Optional but useful: <code>session_id</code>, <code>prompt_template_id</code>, <code>tool_call_count</code>, and <code>stop_reason</code>. The schema must support cost attribution by every dimension you care about — feature, user, model, template — so leaving out a field means losing the ability to ask that question later. See <a href="../chapters/09-structured-logging/">Chapter 9</a> for the full schema and <a href="../chapters/10-observability-dashboards-alerting/">Chapter 10</a> for how the schema drives dashboard design.</p>
+<h3 id="how-does-prompt-caching-work-in-the-anthropic-api">How does prompt caching work in the Anthropic API?</h3>
+<p>You mark a content block in a Claude Messages API request with <code>cache_control: {"type": "ephemeral"}</code>. Anthropic stores the prefilled key-value cache for that prefix for roughly five minutes (or longer with the one-hour TTL option). Subsequent requests whose content begins with the exact same prefix bill the cached portion at roughly 10% of the input rate. The response's <code>usage</code> object reports <code>cache_creation_input_tokens</code> and <code>cache_read_input_tokens</code> so you can verify hits. See <a href="../chapters/04-anthropic-claude-ecosystem/">Chapter 4</a> for the API mechanics and <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for cross-vendor cache patterns.</p>
+<h3 id="what-are-the-published-per-million-token-prices">What are the published per-million-token prices?</h3>
+<p>Prices change frequently, so always check the vendor's current pricing page before quoting numbers. As a rough mental model used throughout this textbook: small/fast tier (Haiku, GPT-4o-mini, Gemini Flash) is roughly $0.25–$1 per million input tokens; mid tier (Sonnet) is roughly $3 per million input tokens; large tier (Opus, Gemini Ultra) is roughly $15 per million. Output tokens are 3–5x the input rate. Cached input is roughly 10% of the input rate. See <a href="../chapters/03-pricing-economics-async-apis/">Chapter 3</a> for the full pricing model with worked unit-economics examples.</p>
+<h3 id="what-does-the-response-usage-object-look-like-across-vendors">What does the response usage object look like across vendors?</h3>
+<p><strong>Anthropic Claude</strong> returns <code>usage.input_tokens</code>, <code>usage.output_tokens</code>, <code>usage.cache_creation_input_tokens</code>, and <code>usage.cache_read_input_tokens</code>. <strong>OpenAI</strong> returns <code>usage.prompt_tokens</code>, <code>usage.completion_tokens</code>, and <code>usage.total_tokens</code>, with <code>prompt_tokens_details.cached_tokens</code> for cached requests. <strong>Google Gemini</strong> returns <code>usageMetadata.promptTokenCount</code>, <code>usageMetadata.candidatesTokenCount</code>, and <code>usageMetadata.totalTokenCount</code>. The field names differ, the semantics align — this is one of the first things any vendor-neutral logging layer must reconcile. See <a href="../chapters/09-structured-logging/">Chapter 9</a>.</p>
+<h3 id="what-is-the-difference-between-max_tokens-and-a-stop-sequence">What is the difference between <code>max_tokens</code> and a stop sequence?</h3>
+<p><code>max_tokens</code> is a hard upper bound on output tokens — the model is forced to stop generation when it hits the limit, even mid-sentence. A stop sequence is a token pattern that, when generated, causes the model to stop cleanly — typically a delimiter like <code>&lt;/answer&gt;</code> or <code>\n\nUser:</code>. Use <code>max_tokens</code> as a safety belt against runaway generation; use stop sequences for graceful structural termination. They are complementary, not alternatives. See <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="how-does-extended-thinking-affect-token-cost">How does extended thinking affect token cost?</h3>
+<p>Extended thinking (the visible reasoning step that Claude, OpenAI o-series, and Gemini Flash-Thinking can emit) generates <strong>reasoning tokens</strong> that are billed at the output rate. The reasoning content is not visible to your end user but appears in the output token count. A thinking-heavy response can easily be 5–10x the cost of a non-thinking response on the same task, so extended thinking should be reserved for problems where the quality lift is worth it — and the thinking-token budget should be capped explicitly. See <a href="../chapters/04-anthropic-claude-ecosystem/">Chapter 4</a> and <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="what-is-json-mode-and-how-does-it-change-cost">What is JSON mode and how does it change cost?</h3>
+<p>JSON mode (or structured outputs) is a vendor feature that constrains generation to valid JSON conforming to a supplied schema. It does not change the per-token price but typically reduces output tokens because the model cannot pad with prose, and it eliminates the cost of retry-on-parse-failure loops. The schema itself adds input tokens, so on small calls the net is sometimes a wash; on calls with non-trivial output it is a clear win. See <a href="../chapters/05-openai-ecosystem/">Chapter 5</a> for the OpenAI structured-outputs API.</p>
+<h3 id="what-is-the-difference-between-claude-haiku-sonnet-and-opus">What is the difference between Claude Haiku, Sonnet, and Opus?</h3>
+<p>The three are the small, mid, and large tiers of the Claude model family. Haiku is the fastest and cheapest, suitable for classification, extraction, and routing. Sonnet is the workhorse mid tier, suitable for most production reasoning tasks. Opus is the largest, suitable for hard reasoning where capability matters more than cost. Pricing ratios are roughly Haiku 1x : Sonnet 12x : Opus 60x on the input rate. See <a href="../chapters/04-anthropic-claude-ecosystem/">Chapter 4</a>.</p>
+<h3 id="what-is-the-difference-between-gpt-4o-gpt-4o-mini-and-the-o-series">What is the difference between GPT-4o, GPT-4o-mini, and the o-series?</h3>
+<p>GPT-4o is OpenAI's flagship general-purpose model. GPT-4o-mini is the small/fast variant for routing and high-volume work. The <strong>o-series</strong> (o1, o3, etc.) are reasoning models that use extended internal thinking and bill those thinking tokens at the output rate — they cost more per call but solve harder problems. See <a href="../chapters/05-openai-ecosystem/">Chapter 5</a> for the full family map.</p>
+<h3 id="what-is-the-difference-between-gemini-pro-flash-and-ultra">What is the difference between Gemini Pro, Flash, and Ultra?</h3>
+<p>Gemini Flash is the small/fast tier (analogous to Haiku and GPT-4o-mini). Gemini Pro is the mid tier with the one-million-token context window. Gemini Ultra is the largest tier. The defining Gemini feature is the long context window — Pro reliably handles a million input tokens, which makes it the natural choice for long-document analysis when the cost can be justified. See <a href="../chapters/06-google-gemini-ecosystem/">Chapter 6</a>.</p>
+<h3 id="what-is-opentelemetry-and-should-i-use-it-for-llm-logging">What is OpenTelemetry and should I use it for LLM logging?</h3>
+<p>OpenTelemetry (OTel) is a vendor-neutral observability standard with conventions for LLM call instrumentation under the <code>gen_ai</code> semantic conventions. Using OTel means your traces, metrics, and logs work with any compliant backend (Honeycomb, Datadog, Grafana Tempo, etc.) and you avoid lock-in to a single observability vendor. The OTel LLM conventions cover most of the canonical log schema fields out of the box. See <a href="../chapters/09-structured-logging/">Chapter 9</a>.</p>
+<h3 id="what-is-a-prompt-hash-and-why-log-it">What is a prompt hash and why log it?</h3>
+<p>A prompt hash is a stable hash (typically SHA-256, truncated to 16 hex characters) of the full prompt content, computed before the request goes out and stored as a log field. It lets you group and aggregate by prompt without storing the prompt text itself — useful for cost attribution by template, for finding duplicate requests, and for keeping logs privacy-safe. Two requests with the same hash had identical input. See <a href="../chapters/09-structured-logging/">Chapter 9</a>.</p>
+<h3 id="what-is-a-sample-size-calculation-for-an-ab-test">What is a sample size calculation for an A/B test?</h3>
+<p>A sample size calculation determines how many requests each variant needs to detect a true effect of a given size with a given confidence. The inputs are baseline metric value, minimum detectable effect, statistical power (typically 0.8), and significance level (typically 0.05). Without a sample size calculation, you risk <strong>stopping too early</strong> (declaring a winner that's actually noise) or <strong>running too long</strong> (paying for traffic you didn't need). See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for the full framework and a worked calculator.</p>
+<h3 id="what-is-the-difference-between-statistical-power-and-statistical-significance">What is the difference between statistical power and statistical significance?</h3>
+<p>Statistical significance (p-value) is the probability of observing your result if the variants were actually identical — a low p-value means the result is unlikely to be noise. Statistical power is the probability of detecting a true effect of a given size — high power means a real win is unlikely to be missed. Significance protects against false positives; power protects against false negatives. A good A/B test is designed for both. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="what-is-a-guardrail-metric">What is a guardrail metric?</h3>
+<p>A guardrail metric is a secondary measurement on an A/B test that protects against improvements in the primary metric coming at the cost of something you also care about. If your primary metric is cost-per-request, your guardrail metrics are typically quality and latency — a 30% cost reduction that drops quality 10% is not a win. Guardrails are non-negotiable for any cost-focused experiment. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="what-is-a-p95-token-usage-and-why-log-it">What is a P95 token usage and why log it?</h3>
+<p>P95 is the 95th percentile of a distribution — the value below which 95% of observations fall. P95 input tokens tells you what your "long tail" requests look like, which is often where runaway agents and pathological prompts hide. The mean is misleading because a few 200K-token requests pull it way up; P50 hides them entirely; P95 surfaces them honestly. Log P50, P95, and P99 for every cost-relevant metric. See <a href="../chapters/11-log-file-analysis/">Chapter 11</a>.</p>
+<h3 id="what-is-the-difference-between-embeddings-and-tokens">What is the difference between embeddings and tokens?</h3>
+<p>Tokens are the integer IDs the model reads and writes. Embeddings are dense floating-point vectors (typically 1,536 to 3,072 dimensions) produced by an embedding model from text. Embeddings are how RAG systems do semantic search — you embed the query, find the nearest-neighbor document chunks, and inject them as context. Embeddings are billed in tokens (the input text being embedded) but at a separate, usually cheaper, embedding-model rate. See <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> and <a href="../chapters/15-rag-optimization/">Chapter 15</a>.</p>
+<h3 id="what-is-reranking-in-rag">What is reranking in RAG?</h3>
+<p>Reranking is a second-pass scoring step in a RAG pipeline: the initial retrieval (typically vector search or BM25) returns the top 50–100 candidates, then a heavier cross-encoder reranker scores each candidate against the query and keeps only the top 3–5 to inject into the prompt. Reranking dramatically improves retrieval precision, which in turn lets you inject fewer chunks — meaning lower input-token cost without losing quality. See <a href="../chapters/15-rag-optimization/">Chapter 15</a>.</p>
+<h3 id="what-is-conversation-compaction">What is conversation compaction?</h3>
+<p>Conversation compaction is the practice of replacing the older portion of a long conversation with a shorter summary so the total context stays under a target size. <strong>Auto-compaction</strong> (the harness does it on a threshold) is convenient but lossy. <strong>Manual compaction</strong> (the user or a Skill summarizes explicitly) is precise but requires intervention. Either way, compaction is non-optional for any agent session that runs longer than a few dozen turns. See <a href="../chapters/16-context-window-management/">Chapter 16</a>.</p>
+<h2 id="common-challenge-questions">Common Challenge Questions</h2>
+<h3 id="why-is-my-prompt-cache-hit-rate-lower-than-expected">Why is my prompt cache hit rate lower than expected?</h3>
+<p>The most common cause is a silently invalidated cache key. Anthropic prompt caching requires the cached prefix to be <strong>byte-identical</strong> across requests, and any of the following will break it: a changed model ID, a reordered tool list, a date or timestamp in the system prompt, a non-deterministic JSON serialization that reorders keys, or a tool definition added at the start instead of the end. Print and diff the actual bytes of the prefix between two requests that should hit. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for the full debugging checklist.</p>
+<h3 id="why-is-my-agent-session-running-up-huge-bills-overnight">Why is my agent session running up huge bills overnight?</h3>
+<p>The standard diagnosis is a pathological agent loop: the model is stuck repeating roughly the same tool call, each iteration replaying the entire prior context as input. Look at the session log for tool call iteration count, the diversity of tool arguments across iterations, and the input-token growth curve. The structural fix is an <strong>agent budget policy</strong> with a per-session token cap, a loop iteration limit, and a wall-clock limit. Patching the prompt is rarely sufficient. See <a href="../chapters/18-agent-budget-policies/">Chapter 18</a>.</p>
+<h3 id="why-does-my-openai-bill-not-match-my-anthropic-bill-on-the-same-task">Why does my OpenAI bill not match my Anthropic bill on the same task?</h3>
+<p>The two most likely causes are tokenizer drift (the same English text tokenizes to different counts on different vendors) and output verbosity differences (the same instruction can produce a 200-token answer on one model and an 800-token answer on another). Always compare on <strong>cost-per-successful-outcome</strong>, not cost-per-call. See <a href="../chapters/02-sampling-tokenization-embeddings/">Chapter 2</a> for tokenizer drift and <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for the outcome-based comparison framework.</p>
+<h3 id="why-are-my-cached-tokens-being-charged-at-full-rate">Why are my cached tokens being charged at full rate?</h3>
+<p>Either the cache entry has expired (the default Anthropic TTL is roughly five minutes between writes/reads on the same prefix), or the cache key has been silently invalidated. Check the response <code>usage</code> object: <code>cache_read_input_tokens</code> is the count actually served from cache; everything else billed as <code>input_tokens</code> was either uncacheable or a cache miss. Cache writes themselves cost slightly more than uncached input — so the first request after a TTL expiry pays a premium. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a>.</p>
+<h3 id="why-do-my-ab-test-results-keep-flipping">Why do my A/B test results keep flipping?</h3>
+<p>Almost always: insufficient sample size, a peeking-at-the-data problem, or a novelty effect. <strong>Insufficient sample size</strong> means your observed difference is within the noise floor — recompute power for the effect size you actually saw. <strong>Peeking</strong> means you keep checking the result and stopping when it looks good — fix this with a pre-registered stopping rule. <strong>Novelty effect</strong> means user behavior changes when something new appears and reverts after a few days — let the test run past the novelty window. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="why-is-my-context-window-full-when-i-havent-sent-that-much-text">Why is my context window full when I haven't sent that much text?</h3>
+<p>A multi-turn agent session accumulates the full conversation history on every request. Add a 4,000-token system prompt, ten user messages, ten assistant responses, and a few tool-call/result pairs, and you can hit 50,000 tokens of input on the eleventh turn — even if each individual message was small. The structural fix is <strong>conversation compaction</strong> plus a <strong>per-session token budget</strong>. See <a href="../chapters/16-context-window-management/">Chapter 16</a> and <a href="../chapters/18-agent-budget-policies/">Chapter 18</a>.</p>
+<h3 id="why-is-my-skill-not-loading-when-i-expect-it-to">Why is my Skill not loading when I expect it to?</h3>
+<p>The most common cause is a <strong>trigger description that's too generic</strong> — the harness can't tell when the Skill is relevant, so it loads the Skill on irrelevant tasks (false positives) or fails to load it when needed (false negatives). The fix is to rewrite the trigger description with specific keywords, file types, or task verbs that actually distinguish this Skill's domain from others. See <a href="../chapters/08-skills-system/">Chapter 8</a> for trigger-description patterns.</p>
+<h3 id="why-are-my-output-tokens-so-much-higher-than-my-input-tokens">Why are my output tokens so much higher than my input tokens?</h3>
+<p>Either the model is genuinely producing a lot of content (long answers, code generation, JSON output), or the model is using extended thinking — which generates reasoning tokens billed at the output rate. Check the response <code>usage</code> for a thinking-token field. The fix is some combination of: a <code>max_tokens</code> cap, a "be concise" instruction in the system prompt, a smaller reasoning budget, or routing easier requests to a non-thinking model. See <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="why-does-my-rag-pipeline-cost-so-much-per-query">Why does my RAG pipeline cost so much per query?</h3>
+<p>Usually too many chunks at too large a size. Top-k=20 chunks at 1,000 tokens each is 20,000 input tokens injected on every query — and most of those chunks aren't actually used to answer. The fix is a tighter retrieval pipeline: smaller chunks, smaller top-k, a reranker that lets you keep only the top 3–5, and <strong>context pruning</strong> that drops chunks whose retrieval score is below a quality threshold. See <a href="../chapters/15-rag-optimization/">Chapter 15</a>.</p>
+<h3 id="why-does-my-cost-dashboard-show-a-spike-at-2-am-every-day">Why does my cost dashboard show a spike at 2 AM every day?</h3>
+<p>Common culprits: a nightly batch job running on the synchronous API instead of the batch API; a scheduled re-index that re-embeds the full corpus; an agent that's stuck retrying after a vendor rate limit. The investigation pattern is to slice the spike by feature, then by user, then by model. See <a href="../chapters/11-log-file-analysis/">Chapter 11</a> for log analysis patterns and <a href="../chapters/10-observability-dashboards-alerting/">Chapter 10</a> for alerting on this kind of pattern proactively.</p>
+<h3 id="why-is-my-batch-job-sitting-in-pending-forever">Why is my batch job sitting in pending forever?</h3>
+<p>Each vendor has its own batch processing window — Anthropic and OpenAI typically deliver within 24 hours but can take longer under load; Gemini batch mode has its own SLA. Check the batch job status object for an explicit error. Common failure modes: a malformed request line in the batch (the whole job is rejected), an exceeded per-job request count, or a vendor-side queue depth issue. See <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a>.</p>
+<h3 id="why-does-my-prompt-sometimes-hit-the-cache-and-sometimes-miss">Why does my prompt sometimes hit the cache and sometimes miss?</h3>
+<p>Look for any per-request variability in the cached prefix: a timestamp, a request ID, a user ID, a randomized few-shot order, a tool list whose order depends on a Python dict's iteration order. Cache invariants are the silent killer of hit rate — a single byte difference is a cache miss. Lock the prefix down with deterministic serialization and remove any per-request content from it. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a>.</p>
+<h2 id="best-practice-questions">Best Practice Questions</h2>
+<h3 id="when-should-i-use-prompt-caching">When should I use prompt caching?</h3>
+<p>Whenever you have a stable prefix of at least 1,024 tokens (the typical Anthropic minimum) that gets reused across multiple requests within a few minutes. Strong fits: a long system prompt shared by all users of a feature; a tool-definition list shared by all calls in a session; a retrieved document block reused across follow-up questions. Weak fits: prompts that change every request, single-shot calls, or prefixes shorter than the minimum. See <a href="../chapters/14-prompt-caching-patterns/">Chapter 14</a> for the full decision matrix.</p>
+<h3 id="when-should-i-use-a-batch-api-instead-of-synchronous-calls">When should I use a batch API instead of synchronous calls?</h3>
+<p>Whenever the workload tolerates hours of latency. Strong fits: nightly classification, bulk evaluation runs, embedding generation, offline analysis, large-scale data labeling. Weak fits: any user-facing path where someone is waiting for a response. The 50% discount on batch is large enough that "could this run on batch?" should be a question you ask of every recurring workload. See <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a>.</p>
+<h3 id="when-should-i-escalate-from-a-cheap-model-to-an-expensive-one">When should I escalate from a cheap model to an expensive one?</h3>
+<p>When the cheap model's confidence is low, when the task is detected as hard at routing time, or when a downstream quality check fails. The escalation rule should be <strong>explicit and measurable</strong> — "escalate when the classifier confidence is below 0.7" or "escalate when the JSON schema validation fails twice." Never escalate "just to be safe" on every request, or the expensive model becomes the de facto floor. See <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="how-do-i-write-a-good-skill-trigger-description">How do I write a good Skill trigger description?</h3>
+<p>Make it specific enough that the model can tell when the Skill is relevant from the description alone, and short enough that it doesn't bloat the always-loaded context. Lead with the task verbs ("generate", "validate", "deploy"), name the artifact types ("p5.js MicroSim", "structured log line", "A/B test report"), and avoid generic adjectives. Test the trigger description against a sample of representative tasks and measure false-positive and false-negative rates. See <a href="../chapters/08-skills-system/">Chapter 8</a>.</p>
+<h3 id="how-do-i-bound-an-agent-sessions-cost">How do I bound an agent session's cost?</h3>
+<p>Set an explicit <strong>per-session token budget</strong>, an explicit <strong>loop iteration limit</strong>, and an explicit <strong>wall-clock limit</strong>, then write a graceful-degradation handler that fires when any of the three is exhausted — the agent should summarize its progress and stop, not silently fail or keep looping. Layer this at the harness level, not just the prompt level: a budget enforced only by instructing the model in the system prompt is a budget the model can ignore. See <a href="../chapters/18-agent-budget-policies/">Chapter 18</a>.</p>
+<h3 id="how-do-i-choose-between-anthropic-openai-and-google-for-a-given-task">How do I choose between Anthropic, OpenAI, and Google for a given task?</h3>
+<p>Run a controlled benchmark on <strong>your own task</strong> with a fixed evaluation set and measure cost-per-successful-outcome, latency P95, and quality, then choose. Public benchmarks rank models on tasks that may not match yours, and vendor pricing alone doesn't capture the verbosity differences. The course's vendor-pluralistic stance exists precisely because the right answer for one team is the wrong answer for another. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> for the benchmark framework.</p>
+<h3 id="how-do-i-keep-my-llm-logs-privacy-safe">How do I keep my LLM logs privacy-safe?</h3>
+<p>Hash user identifiers before logging. Redact known PII patterns (email, phone, SSN) from prompt content before logging — or skip logging the prompt content entirely and log only the prompt hash. Log only what cost attribution actually needs: model, token counts, latency, cost, feature, hashed user ID, outcome. Apply a retention policy that deletes logs after the cost-investigation window closes (typically 90 days). See <a href="../chapters/19-batch-privacy-compliance/">Chapter 19</a>.</p>
+<h3 id="how-do-i-refactor-a-prose-heavy-skill-into-a-script-backed-one">How do I refactor a prose-heavy Skill into a script-backed one?</h3>
+<p>Identify the deterministic portions of the Skill — input validation, file generation, formatting, calculations — and move them into a bundled shell or Python script that the Skill calls. Keep in the model-facing prose only the parts that genuinely require model judgment: design decisions, narrative explanations, ambiguous parsing. Measure tokens before and after on a representative task; the target is roughly 30% reduction. See <a href="../chapters/08-skills-system/">Chapter 8</a>.</p>
+<h3 id="how-do-i-run-a-credible-ab-test-on-a-prompt-change">How do I run a credible A/B test on a prompt change?</h3>
+<p>Pre-register the hypothesis, primary metric, guardrail metrics, sample size, and stopping rule <strong>before</strong> turning on the experiment. Split traffic randomly. Wait for the planned sample size before peeking. Report effect size with a confidence interval, not just a p-value. If the result is null, accept it instead of mining for a subgroup that "won." See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="how-do-i-attribute-cost-to-features">How do I attribute cost to features?</h3>
+<p>Tag every LLM call with a <code>feature</code> field at emit time — never try to attribute cost to features by parsing the prompt content after the fact. The tag is set by the calling code (usually a thin wrapper around the SDK) and travels through the log pipeline to the dashboard. Without the tag, attribution is an unbounded archaeology project; with it, attribution is a single GROUP BY. See <a href="../chapters/09-structured-logging/">Chapter 9</a>.</p>
+<h3 id="how-do-i-know-if-a-cost-optimization-actually-worked">How do I know if a cost optimization actually worked?</h3>
+<p>Run a controlled A/B test, not a before-after comparison on the same time window, because traffic mix changes day to day and "after the change" includes that drift. The A/B test should measure cost, quality, and latency simultaneously — a cost win that hides a quality regression is not a win. Report the result as a confidence-interval-bounded effect size. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="how-often-should-i-review-my-token-cost-dashboard">How often should I review my token cost dashboard?</h3>
+<p>A short daily glance for anomaly detection (any unexpected spike, any cache hit-rate dip), a weekly deeper review by feature and user (where is spend growing, where is it shrinking), and a monthly review with engineering management (top cost drivers, optimization roadmap, ROI on shipped optimizations). The dashboards should be designed for that cadence — drill-down for daily, roll-ups for weekly, narrative reports for monthly. See <a href="../chapters/10-observability-dashboards-alerting/">Chapter 10</a>.</p>
+<h2 id="advanced-topic-questions">Advanced Topic Questions</h2>
+<h3 id="how-do-i-design-a-vendor-neutral-logging-schema-that-works-across-claude-openai-and-gemini">How do I design a vendor-neutral logging schema that works across Claude, OpenAI, and Gemini?</h3>
+<p>Define a single canonical schema with vendor-agnostic field names (<code>input_tokens</code>, <code>output_tokens</code>, <code>cached_tokens</code>, <code>model</code>, <code>latency_ms</code>, <code>cost_usd</code>) and write a thin adapter per vendor that maps the response usage object into that schema. Resolve the field-name differences (Anthropic's <code>cache_read_input_tokens</code> versus OpenAI's <code>prompt_tokens_details.cached_tokens</code> versus Gemini's <code>usageMetadata.cachedContentTokenCount</code>) at the adapter boundary, not in the dashboard. The dashboard should never know which vendor produced a row. See <a href="../chapters/09-structured-logging/">Chapter 9</a> and <a href="../chapters/20-capstone-projects-practice/">Chapter 20</a>.</p>
+<h3 id="when-does-extended-thinking-pay-for-itself">When does extended thinking pay for itself?</h3>
+<p>Extended thinking is justified when the task is hard enough that the small/mid-tier non-thinking model fails on it more than ~15% of the time, and the cost of failure is high enough that you'd rather pay 5–10x for a higher success rate. For most production workloads — classification, extraction, summarization, routing — extended thinking is overkill and a non-thinking model with a tighter prompt wins on cost-per-successful-outcome. The way to know is to A/B test it on <strong>your</strong> task with <strong>your</strong> quality metric. See <a href="../chapters/17-routing-output-control/">Chapter 17</a> and <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a>.</p>
+<h3 id="how-do-i-architect-a-cost-aware-multi-vendor-router">How do I architect a cost-aware multi-vendor router?</h3>
+<p>Build three layers: a <strong>task classifier</strong> that estimates difficulty and task type, a <strong>routing policy</strong> that maps (task, difficulty, budget) → (vendor, model), and a <strong>fallback handler</strong> that escalates on confidence-below-threshold or schema-validation-failure. Log every routing decision so you can audit the policy. Plan for the policy to be wrong sometimes — measure escalation rate as a key metric and tune the difficulty threshold against cost-per-successful-outcome. See <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="how-do-i-evaluate-vendor-lock-in-risk-when-adopting-anthropic-prompt-caching-or-gemini-long-context">How do I evaluate vendor lock-in risk when adopting Anthropic prompt caching or Gemini long context?</h3>
+<p>For each vendor-specific feature, ask three questions: (1) what is the cost lift if I adopt it? (2) how long would it take to migrate off? (3) what's the migration cost in tokens, engineering time, and quality regression? Anthropic prompt caching has a clean alternative on OpenAI and Gemini, so adoption is low-risk. Gemini's one-million-token context has no equivalent on the other two — adopting it for a workload locks you in until the others catch up. Document the lock-in cost explicitly in the design doc. See <a href="../chapters/06-google-gemini-ecosystem/">Chapter 6</a> and <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+<h3 id="how-do-i-design-a-token-budget-policy-for-an-autonomous-coding-harness">How do I design a token budget policy for an autonomous coding harness?</h3>
+<p>Combine a per-session token cap (e.g., 300,000 tokens), a per-tool-call budget (e.g., 50 calls), a wall-clock limit (e.g., 30 minutes), a per-PR budget (the harness cannot exceed N tokens of work on a single PR), and a per-engineer weekly budget that surfaces in a manager-reviewable report. Each limit has a graceful degradation: summarize and stop, escalate to a human, or write a partial result. The budget policy is a document; the harness configuration is the implementation. See <a href="../chapters/18-agent-budget-policies/">Chapter 18</a>.</p>
+<h3 id="how-do-i-build-a-continuous-cost-optimization-loop-for-a-production-llm-system">How do I build a continuous cost optimization loop for a production LLM system?</h3>
+<p>Instrument with structured logging on day one. Build dashboards that surface top cost drivers by feature, user, and model. Maintain an <strong>optimization backlog</strong> with hypotheses ranked by expected savings. Run one A/B test at a time, with pre-registered hypothesis and stopping rule. Ship the winner, archive the loser. Repeat weekly. The compounding effect of even modest weekly wins is the difference between a cost graph that goes up and to the right and one that flattens. See <a href="../chapters/20-capstone-projects-practice/">Chapter 20</a>.</p>
+<h3 id="how-do-i-design-a-skill-from-scratch-with-optimal-token-economics">How do I design a Skill from scratch with optimal token economics?</h3>
+<p>Start with a one-line trigger description that names the task verb and the artifact type. Write a concise body with only the model-judgment-required steps. Move every deterministic step into a bundled script (validation, formatting, file I/O, math). Keep all reference material — long examples, schema definitions, lookup tables — in bundled asset files that the model loads only when actually needed. Measure baseline tokens on a representative invocation; the target is at least 30% reduction versus a prose-only Skill. See <a href="../chapters/08-skills-system/">Chapter 8</a>.</p>
+<h3 id="how-do-i-balance-the-cost-quality-latency-tradeoff-for-a-user-facing-product">How do I balance the cost-quality-latency tradeoff for a user-facing product?</h3>
+<p>Pick the dimension your product most needs first (usually quality for a hard task, latency for a chat UI, cost for a high-volume background job). Set hard floors on the other two. Measure all three on every change. When two changes both improve the priority dimension, prefer the one that doesn't hit the floors of the others. Revisit the priority quarterly — what was a quality-first product in V1 may be a cost-first product at scale. See <a href="../chapters/12-ab-testing-methodology/">Chapter 12</a> and <a href="../chapters/17-routing-output-control/">Chapter 17</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../learning-graph/faq-coverage-gaps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ Coverage Gaps">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                FAQ Coverage Gaps
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../glossary/" class="md-footer__link md-footer__link--next" aria-label="Next: Glossary">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Glossary
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
