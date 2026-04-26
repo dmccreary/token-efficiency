@@ -1,0 +1,1561 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Multi-line cumulative cost chart comparing Anthropic, OpenAI, and Gemini caching mechanics across 50 requests, with sliders for prefix size, cache lifetime, and request frequency.">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Cross-Vendor Caching Comparison - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cross-vendor-caching-comparison" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cross-Vendor Caching Comparison
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-microsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This MicroSim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloom-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bloom Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iframe-embed-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iframe Embed Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Scenarios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#math-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#senior-instructional-designer-quality-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Senior Instructional Designer Quality Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Senior Instructional Designer Quality Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall verdict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-works-the-pedagogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What works (the pedagogy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-needs-follow-up-the-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs follow-up (the gaps)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-and-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessibility and clarity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognitive-load-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cognitive load assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="cross-vendor-caching-comparison">Cross-Vendor Caching Comparison</h1>
+<iframe src="main.html" height="582px" width="100%" scrolling="no"></iframe>
+
+<p><a class="md-button md-button--primary" href="main.html">Run the Cross-Vendor Caching Comparison MicroSim Fullscreen</a></p>
+<h2 id="about-this-microsim">About This MicroSim</h2>
+<p>The three major LLM vendors — Anthropic, OpenAI, and Google Gemini — all offer prompt caching, but the <em>structure</em> of the cost model differs. Anthropic uses an explicit cache breakpoint with a 1.25× write premium and a 0.10× read; OpenAI uses automatic prefix caching with no write premium and a ~50% read discount; Gemini offers both implicit (auto, slow ramp) and explicit caching (with a per-hour storage cost). This MicroSim plots the cumulative cost of running the same workload on all four cached paths plus a no-cache baseline so you can see exactly where each vendor's curve crosses the others.</p>
+<p>The four sliders let you parameterize the workload: prefix size, cache lifetime, request frequency, and whether to include the Gemini explicit storage cost. The summary table at the bottom shows the total dollar cost over 50 requests and the percentage savings versus the no-cache baseline. Use it to recommend a vendor for a new workload.</p>
+<h2 id="how-to-use">How to Use</h2>
+<ol>
+<li><strong>Read the default chart.</strong> With a 5,000-token prefix, 1-hour TTL, and 1 request/minute, look at the five lines. The dashed gray line is the no-cache baseline — every other line should be below it (caching should always help, except in pathological storage-cost cases).</li>
+<li><strong>Watch the crossover points.</strong> As you scan from R1 to R50, notice where the lines cross. The vendor that is cheapest at R5 may not be the cheapest at R50. Anthropic's 1.25× write premium pays off after the 2nd request; OpenAI's no-premium write means it is cheapest immediately but its 0.50× read is less aggressive than Anthropic's 0.10× read.</li>
+<li><strong>Increase the prefix size.</strong> Drag prefix to 50,000 tokens. The savings dollar values become much larger but the <em>shape</em> of the comparison stays similar — caching mechanics scale linearly with prefix size.</li>
+<li><strong>Shorten the TTL.</strong> Drag TTL down to 5 minutes. Notice that the cached lines develop "sawtooth" patterns where the cache expires and a fresh write happens. Anthropic's sawtooth has the steepest 1.25× steps.</li>
+<li><strong>Increase request frequency.</strong> Drag frequency from 1/min to 10/min. The TTL fits more requests per cache window, so caching pays off more.</li>
+<li><strong>Toggle Gemini storage cost.</strong> With storage off, Gemini explicit looks superb. With storage on, Gemini explicit grows a small linear penalty (per-minute, per-1K-tok-cached). For long-lived caches with many requests, storage is negligible; for low-volume long-cache scenarios, storage can flip the recommendation.</li>
+</ol>
+<h2 id="bloom-level">Bloom Level</h2>
+<p><strong>Analyze (L4)</strong> — compare the caching cost models of three vendors and recommend a vendor for a workload.</p>
+<h2 id="iframe-embed-code">Iframe Embed Code</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;sims/cross-vendor-caching-comparison/main.html&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;582px&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span>
+        <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="audience">Audience</h3>
+<p>Adult professional learners — engineers and platform-team members making vendor-selection decisions for production LLM workloads.</p>
+<h3 id="duration">Duration</h3>
+<p>20 minutes inside Chapter 6, or 45 minutes including the 7-row practice scenario walkthrough.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Chapter 4 sections on Anthropic prompt caching</li>
+<li>Chapter 5 sections on OpenAI automatic caching</li>
+<li>Chapter 6 sections on Gemini implicit and explicit caching</li>
+<li>Comfort reading multi-line charts</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li><strong>Read the default lines (5 min).</strong> With default sliders, walk each line in turn and articulate the structural source of its shape (write premium / read discount / storage cost / warm-up).</li>
+<li><strong>Find the crossover (5 min).</strong> For the default case, identify the request number at which Anthropic becomes cheaper than OpenAI. Then explain why.</li>
+<li><strong>Tune for short bursts (5 min).</strong> Set TTL to 5 minutes and frequency to 1 req/min. Re-read the chart. Which vendor wins now? Why?</li>
+<li><strong>Tune for long-running pipelines (5 min).</strong> Set TTL to 24 hours, frequency to 10 req/min. Now compare. Notice how Gemini explicit (with or without storage) looks against Anthropic.</li>
+<li><strong>Recommend a vendor (10 min).</strong> For each scenario in the table below, pick the cheapest vendor and explain.</li>
+</ol>
+<h3 id="practice-scenarios">Practice Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prefix</th>
+<th>TTL</th>
+<th>Frequency</th>
+<th>Best vendor</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1,000</td>
+<td>60 min</td>
+<td>1/min</td>
+<td>OpenAI or Anthropic</td>
+<td>Small prefix, savings dominated by per-request input</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5,000</td>
+<td>60 min</td>
+<td>1/min</td>
+<td>Anthropic</td>
+<td>0.10× read advantage compounds over many turns</td>
+</tr>
+<tr>
+<td>3</td>
+<td>50,000</td>
+<td>24 hr</td>
+<td>10/min</td>
+<td>Gemini explicit (storage on)</td>
+<td>Large cache, high volume — storage cost amortizes</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5,000</td>
+<td>5 min</td>
+<td>0.1/min</td>
+<td>None ideal</td>
+<td>Cache expires before reuse — cache write premium hurts</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20,000</td>
+<td>60 min</td>
+<td>0.5/min</td>
+<td>Gemini implicit</td>
+<td>Medium prefix, modest volume — implicit avoids manual breakpoint mgmt</td>
+</tr>
+<tr>
+<td>6</td>
+<td>50,000</td>
+<td>60 min</td>
+<td>1/min</td>
+<td>Anthropic</td>
+<td>Large prefix, modest volume — 0.10× read wins</td>
+</tr>
+<tr>
+<td>7</td>
+<td>1,000</td>
+<td>60 min</td>
+<td>5/min</td>
+<td>OpenAI</td>
+<td>High volume on small prefix — auto-caching no-management win</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assessment">Assessment</h3>
+<p>A learner has met the objective when they can:</p>
+<ul>
+<li>Identify the structural source of each vendor's curve shape (write premium, read multiplier, storage cost, warm-up).</li>
+<li>Locate the crossover points where one vendor becomes cheaper than another.</li>
+<li>Recommend a vendor for a new workload based on prefix size, TTL, and frequency.</li>
+<li>Explain when caching loses (TTL shorter than the inter-request gap → cache expires unused).</li>
+</ul>
+<h3 id="math-reference">Math reference</h3>
+<p>Per-request cost for vendor <span class="arithmatex">\(v\)</span> at request <span class="arithmatex">\(i\)</span> within a cache window:</p>
+<div class="arithmatex">\[
+c_{v,i} =
+\begin{cases}
+P_v \cdot m_v^{\text{write}} \cdot K, &amp; i \equiv 1 \pmod{W} \quad\text{(cache write)} \\
+P_v \cdot m_v^{\text{read}}  \cdot K, &amp; \text{otherwise (cache read)}
+\end{cases}
+\]</div>
+<p>where <span class="arithmatex">\(P_v\)</span> is the vendor input price, <span class="arithmatex">\(m_v^{\text{write}}\)</span> and <span class="arithmatex">\(m_v^{\text{read}}\)</span> are the write and read multipliers, <span class="arithmatex">\(K\)</span> is the prefix size in 1K tokens, and <span class="arithmatex">\(W = \lfloor \text{TTL} / \Delta t \rfloor\)</span> is the cache window length in requests.</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Anthropic. <em>Prompt Caching</em> documentation — defines the 1.25× / 0.10× model.</li>
+<li>OpenAI. <em>Prompt Caching</em> documentation — defines the automatic prefix-cache model and the discount.</li>
+<li>Google Cloud. <em>Vertex AI Context Caching</em> documentation — defines the implicit and explicit caching models and the per-hour storage cost.</li>
+<li>Anthropic Engineering Blog. <em>Building Effective Agents</em> — multi-vendor cost-modeling perspective.</li>
+</ol>
+<hr />
+<h2 id="senior-instructional-designer-quality-review">Senior Instructional Designer Quality Review</h2>
+<p><em>Reviewer perspective: 15+ years designing engineering and data-science curricula for adult professional learners; expertise in Bloom's revised taxonomy, evidence-based assessment design, and accessibility of technical content.</em></p>
+<h3 id="overall-verdict">Overall verdict</h3>
+<p><strong>Approve for use in Chapter 6.</strong> Score: <strong>89/100 (B+).</strong> This is one of the strongest L4 "compare" MicroSims in the textbook because the comparison is <em>structural</em> (curve shape) rather than just numerical (which is cheaper). The four parameters (prefix, TTL, frequency, storage) cover the meaningful design dimensions, and the no-cache baseline keeps the savings honest.</p>
+<h3 id="what-works-the-pedagogy">What works (the pedagogy)</h3>
+<ol>
+<li><strong>Bloom alignment is correct.</strong> L4 "compare" requires more than ranking; it requires articulating <em>why</em> one option beats another. The chart shows the curve shapes; the slider variations let the learner see <em>which</em> parameter changes the ranking.</li>
+<li><strong>The dashed no-cache baseline is the right anchor.</strong> Without it, learners might think Gemini explicit "growing" means it is bad, when it is actually growing slower than no-cache. The baseline frames every line as a discount from the same reference point.</li>
+<li><strong>Crossover points teach the key insight.</strong> A common trap is to pick the vendor that is cheapest "right now" (the first 5 requests) and miss that a different vendor wins at scale. The chart shows both regimes in one frame.</li>
+<li><strong>The Gemini storage-cost toggle is pedagogically honest.</strong> Many vendor-comparison MicroSims hide the storage cost or omit it entirely. Surfacing it as a toggle teaches that "what you forget to include" can flip the recommendation.</li>
+<li><strong>The summary table closes the loop.</strong> A line chart shows the <em>shape</em>; the table shows the <em>number</em>. Both are needed for a defensible vendor recommendation.</li>
+</ol>
+<h3 id="what-needs-follow-up-the-gaps">What needs follow-up (the gaps)</h3>
+<ol>
+<li><strong>The pricing assumptions are illustrative, not current.</strong> A note in the lesson plan disclaims this, but the sim itself does not. A small "(illustrative pricing — verify on current vendor pages)" note near the chart would be appropriate. Score impact: −2.</li>
+<li><strong>Output cost is excluded.</strong> The chart only models input/cache. A real workload also has output cost which differs across vendors. A future revision could overlay output cost as a second-axis line. Score impact: −2.</li>
+<li><strong>The "warm-up" model for Gemini implicit is hand-tuned.</strong> Three requests of cold cost is illustrative; the real warm-up depends on traffic patterns the sim does not model. Score impact: −2.</li>
+<li><strong>No way to set the per-request output size.</strong> Output dominates cost on long answers; a slider for output size would meaningfully expand the analysis. Score impact: −2.</li>
+<li><strong>Crossover annotations are not drawn on the chart.</strong> The lesson plan asks the learner to find them; the chart could optionally highlight them with a vertical guide. Score impact: −2.</li>
+<li><strong>Only one workload at a time.</strong> A side-by-side multi-workload view (e.g., "small prefix" vs. "large prefix" simultaneously) would teach generalization. Score impact: −1.</li>
+</ol>
+<h3 id="accessibility-and-clarity">Accessibility and clarity</h3>
+<ul>
+<li><strong>Color-blind safety:</strong> The five line colors (gray-dashed, russet, blue, green, purple) are distinguishable under common color-blindness profiles. The dashed pattern on no-cache is a redundant signal in addition to color.</li>
+<li><strong>Legend placement</strong> at the bottom of the chart is screen-reader friendly.</li>
+<li><strong>Native HTML range sliders</strong> are keyboard-focusable and arrow-adjustable.</li>
+<li><strong>The summary table</strong> uses semantic HTML (<code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>) that is screen-reader friendly.</li>
+</ul>
+<h3 id="cognitive-load-assessment">Cognitive load assessment</h3>
+<ul>
+<li><strong>Five lines on one chart</strong> is at the upper edge of what a beginner can read. The legend is essential; the dashed baseline helps anchor.</li>
+<li><strong>Four sliders</strong> is manageable; the labels update live to confirm value changes.</li>
+<li><strong>Summary table</strong> is a good "one number per vendor" condensation that complements the dense chart.</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Approve for use in Chapter 6 as currently implemented.</strong> The six gaps above are real but none block the L4 "compare" objective. Open follow-up tickets for items 1 (illustrative-pricing note), 4 (output-size slider), and 5 (crossover annotations) — those three would be the highest-impact polish items.</p>
+<p>The MicroSim teaches the <em>structure</em> of vendor caching differences, not just the numbers. That is the bar for an L4 sim, and it clears it.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

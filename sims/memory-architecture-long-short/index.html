@@ -1,0 +1,1531 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Three-column diagram showing how short-term conversation turns flow through compaction into long-term memory files, with a per-turn input flow at the bottom.">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Long-Term and Short-Term Memory Architecture - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#long-term-and-short-term-memory-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Long-Term and Short-Term Memory Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-microsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This MicroSim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloom-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bloom Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iframe-embed-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iframe Embed Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Scenarios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#math-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#senior-instructional-designer-quality-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Senior Instructional Designer Quality Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Senior Instructional Designer Quality Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall verdict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-works-the-pedagogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What works (the pedagogy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-needs-follow-up-the-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs follow-up (the gaps)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-and-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessibility and clarity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognitive-load-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cognitive load assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="long-term-and-short-term-memory-architecture">Long-Term and Short-Term Memory Architecture</h1>
+<iframe src="main.html" height="642px" width="100%" scrolling="no"></iframe>
+
+<p><a class="md-button md-button--primary" href="main.html">Run the Memory Architecture MicroSim Fullscreen</a>
+<a href="https://editor.p5js.org/">Edit in the p5.js Editor</a></p>
+<h2 id="about-this-microsim">About This MicroSim</h2>
+<p>Two kinds of memory live inside an LLM agent at the same time, and confusing them is one of the most common reasons agents go off the rails on long sessions. <strong>Short-term memory</strong> is the recent conversation history — every turn included in full, every token paying full per-turn cost, every detail still there. <strong>Long-term memory</strong> is a small set of distilled files (project facts, prior decisions, key learnings) that the agent retrieves selectively, paying only for the few it pulls into a given turn.</p>
+<p>This MicroSim shows both at once. Add turns one at a time and watch the short-term stack grow until it crosses your threshold. The compaction step then summarizes the oldest turns into a single new long-term memory file at roughly a 10:1 compression ratio. Below the three columns, a per-turn input flow shows what actually gets sent to the model on the <em>next</em> call: system prompt, a couple of selected long-term files, all of short-term, and the new user message — and the cost that comes with that.</p>
+<h2 id="how-to-use">How to Use</h2>
+<ol>
+<li><strong>Read the default state.</strong> Eight short-term turn cards on the left, three long-term files on the right, and the per-turn input flow at the bottom showing the four components that go into every model call.</li>
+<li><strong>Click "Add new turn" until compaction fires.</strong> The new card appears at the bottom of the short-term stack with a brief highlight. When the count crosses the threshold (default 15), the oldest turns flow through the purple "Summarize" node and a new file appears on the right.</li>
+<li><strong>Watch the per-turn cost drop after compaction.</strong> Before compaction, short-term holds many turns at ~1K tokens each. After compaction, that block is replaced by a single ~200-token summary file, so the per-turn input shrinks and the cost line goes down.</li>
+<li><strong>Try "Manually compact now"</strong> to compact at a chosen moment, not just when the threshold fires. This is the operator's escape hatch when they know the conversation is about to take a turn that needs more headroom.</li>
+<li><strong>Move the threshold slider.</strong> A lower threshold means more frequent but smaller compactions; a higher threshold means rarer but larger ones. Watch the same conversation play out under each policy.</li>
+<li><strong>Toggle the per-turn cost overlay.</strong> The per-turn cost is the load-bearing number for the chapter; turning it off lets you see the raw flow first, then re-enable it to see what the flow costs.</li>
+</ol>
+<h2 id="bloom-level">Bloom Level</h2>
+<p><strong>Understand (L2)</strong> — explain how short-term and long-term memory differ in lifecycle, retrieval, and per-turn token cost.</p>
+<h2 id="iframe-embed-code">Iframe Embed Code</h2>
+<p>You can add this MicroSim to any web page by adding this to your HTML:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;sims/memory-architecture-long-short/main.html&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;642px&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span>
+        <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="audience">Audience</h3>
+<p>Adult professional learners — engineers and platform-team members new to building agents that need to remember things across many turns.</p>
+<h3 id="duration">Duration</h3>
+<p>15–20 minutes inside Chapter 16.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Chapter 16 sections on context window, system prompt, and turn-by-turn cost</li>
+<li>Ability to read a horizontal stacked bar chart</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li><strong>Anatomy walk-through (3 min).</strong> Identify the three columns and the per-turn input bar. Confirm the three columns map to three lifecycles: every-turn (system), selectively-retrieved (LTM), and accumulating (short-term).</li>
+<li><strong>Lifecycle observation (5 min).</strong> Add ten turns one at a time. Note when compaction fires. Observe the size of the new LTM file vs. the size of the turns it replaced.</li>
+<li><strong>Cost observation (3 min).</strong> Enable the cost overlay. Add turns and watch the per-turn cost climb until compaction, then drop. The "saw-tooth" cost curve is the signature of a working compaction policy.</li>
+<li><strong>Manual compaction discussion (4 min).</strong> Discuss: when would an operator manually compact instead of waiting for the threshold? (Right before a topic switch, before adding a long pasted document, before resuming after a break.)</li>
+</ol>
+<h3 id="practice-scenarios">Practice Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Action</th>
+<th>Threshold</th>
+<th>Predict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Add 10 turns</td>
+<td>15</td>
+<td>No compaction yet — short-term reaches 18 turns?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Add 10 turns</td>
+<td>12</td>
+<td>Compaction fires once around turn 12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Click compact now at turn 9</td>
+<td>15</td>
+<td>One LTM file appears early; per-turn cost drops</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Add 20 turns</td>
+<td>20</td>
+<td>Compaction fires around turn 20; one big LTM file</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Add 30 turns</td>
+<td>10</td>
+<td>Two compactions; two LTM files; lowest per-turn cost</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assessment">Assessment</h3>
+<p>A learner has met the L2 objective when they can:</p>
+<ul>
+<li>Name the three lifecycles (every-turn, selectively-retrieved, accumulating) and assign each to one of the three columns.</li>
+<li>Explain why the compaction step reduces per-turn cost in subsequent turns even though the <em>total</em> stored content grows.</li>
+<li>Articulate the difference between "dropping" old turns and "summarizing" them.</li>
+<li>Identify one or two situations where a manual compaction is preferable to waiting for the threshold.</li>
+</ul>
+<h3 id="math-reference">Math reference</h3>
+<p>Per-turn input tokens are</p>
+<div class="arithmatex">\[
+T_{\text{turn}} = T_{\text{sys}} + T_{\text{ltm-included}} + T_{\text{short-term}} + T_{\text{user}}
+\]</div>
+<p>A compaction event replaces the oldest <span class="arithmatex">\( k \)</span> short-term turns (each averaging <span class="arithmatex">\( \bar{t} \)</span> tokens) with one LTM file of <span class="arithmatex">\( \rho \cdot k \cdot \bar{t} \)</span> tokens, where <span class="arithmatex">\( \rho \approx 0.10 \)</span>. On subsequent turns only a few LTM files are retrieved, so the per-turn input drops by approximately</p>
+<div class="arithmatex">\[
+\Delta T_{\text{turn}} \approx k \cdot \bar{t} - \rho \cdot k \cdot \bar{t} = (1 - \rho) \cdot k \cdot \bar{t}
+\]</div>
+<h2 id="references">References</h2>
+<ol>
+<li>Anthropic Engineering. <em>Building Effective Agents</em>. — Discussion of memory tiers in long-running agents.</li>
+<li>The Claude Code documentation — short-term vs. long-term memory and compaction triggers.</li>
+<li>Park, J. S., et al. (2023). <em>Generative Agents: Interactive Simulacra of Human Behavior</em>. — Memory streams and reflection as a model of long-term memory.</li>
+<li>OpenAI Cookbook — <em>Long-running conversations and summarization patterns</em>.</li>
+</ol>
+<hr />
+<h2 id="senior-instructional-designer-quality-review">Senior Instructional Designer Quality Review</h2>
+<p><em>Reviewer perspective: 15+ years designing engineering and data-science curricula for adult professional learners; expertise in Bloom's revised taxonomy, evidence-based assessment design, and accessibility of technical content.</em></p>
+<h3 id="overall-verdict">Overall verdict</h3>
+<p><strong>Strong fit for the stated learning objective. Approve as-is for Chapter 16.</strong> Score: <strong>86/100 (B).</strong> The three-column architecture diagram with a per-turn flow underneath is the right pedagogical model for an Understand-level (L2) "explain" task: the structure is visible, the flow is visible, and the lifecycle difference between the two memory tiers is something the learner watches play out, not something they have to imagine.</p>
+<h3 id="what-works-the-pedagogy">What works (the pedagogy)</h3>
+<ol>
+<li><strong>Bloom alignment is correct.</strong> L2 "explain" requires the learner to put the relationship between two concepts into their own words. The three-column layout externalizes the structure; the compaction step animates the transition; the per-turn flow shows the <em>consequence</em> of the architecture. The learner needs all three to give a good explanation.</li>
+<li><strong>Three columns map to three lifecycles.</strong> Most tutorials describe short-term and long-term memory in prose; this MicroSim makes the third axis (selective retrieval) the literal middle column. That visual placement is more pedagogically honest than a binary "short vs. long" framing.</li>
+<li><strong>The 10:1 compression ratio is annotated, not hidden.</strong> The Summarize node carries a literal "20 turns × 1K tokens → 1 summary × 200 tokens" annotation. A learner walks away with a numerically-anchored intuition for compression, not just a directional one.</li>
+<li><strong>Manual compaction as a button, not a hidden behavior.</strong> Surfacing the manual-compact affordance teaches an operator-role pattern (proactive trim) that is invisible if the only path to compaction is hitting the threshold.</li>
+<li><strong>Per-turn cost overlay closes the loop.</strong> The chapter cares about cost; the architecture exists to control cost; the cost line at the bottom of the per-turn flow makes the consequence of the architecture visible without requiring a second sim.</li>
+<li><strong>Newest turn highlighted briefly on add.</strong> A small UI affordance — but it tells the learner "this is what changed" without making them count the cards.</li>
+</ol>
+<h3 id="what-needs-follow-up-the-gaps">What needs follow-up (the gaps)</h3>
+<ol>
+<li><strong>Compression ratio is hardcoded at 10:1.</strong> Real LLM summaries vary from 5:1 (verbatim notes) to 50:1 (executive bullet). A slider for compression would let the learner explore the cost/fidelity tradeoff inside compaction itself. Score impact: −3.</li>
+<li><strong>The "selectively-retrieved" mechanism is implicit.</strong> The MicroSim shows two LTM files marked "included this turn" but does not explain <em>why</em> those two — there is no retrieval mechanism shown (semantic search? recency? pinning?). A small legend or hover would close the gap. Score impact: −3.</li>
+<li><strong>No way to see what was <em>lost</em> in compaction.</strong> The summary tokens are a number, but the learner has no way to inspect the difference between the original and the summary. A toggle that overlays "lost detail" as a faded element would make the cost of compaction visible, not just the cost of context. Score impact: −2.</li>
+<li><strong>Reset button is a sledgehammer.</strong> Resetting clears all compaction history, losing the long-term-memory progression the learner just built. A "rewind one step" affordance would let learners undo a turn or compaction. Score impact: −1.</li>
+<li><strong>The per-turn flow shows the <em>next</em> turn but not historical turns.</strong> A learner cannot see, for the previous five turns, what the per-turn flow looked like — so the cost-drop after compaction is implicit, not explicit. A small sparkline of per-turn cost over recent turns would close this loop. Score impact: −2.</li>
+</ol>
+<h3 id="accessibility-and-clarity">Accessibility and clarity</h3>
+<ul>
+<li><strong>Color contrast.</strong> Russet on cream (short-term cards), blue on light-blue (LTM cards), and purple on lavender (compaction node) all pass WCAG AA at the font sizes used.</li>
+<li><strong>Color-blind safety.</strong> The russet/blue/purple palette is robust under deuteranopia and protanopia; the column titles and card labels provide language redundancy.</li>
+<li><strong>Keyboard.</strong> p5.js native sliders, buttons, and checkboxes are keyboard-focusable and arrow-adjustable. The card stacks themselves are not keyboard-navigable, but no information is hidden behind hover.</li>
+<li><strong>Animation duration.</strong> The 500–700 ms highlight on add/compact is brief but visible. No flashing or rapid-cycling animation that could trigger photosensitivity issues.</li>
+</ul>
+<h3 id="cognitive-load-assessment">Cognitive load assessment</h3>
+<ul>
+<li><strong>Three columns + per-turn flow + cost line + event narration + four controls</strong> is dense but spatially well organized. The columns share a uniform shape (frame + title + cards + total), which lets the learner reuse one mental template across all three.</li>
+<li><strong>The animation on add/compact is a working-memory aid</strong>, not a distraction — it tells the learner where to look.</li>
+<li><strong>Card stack overflow</strong> is handled by showing only the most recent visible turns; a learner who adds 30 turns sees the latest 10 with the count "Last N turns" updated. This avoids the cognitive load of scrolling but does mean the "what compacted away" is no longer visible — see gap #3.</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Approve for use in Chapter 16 as currently implemented.</strong> The five gaps above are real but none of them block the L2 objective. Open follow-up tickets for items 2 and 5 (highest pedagogical impact). Defer items 1, 3, and 4 to a polish pass.</p>
+<p>The MicroSim teaches the rule it claims to teach, makes the lifecycle difference visible without prose, and closes the cost loop at the bottom of the screen. Ship.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

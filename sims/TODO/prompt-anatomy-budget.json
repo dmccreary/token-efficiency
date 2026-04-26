@@ -1,0 +1,14 @@
+{
+  "sim_id": "prompt-anatomy-budget",
+  "diagram_name": "Prompt Anatomy and Budget Allocation",
+  "chapter_number": 13,
+  "chapter_title": "Prompt Engineering for Token Efficiency",
+  "chapter_dir": "13-prompt-engineering-tokens",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a prompt length budget by allocating tokens across the components of a typical request.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: infographic\n**sim-id:** prompt-anatomy-budget<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show a typical production prompt as a stacked bar of its components (system prompt, tool definitions, few-shot, retrieved context, user message) with a length budget overlay, so learners can see how a budget forces prioritization.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a prompt length budget by allocating tokens across the components of a typical request.\n\nCanvas layout:\n- Main area: A horizontal stacked bar showing the components of a request, each labeled with its token count\n- Overlay: A vertical line marking the budget boundary\n- Side panel: A list of components with sliders to adjust each one's token allocation\n\nComponents shown by default (sum: 8,000 tokens):\n- System prompt: 3,200\n- Tool definitions: 1,200\n- Few-shot examples: 1,500\n- Retrieved context: 1,500\n- User message: 600\n- Reserve for output: 1,000\n\nInteractive controls:\n- Slider for each component (within budget; over-budget triggers a red warning)\n- Slider: Total budget (4K to 16K tokens)\n- Buttons: \"Auto-shrink system prompt\", \"Auto-prune few-shot\", \"Auto-compress retrieved context\"\n\nData Visibility Requirements:\n  Stage 1: Show all components within budget\n  Stage 2: When user pushes a component over budget, show a red over-budget marker and the suggestion buttons\n  Stage 3: When auto-actions are clicked, show the resulting reductions (animated slide)\n\nDefault state: All components within an 8K budget\n\nImplementation: p5.js with responsive width and updateCanvasSize()"
+}

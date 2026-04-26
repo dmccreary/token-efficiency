@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Bounding what an autonomous harness can spend — per-session token and tool-call budgets, loop limits, wall-clock caps, runaway detection, circuit breakers, per-engineer and per-PR budgets, and the vendor-imposed 5-hour and weekly limits">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../19-batch-privacy-compliance/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>18. Agent Budget Policies and Session Limits - Token Efficiency</title>
+        <title>Agent Budget Policies and Session Limits - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              18. Agent Budget Policies and Session Limits
+              Agent Budget Policies and Session Limits
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -744,6 +742,144 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#why-budgets-are-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Budgets Are Non-Negotiable
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-granularities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Granularities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-exhaustion-handling-and-graceful-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Exhaustion Handling and Graceful Degradation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runaway-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runaway Detection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-breakers-and-tool-call-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Breakers and Tool Call Throttling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Circuit Breakers and Tool Call Throttling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-agent-budget-policy-with-multiple-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Agent Budget Policy with Multiple Limits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtask-budget-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subtask Budget Allocation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logs-and-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Logs and Reporting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-granularities-beyond-the-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Granularities Beyond the Session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Notifications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-versus-outcome-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Versus Outcome Reporting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vendor-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Vendor Limits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Vendor Limits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-per-engineer-per-pr-per-repo-budget-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Per-Engineer / Per-PR / Per-Repo Budget Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +959,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +968,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1295,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1343,144 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-budgets-are-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Budgets Are Non-Negotiable
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-granularities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Granularities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-exhaustion-handling-and-graceful-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Exhaustion Handling and Graceful Degradation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runaway-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runaway Detection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-breakers-and-tool-call-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Breakers and Tool Call Throttling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Circuit Breakers and Tool Call Throttling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-agent-budget-policy-with-multiple-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Agent Budget Policy with Multiple Limits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subtask-budget-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subtask Budget Allocation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logs-and-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Logs and Reporting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-granularities-beyond-the-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Granularities Beyond the Session
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Notifications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#budget-versus-outcome-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Budget Versus Outcome Reporting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vendor-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Vendor Limits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Vendor Limits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-per-engineer-per-pr-per-repo-budget-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Per-Engineer / Per-PR / Per-Repo Budget Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1161,13 +1540,234 @@
 <li><a href="../11-log-file-analysis/">Chapter 11: Log File Analysis and Cost Hotspots</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">The Safety Net Under Every Agent</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Routing (Chapter 17) makes routine work cheap. Caching (Chapter 14) makes prefixes cheap. Compaction (Chapter 16) makes long sessions cheap. None of them stops a runaway: an agent loop that decides to read every file in the repo three times, or a confused subagent that retries the same broken tool 200 times. This chapter installs the budgets — the hard ceilings that fire before a single bad session can cost a thousand dollars. Cheap systems are systems with brakes.</p>
+</div>
+<h2 id="why-budgets-are-non-negotiable">Why Budgets Are Non-Negotiable</h2>
+<p>In a non-agent application, the cost of a single request is bounded by <code>max_tokens</code> — even a misbehaving prompt can only spend so much before truncation kicks in. In an <em>agent</em> application, no such natural bound exists. An agent loop can iterate as many times as the model decides, each iteration potentially calling expensive tools, each iteration's input growing as the conversation grows. The cost of a single agent session is, in principle, unbounded.</p>
+<p>Real production incidents from this gap include: a code-refactor agent that read the same 50,000-line file 40 times in one session (seven figures of input tokens), a research agent that recursively spawned subagents in a loop (a six-figure session in twenty minutes), a tool-use agent that hit a rate limit, retried with exponential backoff for hours, and burned a budget without making progress.</p>
+<p>The countermeasure is the same in every case: hard budgets that fire before the runaway becomes catastrophic.</p>
+<h2 id="budget-granularities">Budget Granularities</h2>
+<p>An <strong>agent budget policy</strong> is the formal spec of what limits apply to which scope. Production budget policies span several granularities, each catching a different failure mode.</p>
+<p>The <strong>per-session token budget</strong> is the cap on cumulative tokens consumed by one agent session. When the cap is hit, the harness halts the session — possibly with a graceful summary, possibly hard. Typical cap: 1–10M tokens for normal coding sessions, scaled up for genuinely large tasks. Anything beyond 10M is almost certainly a runaway.</p>
+<p>The <strong>per-session tool call budget</strong> is the cap on number of tool invocations per session. Often a more useful safety brake than tokens because runaways frequently manifest as call-count explosions before the token count catches up. Typical cap: 100–500 tool calls per session.</p>
+<p>The <strong>loop iteration limit</strong> is a cap on number of agentic-loop iterations (Chapter 7). Each iteration is one request-response round; runaway loops trip this before either tokens or tool calls explode. Typical cap: 50–200 iterations per session.</p>
+<p>The <strong>wall clock limit</strong> is a cap on session wall-clock duration. Useful as a backstop when token and call counts look normal but the session is just stuck — the model is endlessly retrying a tool that doesn't work, for example. Typical cap: 30 minutes to 2 hours.</p>
+<p>The <strong>cost cap</strong> is the explicit dollar ceiling derived from the token cap and the in-use model's prices. For a session running on a model that costs $3/MTok input and $15/MTok output, a 10M-token cap implies a cost cap of roughly $50–$100 depending on input/output mix. Some teams set the cap in dollars directly and back-compute the token equivalent.</p>
+<p>These budgets compose: a session ends when <em>any</em> one of them is hit. Belt and suspenders is the right design — each catches a different failure mode and the cost of redundant caps is zero.</p>
+<h2 id="budget-exhaustion-handling-and-graceful-degradation">Budget Exhaustion Handling and Graceful Degradation</h2>
+<p>What happens when a budget is hit matters as much as the cap itself.</p>
+<p><strong>Budget exhaustion handling</strong> is the policy executed when a session hits its limit. Three common patterns:</p>
+<ul>
+<li><strong>Hard halt</strong> — session stops immediately, returns whatever partial results exist, logs the budget exhaustion as a session outcome</li>
+<li><strong>Graceful summary</strong> — before halting, ask the model for a one-paragraph summary of what it accomplished and what's left, so the user can resume manually</li>
+<li><strong>Escalation prompt</strong> — surface to the user "this session has consumed $X, do you want to allow another $Y?" and let the user decide</li>
+</ul>
+<p>Hard halt is the safe default. Graceful summary is better UX when the work is partially recoverable. Escalation prompts are appropriate for interactive sessions where the user is present; they're a footgun for batch agent workloads where no human is watching.</p>
+<p><strong>Graceful degradation</strong> is the broader principle: when a budget is approaching its limit, the agent should shift behavior in cost-aware ways before being hard-stopped. Examples:</p>
+<ul>
+<li>Switch from a strong model to a cheaper one</li>
+<li>Stop spawning new subagents</li>
+<li>Avoid making more tool calls; rely on what's already in context</li>
+<li>Compact the conversation aggressively (Chapter 16)</li>
+<li>Decline to attempt new sub-tasks; finish the current one</li>
+</ul>
+<p>A well-designed agent shifts gracefully through these as the budget drains, rather than running at full speed into the wall.</p>
+<h2 id="runaway-detection">Runaway Detection</h2>
+<p><strong>Runaway detection</strong> is the real-time monitoring that catches a session going off the rails <em>before</em> it hits the hard budget cap. The detection signals:</p>
+<ul>
+<li>Token-rate spike (current iteration consuming much more than the running average)</li>
+<li>Tool-call-rate spike (more tool calls per minute than typical)</li>
+<li>Repetitive tool calls (same tool with same arguments multiple times in a row — sign of a stuck loop)</li>
+<li>Output-pattern repetition (the model is producing near-identical responses across iterations)</li>
+<li>Lack of progress (some external signal that the work is not advancing)</li>
+</ul>
+<p>Detection should fire alerts (Chapter 10) and may trigger automatic intervention (the next concept). Runaway detection is the difference between catching a problem at iteration 30 and catching it at iteration 200.</p>
+<h2 id="circuit-breakers-and-tool-call-throttling">Circuit Breakers and Tool Call Throttling</h2>
+<p>The <strong>circuit breaker pattern</strong> is borrowed from distributed systems: a logical "switch" that opens (interrupts traffic) when a failure threshold is crossed and stays open for a cooldown period. Applied to agents:</p>
+<ul>
+<li>The breaker monitors per-session metrics (tool failure rate, repeat-invocation rate, cost rate)</li>
+<li>When a metric crosses its threshold, the breaker "trips" and the session halts immediately</li>
+<li>The breaker logs the trip with the triggering metric value for postmortem analysis</li>
+<li>The breaker may auto-reset after a cooldown (allowing the next session to proceed) or stay tripped until manually cleared</li>
+</ul>
+<p>Circuit breakers are particularly important for tool failures. A tool that returns errors 100% of the time but the agent keeps retrying is a classic runaway pattern; a tool-failure-rate circuit breaker trips it immediately.</p>
+<p><strong>Tool call throttling</strong> is the related practice of limiting tool-call rate per session — no more than N calls per minute, no more than M repeats of the same tool with the same arguments. Throttling is rate-limiting at the harness level, complementing the vendor's API rate limits.</p>
+<h4 id="diagram-agent-budget-policy-with-multiple-limits">Diagram: Agent Budget Policy with Multiple Limits</h4>
+<iframe src="../../sims/agent-budget-policy-multi-limit/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Agent Budget Policy with Multiple Limits</summary>
+<p>Type: chart
+<strong>sim-id:</strong> agent-budget-policy-multi-limit<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a session in progress with four parallel budget meters (tokens, tool calls, iterations, wall clock) and visualize which one would fire first under different scenarios.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement a multi-cap budget policy and identify which cap fires first under different failure modes.</p>
+<p>Chart type: Multi-meter dashboard
+- Four horizontal "fuel gauge" meters: Tokens used / Cap, Tool calls / Cap, Iterations / Cap, Wall clock / Cap
+- A timeline below showing the session's per-iteration consumption</p>
+<p>Interactive controls:
+- Sliders to set each cap value
+- Dropdown: scenario ("Healthy session", "Token runaway", "Tool-call explosion", "Stuck loop")
+- Button: "Run session" — animates iterations until one cap fires
+- Toggle: "Enable graceful degradation at 75% of any cap"</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show all four meters at 0%
+  Stage 2: As the session runs, animate the meters filling at scenario-appropriate rates
+  Stage 3: When the first cap fires, highlight which one and stop the session
+  Stage 4: With graceful degradation on, show consumption rate slowing after 75%</p>
+<p>Default state: Healthy scenario with reasonable caps</p>
+<p>Implementation: Chart.js horizontal bar charts as meters, responsive grid layout</p>
+</details>
+<h2 id="subtask-budget-allocation">Subtask Budget Allocation</h2>
+<p>In agent workflows that spawn subagents (Chapter 7), how is the parent session's budget divided?</p>
+<p><strong>Subtask budget allocation</strong> is the policy that assigns a portion of the parent's remaining budget to each subagent it spawns. Two patterns:</p>
+<ul>
+<li><strong>Static allocation</strong> — pre-declared budget per subtask type (research subagent: 100K tokens, refactor subagent: 500K tokens). Predictable; easy to enforce. Doesn't adapt when the parent's budget is nearly exhausted.</li>
+<li><strong>Proportional allocation</strong> — each subagent gets a fraction of the parent's <em>remaining</em> budget. Adapts to budget pressure but can starve later subagents if early ones consume too much.</li>
+</ul>
+<p>In practice, a hybrid works best: static allocation with a "you cannot exceed P% of remaining parent budget" constraint as a safety check.</p>
+<h2 id="audit-logs-and-reporting">Audit Logs and Reporting</h2>
+<p>A <strong>budget audit log</strong> records every budget event — limit configuration changes, sessions that approached limits, sessions that hit limits, sessions that triggered circuit breakers. The audit log is what you consult during postmortems and what compliance auditors ask for.</p>
+<p><strong>Budget reporting</strong> is the periodic surfacing of budget data to stakeholders. Different audiences need different reports:</p>
+<ul>
+<li>Engineers: per-session reports (which sessions hit caps, why, what to change)</li>
+<li>Engineering managers: per-team and per-repo aggregates (where is the team's spend going?)</li>
+<li>Finance: per-budget aggregates against monthly forecasts (Chapter 3)</li>
+</ul>
+<p>The cost dashboard from Chapter 10 covers part of this; budget-specific reports add the policy-versus-actual lens.</p>
+<p>A <strong>manager weekly report</strong> is the routine artifact for engineering managers — total cost per engineer, per repo, per PR for the week, with trend comparisons to the prior week. The report makes spend visible to the people responsible for managing it. Weekly cadence is the right rhythm — daily is too noisy, monthly is too late.</p>
+<h2 id="budget-granularities-beyond-the-session">Budget Granularities Beyond the Session</h2>
+<p>Per-session budgets are the foundation, but useful budget policies extend beyond:</p>
+<p>A <strong>per-engineer budget</strong> is a monthly allowance per engineer for harness usage. Caps individual experimentation cost; surfaces the engineers whose patterns deserve coaching (or whose work genuinely requires the spend).</p>
+<p>A <strong>per-repository budget</strong> is the cap on total harness cost per repo per month. Some repos justify high spend (the production codebase under active refactor); others should be lower (a documentation-only repo). The per-repo policy makes intent explicit.</p>
+<p>A <strong>per-PR budget</strong> is the cap on cumulative agent cost attributable to a single pull request — every refactor session, every code-review run, every test-generation pass that touched the PR. Per-PR budgets surface PRs where the agent assistance was disproportionately expensive relative to the change shipped.</p>
+<p>The granularity hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Time Window</th>
+<th>Typical Cap</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Per-session</td>
+<td>Single session</td>
+<td>$0.50–$50</td>
+<td>Catch runaways</td>
+</tr>
+<tr>
+<td>Per-PR</td>
+<td>Until PR ships</td>
+<td>$5–$200</td>
+<td>Catch over-iteration on a single change</td>
+</tr>
+<tr>
+<td>Per-engineer</td>
+<td>Monthly</td>
+<td>$500–$5,000</td>
+<td>Cap individual experimentation cost</td>
+</tr>
+<tr>
+<td>Per-repo</td>
+<td>Monthly</td>
+<td>$5,000–$50,000</td>
+<td>Allocate spend across business priorities</td>
+</tr>
+</tbody>
+</table>
+<p>Higher levels enforce against lower; a per-engineer cap that goes red doesn't kill the current session, it stops new ones from starting until the next reset.</p>
+<h2 id="budget-notifications">Budget Notifications</h2>
+<p>A <strong>budget notification</strong> is the message sent when a budget event occurs — an agent session approaching its cap, a cap actually firing, an engineer's monthly budget at 75%, a repo trending toward overspend.</p>
+<p>Notifications should:</p>
+<ul>
+<li>Fire to the right person (engineer for session-level, manager for team-level, finance for org-level)</li>
+<li>Include enough context to act ("session foo-1234 hit token cap; here's the partial result and the most expensive operations")</li>
+<li>Not be spammy — set thresholds that fire on meaningful events, not every tick</li>
+</ul>
+<p>The format matters: a Slack message with a link to the relevant dashboard is dramatically more useful than an email with the bare metric. Wire notifications into the same tools your team already uses.</p>
+<h2 id="budget-versus-outcome-reporting">Budget Versus Outcome Reporting</h2>
+<p><strong>Budget versus outcome</strong> is the analytical view that pairs budget consumption with what was accomplished. The question it answers: are we getting our money's worth? A team that spent $10K on agent assistance and shipped 50 PRs has a different cost-per-outcome than one that spent $10K and shipped 5.</p>
+<p>The standard report:</p>
+<ul>
+<li>For each completed PR: total agent cost, number of agent sessions, lines changed, review-iteration count</li>
+<li>Aggregated per engineer / per team / per repo</li>
+<li>Trended over time</li>
+</ul>
+<p>Budget-versus-outcome is what turns "we spent X on LLMs" into "we spent X on LLMs and shipped Y" — the conversation that justifies (or rebuts) the budget allocation.</p>
+<h2 id="the-vendor-limits">The Vendor Limits</h2>
+<p>Vendors impose their own session limits that act as backstops to your policy. Two specifically named:</p>
+<p>The <strong>5-hour limit</strong> (Anthropic; analogous limits at other vendors) is a vendor-imposed rate cap that kicks in when a single user account performs heavy continuous usage over a 5-hour window. When the limit fires, further requests in that window are rate-limited or rejected. This is genuinely a constraint for heavy harness users — a long debugging session can hit it. Plan around it: split heavy work across accounts where appropriate, or cap session durations.</p>
+<p>The <strong>weekly limit</strong> is the analogous longer-window cap, kicking in after sustained heavy usage over multiple days. Less frequently encountered than the 5-hour limit but real for power users.</p>
+<p>These vendor limits are not configurable — they're terms of service. Your budget policies should respect them; design sessions assuming they exist.</p>
+<h4 id="diagram-per-engineer-per-pr-per-repo-budget-hierarchy">Diagram: Per-Engineer / Per-PR / Per-Repo Budget Hierarchy</h4>
+<iframe src="../../sims/budget-hierarchy-roll-up/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Per-Engineer / Per-PR / Per-Repo Budget Hierarchy</summary>
+<p>Type: infographic
+<strong>sim-id:</strong> budget-hierarchy-roll-up<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show how individual session costs roll up through PR, engineer, repo, and organization budgets, with each level's cap and current consumption visible.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: organize</p>
+<p>Learning objective: Organize per-session costs into the hierarchical budget structure (PR → engineer → repo → organization) and identify which level would fire first.</p>
+<p>Canvas layout:
+- Pyramid diagram with five levels (Session → PR → Engineer → Repo → Organization), each level wider than the one above
+- Each level shows: scope label, current consumption (% of cap), cap value
+- Arrows show the roll-up relationship</p>
+<p>Interactive controls:
+- Click any level: drill down into the contributing items at the next level
+- Slider: time window (this session, this PR, this week, this month)
+- Toggle: "Highlight at-risk levels" (&gt;75% of cap)</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show all five levels with example data
+  Stage 2: When user clicks the Engineer level, show the contributing PRs
+  Stage 3: When at-risk highlighting is on, color levels above 75% in orange and 90% in red</p>
+<p>Default state: All levels healthy</p>
+<p>Implementation: p5.js with responsive width</p>
+</details>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Set Caps Before You Need Them</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+Almost no team sets budget policies before their first runaway. Almost every team sets them after — usually one to two weeks after the bill that prompted the conversation. The cost of getting in front of this is one afternoon of policy design; the cost of not is a four-figure (or higher) surprise on a single session. Set the caps now, while you're reading this. Cheap systems have brakes that were installed before the first crash.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now bound agent costs at every level. You define an <strong>agent budget policy</strong> that combines a <strong>per-session token budget</strong>, a <strong>per-session tool call budget</strong>, a <strong>loop iteration limit</strong>, a <strong>wall clock limit</strong>, and an explicit <strong>cost cap</strong> — caps that compose so the first one to fire halts the session. You implement <strong>budget exhaustion handling</strong> — hard halt, graceful summary, or escalation — backed by <strong>graceful degradation</strong> that downshifts cost-aware behavior as a budget approaches. You add <strong>runaway detection</strong> for in-flight catching, the <strong>circuit breaker pattern</strong> for automatic intervention, and <strong>tool call throttling</strong> to bound per-tool rates. You handle <strong>subtask budget allocation</strong> for subagent work. You record everything in a <strong>budget audit log</strong>, surface it via <strong>budget reporting</strong> including the <strong>manager weekly report</strong>, and analyze with <strong>budget versus outcome</strong> views. You extend caps beyond the session — <strong>per-engineer budget</strong>, <strong>per-repository budget</strong>, <strong>per-PR budget</strong> — and you wire <strong>budget notifications</strong> into your existing communication tools. Finally, you respect the vendor's <strong>5-hour limit</strong> and <strong>weekly limit</strong> as backstops to your own policy.</p>
+<p>Chapter 19 zooms back out to operational concerns for any production deployment: batch operations done safely, plus the privacy and compliance frameworks that govern what can be sent to the model in the first place.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Why have multiple cap types instead of just a token cap?</strong> Different runaway modes manifest differently — sometimes the token count is normal but tool-call count explodes, sometimes the iteration count goes wild while tokens stay flat. Multiple caps catch all the modes.</li>
+<li><strong>What is graceful degradation in this context?</strong> As a session approaches its budget, automatically shift to cheaper behaviors — switch to a smaller model, stop spawning subagents, compact conversation aggressively, decline new sub-tasks.</li>
+<li><strong>What does a circuit breaker do that a simple cap doesn't?</strong> It monitors <em>quality</em> signals (tool failure rate, repeat-invocation rate) in addition to cost, and trips immediately when those signals indicate a stuck or broken session — before the cost cap would fire.</li>
+<li><strong>What's the right cadence for budget reporting?</strong> Weekly for engineer-level and team-level reporting. Daily is too noisy; monthly is too late to act on.</li>
+<li><strong>What is the 5-hour limit?</strong> A vendor-imposed rate cap that fires when one account performs heavy continuous usage over a 5-hour window. Backstop to your own per-session policy.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 18</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Brakes installed at every level. Next chapter handles the operational side: batch jobs run safely, plus the privacy and compliance frameworks that govern what data can be sent to the model.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1212,6 +1812,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

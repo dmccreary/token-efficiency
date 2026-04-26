@@ -1,0 +1,45 @@
+{
+  "title": "Cross-Vendor Token Count Drift",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization for Generative AI",
+  "description": "Side-by-side tokenization of the same input across Anthropic, OpenAI, and Gemini, with per-vendor cost calculation.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "Generative AI / LLM Operations",
+    "topic": "Cross-Vendor Token Count Drift",
+    "learningObjectives": [
+      "Assess which vendor offers the lowest cost for a given content shape"
+    ],
+    "bloomsTaxonomy": "Evaluate",
+    "duration": "20 minutes",
+    "prerequisites": ["Tokenization basics", "Vendor pricing pages"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 820},
+    "responsive": true,
+    "dependencies": ["p5.js@1.11"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Live tokenization with side-by-side comparison",
+    "keyQuestions": [
+      "Which vendor is cheapest for English prose? For code? For Japanese?",
+      "Does the cheapest token count always mean the cheapest dollar cost?"
+    ],
+    "commonMisconceptions": [
+      "Assuming token count is the same across vendors",
+      "Assuming the cheapest model is the cheapest vendor"
+    ],
+    "assessmentOpportunities": [
+      "Recommend a vendor for a given content shape and tier"
+    ]
+  },
+  "chapter": "06-google-gemini-ecosystem"
+}

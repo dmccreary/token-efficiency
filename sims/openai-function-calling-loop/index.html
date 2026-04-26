@@ -1,0 +1,1510 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Interactive sequence diagram showing the OpenAI function-calling round-trip and how each tool_choice setting (auto, none, required, specific) changes the loop shape and token cost.">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Function Calling Loop with Tool Choice - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#function-calling-loop-with-tool-choice" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Function Calling Loop with Tool Choice
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-microsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This MicroSim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloom-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bloom Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iframe-embed-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iframe Embed Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Scenarios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#senior-instructional-designer-quality-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Senior Instructional Designer Quality Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Senior Instructional Designer Quality Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall verdict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-works-the-pedagogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What works (the pedagogy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-needs-follow-up-the-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs follow-up (the gaps)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-and-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessibility and clarity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognitive-load-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cognitive load assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="function-calling-loop-with-tool-choice">Function Calling Loop with Tool Choice</h1>
+<iframe src="main.html" height="642px" width="100%" scrolling="no"></iframe>
+
+<p><a class="md-button md-button--primary" href="main.html">Run the Function Calling Loop MicroSim Fullscreen</a></p>
+<h2 id="about-this-microsim">About This MicroSim</h2>
+<p>The OpenAI Chat Completions API uses a two-round-trip pattern for function calling: the application sends a request with <code>tools</code> and <code>tool_choice</code>, the API returns either a <code>tool_calls</code> array or a text message, the application executes the tool, and a second round trip returns the final assistant text. This MicroSim shows that loop end-to-end across three swimlanes (Application, OpenAI API, Tool implementation) and lets you see how each <code>tool_choice</code> setting changes the loop shape.</p>
+<p>The four <code>tool_choice</code> modes have very different cost and correctness properties. <code>auto</code> lets the model decide, which can short-circuit to a single round trip. <code>none</code> forbids tool use entirely. <code>required</code> forces the model to call <em>some</em> tool. <code>{specific tool}</code> forces a particular tool — useful for structured extraction. The right-side panel explains the meaning of each mode, when to use it, and the per-mode round-trip cost.</p>
+<h2 id="how-to-use">How to Use</h2>
+<ol>
+<li><strong>Trace the default <code>auto</code> flow.</strong> Read each arrow in the diagram. Note the four logical steps: send messages + tools, receive tool_calls, execute the tool, send the result, receive the final assistant text.</li>
+<li><strong>Switch to <code>none</code>.</strong> Notice the loop collapses to a single request/response. The tools array is still sent, but the model never calls them. Read the right-side panel for when this is appropriate (greetings, conversational fallback) and when it is wasteful (any question the model could answer with a tool).</li>
+<li><strong>Switch to <code>required</code>.</strong> Notice the loop is identical to <code>auto</code> in shape, but the model is <em>forced</em> to emit a tool call. Read the panel for the warning: on a question that does not need a tool, <code>required</code> forces a nonsensical tool call.</li>
+<li><strong>Switch to <code>{specific tool}</code>.</strong> This is the cleanest forced-call path — useful for structured-output extraction where you treat the tool schema as a JSON Schema for the response.</li>
+<li><strong>Toggle "Show token costs."</strong> Each step now shows an approximate token count. Compare modes: <code>auto</code> is ambiguous (1 or 2 round trips), <code>none</code> is always 1, <code>required</code> and <code>specific</code> are always 2.</li>
+</ol>
+<h2 id="bloom-level">Bloom Level</h2>
+<p><strong>Apply (L3)</strong> — implement an OpenAI function-calling round trip and pick the right <code>tool_choice</code> setting for a given workload.</p>
+<h2 id="iframe-embed-code">Iframe Embed Code</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;sims/openai-function-calling-loop/main.html&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;642px&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span>
+        <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="audience">Audience</h3>
+<p>Adult professional learners — software engineers building OpenAI-API-backed applications who need to choose the right tool-control setting per use case.</p>
+<h3 id="duration">Duration</h3>
+<p>15 minutes inside Chapter 5, or 30 minutes including the practice scenarios below.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>OpenAI Chat Completions API basics</li>
+<li>JSON request and response familiarity</li>
+<li>Chapter 5 sections introducing the <code>tools</code> and <code>tool_choice</code> parameters</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li><strong>Walk the auto loop (3 min).</strong> With <code>tool_choice="auto"</code> selected and cost overlay on, trace each arrow aloud. Articulate which steps cost input tokens and which cost output tokens.</li>
+<li><strong>Compare auto vs. required (5 min).</strong> Imagine the user asks "What is 2 + 2?". Predict what each setting returns. Then switch modes in the diagram and read the explanations.</li>
+<li><strong>Force a structured extraction (5 min).</strong> Switch to <code>{specific tool}</code> mode. Discuss when forcing a particular tool is the right choice (extraction tasks, schema-validated responses).</li>
+<li><strong>Workload mapping (10 min).</strong> For each scenario in the table below, pick the right <code>tool_choice</code> setting and justify.</li>
+</ol>
+<h3 id="practice-scenarios">Practice Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Workload</th>
+<th>Best tool_choice</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>A weather chatbot that may chat or fetch the weather</td>
+<td>auto</td>
+<td>Some inputs need the tool; some do not</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A receipt parser that always extracts JSON fields</td>
+<td>{specific tool}</td>
+<td>Forced single-tool path with schema validation</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A greeter that should never call a tool</td>
+<td>none (or strip tools)</td>
+<td>Forbid tool use; or strip tools to save input tokens</td>
+</tr>
+<tr>
+<td>4</td>
+<td>A code-executor that always runs the user's code</td>
+<td>required (or specific)</td>
+<td>Always need a tool call</td>
+</tr>
+<tr>
+<td>5</td>
+<td>A research agent that decides whether to search</td>
+<td>auto</td>
+<td>Tool use depends on query content</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assessment">Assessment</h3>
+<p>A learner has met the objective when they can:</p>
+<ul>
+<li>Pick the correct <code>tool_choice</code> setting for a described workload.</li>
+<li>Predict the number of API round trips for each mode.</li>
+<li>Identify the wasteful case (sending a <code>tools</code> array with <code>tool_choice="none"</code> when the tools are never invoked and the model does not need to know they exist).</li>
+<li>Explain why <code>tool_choice="required"</code> can produce nonsensical tool calls on simple inputs.</li>
+</ul>
+<h2 id="references">References</h2>
+<ol>
+<li>OpenAI. <em>Function Calling</em> — official documentation for the <code>tools</code>, <code>tool_calls</code>, and <code>tool_choice</code> parameters.</li>
+<li>OpenAI Cookbook. <em>How to call functions with chat models</em> — code-level walkthrough of the loop shown in this diagram.</li>
+<li>Anthropic. <em>Tool Use</em> documentation — useful comparison since the Anthropic version has slightly different semantics.</li>
+<li>Karpathy, A. <em>State of GPT</em> — high-level model of stateless API calls and what they imply for tool-use loops.</li>
+</ol>
+<hr />
+<h2 id="senior-instructional-designer-quality-review">Senior Instructional Designer Quality Review</h2>
+<p><em>Reviewer perspective: 15+ years designing engineering and data-science curricula for adult professional learners; expertise in Bloom's revised taxonomy, evidence-based assessment design, and accessibility of technical content.</em></p>
+<h3 id="overall-verdict">Overall verdict</h3>
+<p><strong>Approve for use in Chapter 5.</strong> Score: <strong>87/100 (B+).</strong> This is a clean L3 "implement" MicroSim — it gives the learner the four buttons (<code>auto</code>, <code>none</code>, <code>required</code>, specific) that correspond to four real implementation decisions, and shows the consequence of each. The contextual explanation panel does the heavy lifting that a static sequence diagram cannot.</p>
+<h3 id="what-works-the-pedagogy">What works (the pedagogy)</h3>
+<ol>
+<li><strong>Bloom alignment is correct.</strong> L3 "implement" requires choosing among options for a given purpose. The four <code>tool_choice</code> modes are exactly the choice space, and the panel makes the use-case mapping explicit.</li>
+<li><strong>Mode-driven re-render is the right interaction.</strong> Changing <code>tool_choice</code> re-renders the entire diagram, not just a label. The learner sees the loop <em>shape</em> change (1 round trip vs. 2), which is the load-bearing pedagogy.</li>
+<li><strong>The <code>none</code> collapse is striking.</strong> Going from a 4-step loop to a 2-step loop visually drives home that <code>none</code> is structurally different — not just a semantic toggle.</li>
+<li><strong>Misuse warnings are first-class.</strong> The "When to use it" panel explicitly warns about the failure modes of <code>required</code> (forced nonsense calls) and the wasted tokens in <code>none</code> (when the tools array is unnecessary). These are the gotchas that engineers actually hit in production.</li>
+<li><strong>The cost panel ties together</strong> the structural choice (round trips) with the operational consequence (token cost). That is the right framing for an L3 sim about a cost-optimization textbook.</li>
+</ol>
+<h3 id="what-needs-follow-up-the-gaps">What needs follow-up (the gaps)</h3>
+<ol>
+<li><strong>The <code>auto</code> mode does not branch.</strong> A real <code>auto</code> flow is bimodal: sometimes 1 round trip, sometimes 2. The diagram only shows the 2-round-trip path. A toggle for "model decides not to call a tool" would let the learner see the 1-round-trip variant. Score impact: −4.</li>
+<li><strong>Token costs are illustrative, not parameterized.</strong> The 1500-token input and 80-token output are reasonable defaults but a learner with a different <code>messages</code> size cannot map directly. A slider for "system + history size" would close this. Score impact: −2.</li>
+<li><strong>No discussion of strict mode</strong> (<code>strict: true</code> for tool schemas). Strict mode is a recent addition and a real Apply-level decision. A note in the panel would acknowledge it without overloading the diagram. Score impact: −2.</li>
+<li><strong>No comparison to Anthropic's <code>tool_choice</code> semantics.</strong> Chapter 4 covers Anthropic; chapter 5 covers OpenAI. A one-line note that "Anthropic supports <code>auto</code> / <code>any</code> / <code>tool</code> — similar but not identical to OpenAI's" would help the learner generalize. Score impact: −1.</li>
+<li><strong>No assessment built into the sim.</strong> The lesson plan provides a 5-row scenario table, but the sim itself does not test mode selection. A "given this user message, which mode?" quiz overlay would close the loop. Score impact: −4.</li>
+</ol>
+<h3 id="accessibility-and-clarity">Accessibility and clarity</h3>
+<ul>
+<li><strong>The mode dropdown is a native HTML <code>&lt;select&gt;</code></strong> — keyboard-focusable and screen-reader friendly.</li>
+<li><strong>Sequence numbering on arrows</strong> gives screen-reader users a stable referent.</li>
+<li><strong>Color contrast</strong> on the toolbar (white on <code>#37474f</code>) and panel headers (russet underline) passes WCAG AA.</li>
+<li><strong>No color is the only channel</strong> — every distinction is reinforced with text in the side panel.</li>
+</ul>
+<h3 id="cognitive-load-assessment">Cognitive load assessment</h3>
+<ul>
+<li><strong>6 arrows for <code>auto</code> / <code>required</code> / <code>specific</code></strong>, <strong>2 arrows for <code>none</code></strong>. Both are well within 7±2.</li>
+<li><strong>Three side-panel sections</strong> (what / when / cost). Each is short. Total reading load is modest.</li>
+<li><strong>The dropdown changes everything</strong> — diagram, what-it-does text, when-to-use text, cost numbers. This is dense for a beginner; the lesson plan correctly recommends walking the modes one at a time.</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Approve for use in Chapter 5 as currently implemented.</strong> The five gaps above are real but none block the L3 objective. Open follow-up tickets for items 1 (<code>auto</code> short-circuit branch) and 5 (built-in mode-selection assessment) — both would meaningfully strengthen the MicroSim with modest implementation effort.</p>
+<p>The MicroSim teaches the rule it claims to teach. Ship.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

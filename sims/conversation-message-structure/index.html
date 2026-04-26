@@ -1,0 +1,1547 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Watch a multi-turn dialogue accumulate input tokens turn by turn, and see why the system-prompt prefix is the prime caching target.">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Conversation Message Structure - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#conversation-message-structure" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Conversation Message Structure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-microsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This MicroSim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloom-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bloom Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iframe-embed-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iframe Embed Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Scenarios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#math-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#senior-instructional-designer-quality-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Senior Instructional Designer Quality Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Senior Instructional Designer Quality Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall verdict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-works-the-pedagogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What works (the pedagogy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-needs-follow-up-the-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs follow-up (the gaps)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-and-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessibility and clarity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognitive-load-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cognitive load assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="conversation-message-structure">Conversation Message Structure</h1>
+<iframe src="main.html" height="662px" width="100%" scrolling="no"></iframe>
+
+<p><a class="md-button md-button--primary" href="main.html">Run the Conversation Message Structure MicroSim Fullscreen</a>
+<a href="https://editor.p5js.org/">Edit in the p5.js Editor</a></p>
+<h2 id="about-this-microsim">About This MicroSim</h2>
+<p>A multi-turn conversation is not a stream — it is a sequence of stateless API calls. On every new turn, the client re-sends the full message history (system prompt, then every prior user/assistant pair, then the new user message) so the model can see the context. This MicroSim shows that re-sending visually: the message stack on the left grows downward as you click "Send next turn", while the line chart on the right tracks cumulative input tokens.</p>
+<p>The key insight emerges by turn 3 or 4. The system prompt — sent on <em>every</em> turn — quickly becomes the largest single contributor to total billed input. Toggling "Cache the system prompt" splits the cumulative-cost line in two and makes the savings opportunity quantitative. This is the load-bearing economic argument for prompt caching: the prefix is identical on every request, so paying full price for it on every turn is a self-inflicted cost.</p>
+<h2 id="how-to-use">How to Use</h2>
+<ol>
+<li><strong>Read the starting state.</strong> Only the system prompt is shown — 800 tokens by default. The chart shows a single point at (turn 0, 800 tokens).</li>
+<li><strong>Click "Send next turn."</strong> A user/assistant pair appears below the system card and the chart adds a new point. Note that the cumulative input includes the system prompt <em>plus</em> the user message that just got sent.</li>
+<li><strong>Click "Send next turn" several more times.</strong> Watch the cumulative line climb roughly linearly. Each new turn adds the system prompt (800), the entire prior history, and the new user message — most of which the model already saw on the prior turn.</li>
+<li><strong>Drag the system-prompt-size slider up</strong> from 800 to 4,000 tokens. Watch every cumulative point jump. Note how dramatic this is by turn 5 — the system-prompt share of total input grows with turn count.</li>
+<li><strong>Toggle "Cache the system prompt" on.</strong> A second (green) line appears, hugging the X axis much more closely than the slate full-price line. Read the savings percentage in the annotation panel.</li>
+<li><strong>Click "Reset conversation"</strong> and try a small system prompt (200 tokens) versus a large one (4,000 tokens). Caching matters proportionally — the bigger the cached prefix, the bigger the savings.</li>
+</ol>
+<h2 id="bloom-level">Bloom Level</h2>
+<p><strong>Analyze (L4)</strong> — examine how a multi-turn conversation accumulates input tokens on every new turn, and identify the system-prompt prefix as a prime cache target.</p>
+<h2 id="iframe-embed-code">Iframe Embed Code</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;sims/conversation-message-structure/main.html&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;662px&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span>
+        <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="audience">Audience</h3>
+<p>Adult professional learners — engineers and ML engineers building chatbot, agent, or copilot integrations who need to understand why "the same system prompt" is more expensive than they intuit and what to do about it.</p>
+<h3 id="duration">Duration</h3>
+<p>15–25 minutes inside Chapter 1, or 30 minutes as a standalone workshop with the practice scenarios.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Familiarity with the request/response model of an HTTP API</li>
+<li>Chapter 1 sections on tokens, input vs. output tokens, and conversation turns</li>
+<li>A general sense that LLM APIs are stateless</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li><strong>Anchor on a single turn (3 min).</strong> Run with the default 800-token system prompt and click "Send next turn" once. Note the cumulative cost. This is the calibration point.</li>
+<li><strong>The growth pattern (5 min).</strong> Click "Send next turn" five more times. Sketch the shape of the chart line on paper before looking. Most learners draw a flat line; the actual line is monotonically rising and roughly linear. Discuss: why linear? (Each new turn re-sends a slightly larger history.)</li>
+<li><strong>System-prompt sweep (5 min).</strong> Reset, then sweep the slider from 200 to 4,000 tokens after running 5 turns. Note how the curve scales. The relationship between system-prompt size and cumulative cost is multiplicative in turn count.</li>
+<li><strong>Caching demo (5 min).</strong> Toggle caching on. Read the savings percentage. Compare savings at 200-token system prompt vs. 4,000-token system prompt. Discuss: when does caching pay off, and when is it wasted overhead?</li>
+<li><strong>The "what if I trim history?" question (5 min).</strong> Note that this sim does not model history truncation — it is the upper bound on cost. Discuss: how would the chart change if the client only sent the last 3 turns? (Slope flattens after turn 3.) This is the bridge to Chapter 12 on context-window management.</li>
+</ol>
+<h3 id="practice-scenarios">Practice Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>System size</th>
+<th>Turns</th>
+<th>Caching</th>
+<th>Predict cumulative input</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short FAQ chatbot, no cache</td>
+<td>400</td>
+<td>5</td>
+<td>off</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Long agent prompt, no cache</td>
+<td>3,500</td>
+<td>5</td>
+<td>off</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Long agent prompt, with cache</td>
+<td>3,500</td>
+<td>5</td>
+<td>on</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Short FAQ chatbot, with cache</td>
+<td>400</td>
+<td>5</td>
+<td>on</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Customer support bot, mid prompt</td>
+<td>1,200</td>
+<td>8</td>
+<td>off</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Customer support bot, mid prompt</td>
+<td>1,200</td>
+<td>8</td>
+<td>on</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assessment">Assessment</h3>
+<p>A learner has met the objective when they can:</p>
+<ul>
+<li>Sketch the cumulative-input-tokens curve for a given system-prompt size and number of turns without using the calculator.</li>
+<li>Identify that the system-prompt prefix is the <em>single largest contributor</em> to billed input on conversations of more than 3 turns.</li>
+<li>Predict (within 20%) the savings percentage from caching for a given configuration.</li>
+<li>Explain to a colleague why "stateless API" makes caching the system prompt the highest-leverage cost optimization in a chatbot.</li>
+</ul>
+<h3 id="math-reference">Math reference</h3>
+<p>For a conversation with system size <span class="arithmatex">\( S \)</span>, per-turn user message size <span class="arithmatex">\( u_t \)</span>, per-turn assistant size <span class="arithmatex">\( a_t \)</span>, and <span class="arithmatex">\( T \)</span> total turns, the cumulative billed input is:</p>
+<div class="arithmatex">\[
+\text{cumulative} = S + \sum_{t=1}^{T} \left( S + u_t + \sum_{k=1}^{t-1} (u_k + a_k) \right)
+\]</div>
+<p>Holding <span class="arithmatex">\( u_t \)</span> and <span class="arithmatex">\( a_t \)</span> constant, this simplifies to a quadratic in <span class="arithmatex">\( T \)</span> with a leading <span class="arithmatex">\( S \cdot T \)</span> term — the system-prompt share of total cost grows linearly in turn count.</p>
+<p>With caching, the system-prompt term changes from <span class="arithmatex">\( S \cdot T \)</span> to <span class="arithmatex">\( 1.25 \cdot S + 0.10 \cdot S \cdot (T-1) \)</span>, a substantial reduction once <span class="arithmatex">\( T \geq 2 \)</span>.</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Anthropic Documentation. <em>Messages API</em> — describes the stateless turn structure and the <code>cache_control</code> parameter.</li>
+<li>OpenAI Platform Documentation. <em>Chat Completions</em> — analogous stateless turn semantics for the OpenAI API.</li>
+<li>Anthropic Engineering. <em>Prompt caching for the Claude API</em> — pricing and caching break-even analysis.</li>
+<li>Karpathy, A. (2024). <em>Let's build the GPT tokenizer</em> — useful background on why tokens (not characters) are the billing unit.</li>
+</ol>
+<hr />
+<h2 id="senior-instructional-designer-quality-review">Senior Instructional Designer Quality Review</h2>
+<p><em>Reviewer perspective: 15+ years designing engineering and data-science curricula for adult professional learners; expertise in Bloom's revised taxonomy, evidence-based assessment design, and accessibility of technical content.</em></p>
+<h3 id="overall-verdict">Overall verdict</h3>
+<p><strong>Strong fit for the stated learning objective. Approve as-is for Chapter 1.</strong> Score: <strong>89/100 (B+).</strong> This is one of the cleaner Analyze-level (L4) MicroSims I have reviewed for an introductory chapter: the learner does not just <em>see</em> that conversations accumulate tokens, they <em>examine</em> the structure of the accumulation and <em>identify</em> the cache target. The split-line treatment of caching is exactly the right pedagogy for the L4 verb "examine."</p>
+<h3 id="what-works-the-pedagogy">What works (the pedagogy)</h3>
+<ol>
+<li><strong>Bloom alignment is correct for L4.</strong> "Examine" requires the learner to <em>take apart and identify components</em>. The two-pane layout — message stack on the left, cumulative line on the right — is the canonical "decompose the system" view. The learner sees both the <em>parts</em> (each message card with its token count) and the <em>aggregate behavior</em> (cumulative line) at once, which is the load-bearing visual for the analyze verb.</li>
+<li><strong>The system-prompt size slider is the load-bearing control.</strong> Most introductory texts describe the system prompt as "the instructions" and leave it at that. Letting the learner manipulate its size and watch the cumulative curve scale in turn count is the moment when "this is just an instruction" becomes "this is the dominant cost driver." That moment is the chapter's most important insight.</li>
+<li><strong>Caching toggle as a secondary feature, not the headline.</strong> Putting the caching feature behind a toggle (rather than always on) lets the learner see the <em>uncached</em> behavior first, build intuition for why it is wasteful, and only <em>then</em> apply caching as a fix. This is the correct sequence for problem-before-solution pedagogy.</li>
+<li><strong>Random per-turn message sizes are the right level of realism.</strong> Hardcoding "every user message is 100 tokens" would teach a memorized rule. Random sizes within realistic ranges (50–200 user, 300–600 assistant) force the learner to read the chart instead of computing the answer mentally.</li>
+<li><strong>The annotation panel surfaces the system-prompt share of total input.</strong> This is the analyze-level summary statistic and pinning it on screen is correct.</li>
+</ol>
+<h3 id="what-needs-follow-up-the-gaps">What needs follow-up (the gaps)</h3>
+<ol>
+<li><strong>No way to inspect the per-turn billed amount.</strong> The cumulative chart shows total billed input over the conversation but does not surface "this turn cost X tokens." A learner who wants to verify their mental model has to subtract two consecutive points. Adding a small per-turn delta readout next to each user/assistant card would close this. Score impact: −3.</li>
+<li><strong>The 8-turn cap is invisible.</strong> The "Send next turn" button silently stops working at turn 8. A learner who expects more turns will not understand why nothing happens. Either disable the button visibly when the cap is hit, or extend the chart to support a longer history. Score impact: −2.</li>
+<li><strong>No history-trimming alternative.</strong> The sim presents "send everything every turn" as the only option. A real production chatbot often trims to the last N turns or summarizes older history. A "history limit" toggle (or even a static annotation: "this is the upper bound — trimming or summarizing changes the curve") would prepare the learner for Chapter 12 on context-window management. Score impact: −3.</li>
+<li><strong>Cache write/read multipliers are not surfaced.</strong> The 1.25× write and 0.10× read constants are baked into the calculation but never shown to the learner. A small footnote in the chart legend ("cache write 1.25×, cache read 0.10×") would let learners verify their mental model. The math reference handles it but the sim itself is silent. Score impact: −1.</li>
+<li><strong>No explicit "linear growth" framing.</strong> The chart shows linear-ish growth but does not name it. A learner unfamiliar with analyzing curves may not realize that "linear in turn count" is the takeaway. A subtle annotation on the line ("≈ linear in turn count") would help. Score impact: −1.</li>
+</ol>
+<h3 id="accessibility-and-clarity">Accessibility and clarity</h3>
+<ul>
+<li><strong>Color contrast</strong> of the slate (full-price) and green (cached) lines on white is AA-compliant. The system card uses dark slate on white with white text — AAA on the role label.</li>
+<li><strong>Color-blind safety:</strong> The user (blue) and assistant (russet/orange) cards are distinguishable under deuteranopia and protanopia because the role labels in the corner of each card are also text-marked.</li>
+<li><strong>The cache-target ribbon</strong> uses the same russet color as the assistant cards, which could be confusing under tritanopia. Consider an icon (a small key glyph) in addition to the color.</li>
+<li><strong>p5.js native sliders</strong> are keyboard-focusable and arrow-key adjustable.</li>
+</ul>
+<h3 id="cognitive-load-assessment">Cognitive load assessment</h3>
+<ul>
+<li><strong>2 sliders + 1 toggle + 2 buttons + the simulation = 6 interactive elements.</strong> Comfortably within working-memory budget.</li>
+<li><strong>Two visualizations on screen simultaneously</strong> (message stack and line chart). The visual relationship — same data, two views — is what an Analyze sim is supposed to teach, so this density is paying its weight rather than overloading.</li>
+<li><strong>The annotation panel</strong> competes for attention with the chart. A learner may bounce between them. Consider a numbered "stage" indicator that highlights one element at a time as the conversation progresses.</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Approve for use in Chapter 1 as currently implemented.</strong> The five gaps above are real but none of them block correct learning of the L4 objective. Open follow-up tickets for:</p>
+<ol>
+<li>Per-turn delta readouts on each card (highest impact)</li>
+<li>History-trimming toggle to bridge to Chapter 12</li>
+<li>Visible disable on the "Send next turn" button at the 8-turn cap</li>
+</ol>
+<p>The MicroSim teaches what it claims to teach, the system-prompt-as-cache-target insight emerges from playing rather than from being told, and the cumulative line is the right visual for an L4 examine objective. Ship.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

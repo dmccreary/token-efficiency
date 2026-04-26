@@ -1,0 +1,45 @@
+{
+  "title": "Cross-Vendor Caching Comparison",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization for Generative AI",
+  "description": "Multi-line cumulative cost chart comparing Anthropic, OpenAI, and Gemini caching mechanics across 50 requests for the same workload.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "Generative AI / LLM Operations",
+    "topic": "Cross-Vendor Caching Comparison",
+    "learningObjectives": [
+      "Compare the caching cost models of three vendors",
+      "Recommend a vendor for a workload based on prefix length, request volume, and cache lifetime"
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "duration": "20 minutes",
+    "prerequisites": ["Prompt caching basics", "Per-vendor pricing model"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Chart.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 580},
+    "responsive": true,
+    "dependencies": ["chart.js@4.4"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Multi-line cumulative cost chart with parameterized workload",
+    "keyQuestions": [
+      "Which vendor wins for a 1K-token prefix at 1 req/min for 1 hour?",
+      "Which vendor wins for a 50K-token prefix at 10 req/min for 24 hours?"
+    ],
+    "commonMisconceptions": [
+      "Assuming caching always pays off (storage cost on Gemini explicit can flip the comparison)"
+    ],
+    "assessmentOpportunities": [
+      "Pick the cheapest vendor for a described workload"
+    ]
+  },
+  "chapter": "06-google-gemini-ecosystem"
+}

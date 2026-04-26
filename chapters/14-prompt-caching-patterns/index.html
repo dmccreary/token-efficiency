@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="The single highest-leverage cost optimization — cache keys, hits and misses, hit-rate metrics, warming, invalidation, the stable-prefix-volatile-suffix structure, cross-vendor differences, and the cache stampede problem">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../15-rag-optimization/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>14. Prompt Caching Patterns - Token Efficiency</title>
+        <title>Prompt Caching Patterns - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              14. Prompt Caching Patterns
+              Prompt Caching Patterns
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -660,6 +658,144 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#why-caching-is-the-headline-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Caching Is the Headline Optimization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mechanics-keys-hits-misses" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Mechanics: Keys, Hits, Misses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-invariants-and-the-stable-prefix-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Invariants and the Stable-Prefix Discipline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache Invariants and the Stable-Prefix Discipline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-stable-prefix-and-volatile-suffix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Stable Prefix and Volatile Suffix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-warming-and-invalidation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Warming and Invalidation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implicit-vs-explicit-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implicit vs. Explicit Caching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-vendor-caching-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Vendor Caching Differences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-monitoring-and-cache-hit-rate-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Monitoring and Cache Hit Rate Metric
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cache-stampede" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cache Stampede
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache-Aware Routing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache-Aware Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cache-hit-rate-health-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cache Hit Rate Health Indicators
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-cost-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Cost Savings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +959,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +968,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1295,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1343,144 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-caching-is-the-headline-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Caching Is the Headline Optimization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mechanics-keys-hits-misses" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Mechanics: Keys, Hits, Misses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-invariants-and-the-stable-prefix-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Invariants and the Stable-Prefix Discipline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache Invariants and the Stable-Prefix Discipline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-stable-prefix-and-volatile-suffix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Stable Prefix and Volatile Suffix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-warming-and-invalidation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Warming and Invalidation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-eviction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Eviction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implicit-vs-explicit-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implicit vs. Explicit Caching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-vendor-caching-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Vendor Caching Differences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-monitoring-and-cache-hit-rate-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Monitoring and Cache Hit Rate Metric
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cache-stampede" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cache Stampede
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-aware-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache-Aware Routing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache-Aware Routing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cache-hit-rate-health-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cache Hit Rate Health Indicators
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache-cost-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Cost Savings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1159,13 +1538,229 @@
 <li><a href="../10-observability-dashboards-alerting/">Chapter 10: Observability, Dashboards, and Alerting</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">The 90% Discount Most Teams Leave on the Table</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Prompt caching is the single highest-leverage cost optimization in this book. A typical production application that turns it on goes from paying full price for every input token to paying ~10% on the cached portion — and the cached portion is usually 80%+ of input. The math is unusually friendly. The trick is structuring prompts so the cache actually fires, monitoring the hit rate so silent breakage shows up immediately, and avoiding a few classic footguns. Cheap systems are caching systems, and this chapter is how.</p>
+</div>
+<h2 id="why-caching-is-the-headline-optimization">Why Caching Is the Headline Optimization</h2>
+<p><strong>Prompt caching</strong> is the vendor-side mechanism that lets you mark a portion of your prompt as cacheable. The vendor processes that portion once, stores the result in a fast-access cache, and on subsequent requests with the same prefix charges you a fraction of the normal input rate. The discount is dramatic — typically 90% off the cached portion.</p>
+<p>The math (introduced for Anthropic in Chapter 4): one cached read pays back the cache-write premium almost immediately. Any prefix sent more than once should be cached. In practice, <em>most</em> of any production system's input tokens are eligible for caching once you look — system prompts, tool definitions, few-shot examples, retrieved documents that get re-asked about, conversation history. The opportunity is huge.</p>
+<h2 id="the-mechanics-keys-hits-misses">The Mechanics: Keys, Hits, Misses</h2>
+<p>A <strong>cache key</strong> is the identifier the vendor uses to look up cached content. The key is computed deterministically from the prefix you marked as cacheable — typically a hash of the exact bytes of that prefix, plus the model name and any other invariants. Two requests produce the same cache key only if the cacheable prefix is byte-for-byte identical.</p>
+<p>A <strong>cache hit</strong> is the case when the vendor finds the cache key in its cache and serves the cached prefix at the discounted rate. A <strong>cache miss</strong> is the opposite: the prefix is not in the cache (because it's never been seen, or it was evicted, or the TTL expired), and the vendor processes it as a normal full-price input — possibly also writing it to the cache for next time.</p>
+<p>The <strong>cache hit rate</strong> is the ratio that quantifies cache effectiveness:</p>
+<div class="arithmatex">\[
+\text{Cache Hit Rate} = \frac{\text{Cached input tokens served}}{\text{Total input tokens (cached + uncached)}}
+\]</div>
+<p>A healthy production system with a stable system prompt typically achieves 70–95% hit rate. Below 50% something is wrong — usually the cacheable prefix is unintentionally varying between requests.</p>
+<h2 id="cache-invariants-and-the-stable-prefix-discipline">Cache Invariants and the Stable-Prefix Discipline</h2>
+<p>A <strong>cache invariant</strong> is a property of the prompt that must remain identical across requests for the cache to fire. Cache invariants are absolute — even a single byte difference (an extra space, a different timestamp, a swapped quote style) creates a different cache key and forces a miss.</p>
+<p>The architecture every cached prompt follows:</p>
+<p>A <strong>stable prefix</strong> is the portion of the prompt that is identical across requests. It contains the immutable parts: the system prompt, tool definitions, few-shot examples, any retrieved documents that are reused across requests in the same session. The stable prefix is what gets cached.</p>
+<p>A <strong>volatile suffix</strong> is the portion that varies per request — typically the user message, per-request context, the latest tool result. The volatile suffix is <em>not</em> cached; it's processed at the normal input rate every time.</p>
+<p>The <strong>cache boundary</strong> is the position in the prompt where stable ends and volatile begins. The vendor caches everything from the start of the request through the cache breakpoint marker. Placement matters: anything before the marker is cacheable; anything after is volatile.</p>
+<p>The fundamental discipline of cache-friendly prompt design is: <strong>put everything stable at the front, everything volatile at the back, and place the cache boundary at the join.</strong></p>
+<h4 id="diagram-stable-prefix-and-volatile-suffix">Diagram: Stable Prefix and Volatile Suffix</h4>
+<iframe src="../../sims/stable-prefix-volatile-suffix/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Stable Prefix and Volatile Suffix</summary>
+<p>Type: diagram
+<strong>sim-id:</strong> stable-prefix-volatile-suffix<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a typical production prompt as a horizontal stack of components, color-coded by stable vs. volatile, with the cache boundary marked, so learners can see why ordering matters.</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: classify</p>
+<p>Learning objective: Classify prompt components as stable or volatile and place the cache boundary correctly to maximize the cached portion.</p>
+<p>Canvas layout:
+- Main area: A wide horizontal bar representing the prompt, divided into labeled segments
+- Each segment is colored: green for stable, orange for volatile
+- A vertical dashed line marks the current cache boundary position
+- Below the bar: a numeric readout of "Cached tokens: N | Uncached tokens: M | Cache eligibility: X%"</p>
+<p>Default segments (left to right):
+- "System prompt" (green, 3,000 tokens)
+- "Tool definitions" (green, 1,200 tokens)
+- "Few-shot examples" (green, 1,500 tokens)
+- "Retrieved context" (yellow — sometimes stable, sometimes not, 1,500 tokens)
+- "Conversation history" (mixed, 800 tokens)
+- "Current user message" (orange, 200 tokens)</p>
+<p>Interactive controls:
+- Drag the cache boundary line left or right to see how the eligible token count changes
+- Toggle each segment between stable / volatile / mixed
+- Button: "Anti-pattern: timestamp in system prompt" — adds a timestamp to the system prompt segment, marks it volatile, shows the eligible portion drop to zero
+- Button: "Restructure: move volatile to the end" — animates volatile segments moving to the right of the boundary</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the default arrangement with the cache boundary at the natural stable/volatile join
+  Stage 2: When user toggles a segment to volatile, recompute eligibility live
+  Stage 3: When the anti-pattern button is clicked, show the cascading effect on eligibility</p>
+<p>Default state: Boundary just before "Current user message", ~83% cache eligibility</p>
+<p>Implementation: p5.js with responsive width and updateCanvasSize()</p>
+</details>
+<h2 id="cache-warming-and-invalidation">Cache Warming and Invalidation</h2>
+<p><strong>Cache warming</strong> is the deliberate practice of issuing one priming request after a deployment (or after the cache TTL would have expired) to populate the cache before real user traffic arrives. Warming pays the cache-write premium during a low-stakes moment instead of letting the first real user pay it.</p>
+<p>A warming script is straightforward — replay a representative request against the new system prompt, expect a cache miss (since the new content has never been cached), then expect every subsequent real request to hit. For high-traffic endpoints this is automatic (real traffic warms the cache within seconds); for low-traffic endpoints (a Sunday morning spike after a Saturday-night deploy) explicit warming is worth doing.</p>
+<p><strong>Cache invalidation</strong> is the inverse problem: when the cached content needs to be refreshed (a new system prompt, an updated tool definition), the cache must be discarded. Most vendor caching systems handle this implicitly via the cache key — if the prefix bytes change, the new prefix has a new cache key, and the old key just sits in the cache until its TTL expires (then is evicted).</p>
+<p>The only common case where explicit invalidation matters is the 1-hour cache (Anthropic's extended TTL or Gemini's longer TTLs): a bug in the cached content can persist for an hour after the fix ships if you don't trigger fresh requests against the new content. Best practice: after deploying any change to the stable prefix, issue a warming request immediately to seed the new key.</p>
+<h2 id="cache-eviction">Cache Eviction</h2>
+<p><strong>Cache eviction</strong> is the process by which the vendor removes entries from the cache to make room for new ones — typically when the TTL expires (5 minutes by default on Anthropic, longer with explicit configuration) or when the cache is under memory pressure.</p>
+<p>Eviction is a silent failure mode: a workload with bursty traffic can have a perfectly cache-friendly prompt structure but still see low hit rates because the cache TTL keeps expiring between bursts. The diagnostic is to look at the gaps between requests on the same cache key — if the average gap exceeds the TTL, you're paying for cache writes repeatedly without getting reads.</p>
+<p>Mitigations:</p>
+<ul>
+<li>Use the longer TTL (1-hour on Anthropic, multi-hour on Gemini) for low-frequency workloads</li>
+<li>Smooth out traffic with batching or background warming</li>
+<li>Accept that ultra-low-frequency workloads (one request every few hours) cannot benefit from caching — the savings don't recover the per-write premium</li>
+</ul>
+<h2 id="implicit-vs-explicit-caching">Implicit vs. Explicit Caching</h2>
+<p><strong>Implicit caching</strong> is the variant where the vendor caches automatically, without you marking any cache control parameter. OpenAI and Google both offer some form of implicit caching — common stable prefixes get cached and discounted with no code changes on your side. The discount is typically smaller than explicit caching's, but the savings are free.</p>
+<p><strong>Explicit caching</strong> is the variant where you opt in by marking specific portions of the prompt as cacheable (Anthropic's <code>cache_control</code> parameter, Google's explicit cache resources). Explicit caching gives larger and more predictable savings but requires deliberate prompt structuring.</p>
+<p>The decision rule:</p>
+<ul>
+<li>Use implicit caching wherever it's available — it's free</li>
+<li>Use explicit caching for the highest-volume features where the prefix is large (&gt;1,000 tokens) and stable</li>
+<li>Don't bother with explicit caching for ultra-low-volume or ultra-volatile prompts — the operational overhead exceeds the savings</li>
+</ul>
+<h2 id="cross-vendor-caching-differences">Cross-Vendor Caching Differences</h2>
+<p><strong>Cross-vendor caching</strong> is the awkward reality that the three major vendors implement caching differently in mechanics, pricing, and constraints. The differences matter when you're operating multi-vendor:</p>
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Style</th>
+<th>Discount</th>
+<th>Minimum Prefix</th>
+<th>Default TTL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic</td>
+<td>Explicit (<code>cache_control</code>)</td>
+<td>~90% off cached input</td>
+<td>~1,024 tokens</td>
+<td>5 min (1 hr extended)</td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td>Implicit (automatic)</td>
+<td>~50% off cached portion</td>
+<td>~1,024 tokens</td>
+<td>Short, vendor-managed</td>
+</tr>
+<tr>
+<td>Google Gemini</td>
+<td>Both (implicit + explicit)</td>
+<td>50–75% off cached</td>
+<td>1,024 (Flash) / 4,096 (Pro)</td>
+<td>1 min to multi-hour, configurable</td>
+</tr>
+</tbody>
+</table>
+<p>The implications for cross-vendor design:</p>
+<ul>
+<li>The same prompt structure does not produce the same hit rate or savings on every vendor — measure per vendor</li>
+<li>When designing for portability (Chapter 17's vendor-neutral abstraction), prefer prefix structures that work everywhere — long, stable, byte-identical leading sections</li>
+<li>Tool definitions and system prompts are the universal cache-friendly content; per-user conversation history is much less universally cacheable</li>
+</ul>
+<h2 id="cache-monitoring-and-cache-hit-rate-metric">Cache Monitoring and Cache Hit Rate Metric</h2>
+<p><strong>Cache monitoring</strong> is the operational practice of tracking cache effectiveness in production. The single most important metric is the <strong>cache hit rate metric</strong> — the per-feature, per-model hit rate over time.</p>
+<p>The dashboard panel (Chapter 10) shows cache hit rate as a line chart per feature. A healthy line is steady at 70–95% with small TTL-related dips. Failure modes that show up as dips or trends:</p>
+<ul>
+<li>Sudden drop to ~0% — the cacheable prefix changed (someone modified the system prompt without realizing it broke the cache)</li>
+<li>Slow erosion — a slowly-changing element (a date, a counter, a recent-message-injected timestamp) is sneaking into the prefix</li>
+<li>Sawtooth pattern with TTL-period peaks — your traffic is too bursty for the current TTL setting; consider extending it</li>
+<li>Per-feature regression — one feature's hit rate dropped while others held steady; investigate that feature's recent prompt changes</li>
+</ul>
+<p>The investment in monitoring is small and the savings from catching a broken cache early are large — a feature that silently lost caching for a month before anyone noticed can easily cost extra thousands of dollars.</p>
+<h2 id="the-cache-stampede">The Cache Stampede</h2>
+<p><strong>Cache stampede</strong> is a failure mode where many requests simultaneously miss the cache (typically right after eviction or first deployment), each independently pays the cache-write cost, and the cache write benefits the <em>next</em> set of requests rather than the current burst. For high-volume endpoints, this can multiply cost momentarily as N concurrent first-requests each write the same content.</p>
+<p>Mitigations:</p>
+<ul>
+<li><strong>Single-flight pattern</strong> — when N requests arrive simultaneously and none of them are in cache, let one make the actual API call (paying the cache write premium) and have the others wait, then serve them all from the (now-warm) cache. Implementing this correctly in distributed systems is non-trivial; libraries like <code>singleflight</code> (Go) or <code>redis-cache-with-locks</code> (general) handle it.</li>
+<li><strong>Pre-warming</strong> — issue the first request to the new prefix from your deployment pipeline, so by the time real traffic arrives the cache is already warm</li>
+<li><strong>Staggered TTL</strong> — for caches that expire on a fixed cadence, add jitter so all entries don't expire at the same instant</li>
+</ul>
+<p>The cache stampede is a classic distributed-systems problem applied to LLM caches. It's rare in practice but expensive when it happens — usually the post-deploy "why did our cost spike for 10 minutes?" investigation reveals it.</p>
+<h2 id="cache-aware-routing">Cache-Aware Routing</h2>
+<p><strong>Cache-aware routing</strong> is the practice of factoring cache hit probability into model and traffic-routing decisions. Two patterns:</p>
+<ul>
+<li><strong>Sticky routing</strong> — when caching is associated with a specific session, route subsequent requests in the session to the same backend that served the first one (where the cache is warm). For cloud LLM APIs this happens implicitly at the vendor; for self-hosted models or caching proxies, you implement it.</li>
+<li><strong>Cache-affinity model selection</strong> — when a workload could use either of two models, prefer the one whose cache is warmer for that user/session. The same prompt that would cost $0.05 cold can cost $0.005 warm; the choice should follow the cache.</li>
+</ul>
+<p>Cache-aware routing rarely matters for vanilla SaaS LLM use, where the vendor handles routing transparently. It becomes important for self-hosted setups, multi-region deployments, and proxy-based caching layers.</p>
+<h4 id="diagram-cache-hit-rate-health-indicators">Diagram: Cache Hit Rate Health Indicators</h4>
+<iframe src="../../sims/cache-hit-rate-health/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Cache Hit Rate Health Indicators</summary>
+<p>Type: chart
+<strong>sim-id:</strong> cache-hit-rate-health<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show four representative cache-hit-rate time series (healthy, sudden drop, slow erosion, sawtooth) so learners can recognize each pattern and identify the likely root cause.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: distinguish</p>
+<p>Learning objective: Distinguish healthy and degraded cache hit-rate patterns and diagnose the likely root cause of each degradation pattern.</p>
+<p>Chart type: Four small multiples (line charts)
+- Each chart: cache hit rate over 30 days, Y axis 0%–100%</p>
+<p>Patterns:
+1. Healthy: Steady at ~88% with small daily TTL dips
+2. Sudden drop: Steady at 88%, then a cliff to 5% on day 14
+3. Slow erosion: Starts at 88%, gradually drifts down to 40% over 30 days
+4. Sawtooth: Oscillates between 0% and 60% in a daily cycle</p>
+<p>Below each chart:
+- A diagnostic caption identifying the pattern
+- A "likely cause" hint
+- A "what to check" action</p>
+<p>Interactive controls:
+- Click any chart: open a detailed-view modal with timeline annotations
+- Dropdown: "What changed on day 14?" prompting hypothesis generation</p>
+<p>Default state: All four charts visible side by side</p>
+<p>Implementation: Chart.js multi-line, responsive grid layout</p>
+</details>
+<h2 id="cache-cost-savings">Cache Cost Savings</h2>
+<p><strong>Cache cost savings</strong> is the dollar amount saved per period by the caching strategy in place. The computation:</p>
+<div class="arithmatex">\[
+\text{Savings} = \text{Cached tokens} \times (P_{\text{normal}} - P_{\text{read}}) - \text{Cache writes} \times (P_{\text{write}} - P_{\text{normal}})
+\]</div>
+<p>For a typical Anthropic-cached endpoint with 1M cached read tokens per day and 50K cache write tokens per day:</p>
+<div class="arithmatex">\[
+\text{Daily savings} = 1{,}000{,}000 \times (\$3 - \$0.30)/\text{MTok} - 50{,}000 \times (\$3.75 - \$3)/\text{MTok} = \$2.70 - \$0.0375 = \$2.66
+\]</div>
+<p>That's per million-token-bucket; scale to your actual volumes. The point of the formula is that the second term (write premium) almost never dominates — caching is a near-free win when the math holds, and the math holds whenever you have enough repeat traffic.</p>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Treat the Cache Hit Rate Like a Production Metric</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+A 10-percentage-point drop in cache hit rate is often a 10-percentage-point increase in your bill on that feature. Alert on any feature whose cache hit rate drops more than 10 points week-over-week. The alert will fire occasionally on legitimate prompt changes — that's fine, you'll have the conversation about whether the new prompt was worth the caching loss. Where did all the tokens go? Spoiler: into a cache miss someone introduced when they added a timestamp to the system prompt.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now design and operate a cache-friendly LLM application. You apply <strong>prompt caching</strong> by structuring prompts as a <strong>stable prefix</strong> followed by a <strong>volatile suffix</strong> with the <strong>cache boundary</strong> placed at the join. You enforce <strong>cache invariants</strong> so the <strong>cache key</strong> is the same on every legitimate hit, and you read <strong>cache hit</strong> vs. <strong>cache miss</strong> counts off the response usage object. You monitor the <strong>cache hit rate</strong> (the <strong>cache hit rate metric</strong>) on every dashboard, and you investigate degraded patterns by <strong>cache monitoring</strong> workflows. You <strong>cache warming</strong> after deploys, accept <strong>cache eviction</strong> as a TTL-driven reality, and choose between <strong>implicit caching</strong> (free, smaller savings) and <strong>explicit caching</strong> (opt-in, larger savings). You account for <strong>cross-vendor caching</strong> differences when operating multi-vendor. You compute <strong>cache cost savings</strong> to justify the work. You handle the <strong>cache stampede</strong> with single-flight or pre-warming patterns where needed, and you apply <strong>cache-aware routing</strong> in self-hosted or proxy-based architectures. You handle <strong>cache invalidation</strong> correctly when prefix content changes.</p>
+<p>Chapter 15 turns to RAG — making sure the retrieved context that hits your prompt is actually worth the tokens it costs.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What's a cache invariant?</strong> A property of the prompt that must remain byte-identical across requests for the cache to fire. Anything that varies (timestamps, IDs, dates) breaks the cache silently.</li>
+<li><strong>Where do you place the cache boundary?</strong> At the join between the stable prefix and the volatile suffix — everything before the boundary is cached, everything after is processed at full input price.</li>
+<li><strong>What's a cache stampede?</strong> Many simultaneous requests missing the cache and each independently paying the cache write premium. Mitigated by single-flight patterns or pre-warming.</li>
+<li><strong>Why is the cache hit rate the right metric to monitor?</strong> A drop in hit rate is the leading indicator of a silently-broken cache — usually a recent prompt change that introduced a varying element. Catching it early avoids weeks of unnecessary spend.</li>
+<li><strong>What's the difference between implicit and explicit caching?</strong> Implicit is automatic with no code changes (smaller, free savings). Explicit requires marking cache breakpoints (larger, opt-in savings).</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 14</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+The single highest-leverage cost optimization is in your hands. Next: tuning RAG so the retrieved context actually earns its tokens.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1210,6 +1805,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

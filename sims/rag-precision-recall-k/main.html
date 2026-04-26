@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Precision/Recall Tradeoff for K Selection</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Precision/Recall Tradeoff for K Selection</span>
+    <span class="subtitle">Justify a choice of K based on precision, recall, and per-query cost</span>
+</div>
+
+<div class="content">
+    <div class="chart-pane">
+        <canvas id="prCurve"></canvas>
+    </div>
+    <aside class="info-pane">
+        <div class="readout-grid">
+            <div class="readout"><div class="readout-label">Recommended K</div><div class="readout-value" id="recK">--</div></div>
+            <div class="readout"><div class="readout-label">Precision @ K</div><div class="readout-value" id="recP">--</div></div>
+            <div class="readout"><div class="readout-label">Recall @ K</div><div class="readout-value" id="recR">--</div></div>
+            <div class="readout"><div class="readout-label">Cost / query</div><div class="readout-value" id="recC">--</div></div>
+        </div>
+        <div class="verdict" id="verdict">Adjust controls to evaluate K choices.</div>
+        <div class="legend">
+            <div class="legend-item"><span class="dot" style="background:#0277bd"></span>Precision</div>
+            <div class="legend-item"><span class="dot" style="background:#2e7d32"></span>Recall</div>
+            <div class="legend-item"><span class="dot" style="background:#c1440e"></span>Cost / query ($)</div>
+            <div class="legend-item"><span class="dot" style="background:rgba(46,125,50,0.18)"></span>Cost-acceptable zone</div>
+        </div>
+    </aside>
+</div>
+
+<div class="controls">
+    <label class="control-block">
+        <input type="checkbox" id="useReranker" checked>
+        Use reranker
+    </label>
+    <label class="control-block">
+        Reranker N: <span id="nVal">5</span>
+        <input type="range" id="nSlider" min="1" max="20" step="1" value="5">
+    </label>
+    <label class="control-block">
+        Chunk size (tokens): <span id="chunkVal">500</span>
+        <input type="range" id="chunkSlider" min="100" max="1500" step="50" value="500">
+    </label>
+    <label class="control-block">
+        K (selected): <span id="kVal">20</span>
+        <input type="range" id="kSlider" min="1" max="50" step="1" value="20">
+    </label>
+</div>
+</main>
+<script src="rag-precision-recall-k.js"></script>
+</body>
+</html>

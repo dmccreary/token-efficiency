@@ -1,0 +1,1542 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visualize how semantically related words cluster in 2D, and use a "find nearest" tool to see why nearness in embedding space means semantic similarity.">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Embedding Space Concept - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#embedding-space-concept" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Embedding Space Concept
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-microsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      About This MicroSim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloom-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bloom Level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iframe-embed-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iframe Embed Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Duration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Scenarios
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#math-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#senior-instructional-designer-quality-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Senior Instructional Designer Quality Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Senior Instructional Designer Quality Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall verdict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-works-the-pedagogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      What works (the pedagogy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-needs-follow-up-the-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      What needs follow-up (the gaps)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessibility-and-clarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessibility and clarity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognitive-load-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cognitive load assessment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="embedding-space-concept">Embedding Space Concept</h1>
+<iframe src="main.html" height="622px" width="100%" scrolling="no"></iframe>
+
+<p><a class="md-button md-button--primary" href="main.html">Run the Embedding Space Concept Fullscreen</a>
+<a href="https://editor.p5js.org/">Edit in the p5.js Editor</a></p>
+<h2 id="about-this-microsim">About This MicroSim</h2>
+<p>A 2D scatter plot of fifteen words pre-positioned to form three semantically distinct clusters: animals (upper-left, green), vehicles (lower-right, blue), and foods (upper-right, russet). Type a new word into the input field, click "Find nearest", and a star marker appears in the cluster the word semantically belongs to, with dashed lines drawn to its three nearest existing neighbors and the Euclidean distances labeled.</p>
+<p>This is a <em>concept</em> simulator, not a real embedding model. The points are hand-positioned to make the clustering pedagogically obvious. The "find nearest" computation uses simple Euclidean distance on the 2D positions and a hardcoded word-to-cluster mapping for query placement. The pedagogical point is the <em>shape</em> of an embedding space — semantically related items cluster together, and "nearest neighbor" is a meaningful retrieval primitive — not the exact geometry of any production embedding.</p>
+<h2 id="how-to-use">How to Use</h2>
+<ol>
+<li><strong>Read the scatter plot.</strong> Note the three colored clusters. Animal words cluster upper-left, vehicle words lower-right, food words upper-right. The "Embedding dim 1" and "Embedding dim 2" axis labels are intentionally generic — real embeddings have hundreds of dimensions, but the <em>concept</em> survives in 2D.</li>
+<li><strong>Toggle "Show cluster regions" off.</strong> The colored circles disappear; only the labeled dots remain. Note that the cluster structure is still visible from the dot positions alone — that is the whole point of an embedding.</li>
+<li><strong>Type "dog" and click "Find nearest."</strong> A star appears in the animal cluster and dashed lines connect it to the three nearest neighbors with their distances. Discuss: why animals and not vehicles?</li>
+<li><strong>Type "plane" and click "Find nearest."</strong> Star jumps to the vehicle cluster.</li>
+<li><strong>Type "cheese."</strong> Star jumps to the food cluster.</li>
+<li><strong>Type "rocket" or "scooter."</strong> Watch them land in the vehicle cluster — these words are not in the original 15 but the system places them by semantic membership. This is what nearest-neighbor retrieval is.</li>
+<li><strong>Type a word the simulator does not know,</strong> like "happiness." It falls in the middle (unknown cluster). Discuss: a real embedding model handles this gracefully because every string has <em>some</em> embedding; this concept sim does not.</li>
+</ol>
+<h2 id="bloom-level">Bloom Level</h2>
+<p><strong>Understand (L2)</strong> — classify words by their position in a 2D embedding projection and infer that nearness in embedding space reflects semantic similarity.</p>
+<h2 id="iframe-embed-code">Iframe Embed Code</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;sims/embedding-space-concept/main.html&quot;</span>
+        <span class="na">height</span><span class="o">=</span><span class="s">&quot;622px&quot;</span>
+        <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span>
+        <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="audience">Audience</h3>
+<p>Adult professional learners — engineers and product managers exploring RAG, semantic search, or vector-database integrations who need a working mental model of what "an embedding" is and why "nearest neighbor" is the retrieval primitive.</p>
+<h3 id="duration">Duration</h3>
+<p>15–20 minutes inside Chapter 2, or 30 minutes as a standalone workshop with the practice scenarios.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Familiarity with the concept of a vector and 2D coordinates</li>
+<li>Chapter 2 introduction to embeddings as fixed-dimensional vectors</li>
+<li>No prior linear algebra required</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li><strong>Anchor on the three clusters (3 min).</strong> Read the dots aloud, cluster by cluster. Discuss: what is the <em>shared</em> property of the words in each cluster? Note that the model never saw the labels "animal", "vehicle", or "food" — those emerge from co-occurrence in training data.</li>
+<li><strong>Predict before querying (5 min).</strong> Pick three words <em>not</em> in the visible 15 (e.g. "lion", "boat", "yogurt"). Predict which cluster each will land in. Click Find Nearest. Compare.</li>
+<li><strong>The retrieval primitive (5 min).</strong> Discuss: a vector database is a tool that, given a query vector, returns the K nearest vectors. The "find nearest" feature in this sim <em>is</em> a vector database in miniature. Every RAG system, every semantic search, every recommendation engine that uses embeddings is built on this primitive.</li>
+<li><strong>The "unknown" case (3 min).</strong> Type a word the simulator does not know. Watch it land in the middle. Discuss: how does a real embedding model handle this? (Every string has a vector, even unfamiliar ones. The concept sim cannot do this because it relies on hardcoded mappings.)</li>
+<li><strong>From 2D to N dimensions (3 min).</strong> Real embeddings live in 768- or 1536- or 3072-dimensional space. The cluster structure persists. Discuss: why 2D is <em>legitimate</em> as a teaching tool but limiting as a search tool.</li>
+</ol>
+<h3 id="practice-scenarios">Practice Scenarios</h3>
+<table>
+<thead>
+<tr>
+<th>Query word</th>
+<th>Predicted cluster</th>
+<th>Predicted nearest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dog</td>
+<td>animal</td>
+<td>wolf or fox</td>
+</tr>
+<tr>
+<td>plane</td>
+<td>vehicle</td>
+<td>bus or truck</td>
+</tr>
+<tr>
+<td>banana</td>
+<td>food</td>
+<td>apple</td>
+</tr>
+<tr>
+<td>keyboard</td>
+<td>unknown (no cluster)</td>
+<td>drifts to center</td>
+</tr>
+<tr>
+<td>sandwich</td>
+<td>food</td>
+<td>bread</td>
+</tr>
+<tr>
+<td>elephant</td>
+<td>animal</td>
+<td>bear or tiger</td>
+</tr>
+<tr>
+<td>submarine</td>
+<td>vehicle</td>
+<td>bus or motorcycle</td>
+</tr>
+</tbody>
+</table>
+<h3 id="assessment">Assessment</h3>
+<p>A learner has met the objective when they can:</p>
+<ul>
+<li>Classify a new word by predicting which cluster it belongs to, and verify against the sim.</li>
+<li>Explain (without using technical terms) why nearest-neighbor in embedding space corresponds to semantic similarity.</li>
+<li>Describe the function of a vector database in a sentence: "a structure that, given a query vector, returns the K closest vectors."</li>
+<li>Recognize the conceptual difference between this 2D pedagogy and a real high-dimensional embedding (the <em>shape</em> of the cluster transfers; the precise geometry does not).</li>
+</ul>
+<h3 id="math-reference">Math reference</h3>
+<p>Given two embedding vectors <span class="arithmatex">\( \mathbf{u}, \mathbf{v} \in \mathbb{R}^d \)</span>, nearness is most often measured by either Euclidean distance:</p>
+<div class="arithmatex">\[
+d(\mathbf{u}, \mathbf{v}) = \sqrt{\sum_{i=1}^{d} (u_i - v_i)^2}
+\]</div>
+<p>or cosine similarity (when only direction matters and not magnitude):</p>
+<div class="arithmatex">\[
+\cos(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|}
+\]</div>
+<p>Production vector databases support both; in practice, normalized vectors make the two measures equivalent up to a monotonic transform. This MicroSim uses Euclidean distance on 2D points.</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Mikolov, T., et al. (2013). <em>Efficient Estimation of Word Representations in Vector Space</em>. ICLR. — The Word2Vec paper, foundational for the "words live in a vector space" intuition.</li>
+<li>Pennington, J., Socher, R., Manning, C. (2014). <em>GloVe: Global Vectors for Word Representation</em>. EMNLP. — Companion to Word2Vec for the same intuition.</li>
+<li>Reimers, N., Gurevych, I. (2019). <em>Sentence-BERT</em>. EMNLP. — Reference for the dominant modern sentence-embedding model family.</li>
+<li>OpenAI Documentation. <em>Embeddings</em> — practical reference for an off-the-shelf embedding API and pricing model.</li>
+</ol>
+<hr />
+<h2 id="senior-instructional-designer-quality-review">Senior Instructional Designer Quality Review</h2>
+<p><em>Reviewer perspective: 15+ years designing engineering and data-science curricula for adult professional learners; expertise in Bloom's revised taxonomy, evidence-based assessment design, and accessibility of technical content.</em></p>
+<h3 id="overall-verdict">Overall verdict</h3>
+<p><strong>Strong fit for the stated learning objective. Approve as-is for Chapter 2.</strong> Score: <strong>86/100 (B+).</strong> A clean, low-density Understand-level (L2) "classify" sim. The three-cluster pre-positioning is the load-bearing design choice — most introductory texts try to <em>describe</em> a high-dimensional embedding in words and lose the audience. Showing a 2D version with hand-placed clusters lets the <em>shape</em> of the concept transfer to higher dimensions.</p>
+<h3 id="what-works-the-pedagogy">What works (the pedagogy)</h3>
+<ol>
+<li><strong>Bloom alignment is correct for L2.</strong> "Classify" requires the learner to <em>put items into categories based on properties</em>. The cluster regions are the categories; the dot positions are the properties. The query input lets the learner classify a new word by predicting where it will land, then verifying — the canonical L2 predict/verify cycle.</li>
+<li><strong>The three clusters are well-separated and non-confounding.</strong> Animals, vehicles, and foods share no obvious overlap, so a learner cannot accidentally form a wrong rule. Choosing categories that are <em>too</em> close (animal/mammal/pet) would have introduced unproductive ambiguity at this level.</li>
+<li><strong>Distance labels on the neighbor lines.</strong> The dashed lines alone would teach "nearest = related"; the numeric distance labels add a second channel — the learner can compare distances numerically and notice that within-cluster distances are smaller than across-cluster.</li>
+<li><strong>Toggle for the cluster regions.</strong> Letting the learner remove the colored regions tests whether the cluster structure is visible from positions alone. Most learners say yes — which is the right insight: the <em>embedding</em>, not the labels, is what carries the semantic information.</li>
+<li><strong>Honest concept-sim disclaimer in the about section.</strong> Calling out that this is hand-positioned rather than computed protects the learner from forming a false belief about how real embeddings produce these positions.</li>
+</ol>
+<h3 id="what-needs-follow-up-the-gaps">What needs follow-up (the gaps)</h3>
+<ol>
+<li><strong>The "unknown" case dumps the marker in the middle.</strong> Real embeddings do not have an "unknown" cluster — every string gets <em>some</em> vector, often near the cluster of related words even when the word was not in the training data. A learner who types "happiness" and sees the marker drift to dead center may incorrectly conclude that embeddings cannot place novel words. A note next to the result panel ("real embedding models would still place this — the concept sim cannot, see Chapter 6") would close this gap. Score impact: −3.</li>
+<li><strong>No way to load a real embedding.</strong> A future revision could load a real 384-dimensional embedding for the 15 words and project to 2D via PCA or UMAP, showing the actual cluster structure. The current hand-positioned layout is fine for L2 but limits the bridge to L3. Score impact: −2.</li>
+<li><strong>No cosine-similarity option.</strong> The math reference mentions cosine, but the sim only computes Euclidean. A toggle would teach the most-used distinction in production vector databases. Score impact: −2.</li>
+<li><strong>No "K" slider for nearest neighbors.</strong> K is fixed at 3. A slider (1 to 5) would let the learner explore K=1 (single best match) vs. K=5 (return more candidates) — a real-world tradeoff in RAG retrieval. Score impact: −1.</li>
+<li><strong>The dimensionality is fixed at 2.</strong> Most production embeddings are 768 to 3072 dimensions. The learner cannot directly experience the "high-dimensional" part. This is honest in the about section but limits the bridge to vector-database sizing. Score impact: −1.</li>
+</ol>
+<h3 id="accessibility-and-clarity">Accessibility and clarity</h3>
+<ul>
+<li><strong>Color contrast</strong> of the three cluster colors (green, blue, russet) on white passes AA. The dots themselves are slightly desaturated; the legend uses the same colors so the channel is consistent.</li>
+<li><strong>Color-blind safety:</strong> Green and russet are well-separated under deuteranopia; the cluster regions add a second cue (spatial location) so color is not the only channel.</li>
+<li><strong>The distance labels</strong> are positioned on the line midpoints which can overlap when neighbors are close. A more sophisticated label-collision avoidance would help — flagged for follow-up.</li>
+<li><strong>p5.js native input and buttons</strong> are keyboard-focusable.</li>
+</ul>
+<h3 id="cognitive-load-assessment">Cognitive load assessment</h3>
+<ul>
+<li><strong>15 labeled points + 1 query input + 2 buttons + 1 toggle = moderate density.</strong></li>
+<li><strong>Mitigated by spatial separation</strong> — the scatter plot occupies most of the canvas, controls are anchored at the bottom.</li>
+<li><strong>The cluster regions can be turned off</strong> if the learner wants a less busy view.</li>
+</ul>
+<h3 id="recommendation">Recommendation</h3>
+<p><strong>Approve for use in Chapter 2 as currently implemented.</strong> The five gaps above are real but none of them block correct learning of the L2 objective. Open follow-up tickets for:</p>
+<ol>
+<li>"Real embedding models still place unknown words" annotation (highest impact for trust)</li>
+<li>Load real embeddings + PCA projection (bridges to L3)</li>
+<li>Cosine-similarity toggle</li>
+</ol>
+<p>The MicroSim teaches what it claims to teach: words cluster by meaning, nearest-neighbor is a meaningful retrieval primitive, and embedding space has structure. Ship.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

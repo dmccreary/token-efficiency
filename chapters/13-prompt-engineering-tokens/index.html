@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Reducing tokens at their source — system prompt hygiene, instruction compression, few-shot pruning, chain-of-thought tradeoffs, prompt templates, length budgets, and the discipline of reusable blocks">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../14-prompt-caching-patterns/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>13. Prompt Engineering for Token Efficiency - Token Efficiency</title>
+        <title>Prompt Engineering for Token Efficiency - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              13. Prompt Engineering for Token Efficiency
+              Prompt Engineering for Token Efficiency
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -639,6 +637,135 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-as-a-cost-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Engineering as a Cost Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-prompt-hygiene" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Prompt Hygiene
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instruction-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction Compression
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#few-shot-pruning-and-zero-shot-prompting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Few-Shot Pruning and Zero-Shot Prompting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chain-of-thought-when-its-worth-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chain of Thought: When It's Worth It
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-templates-and-variable-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Templates and Variable Interpolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-compression-tools-and-selective-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Compression Tools and Selective Compression
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-and-output-length-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt and Output Length Budgets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt and Output Length Budgets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-prompt-anatomy-and-budget-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Prompt Anatomy and Budget Allocation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whitespace-comments-schemas-and-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Whitespace, Comments, Schemas, and Symbols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reusable-prompt-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusable Prompt Blocks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Prompt Blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-before-and-after-of-a-real-world-prompt-trim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Before-and-After of a Real-World Prompt Trim
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +950,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +959,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1286,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1334,135 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-engineering-as-a-cost-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Engineering as a Cost Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-prompt-hygiene" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Prompt Hygiene
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instruction-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instruction Compression
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#few-shot-pruning-and-zero-shot-prompting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Few-Shot Pruning and Zero-Shot Prompting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chain-of-thought-when-its-worth-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chain of Thought: When It's Worth It
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-templates-and-variable-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Templates and Variable Interpolation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-compression-tools-and-selective-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Compression Tools and Selective Compression
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-and-output-length-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt and Output Length Budgets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt and Output Length Budgets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-prompt-anatomy-and-budget-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Prompt Anatomy and Budget Allocation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whitespace-comments-schemas-and-symbols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Whitespace, Comments, Schemas, and Symbols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reusable-prompt-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusable Prompt Blocks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Prompt Blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-before-and-after-of-a-real-world-prompt-trim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Before-and-After of a Real-World Prompt Trim
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1163,13 +1524,223 @@
 <li><a href="../04-anthropic-claude-ecosystem/">Chapter 4: The Anthropic Claude Ecosystem</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Trim at the Source</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Caching (Chapter 14) saves tokens you re-send. RAG tuning (Chapter 15) saves tokens on what you retrieve. This chapter saves tokens <em>before they ever exist</em> — by writing prompts that don't include the words you didn't need to send. Prompt engineering for tokens is the cheapest discipline in the book and the one with the most compounding payoff. Cheap systems are the systems whose prompts say only what they need to say.</p>
+</div>
+<h2 id="prompt-engineering-as-a-cost-discipline">Prompt Engineering as a Cost Discipline</h2>
+<p><strong>Prompt engineering</strong> in the cost sense is the practice of writing the shortest, clearest prompt that produces the desired model behavior. It is distinct from quality-focused prompt engineering (which optimizes for accuracy) but compatible with it — concise prompts often produce better results too, because they don't bury the important instructions in boilerplate.</p>
+<p>The first principle is the audit. Before optimizing any prompt, count its tokens (Chapter 2). Compare to a back-of-envelope estimate of what the prompt <em>needs</em> to say. The gap is the optimization opportunity. Most production prompts started shorter and grew over time — every time someone hit an edge case they added a line. Few teams ever go back and prune.</p>
+<h2 id="system-prompt-hygiene">System Prompt Hygiene</h2>
+<p><strong>System prompt hygiene</strong> is the standing practice of keeping system prompts as short as possible. Every token in your system prompt is paid for on every request — the highest-leverage cost surface in any LLM application.</p>
+<p>The hygiene checklist:</p>
+<ul>
+<li><strong>Lead with the role and task.</strong> First sentence: who the model is and what it does. Don't bury this under preamble.</li>
+<li><strong>State rules positively when possible.</strong> "Respond in JSON" beats "Do not respond in plain prose, do not use markdown, do not include explanations." Positive instructions are shorter and clearer.</li>
+<li><strong>Separate immutable rules from contextual examples.</strong> Immutable rules go in the system prompt; per-request context goes in the user message.</li>
+<li><strong>Audit against the model behavior, not the original intent.</strong> If a rule was added to fix a bug six months ago, check if the bug still happens without it. Models change; old workarounds become dead weight.</li>
+</ul>
+<p>The single biggest win in most production prompts is removing <strong>redundant instruction</strong> — the same rule expressed three different ways because earlier authors weren't sure the first version landed. Modern models follow clear instructions; they don't need the same idea repeated three times. Pick the clearest version and delete the others.</p>
+<p>The companion is <strong>dead context</strong> — content in the prompt that no longer serves any purpose. Examples: a product name from a previous version, a tool reference for a tool that's been removed, an anti-example for a behavior the model no longer exhibits. Dead context is invisible until you look for it; once you look, it's everywhere.</p>
+<p>A third common waste is <strong>verbose boilerplate</strong> — long polite preambles ("You are a helpful, harmless, and honest assistant. You strive to provide accurate and comprehensive answers..."). Modern models are already trained on this style; the boilerplate adds tokens without changing behavior. Trim it ruthlessly.</p>
+<h2 id="instruction-compression">Instruction Compression</h2>
+<p><strong>Instruction compression</strong> is the practice of rewriting prose instructions into denser equivalents. Some patterns:</p>
+<ul>
+<li>Convert prose to bullets where the structure permits — bullets are typically 30–50% fewer tokens than the equivalent prose</li>
+<li>Replace repeated phrases with named conventions ("hereafter, the input string" once instead of "the input string" five times)</li>
+<li>Use abbreviations and codes for terms used many times (define <code>INP</code> for <code>input</code>, then use <code>INP</code> thereafter)</li>
+<li>Cut adverbs and intensifiers ("very carefully" → "carefully" — model behavior unchanged, tokens saved)</li>
+</ul>
+<p>Compression has limits: at some point clarity suffers and the model behavior degrades. The way to find the limit is to A/B test (Chapter 12) the compressed version against the baseline on quality metrics. Acceptable compression is whatever leaves the quality guardrail intact.</p>
+<p><strong>Token-aware rewriting</strong> is the broader skill of editing prompts with token count in mind — picking shorter synonyms, restructuring sentences for density, and noticing when a paragraph could be a list. Token-aware rewriting becomes intuitive after a few weeks of practice; it changes how you write all prompts thereafter.</p>
+<h2 id="few-shot-pruning-and-zero-shot-prompting">Few-Shot Pruning and Zero-Shot Prompting</h2>
+<p>A <strong>few-shot example</strong> is a worked input/output pair included in the prompt to demonstrate the desired behavior. Few-shot examples are powerful — they often outperform pure instruction for tasks that are easier to show than to describe. They are also expensive: each example is hundreds of tokens of input on every request.</p>
+<p><strong>Few-shot pruning</strong> is the discipline of including only the few-shot examples that actually move quality. Methodology:</p>
+<ol>
+<li>Start with the few-shot set you have</li>
+<li>For each example, run an A/B test removing just that example</li>
+<li>Keep examples whose removal causes a measurable quality drop</li>
+<li>Drop examples whose removal does not</li>
+</ol>
+<p>In practice, few-shot prompts grow over time — engineers add an example when they encounter an edge case and never remove the older ones. After pruning, a 10-example prompt often shrinks to 3 or 4 with no quality loss. The savings recur on every request thereafter.</p>
+<p><strong>Zero-shot prompting</strong> is the natural endpoint: no examples at all, instruction-only. Modern reasoning-capable models often perform as well zero-shot as with carefully-curated few-shot — particularly on tasks well-represented in pretraining. Always try zero-shot as a baseline; if it works, you've eliminated all the example tokens forever.</p>
+<h2 id="chain-of-thought-when-its-worth-it">Chain of Thought: When It's Worth It</h2>
+<p><strong>Chain of thought</strong> (CoT) is a prompting pattern that asks the model to reason explicitly before answering — typically with phrases like "Think step by step before answering" or by providing example reasoning chains in the few-shot examples. CoT improves accuracy on multi-step reasoning problems substantially.</p>
+<p>The cost shape is the issue. CoT triples or quadruples the typical output token count, since the model now produces both reasoning <em>and</em> the final answer. Output is the most expensive token category (Chapter 3), so CoT can multiply the cost of an endpoint by 3–4×.</p>
+<p>The decision rule:</p>
+<ul>
+<li>For genuinely hard reasoning tasks (math, logic, complex code), CoT is worth the cost — accuracy gains are large</li>
+<li>For simple tasks (classification, extraction, formatted generation), CoT is wasted output — the model didn't need to reason</li>
+<li>For modern reasoning models (o-series, Claude with extended thinking, Gemini thinking), built-in reasoning replaces explicit CoT — and you can bound it with a thinking budget (Chapter 4)</li>
+</ul>
+<p>The cleanest way to handle CoT cost is to invoke it conditionally: route hard requests to a CoT-enabled prompt and easy requests to a direct-answer prompt (Chapter 17 covers the routing).</p>
+<h2 id="prompt-templates-and-variable-interpolation">Prompt Templates and Variable Interpolation</h2>
+<p>A <strong>prompt template</strong> is a reusable text skeleton with placeholders for the per-request variable parts. Templates are the production-engineering form of prompts — they enable hashing for log analysis (Chapter 11), versioning, A/B testing, and disciplined updates.</p>
+<p><strong>Template versioning</strong> is the practice of treating prompt templates as code: store them in version control, give each version a stable identifier, log the version with every request. When a regression appears, you can correlate it with the template version that introduced it.</p>
+<p>A <strong>prompt variable</strong> is a placeholder in the template (<code>{{user_query}}</code>, <code>{{document_text}}</code>) that gets filled in per request. <strong>Variable interpolation</strong> is the rendering step — substituting the variables for their values to produce the final prompt sent to the API.</p>
+<p>A representative template might look like:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>{# template id: summarize_v3 #}
+You are a document summarizer. Produce a 3-sentence summary
+of the document below.
+
+Document:
+{{document_text}}
+
+Summary:
+</code></pre></div></td></tr></table></div>
+<p>The template ID and version go into the log line as the <code>prompt_hash</code>. When you ship <code>summarize_v4</code>, you immediately see the per-version cost and quality split in your dashboards.</p>
+<h2 id="prompt-compression-tools-and-selective-compression">Prompt Compression Tools and Selective Compression</h2>
+<p>A <strong>prompt compression tool</strong> is a software utility (often itself an LLM) that takes a long prompt and produces a shorter version preserving the same essential information. Tools in this space include LLMLingua, Selective Context, and similar research projects, plus simpler heuristic approaches.</p>
+<p><strong>Selective compression</strong> is the related principle: not all parts of a prompt are equally compressible. Instructions and rules need to remain literal; few-shot examples can sometimes be paraphrased; retrieved context can often be aggressively summarized. Apply different compression levels to different sections.</p>
+<p>In practice, prompt compression tools are most useful for ad-hoc compression of large user-supplied content (a long document the user pasted into a chat) rather than for production prompt templates. Production templates are typically already short enough that automated compression saves little; the wins are upstream, in the design.</p>
+<h2 id="prompt-and-output-length-budgets">Prompt and Output Length Budgets</h2>
+<p>A <strong>prompt length budget</strong> is a pre-declared cap on the total token count of the input portion of a request. Budgets force prioritization decisions early — if a budget is 8,000 tokens and the system prompt is 5,000, the per-request RAG retrieval gets at most 2,500 tokens and the user message gets the remaining 500. Without a budget, retrieval expands silently to fill available context.</p>
+<p>An <strong>output length budget</strong> is the same idea on the output side, enforced via the <code>max_tokens</code> parameter (Chapter 1) and sometimes via prompt-level instructions like "respond in fewer than 100 words." Output budgets serve two purposes: they cap cost and they shape user experience (a long-winded response is often worse than a concise one).</p>
+<p>A <strong>concise output instruction</strong> is a prompt-level directive that biases the model toward short responses ("Answer in one sentence." / "Respond in under 50 words." / "Skip pleasantries."). Concise instructions reduce typical output by 30–60% on chatty endpoints with no quality loss — often with a perceived quality gain because users prefer terse answers.</p>
+<h4 id="diagram-prompt-anatomy-and-budget-allocation">Diagram: Prompt Anatomy and Budget Allocation</h4>
+<iframe src="../../sims/prompt-anatomy-budget/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Prompt Anatomy and Budget Allocation</summary>
+<p>Type: infographic
+<strong>sim-id:</strong> prompt-anatomy-budget<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a typical production prompt as a stacked bar of its components (system prompt, tool definitions, few-shot, retrieved context, user message) with a length budget overlay, so learners can see how a budget forces prioritization.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement a prompt length budget by allocating tokens across the components of a typical request.</p>
+<p>Canvas layout:
+- Main area: A horizontal stacked bar showing the components of a request, each labeled with its token count
+- Overlay: A vertical line marking the budget boundary
+- Side panel: A list of components with sliders to adjust each one's token allocation</p>
+<p>Components shown by default (sum: 8,000 tokens):
+- System prompt: 3,200
+- Tool definitions: 1,200
+- Few-shot examples: 1,500
+- Retrieved context: 1,500
+- User message: 600
+- Reserve for output: 1,000</p>
+<p>Interactive controls:
+- Slider for each component (within budget; over-budget triggers a red warning)
+- Slider: Total budget (4K to 16K tokens)
+- Buttons: "Auto-shrink system prompt", "Auto-prune few-shot", "Auto-compress retrieved context"</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show all components within budget
+  Stage 2: When user pushes a component over budget, show a red over-budget marker and the suggestion buttons
+  Stage 3: When auto-actions are clicked, show the resulting reductions (animated slide)</p>
+<p>Default state: All components within an 8K budget</p>
+<p>Implementation: p5.js with responsive width and updateCanvasSize()</p>
+</details>
+<h2 id="whitespace-comments-schemas-and-symbols">Whitespace, Comments, Schemas, and Symbols</h2>
+<p>Four small but cumulative wins:</p>
+<p><strong>Whitespace stripping</strong> — remove unnecessary leading/trailing whitespace, collapse multiple consecutive newlines to one, drop indentation that the model doesn't need to interpret structure. Whitespace tokens (with their attached following words, Chapter 2) add up in long structured prompts.</p>
+<p><strong>Comment removal</strong> — for code prompts, drop comments that don't change model behavior. Code comments are often added for human readers, not for the model; the model can usually understand the code without them. Strip with caution — comments that explain non-obvious algorithms still earn their tokens.</p>
+<p><strong>Schema minimization</strong> — when sending JSON Schema (for structured outputs, Chapter 5) or tool definitions, prune optional fields that don't affect validation. A schema with verbose <code>description</code> and <code>example</code> fields on every property might be three times the size of the same schema with only the essentials.</p>
+<p><strong>Symbol substitution</strong> — for highly-repetitive references, define a short symbol once and use it many times. "The customer record" repeated 20 times is much more expensive than <code>R</code> defined as "the customer record" once and used as <code>R</code> thereafter. Use sparingly — too many symbols turn the prompt into a cipher and degrade model performance.</p>
+<h2 id="reusable-prompt-blocks">Reusable Prompt Blocks</h2>
+<p>A <strong>reusable prompt block</strong> is a named chunk of prompt content that gets composed into multiple templates. Blocks are the prompt-engineering equivalent of functions — they reduce duplication, support unified updates, and align with cache breakpoints (Chapter 14).</p>
+<p>A typical organization:</p>
+<ul>
+<li><code>blocks/style_guide.md</code> — instructions for writing style, used by every content-generation prompt</li>
+<li><code>blocks/safety_rules.md</code> — safety instructions, used by every user-facing prompt</li>
+<li><code>blocks/json_schema.md</code> — output schema, used by every structured-output prompt</li>
+</ul>
+<p>Templates compose these blocks at render time:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>{{include style_guide}}
+{{include safety_rules}}
+
+You are summarizing a document. Produce a 3-sentence summary.
+
+Document:
+{{document_text}}
+
+{{include json_schema}}
+</code></pre></div></td></tr></table></div>
+<p>When the safety policy changes, you update one block and all templates pick up the change. When you want to cache a stable prefix, you ensure the included blocks come first and the variable parts come last — alignment with caching is a free side effect of good block organization.</p>
+<h4 id="diagram-before-and-after-of-a-real-world-prompt-trim">Diagram: Before-and-After of a Real-World Prompt Trim</h4>
+<iframe src="../../sims/prompt-trim-before-after/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Before-and-After of a Real-World Prompt Trim</summary>
+<p>Type: chart
+<strong>sim-id:</strong> prompt-trim-before-after<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a representative production prompt before and after applying the techniques in this chapter, with the per-section token reduction visible.</p>
+<p>Bloom Level: Evaluate (L5)
+Bloom Verb: assess</p>
+<p>Learning objective: Assess the cumulative impact of multiple prompt-engineering techniques on a representative prompt.</p>
+<p>Chart type: Grouped horizontal bar chart
+- Y-axis: Prompt section (System prompt, Tool defs, Few-shot, Retrieved context, User message, Output)
+- X-axis: Token count</p>
+<p>Two grouped series per section:
+1. Before (gray bars)
+2. After (green bars)</p>
+<p>Sections and example reductions:
+- System prompt: 5,200 → 2,800 (hygiene + instruction compression)
+- Tool defs: 1,800 → 1,400 (schema minimization)
+- Few-shot: 2,400 → 800 (pruning)
+- Retrieved context: 1,500 → 1,500 (no change in this example — handled in Chapter 15)
+- User message: 200 → 200 (no change)
+- Output budget: 1,000 → 400 (concise output instruction)</p>
+<p>Below the chart:
+- Total before / total after / % reduction
+- Monthly savings projection at sample request volume</p>
+<p>Interactive controls:
+- Toggle each technique on/off to see incremental contribution
+- Slider: Monthly request volume</p>
+<p>Default state: All techniques applied, 100K requests/month</p>
+<p>Implementation: Chart.js horizontal grouped bars, responsive width</p>
+</details>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Audit Your Top Five Templates First</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+Run the per-template cost roll-up from Chapter 11 and pick the top five templates by total monthly spend. Audit those five for hygiene, redundancy, dead context, verbose boilerplate, and few-shot pruning candidates. In my experience, the top five almost always have 20–40% of waste each. That's a 10–20% reduction in <em>total</em> LLM cost from a one-week investment. Where did all the tokens go? Spoiler: into a paragraph someone added in 2024 that no one has read since.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now drive down token cost at the source. You apply <strong>prompt engineering</strong> as a cost discipline starting with <strong>system prompt hygiene</strong> — eliminating <strong>redundant instruction</strong>, <strong>dead context</strong>, and <strong>verbose boilerplate</strong>. You compress what remains via <strong>instruction compression</strong> and broader <strong>token-aware rewriting</strong>. You apply <strong>few-shot pruning</strong> to keep only the <strong>few-shot examples</strong> that earn their tokens, and you try <strong>zero-shot prompting</strong> as a baseline. You use <strong>chain of thought</strong> only where the reasoning gain justifies the output-token cost. You manage prompts as code via <strong>prompt templates</strong> with <strong>template versioning</strong>, <strong>prompt variables</strong>, and disciplined <strong>variable interpolation</strong>. You apply <strong>prompt compression tools</strong> for ad-hoc cases and <strong>selective compression</strong> to spare critical instructions. You enforce <strong>prompt length budgets</strong> and <strong>output length budgets</strong>, and you bias toward shorter responses with a <strong>concise output instruction</strong>. You collect the small wins — <strong>whitespace stripping</strong>, <strong>comment removal</strong>, <strong>schema minimization</strong>, <strong>symbol substitution</strong> — and you organize the whole library into <strong>reusable prompt blocks</strong> so updates and caching alignment come for free.</p>
+<p>Chapter 14 takes the next step: structuring those prompts so they cache.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What is system prompt hygiene?</strong> The standing practice of keeping system prompts as short as possible — eliminating redundant instructions, dead context, and verbose boilerplate.</li>
+<li><strong>When is chain of thought worth the output-token cost?</strong> On genuinely hard reasoning tasks (math, multi-step logic, complex code) where the accuracy gain is large. Not for simple classification or extraction.</li>
+<li><strong>Why prune few-shot examples?</strong> Each example costs hundreds of input tokens on every request. After pruning to the examples that genuinely move quality, the savings recur forever.</li>
+<li><strong>What's a reusable prompt block?</strong> A named chunk of prompt content composed into multiple templates — the prompt-engineering equivalent of a function. Reduces duplication and aligns naturally with cache breakpoints.</li>
+<li><strong>Why does adding a concise-output instruction save money?</strong> It biases the model toward shorter responses. Output is the most expensive token category, so a 30–60% reduction in typical output size is a substantial cost win.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 13</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Prompts trimmed at the source. Now we structure them to cache — the single highest-leverage cost optimization in the whole book.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1214,6 +1785,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

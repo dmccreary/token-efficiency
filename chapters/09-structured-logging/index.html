@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="The instrumentation foundation — log schema design, the standard set of LLM call fields, session and trace identifiers, sampling and retention, and the privacy primitives that any LLM logging system needs from day one">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../10-observability-dashboards-alerting/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>9. Structured Logging for LLM Calls - Token Efficiency</title>
+        <title>Structured Logging for LLM Calls - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              9. Structured Logging for LLM Calls
+              Structured Logging for LLM Calls
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -555,6 +553,156 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#why-structured-logging-matters-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Structured Logging Matters Here
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-log-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Log Schema
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Log Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-schema-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Schema Design Principles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-log-line-and-the-json-log-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Log Line and the JSON Log Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-fields-required-vs-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Fields, Required vs. Optional
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-standard-llm-call-fields-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Standard LLM Call Fields in Detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identifiers-trace-span-session-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identifiers: Trace, Span, Session, Request
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-pii-detection-and-redaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy: PII Detection and Redaction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy: PII Detection and Redaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt-truncation-in-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Truncation in Logs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt Truncation in Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-llm-logging-pipeline-with-privacy-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: LLM Logging Pipeline with Privacy Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-sampling-and-retention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Sampling and Retention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Sampling and Retention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-retention-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Retention Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +971,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +980,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1307,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1355,156 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-structured-logging-matters-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Structured Logging Matters Here
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-log-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Log Schema
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Log Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-schema-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Schema Design Principles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-log-line-and-the-json-log-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Log Line and the JSON Log Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-fields-required-vs-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Fields, Required vs. Optional
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-standard-llm-call-fields-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Standard LLM Call Fields in Detail
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identifiers-trace-span-session-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identifiers: Trace, Span, Session, Request
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-pii-detection-and-redaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy: PII Detection and Redaction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy: PII Detection and Redaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt-truncation-in-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Truncation in Logs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompt Truncation in Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-llm-logging-pipeline-with-privacy-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: LLM Logging Pipeline with Privacy Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-sampling-and-retention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Sampling and Retention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Sampling and Retention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Sampling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-retention-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Retention Policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1166,13 +1569,210 @@
 <li><a href="../07-coding-harnesses-agentic-loops/">Chapter 7: AI Coding Harnesses and Agentic Loops</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">The Foundation Everything Else Sits On</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+You can't optimize what you can't measure, and you can't measure what you didn't log. This chapter installs the schema that the rest of the book — dashboards, A/B tests, log-file forensics, budget enforcement — all depends on. The good news: it's about 30 fields. Get them right on day one and every later question becomes answerable. Get them wrong and you'll be re-instrumenting six months from now.</p>
+</div>
+<h2 id="why-structured-logging-matters-here">Why Structured Logging Matters Here</h2>
+<p><strong>Structured logging</strong> is the practice of emitting log entries as machine-parseable records (typically JSON) with consistent field names and types, rather than free-form human-readable strings. For LLM applications, structured logging is non-negotiable — the analyses we'll do in Chapters 10, 11, and 12 all assume you can <code>SELECT SUM(cost) FROM logs WHERE feature = 'X'</code>. That requires fields, not prose.</p>
+<p>Plain-text logs (<code>"INFO: User did the thing, cost was about a dime"</code>) are appropriate for debugging individual requests; they are useless for cost attribution or trend analysis. Structured logs (<code>{"event":"llm_call","feature":"summarize","cost":0.094, ...}</code>) are what every later chapter assumes.</p>
+<h2 id="the-log-schema">The Log Schema</h2>
+<h3 id="log-schema-design-principles">Log Schema Design Principles</h3>
+<p><strong>Log schema design</strong> is the upfront engineering of which fields you'll log on every request, what their names and types are, and which are required vs. optional. Doing this once, deliberately, costs an afternoon. Doing it ad hoc costs years of inconsistent fields that can't be aggregated.</p>
+<p>The principles:</p>
+<ul>
+<li><strong>Stable field names.</strong> If you call it <code>input_tokens</code> in one service and <code>prompt_tokens</code> in another, downstream analyses break. Pick names early; keep them.</li>
+<li><strong>Consistent units.</strong> Tokens are integers, costs are dollars (six decimal places), latency is milliseconds. No mixing.</li>
+<li><strong>Required vs. optional.</strong> A small set of fields must appear on every record (cost-attribution math depends on it). The rest can be optional.</li>
+<li><strong>Forward-compatible.</strong> Add new fields liberally; never repurpose old ones. Removing fields is a breaking change to every downstream query.</li>
+<li><strong>Vendor-neutral where possible.</strong> Capture vendor-specific token sub-categories under namespaced fields (<code>anthropic.cache_write_tokens</code>, <code>openai.reasoning_tokens</code>) rather than overloading generic ones.</li>
+</ul>
+<h3 id="a-log-line-and-the-json-log-format">A Log Line and the JSON Log Format</h3>
+<p>A <strong>log line</strong> is one record in your log stream — typically one LLM API call (or one harness session, depending on granularity). The <strong>JSON log format</strong> is the standard representation: each log line is a single JSON object on a single physical line (newline-delimited JSON, also known as JSONL or NDJSON), suitable for both tail-based debugging and bulk loading into analytics systems.</p>
+<p>A representative log line for one LLM call:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2026-04-26T14:32:15.482Z&quot;</span><span class="p">,</span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;llm_call&quot;</span><span class="p">,</span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="s2">&quot;req_abc123&quot;</span><span class="p">,</span><span class="nt">&quot;trace_id&quot;</span><span class="p">:</span><span class="s2">&quot;trc_xyz789&quot;</span><span class="p">,</span><span class="nt">&quot;span_id&quot;</span><span class="p">:</span><span class="s2">&quot;sp_001&quot;</span><span class="p">,</span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="s2">&quot;sess_def456&quot;</span><span class="p">,</span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="s2">&quot;u_a1b2c3&quot;</span><span class="p">,</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="s2">&quot;summarize_document&quot;</span><span class="p">,</span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span><span class="nt">&quot;input_tokens&quot;</span><span class="p">:</span><span class="mi">4821</span><span class="p">,</span><span class="nt">&quot;output_tokens&quot;</span><span class="p">:</span><span class="mi">312</span><span class="p">,</span><span class="nt">&quot;cached_input_tokens&quot;</span><span class="p">:</span><span class="mi">4500</span><span class="p">,</span><span class="nt">&quot;cost_usd&quot;</span><span class="p">:</span><span class="mf">0.005463</span><span class="p">,</span><span class="nt">&quot;latency_ms&quot;</span><span class="p">:</span><span class="mi">1842</span><span class="p">,</span><span class="nt">&quot;prompt_hash&quot;</span><span class="p">:</span><span class="s2">&quot;sha256:9f8e...&quot;</span><span class="p">,</span><span class="nt">&quot;outcome&quot;</span><span class="p">:</span><span class="s2">&quot;success&quot;</span><span class="p">,</span><span class="nt">&quot;stop_reason&quot;</span><span class="p">:</span><span class="s2">&quot;end_turn&quot;</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>That's a single physical line in production; one record, ~30 fields, fully structured. Every later analytical query is a SQL aggregate over millions of these records.</p>
+<h3 id="log-fields-required-vs-optional">Log Fields, Required vs. Optional</h3>
+<p>A <strong>log field</strong> is one named property in a log line. <strong>Required log fields</strong> must appear on every record; <strong>optional log fields</strong> appear when relevant.</p>
+<p>The required set for any LLM call log:</p>
+<ul>
+<li><code>timestamp</code> — ISO 8601 UTC, millisecond precision</li>
+<li><code>event</code> — record type discriminator (<code>"llm_call"</code>, <code>"agent_session"</code>, etc.)</li>
+<li><code>request_id</code> — unique ID for this request</li>
+<li><code>model</code> — vendor model identifier (<code>"claude-sonnet-4-6"</code>)</li>
+<li><code>input_tokens</code> — integer count</li>
+<li><code>output_tokens</code> — integer count</li>
+<li><code>cost_usd</code> — computed dollar cost (six decimal places)</li>
+<li><code>latency_ms</code> — wall-clock latency for the request</li>
+<li><code>outcome</code> — <code>"success"</code> | <code>"failure"</code> | <code>"refusal"</code> | <code>"timeout"</code></li>
+</ul>
+<p>The optional set (include when relevant; many will be relevant for most production systems):</p>
+<ul>
+<li><code>cached_input_tokens</code> — for vendors with caching</li>
+<li><code>reasoning_tokens</code> — for reasoning-model calls</li>
+<li><code>feature</code> — product-feature tag</li>
+<li><code>user_id</code> — hashed end-user identifier</li>
+<li><code>session_id</code> / <code>trace_id</code> / <code>span_id</code> — for joining multi-call work</li>
+<li><code>prompt_hash</code> — for prompt-template grouping</li>
+<li><code>stop_reason</code> — vendor-reported stop reason</li>
+<li><code>vendor</code> — <code>"anthropic"</code> | <code>"openai"</code> | <code>"google"</code> for multi-vendor systems</li>
+</ul>
+<h3 id="the-standard-llm-call-fields-in-detail">The Standard LLM Call Fields in Detail</h3>
+<p>Several specific fields deserve explanation:</p>
+<p>The <strong>model field</strong> records the exact model identifier used. Always use the vendor's full model string (<code>"claude-sonnet-4-6"</code>, not <code>"sonnet"</code>) so you can tell models apart across versions when you start A/B-testing them in Chapter 12.</p>
+<p>The <strong>prompt hash</strong> is a SHA-256 (or similar) hash of the prompt template — <em>not</em> the fully-rendered prompt with user content interpolated. The prompt hash lets you group all requests that used the same template even though the variable parts differ. This is the key to per-template cost analysis (Chapter 11). Hash the template, not the rendered string.</p>
+<p>The <strong>input token field</strong>, <strong>output token field</strong>, and <strong>cached token field</strong> carry the three categories of token count. Pull them directly from the API response (<code>response.usage</code> for OpenAI, <code>response.usage.input_tokens</code> etc. for Anthropic). Never compute them from <code>len(text)</code> — only the API knows the exact count.</p>
+<p>The <strong>latency field</strong> is the wall-clock duration of the request in milliseconds, measured at the client (network round-trip + server processing). Distinguish from time-to-first-token (TTFT) for streaming requests; consider logging both.</p>
+<p>The <strong>cost field</strong> is the computed dollar cost of this single request. Compute it client-side using the published per-million-token prices for the model in use. Do not wait for the vendor invoice — by then the data is too coarse for per-request analysis. Use a small lookup table that maps <code>(model, token_type) → $/MTok</code>.</p>
+<p>A <strong>feature tag</strong> is a short string identifying which product feature triggered this call (<code>"summarize_document"</code>, <code>"chat_response"</code>, <code>"classify_intent"</code>). Add this from the application code at call site. It's the single most useful dimension for cost attribution.</p>
+<p>A <strong>user identifier</strong> is a (hashed) reference to the end-user the call was made on behalf of. Always hash before logging — never log raw email addresses or user IDs that could re-identify someone outside your system.</p>
+<p>The <strong>outcome field</strong> is the business-level success indicator: did the request accomplish what it was supposed to accomplish? For some endpoints this is obvious (the JSON parsed); for others it requires application-level judgment (the user clicked "thumbs up"). Cost-per-outcome (Chapter 3) is impossible without this field.</p>
+<h2 id="identifiers-trace-span-session-request">Identifiers: Trace, Span, Session, Request</h2>
+<p>Modern distributed systems organize work hierarchically, and your LLM logs need to participate in that hierarchy or you'll lose the ability to join them with the rest of your observability stack.</p>
+<p>A <strong>trace identifier</strong> is a globally-unique ID for an entire user-facing operation that may span many services and many LLM calls. Traces are typically generated at the edge of your system (load balancer or front-door service) and propagated through every downstream call.</p>
+<p>A <strong>span identifier</strong> is a unique ID for one specific operation within a trace — typically one LLM call, one database query, one downstream service call. Spans nest within traces and reference their parent span via a <code>parent_span_id</code>. The trace-and-span model is the OpenTelemetry standard (Chapter 10) and matches how every modern APM tool expects data.</p>
+<p>A <strong>request identifier</strong> is the per-request ID assigned by your application — for some systems it's the same as <code>span_id</code>, for others it's separate. Use whichever convention your existing services use; the important part is that every log entry has <em>some</em> unique per-request handle.</p>
+<p>A <strong>session identifier</strong> is the higher-level grouping for an extended conversation or agent session — Chapter 7's harness sessions, multi-turn chat conversations, etc. The session ID lets you compute per-session cost (sum of all <code>cost_usd</code> for the session) which is the metric agent budgets (Chapter 18) target.</p>
+<p>The hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Scope</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trace</td>
+<td>Whole user operation across services</td>
+<td>One support ticket end-to-end</td>
+</tr>
+<tr>
+<td>Session</td>
+<td>Multi-turn conversation or agent session</td>
+<td>One Claude Code session</td>
+</tr>
+<tr>
+<td>Request / Span</td>
+<td>Single LLM API call</td>
+<td>One <code>messages.create()</code> invocation</td>
+</tr>
+</tbody>
+</table>
+<p>Log all four on every LLM call. Storage is cheap; reconstruction is expensive.</p>
+<h2 id="privacy-pii-detection-and-redaction">Privacy: PII Detection and Redaction</h2>
+<p>LLM logs are, by their nature, dangerous. The user prompts that flow through your system contain whatever the user happened to type — names, addresses, account numbers, medical descriptions, code containing passwords. Logging those prompts naively creates a high-value target for any breach and violates basic data protection principles.</p>
+<p><strong>Data privacy</strong> is the broader practice of not collecting, storing, or exposing personal information beyond what's strictly needed. For LLM logs the principle translates to: log the <em>metadata</em> of every call (token counts, costs, latency, hashes) and avoid logging the <em>content</em> (raw prompts and responses) unless you have an explicit legal basis and a redaction strategy.</p>
+<p><strong>PII detection</strong> is the process of identifying personally-identifiable information in a string before it enters your logs. Modern PII detection uses a mix of regex patterns (email, phone, credit card formats), named-entity recognition (people, organizations, locations), and structured allow/deny lists for known sensitive fields. Use a library — <code>presidio</code>, <code>scrubadub</code>, or your cloud provider's DLP API — rather than writing your own.</p>
+<p><strong>PII redaction</strong> is what you do once PII is detected: replace the offending substrings with placeholders (<code>[EMAIL]</code>, <code>[NAME]</code>) before logging. Redaction is a one-way transformation; you cannot recover the original from the redacted log. That is the point.</p>
+<p>A representative redaction-aware log entry includes:</p>
+<ul>
+<li>The redacted prompt (or just a hash of it) — never the raw</li>
+<li>The token count of the original prompt (computed before redaction)</li>
+<li>A flag indicating PII was detected and redacted: <code>"pii_redacted": true</code></li>
+<li>The redaction policy version: <code>"pii_policy_version": "v3"</code> so you can re-process logs when the policy changes</li>
+</ul>
+<h3 id="prompt-truncation-in-logs">Prompt Truncation in Logs</h3>
+<p><strong>Prompt truncation in logs</strong> is the related practice of storing only a fixed-size prefix or hash of the prompt, even when no PII is detected. Reasons to truncate:</p>
+<ul>
+<li>Storage cost — multi-million-token prompts in logs add up</li>
+<li>Search index size — full-text indexes blow up on long prompt content</li>
+<li>Defense in depth — even non-PII prompts may contain proprietary information</li>
+</ul>
+<p>A common pattern: log the first 500 tokens of the rendered prompt, plus the SHA-256 hash of the full prompt, plus a <code>prompt_truncated: true</code> flag. This gives you enough context to debug typical issues while bounding storage growth.</p>
+<h4 id="diagram-llm-logging-pipeline-with-privacy-filters">Diagram: LLM Logging Pipeline with Privacy Filters</h4>
+<iframe src="../../sims/llm-logging-pipeline-privacy/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>LLM Logging Pipeline with Privacy Filters</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> llm-logging-pipeline-privacy<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the full path of an LLM call from application code through the LLM API and out to a log storage backend, with PII detection and redaction stages clearly marked.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement an LLM logging pipeline that captures every required field while satisfying PII redaction and retention requirements.</p>
+<p>Visual style: Vertical flowchart with branches</p>
+<p>Steps:
+1. Application code: build prompt, call LLM API
+2. LLM API: returns response with usage metadata
+3. Logging middleware (synchronous):
+   - Compute prompt_hash
+   - Detect PII in prompt and response
+   - Branch:
+     - If PII detected: redact → log redacted version with pii_redacted=true
+     - If no PII: log full prompt (truncated to N tokens) with pii_redacted=false
+   - Compute cost_usd from usage and price table
+   - Add trace_id / span_id / session_id / request_id / user_id / feature
+4. Emit JSONL log line to local stream
+5. Log forwarder (asynchronous): ship to object storage and analytics warehouse
+6. Retention policy: delete records older than N days</p>
+<p>Annotations:
+- Highlight which fields are required vs. optional
+- Show the redaction transformation on a sample prompt
+- Show the cost computation: usage * price → cost_usd</p>
+<p>Interactive controls:
+- Toggle: PII detected (true/false) — shows different log output
+- Slider: Truncation length (100–2000 tokens)</p>
+<p>Implementation: Mermaid flowchart, responsive layout</p>
+</details>
+<h2 id="log-sampling-and-retention">Log Sampling and Retention</h2>
+<h3 id="log-sampling">Log Sampling</h3>
+<p><strong>Log sampling</strong> is the practice of logging only a fraction of requests to control storage cost and downstream analytics load. For high-volume LLM applications (millions of requests per day), full logging may be impractical or prohibitively expensive.</p>
+<p>Sampling strategies that work well for LLM logs:</p>
+<ul>
+<li><strong>Always-on for cost-impacting calls.</strong> Sample 100% of high-cost requests (anything above a threshold, say 5,000 output tokens) — they're rare and they matter.</li>
+<li><strong>Always-on for failures.</strong> Sample 100% of any request with <code>outcome != "success"</code> — debugging needs them.</li>
+<li><strong>Down-sampled for routine calls.</strong> Sample 1–10% of routine successful requests, with extrapolation for aggregates.</li>
+<li><strong>Per-feature override.</strong> Sample 100% of any new or A/B-tested feature regardless of volume.</li>
+</ul>
+<p>Sampling decisions must be deterministic per request (hash of <code>request_id</code>, take modulo) so the sampled subset is statistically representative and so retries don't change the sampling outcome.</p>
+<h3 id="log-retention-policy">Log Retention Policy</h3>
+<p>A <strong>log retention policy</strong> specifies how long log records are kept before deletion. Retention serves three competing pressures: forensic value (you might need old logs to debug), storage cost (logs accumulate fast), and compliance (Chapter 19 — GDPR's right-to-be-forgotten, regulatory data-minimization requirements).</p>
+<p>A reasonable default policy for LLM logs:</p>
+<ul>
+<li>Hot tier (queryable in seconds): 30 days</li>
+<li>Warm tier (queryable in minutes, lower-cost storage): 90 days</li>
+<li>Cold tier (archive, retrieve in hours): 1 year</li>
+<li>Beyond 1 year: aggregate-only retention (per-day/feature/user roll-ups), individual records deleted</li>
+</ul>
+<p>Document the policy explicitly so engineers can answer "where can I find that data" with a simple lookup, not by guessing.</p>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Logging Without Privacy Controls Is a Liability</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+The most common logging mistake I see is "log the full prompt and response, we'll figure out privacy later." That decision creates a multi-terabyte database of customer data with no redaction, no retention plan, and no audit trail — exactly the kind of data store that ends up in a breach disclosure. Build privacy in from day one. PII detection runs in microseconds; retroactively scrubbing a year of logs takes weeks.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now design and operate the logging system that every later chapter depends on. You emit <strong>structured logging</strong> as <strong>JSON log format</strong> records with thoughtful <strong>log schema design</strong>, distinguishing <strong>required log fields</strong> (timestamp, request_id, model, input_tokens, output_tokens, cost_usd, latency_ms, outcome) from <strong>optional log fields</strong>. Each <strong>log line</strong> carries the standard set: <strong>model field</strong>, <strong>prompt hash</strong>, <strong>input token field</strong>, <strong>output token field</strong>, <strong>cached token field</strong>, <strong>latency field</strong>, <strong>cost field</strong>, <strong>feature tag</strong>, <strong>user identifier</strong>, <strong>outcome field</strong>, plus the hierarchical identifiers — <strong>request identifier</strong>, <strong>span identifier</strong>, <strong>trace identifier</strong>, <strong>session identifier</strong>. You enforce <strong>data privacy</strong> with <strong>PII detection</strong> and <strong>PII redaction</strong>, complement them with <strong>prompt truncation in logs</strong>, and govern volume and lifecycle with <strong>log sampling</strong> and a <strong>log retention policy</strong>.</p>
+<p>Chapter 10 takes these logs and builds dashboards and alerts on top of them.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What format should LLM logs be in?</strong> Newline-delimited JSON (JSONL / NDJSON) — one structured object per line.</li>
+<li><strong>Why hash the prompt template instead of the rendered prompt?</strong> So you can group all requests that used the same template, regardless of the variable interpolations. Per-template cost analysis depends on this.</li>
+<li><strong>What's the difference between trace_id, session_id, and request_id?</strong> Trace = whole user operation across services; Session = multi-turn conversation or agent session; Request = single LLM call.</li>
+<li><strong>Why is the <code>outcome</code> field necessary?</strong> Without it you cannot compute cost-per-outcome — and cost-per-request reductions can mask quality regressions invisible in token counts alone.</li>
+<li><strong>What goes wrong if you don't redact PII before logging?</strong> You create a high-value, un-curated database of customer data with no compliance story — exactly the data store that ends up in a breach disclosure.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 9</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+The schema is in place. Every later chapter — dashboards, log-file forensics, A/B tests, budgets — assumes you have these fields on every record. Now we'll build the dashboards that turn the logs into signal.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1217,6 +1817,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

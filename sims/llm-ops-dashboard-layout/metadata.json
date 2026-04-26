@@ -1,0 +1,44 @@
+{
+  "title": "LLM Ops Dashboard Layout",
+  "creator": "Dan McCreary",
+  "subject": "LLM Token Efficiency",
+  "description": "Interactive p5.js wireframe of a 6-panel LLM observability dashboard with healthy / incident state toggle and alert overlay.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "LLM Operations",
+    "topic": "Observability, Dashboards, and Alerting",
+    "learningObjectives": [
+      "Implement an LLM observability dashboard with the panels needed to answer cost, latency, and cache-effectiveness questions for a production team."
+    ],
+    "bloomsTaxonomy": "Apply (L3)",
+    "duration": "20-30 minutes",
+    "prerequisites": ["Basic understanding of dashboards and time-series visualization"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 640},
+    "responsive": true,
+    "dependencies": ["p5@1.11.10"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": false
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive wireframe with hover documentation",
+    "keyQuestions": [
+      "Which panel would you look at first for each class of incident?",
+      "Which alerts must be on to catch a cache regression?",
+      "How does cost-by-feature complement cost-over-time?"
+    ],
+    "commonMisconceptions": [
+      "One cost panel is enough — in fact you need cost-over-time AND cost-by-feature AND cost-by-model.",
+      "Latency P50 is the metric to alert on — actually P95/P99 are the ones that catch user pain."
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "10-observability-dashboards-alerting"
+}

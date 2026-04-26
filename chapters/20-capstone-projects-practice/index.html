@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Putting it all together — baseline measurement, optimization hypotheses, before-after reports, the three capstone projects, eval suites, golden test sets, regression loops, and the long-term token-efficiency roadmap">
       
       
       
@@ -14,15 +14,15 @@
         <link rel="prev" href="../19-batch-privacy-compliance/">
       
       
-        <link rel="next" href="../../learning-graph/">
+        <link rel="next" href="../../sims/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>20. Capstone Projects and Continuous Practice - Token Efficiency</title>
+        <title>Capstone Projects and Continuous Practice - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              20. Capstone Projects and Continuous Practice
+              Capstone Projects and Continuous Practice
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -786,6 +784,207 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-optimization-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Optimization Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Optimization Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-cost-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baseline Cost Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-hypotheses-and-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Hypotheses and Backlog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pilot-rollouts-and-canary-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pilot Rollouts and Canary Deployments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-after-reports-and-postmortems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before-After Reports and Postmortems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before-After Reports and Postmortems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-cost-optimization-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Cost Optimization Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-regression-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Regression Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Regression Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eval-suites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eval Suites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-test-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Golden Test Sets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-test-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regression Test Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-capstone-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Three Capstone Projects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Three Capstone Projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-1-the-token-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 1: The Token Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-2-vendor-neutral-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 2: Vendor-Neutral Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-3-skill-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 3: Skill Refactor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-budget-policy-and-manager-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation: Budget Policy and Manager Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation: Budget Policy and Manager Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-continuous-cost-monitoring-operating-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Continuous Cost-Monitoring Operating Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-cost-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continuous Cost Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-efficiency-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token Efficiency Roadmap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +1022,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +1031,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1358,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1406,207 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-optimization-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Optimization Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Optimization Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-cost-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baseline Cost Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-hypotheses-and-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Hypotheses and Backlog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pilot-rollouts-and-canary-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pilot Rollouts and Canary Deployments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-after-reports-and-postmortems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before-After Reports and Postmortems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before-After Reports and Postmortems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-cost-optimization-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Cost Optimization Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-regression-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Regression Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Regression Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eval-suites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eval Suites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-test-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Golden Test Sets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regression-test-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regression Test Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-capstone-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Three Capstone Projects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Three Capstone Projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-1-the-token-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 1: The Token Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-2-vendor-neutral-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 2: Vendor-Neutral Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-3-skill-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project 3: Skill Refactor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-budget-policy-and-manager-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation: Budget Policy and Manager Review
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation: Budget Policy and Manager Review">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-continuous-cost-monitoring-operating-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Continuous Cost-Monitoring Operating Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-cost-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continuous Cost Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-efficiency-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token Efficiency Roadmap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1162,13 +1667,250 @@
 <li><a href="../18-agent-budget-policies/">Chapter 18: Agent Budget Policies and Session Limits</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Putting It All Together</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+You have the full toolkit. This chapter is the playbook for turning that toolkit into ongoing engineering capability — the projects to execute, the evals to defend the wins against regression, and the practices to keep cost-efficiency a sustained discipline rather than a one-time push. Cheap systems are the result of repeated, instrumented, defensible decisions made by teams who treat cost as a feature.</p>
+</div>
+<h2 id="the-optimization-workflow">The Optimization Workflow</h2>
+<p>Every cost-reduction effort follows the same loop. Master the loop and the rest is repetition.</p>
+<h3 id="baseline-cost-measurement">Baseline Cost Measurement</h3>
+<p><strong>Baseline cost measurement</strong> is the upfront capture of the current cost surface, in enough detail that you can later say "we reduced cost by X%" with evidence. The baseline includes:</p>
+<ul>
+<li>Total monthly cost (the headline)</li>
+<li>Per-feature cost roll-up (Chapter 11)</li>
+<li>Per-user / per-outcome unit economics (Chapter 3)</li>
+<li>Cache hit rate per feature</li>
+<li>P50/P95/P99 cost per request, per feature</li>
+<li>Cost composition (input/output/cached/reasoning shares)</li>
+<li>The current settings: models in use, max_tokens caps, prompt template versions, routing policy, budget caps</li>
+</ul>
+<p>Capture the baseline as a snapshot — a data file plus a written summary — at a known commit hash. Without a baseline you have stories, not evidence.</p>
+<h3 id="optimization-hypotheses-and-backlog">Optimization Hypotheses and Backlog</h3>
+<p>An <strong>optimization hypothesis</strong> is a falsifiable claim about how a specific change will affect a measurable outcome — the same hypothesis structure from A/B testing (Chapter 12). <em>"Adding cache_control to the system prompt for feature X will reduce per-request input cost by at least 80% with no quality regression."</em></p>
+<p>An <strong>optimization backlog</strong> is the ranked queue of hypotheses awaiting test and ship. The backlog is the output of Chapter 11's analysis pipeline: each top-N cost driver becomes one or more hypotheses about how to reduce it. Each backlog item should specify:</p>
+<ul>
+<li>The change proposed</li>
+<li>The expected effect size</li>
+<li>The estimated implementation effort</li>
+<li>The risk to quality / latency / other guardrails</li>
+<li>The dependency on other backlog items</li>
+</ul>
+<p>Rank by <code>expected_savings / (effort × risk)</code> and work from the top. Be ruthless about pruning items whose math no longer pencils out.</p>
+<p>A <strong>cost reduction target</strong> is the periodic goal — quarterly is a reasonable cadence — that anchors the backlog work. <em>"Reduce per-monthly-active-user cost by 30% by end of Q3 with no quality regression."</em> Targets keep the work prioritized and the team accountable.</p>
+<h3 id="pilot-rollouts-and-canary-deployments">Pilot Rollouts and Canary Deployments</h3>
+<p>A <strong>pilot rollout</strong> is a limited deployment of an optimization to a controlled subset of traffic — a single tenant, a beta cohort, an internal-only feature flag. Pilots produce real production data on the change at a fraction of the blast radius if something goes wrong.</p>
+<p>A <strong>canary deployment</strong> is the gradual ramp from pilot to full deployment — start with 1% of traffic, monitor for an hour, ramp to 5%, monitor for a day, ramp to 25%, ramp to 100%. Canary deployments catch issues that only manifest at scale (rate-limit interactions, cache-warming behavior, performance under load).</p>
+<p>Always pilot, always canary. The cost of an extra week of rollout is far less than the cost of a bad change shipping at full traffic.</p>
+<h3 id="before-after-reports-and-postmortems">Before-After Reports and Postmortems</h3>
+<p>A <strong>before-after report</strong> is the artifact produced after a successful optimization: the baseline measurement, the change made, the measurement after, and the resulting cost and quality deltas. Before-after reports are the unit of evidence; they go into the optimization-track-record and serve as the team's accountability artifact.</p>
+<p>A <strong>cost reduction postmortem</strong> is the deeper retrospective when an optimization didn't go as planned — either the savings were smaller than expected, the change caused a quality regression, or the rollout had operational issues. Postmortems are not blame exercises; they're learning artifacts. Write them, link them to the original hypothesis, and revise the methodology.</p>
+<p>The diagram below shows the full optimization loop:</p>
+<h4 id="diagram-the-cost-optimization-loop">Diagram: The Cost Optimization Loop</h4>
+<iframe src="../../sims/cost-optimization-loop/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>The Cost Optimization Loop</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> cost-optimization-loop<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the full repeating cycle from baseline measurement through hypothesis, A/B test, pilot, canary, full rollout, before-after report, and back to the next baseline.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement the end-to-end optimization loop and identify which artifacts each stage produces.</p>
+<p>Visual style: Circular flow diagram</p>
+<p>Stages (clockwise):
+1. Baseline cost measurement → Snapshot artifact
+2. Log file analysis → Optimization backlog
+3. Pick top-ranked hypothesis → Hypothesis spec
+4. Design A/B test → Test plan
+5. Pilot rollout → Initial production data
+6. Canary deployment → Wider validation
+7. Full rollout → All traffic on new version
+8. Before-after report → Evidence artifact
+9. Update baseline ← (loop returns to step 1)</p>
+<p>Annotations on each transition:
+- "If guardrails fail at any stage → cost reduction postmortem"
+- "If hypothesis disconfirmed → archive and pick next"
+- "If wins exceed expectations → adjust target upward"</p>
+<p>Interactive controls:
+- Click any stage: show the artifact format and example
+- Toggle: "Show failure paths" — adds the postmortem and disconfirmation branches</p>
+<p>Implementation: Mermaid flowchart (circular layout), responsive</p>
+</details>
+<h2 id="quality-regression-detection">Quality Regression Detection</h2>
+<p>The biggest risk in any cost optimization is shipping a quality regression that the cost-focused tests didn't catch. <strong>Quality regression detection</strong> is the standing infrastructure that prevents this.</p>
+<p>The components:</p>
+<h3 id="eval-suites">Eval Suites</h3>
+<p>An <strong>eval suite</strong> is a structured collection of test cases that exercise the LLM-using features and measure their quality on objective criteria. Evals are not unit tests in the traditional sense — they typically check output quality (does the answer look right?), output validity (does it parse?), and output behavior (does the agent take the right action?).</p>
+<p>Eval suites for LLM systems usually combine:</p>
+<ul>
+<li>Rule-based checks (does the JSON parse? Does it match the schema?)</li>
+<li>LLM-as-judge evaluation (a separate LLM call rates the response on rubric criteria)</li>
+<li>Heuristic checks (does the response contain forbidden patterns? Is it within length bounds?)</li>
+<li>Human-rated samples (a periodic human review of N random samples)</li>
+</ul>
+<p>Run eval suites in CI on every prompt template change and on every model change.</p>
+<h3 id="golden-test-sets">Golden Test Sets</h3>
+<p>A <strong>golden test set</strong> is a small, curated collection of (input, expected-output-or-rubric) pairs that any change must pass before shipping. Goldens are smaller than eval suites (often 50–200 cases) but more carefully curated — each golden case is a regression you specifically want to never reintroduce.</p>
+<p>Goldens are the way you encode hard-won lessons. Every time a bug ships and gets fixed, the bug-triggering input becomes a new golden case. Over time the golden set accumulates the team's institutional knowledge of how the system can fail.</p>
+<h3 id="regression-test-loops">Regression Test Loops</h3>
+<p>A <strong>regression test loop</strong> is the automated infrastructure that runs evals and goldens on every change and surfaces regressions before they ship. A typical setup:</p>
+<ul>
+<li>On every PR that touches a prompt template, model setting, or routing policy: run the relevant eval suites and golden sets, post results to the PR</li>
+<li>Daily: run the full eval suite against the current production configuration; alert on any regression vs. yesterday</li>
+<li>Weekly: run a deeper eval (more cases, possibly LLM-as-judge) and produce a quality report</li>
+</ul>
+<p>The regression test loop is to LLM systems what unit tests are to traditional code — the safety net that lets you change things confidently.</p>
+<h2 id="the-three-capstone-projects">The Three Capstone Projects</h2>
+<p>Three projects, drawn from the course outline, that together exercise the full toolkit and produce lasting engineering value.</p>
+<h3 id="project-1-the-token-dashboard">Project 1: The Token Dashboard</h3>
+<p>The <strong>token dashboard project</strong> is to build a complete cost observability dashboard for an LLM application — your own or one provided as a course exercise. The project deliverable:</p>
+<ul>
+<li>Structured logging (Chapter 9) wired to capture every LLM call</li>
+<li>Cost calculation client-side from a model price table</li>
+<li>Dashboards (Chapter 10): cost over time, per-feature, per-user, per-model, cache hit rate, latency</li>
+<li>Alerts (Chapter 10): token spike, cost threshold</li>
+<li>Documentation: a runbook describing what each panel answers and what action to take when each alert fires</li>
+</ul>
+<p>The dashboard project is the prerequisite for everything else. You can't measure ROI on optimizations if you can't measure cost.</p>
+<h3 id="project-2-vendor-neutral-logging">Project 2: Vendor-Neutral Logging</h3>
+<p>The <strong>vendor-neutral logging project</strong> extends the dashboard work to support multiple LLM vendors behind a unified schema. Deliverable:</p>
+<ul>
+<li>A wrapper library that exposes a single API for Anthropic, OpenAI, and Gemini calls</li>
+<li>Per-vendor token-count translation into the unified schema</li>
+<li>Per-vendor cost calculation using the right rate cards</li>
+<li>Logging that hides vendor-specific field names behind the unified shape</li>
+<li>Migration documentation for existing services to switch to the wrapper</li>
+</ul>
+<p>This project is the prerequisite for cross-vendor routing (Chapter 17) and meaningful cross-vendor benchmarking (Chapter 6). It's also a long-term operational asset — the wrapper survives vendor changes without breaking your dashboards or analytics.</p>
+<h3 id="project-3-skill-refactor">Project 3: Skill Refactor</h3>
+<p>The <strong>skill refactor project</strong> takes a prose-heavy Skill (Chapter 8) and applies the script-delegation methodology to reduce per-invocation token cost by 30%+ while maintaining behavior. Deliverable:</p>
+<ul>
+<li>Before/after token measurements (with the same input set on both versions)</li>
+<li>The refactored Skill, with bundled scripts and updated body</li>
+<li>Eval suite confirming behavior is unchanged</li>
+<li>A short report quantifying the savings and projecting monthly impact at expected invocation volume</li>
+</ul>
+<p>This project is the cleanest demonstration of script delegation as a practice. It also produces a concrete cost win that justifies the refactor work to skeptical engineering managers.</p>
+<h2 id="documentation-budget-policy-and-manager-review">Documentation: Budget Policy and Manager Review</h2>
+<p>A <strong>budget policy document</strong> is the written-down version of the agent budget policies from Chapter 18 — what caps apply where, what notification flows fire when, who approves overrides, what the escalation path is when limits are hit. The document is the artifact engineering managers reference when discussing budget and the artifact compliance reviewers ask for during audits.</p>
+<p>The <strong>engineering manager review</strong> is the recurring meeting (typically monthly) where the cost trends, optimization backlog progress, and budget exhaustion events get discussed at the team level. The reviews are short and data-driven — the dashboards and the optimization track-record do most of the talking. The point is alignment: managers know what's spent and why, engineers know what to prioritize next, and the team avoids the mid-quarter surprise where the line goes up unexpectedly.</p>
+<p>A <strong>reproducible benchmark</strong> is the standardized cost-and-quality test that anyone on the team can re-run to verify a result. Reproducible benchmarks let you say "we re-tested the routing change against the v3 benchmark and the savings hold" rather than "trust me, it worked when I tested it last month." Bake the benchmarks into CI and include their results in PR descriptions for any change to LLM-using code.</p>
+<h4 id="diagram-the-continuous-cost-monitoring-operating-model">Diagram: The Continuous Cost-Monitoring Operating Model</h4>
+<iframe src="../../sims/continuous-cost-operating-model/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>The Continuous Cost-Monitoring Operating Model</summary>
+<p>Type: infographic
+<strong>sim-id:</strong> continuous-cost-operating-model<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show how the artifacts and rituals from this book combine into a sustainable operating model — daily, weekly, monthly, quarterly cadences each with their own activities and outputs.</p>
+<p>Bloom Level: Create (L6)
+Bloom Verb: design</p>
+<p>Learning objective: Design a continuous cost-monitoring operating model that sustains engineering capability over time.</p>
+<p>Canvas layout:
+- Concentric rings labeled by cadence (innermost: Daily, then Weekly, Monthly, Quarterly)
+- Each ring contains the key activities at that cadence</p>
+<p>Activities:
+- Daily ring: Dashboard checks, alert response, regression-test results
+- Weekly ring: Engineering manager review, optimization backlog grooming, manager weekly report
+- Monthly ring: Cost analysis notebook, before-after reports for shipped optimizations, budget vs. actual review
+- Quarterly ring: Set new cost reduction target, refresh reproducible benchmark, update budget policy document, plan next quarter's optimization theme</p>
+<p>Visual elements:
+- Each activity is a small icon with a label
+- Connecting arrows show information flow between rings (daily alerts feed weekly reviews; weekly reviews feed monthly retrospectives; monthly results feed quarterly planning)</p>
+<p>Interactive controls:
+- Click any activity: see the artifact it produces and who's accountable
+- Toggle: "Show owners" — color-codes by role (engineer, EM, finance, compliance)</p>
+<p>Default state: All rings visible with all activities labeled</p>
+<p>Implementation: p5.js with responsive width</p>
+</details>
+<h2 id="continuous-cost-monitoring">Continuous Cost Monitoring</h2>
+<p><strong>Continuous cost monitoring</strong> is the standing operational practice of treating cost as a metric that gets dashboards, alerts, on-call coverage, and weekly review — exactly like latency and error rate. Continuous monitoring is the difference between "we did a cost-reduction project last quarter" and "cost is something this team manages every day."</p>
+<p>The minimum viable continuous monitoring stack:</p>
+<ul>
+<li>A cost dashboard the team has front of mind</li>
+<li>Weekly cost reviews with the engineering manager</li>
+<li>Cost as a metric in the team's quarterly planning</li>
+<li>An on-call rotation that includes responding to cost alerts (not just availability alerts)</li>
+<li>A monthly cost analysis notebook (Chapter 11) producing the next month's optimization backlog</li>
+</ul>
+<p>Continuous monitoring sustains gains. Most cost-reduction projects regress within a year because the team that won the gain stops paying attention. Continuous monitoring is the cure.</p>
+<h2 id="the-token-efficiency-roadmap">The Token Efficiency Roadmap</h2>
+<p>A <strong>token efficiency roadmap</strong> is the multi-quarter plan that connects current cost reality to a long-term target — typically the next 12–18 months of optimization themes, dependencies, and milestones. The roadmap turns ad hoc backlog work into a strategic narrative that survives leadership changes and re-organizations.</p>
+<p>A representative roadmap structure:</p>
+<table>
+<thead>
+<tr>
+<th>Quarter</th>
+<th>Theme</th>
+<th>Key Initiatives</th>
+<th>Cost Reduction Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Instrumentation</td>
+<td>Token dashboard project, vendor-neutral logging</td>
+<td>0% (baseline established)</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>High-leverage wins</td>
+<td>Caching, prompt trimming, model routing</td>
+<td>30% per-request</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>RAG and context</td>
+<td>Reranking, chunking, compaction</td>
+<td>20% additional</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Agent and budgets</td>
+<td>Budget policies, skill refactoring, agent-budget rollouts</td>
+<td>15% additional</td>
+</tr>
+</tbody>
+</table>
+<p>The exact numbers and themes depend on your starting point. The point is having a plan: what we'll attack when, what depends on what, what success looks like at each milestone.</p>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Make Cost a First-Class Metric</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+The single biggest predictor of long-term LLM cost discipline isn't any specific technique from this book — it's whether the team treats cost as a metric on equal footing with latency and quality. Teams that do, ship optimizations continuously. Teams that don't, end up paying their tuition through a surprise quarterly bill that finally gets noticed. Make the dashboard. Hold the weekly review. Cheap systems are the systems whose teams looked.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now run the full continuous-improvement loop. You start with <strong>baseline cost measurement</strong> to capture the current state, generate <strong>optimization hypotheses</strong> and rank them in an <strong>optimization backlog</strong>, and set quarterly <strong>cost reduction targets</strong> to anchor the work. You ship each change through <strong>pilot rollouts</strong> then <strong>canary deployments</strong>, validate via the A/B framework from Chapter 12 with rigorous <strong>quality regression detection</strong> backed by <strong>eval suites</strong>, <strong>golden test sets</strong>, and <strong>regression test loops</strong>, and document results in a <strong>before-after report</strong> (or a <strong>cost reduction postmortem</strong> when things didn't go as planned). You execute the three capstone projects — the <strong>token dashboard project</strong>, the <strong>vendor-neutral logging project</strong>, and the <strong>skill refactor project</strong> — that exercise the toolkit and produce durable engineering assets. You document the operating model in a <strong>budget policy document</strong>, hold the <strong>engineering manager review</strong> on a regular cadence, maintain a <strong>reproducible benchmark</strong> for ongoing verification, and sustain the work through <strong>continuous cost monitoring</strong> organized by a multi-quarter <strong>token efficiency roadmap</strong>.</p>
+<p>This is the end of the chapter material. What follows is the work — not in this book, but in your systems. Every token counts, and counting is fun.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What's the right first project for any team starting cost-efficiency work?</strong> The token dashboard project. You can't optimize what you can't measure, so instrumentation comes first.</li>
+<li><strong>Why pilot before canary before full rollout?</strong> Each stage exposes the change to a wider audience with more chances to catch issues. The cost of a slow rollout is much less than the cost of shipping a regression at full traffic.</li>
+<li><strong>What's a golden test set?</strong> A small, curated collection of input/expected-output pairs that any change must pass before shipping. Each case typically encodes a regression the team has previously fixed and never wants to reintroduce.</li>
+<li><strong>Why is continuous cost monitoring necessary?</strong> Because cost-reduction wins regress within months when no one is watching. Continuous monitoring is the practice that sustains gains.</li>
+<li><strong>What goes in a token efficiency roadmap?</strong> A multi-quarter plan connecting current cost to a long-term target — themes per quarter, key initiatives, dependencies, and the cost reduction targets at each milestone.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">Course Complete</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+You've finished the textbook. You can read any LLM API call and predict its cost. You can find the hotspots in any production logs. You can ship optimizations defensibly with A/B tests, eval suites, and budget caps. You can build cost as a first-class engineering metric on your team. From here on out, every token saved is one you knew how to save deliberately. Every token counts — and counting is fun. Welcome to the discipline.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1213,6 +1955,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

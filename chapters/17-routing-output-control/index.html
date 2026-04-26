@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Spending output tokens deliberately — cheap-first cascades, escalation triggers, fallback models, vendor-neutral abstractions, and the full output-control toolkit (max tokens, stop sequences, JSON schema, reasoning effort)">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../18-agent-budget-policies/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>17. Model Routing and Output Control - Token Efficiency</title>
+        <title>Model Routing and Output Control - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              17. Model Routing and Output Control
+              Model Routing and Output Control
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -723,6 +721,132 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#routing-as-a-cost-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing as a Cost Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cheap-first-cascade" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cheap-First Cascade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-models-and-cross-vendor-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback Models and Cross-Vendor Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-classifiers-and-difficulty-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Classifiers and Difficulty Estimation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing-policy-from-tactics-to-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing Policy: From Tactics to Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Routing Policy: From Tactics to Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#routing-cost-savings-vs-routing-quality-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing Cost Savings vs. Routing Quality Risk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vendor-lock-in-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vendor Lock-In Risk
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vendor Lock-In Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cheap-first-cascade-with-escalation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cheap-First Cascade with Escalation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-control-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Output Control Toolkit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#truncation-detection-and-postprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Truncation Detection and Postprocessing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Truncation Detection and Postprocessing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-output-control-settings-and-their-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Output Control Settings and Their Effects
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +947,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +956,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1283,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1331,132 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing-as-a-cost-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing as a Cost Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cheap-first-cascade" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cheap-First Cascade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-models-and-cross-vendor-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback Models and Cross-Vendor Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-classifiers-and-difficulty-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Classifiers and Difficulty Estimation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing-policy-from-tactics-to-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing Policy: From Tactics to Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Routing Policy: From Tactics to Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#routing-cost-savings-vs-routing-quality-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Routing Cost Savings vs. Routing Quality Risk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vendor-lock-in-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vendor Lock-In Risk
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vendor Lock-In Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cheap-first-cascade-with-escalation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cheap-First Cascade with Escalation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-control-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Output Control Toolkit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#truncation-detection-and-postprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Truncation Detection and Postprocessing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Truncation Detection and Postprocessing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-output-control-settings-and-their-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Output Control Settings and Their Effects
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1173,13 +1528,207 @@
 <li><a href="../16-context-window-management/">Chapter 16: Context Window Management</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Spend Output Tokens Deliberately</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Output is the most expensive token category (Chapter 3) and routing is the second-highest-leverage optimization in this book (after caching). Most LLM applications send everything to the strongest model "to be safe" — and pay 10× too much for the routine 80% of requests that the cheap model would handle perfectly. This chapter shows you how to route deliberately and how to bound output even more precisely. Cheap systems route the easy stuff cheap.</p>
+</div>
+<h2 id="routing-as-a-cost-discipline">Routing as a Cost Discipline</h2>
+<p><strong>Model routing</strong> is the practice of sending each request to the model that's just-good-enough for it, rather than always using the strongest available. The simplest routing decision is binary: send routine requests to a cheap model, escalate hard ones to an expensive model. The savings can easily reach 50–80% of total cost without quality loss.</p>
+<p>The math: for a typical workload distribution, ~80% of requests are routine (suitable for the cheap model) and ~20% are hard (need the expensive one). If the cheap model is 5× cheaper per token, routing produces:</p>
+<div class="arithmatex">\[
+\text{Routed cost} = 0.80 \times C_{\text{cheap}} + 0.20 \times C_{\text{expensive}}
+\]</div>
+<p>Substituting <span class="arithmatex">\( C_{\text{cheap}} = C_{\text{expensive}} / 5 \)</span>:</p>
+<div class="arithmatex">\[
+\text{Routed cost} = 0.16 \times C_{\text{expensive}} + 0.20 \times C_{\text{expensive}} = 0.36 \times C_{\text{expensive}}
+\]</div>
+<p>A 64% cost reduction relative to "always use the expensive model" — for the same expected quality, since the hard requests still get the strong treatment.</p>
+<h2 id="the-cheap-first-cascade">The Cheap-First Cascade</h2>
+<p>The <strong>cheap-first cascade</strong> is the canonical routing pattern: try the cheap model first, escalate to the expensive model only when the cheap one's response fails some quality check. The flow:</p>
+<ol>
+<li>Send request to cheap model</li>
+<li>Run a <strong>quality gate</strong> on the response (validates structure, checks confidence, runs a heuristic)</li>
+<li>If the gate passes, return the cheap response — done</li>
+<li>If the gate fails, retry on the expensive model</li>
+</ol>
+<p>The cascade pays for the cheap call always and the expensive call only on failures. If the cheap model succeeds 80% of the time, total cost is <code>cheap_cost + 0.20 × expensive_cost</code> — close to the cheap cost alone.</p>
+<p>An <strong>escalation trigger</strong> is the specific signal that fires the gate failure. Triggers come in several flavors:</p>
+<ul>
+<li><strong>Format triggers</strong> — the response didn't parse as expected JSON, didn't match a regex, didn't pass a JSON Schema check</li>
+<li><strong>Confidence triggers</strong> — the response includes uncertainty markers ("I'm not sure", "this might be wrong") or has low confidence on logprobs (Chapter 2)</li>
+<li><strong>Length triggers</strong> — the response was suspiciously short (the model gave up) or suspiciously long (the model rambled)</li>
+<li><strong>Eval triggers</strong> — a downstream evaluator (a small classifier, a rule-based checker, even another LLM) judges the response inadequate</li>
+</ul>
+<p>A <strong>confidence threshold</strong> is the specific numeric cutoff for confidence-based triggers. If <code>top_token_logprob - second_token_logprob &lt; threshold</code>, escalate. The right threshold is workload-specific — A/B test it.</p>
+<h2 id="fallback-models-and-cross-vendor-routing">Fallback Models and Cross-Vendor Routing</h2>
+<p>A <strong>fallback model</strong> is the model the cascade escalates to when the primary fails. Fallbacks usually go up the same family (Haiku → Sonnet → Opus) but can also cross vendors when the failure mode is vendor-specific.</p>
+<p><strong>Cross-vendor routing</strong> is the practice of routing across vendors based on cost, capability, or availability — sending Claude requests to Anthropic, GPT requests to OpenAI, Gemini-eligible requests to Google, possibly with vendor-specific cascades within each. The motivations:</p>
+<ul>
+<li>Cost arbitrage — Vendor A's Sonnet-tier might be cheaper than Vendor B's equivalent for your traffic</li>
+<li>Capability arbitrage — some tasks just work better on specific models (long-context to Gemini, reasoning to o-series)</li>
+<li>Availability — fallback to a different vendor when your primary is rate-limited or down</li>
+</ul>
+<p>Cross-vendor routing requires a <strong>vendor-neutral abstraction</strong> layer in your code — a shared interface (request shape, response shape, cost computation) that maps to each vendor's specific SDK behind the scenes. Frameworks like LiteLLM, OpenRouter, or in-house wrappers handle this. The investment is worthwhile for any organization spending more than ~$10K/month on LLM costs; below that, the operational complexity outweighs the savings.</p>
+<h2 id="task-classifiers-and-difficulty-estimation">Task Classifiers and Difficulty Estimation</h2>
+<p>A <strong>task classifier</strong> is a small, cheap component (usually a small LLM call or even a non-LLM ML model) that examines an incoming request and classifies it into a category — "simple lookup", "summarization", "complex reasoning", "code generation", etc. The classifier output drives <strong>per-task model selection</strong> — different categories route to different default models.</p>
+<p><strong>Difficulty estimation</strong> is the related but more granular practice: produce a numeric difficulty score for each request and route based on a threshold. A request scoring 0.2 (easy) goes to Haiku; one scoring 0.8 (hard) goes to Opus.</p>
+<p>Both classifier and difficulty estimation cost a small extra LLM call per request (~$0.0001 each). They're worth it when the cost differential between cheap and expensive models is large enough that even occasional savings dominate the classifier cost — which is almost always.</p>
+<h2 id="routing-policy-from-tactics-to-strategy">Routing Policy: From Tactics to Strategy</h2>
+<p>A <strong>routing policy</strong> is the formal specification of how routing decisions get made — input features, model options, escalation rules, fallback chains, vendor preferences. Policies turn ad hoc routing tactics into auditable, A/B-testable, version-controlled artifacts.</p>
+<p>A typical policy specification:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nt">policy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production_v3</span>
+<span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feature == &quot;simple_lookup&quot;</span>
+<span class="w">    </span><span class="nt">primary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-haiku-4-5</span>
+<span class="w">    </span><span class="nt">escalate_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;json_invalid&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;logprob_uncertain&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">fallback</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-sonnet-4-6</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feature == &quot;code_review&quot;</span>
+<span class="w">    </span><span class="nt">primary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-sonnet-4-6</span>
+<span class="w">    </span><span class="nt">escalate_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;eval_fail&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">fallback</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus-4-7</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feature == &quot;deep_research&quot;</span>
+<span class="w">    </span><span class="nt">primary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude-opus-4-7</span>
+<span class="w">    </span><span class="nt">fallback</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gemini-pro</span>
+<span class="w">    </span><span class="nt">fallback_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;rate_limit&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div></td></tr></table></div>
+<p>Policies should be data, not code — version them, A/B test them, roll back without a deploy.</p>
+<h3 id="routing-cost-savings-vs-routing-quality-risk">Routing Cost Savings vs. Routing Quality Risk</h3>
+<p><strong>Routing cost savings</strong> is the dollar amount saved by a routing policy compared to a "always strongest model" baseline. Quantify and report this monthly — it's the headline metric that justifies the routing infrastructure.</p>
+<p><strong>Routing quality risk</strong> is the corresponding downside: every routing decision that sends a request to a cheaper model carries some risk that the cheaper model produces a worse response. Quantify quality risk via the same A/B test methodology from Chapter 12 — the routed variant must hold guardrail metrics flat.</p>
+<p>A routing policy ships only when it shows large cost savings <em>and</em> flat guardrails. Both must be true.</p>
+<h3 id="vendor-lock-in-risk">Vendor Lock-In Risk</h3>
+<p><strong>Vendor lock-in risk</strong> is the operational risk that comes from depending on vendor-specific features that don't have equivalents elsewhere. Anthropic prompt caching syntax, OpenAI structured outputs, Gemini grounding — each is a vendor-specific feature you can't trivially port. Vendor lock-in isn't always bad (the feature might be worth it), but the risk should be deliberate, not accidental.</p>
+<p>The mitigation is the vendor-neutral abstraction: keep vendor-specific features behind feature flags within your abstraction layer, so you can switch without rewriting application code. The cost is some lost optimization (you can't always exploit a vendor-specific feature fully when there's no equivalent elsewhere); the benefit is freedom of movement when prices, capabilities, or availability shifts.</p>
+<h4 id="diagram-cheap-first-cascade-with-escalation">Diagram: Cheap-First Cascade with Escalation</h4>
+<iframe src="../../sims/cheap-first-cascade-escalation/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Cheap-First Cascade with Escalation</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> cheap-first-cascade-escalation<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the cheap-first cascade flow with escalation triggers visible at each gate, plus a cost annotation showing per-request expected cost as a function of escalation rate.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement a cheap-first cascade with appropriate escalation triggers and quantify the expected cost savings.</p>
+<p>Visual style: Flowchart with three branches</p>
+<p>Steps:
+1. User request → Send to cheap model (Haiku, $0.001)
+2. Run quality gate:
+   - Format check (JSON valid?)
+   - Confidence check (logprob delta &gt; threshold?)
+   - Length check (within expected range?)
+3. Branch:
+   - If all pass → Return cheap response (cost: $0.001)
+   - If any fail → Escalate to expensive model (Sonnet, $0.005), return that response (cost: $0.001 + $0.005 = $0.006)
+4. Optional second escalation to most-expensive model (Opus) on second failure</p>
+<p>Annotations:
+- Per-stage cost
+- Per-stage probability (default: 80% cheap-pass, 18% sonnet-pass, 2% opus-pass)
+- Expected cost per request: 0.80 × $0.001 + 0.18 × $0.006 + 0.02 × $0.026 = $0.0024
+- Compared to "always Opus" baseline ($0.026): 91% reduction</p>
+<p>Interactive controls:
+- Slider: cheap-pass rate (50%–95%)
+- Slider: confidence threshold
+- Toggle: "Add Opus tier" (on/off)
+- Toggle: "Show expected cost calculation"</p>
+<p>Implementation: Mermaid flowchart with cost annotations, responsive layout</p>
+</details>
+<h2 id="the-output-control-toolkit">The Output Control Toolkit</h2>
+<p>Routing decides which model handles a request; output control bounds what that model is allowed to produce. The toolkit:</p>
+<p>The <strong>max tokens setting</strong> is the absolute ceiling on output token count (Chapter 1). Even a misbehaving prompt cannot produce more output tokens than <code>max_tokens</code>. Set this for every endpoint to a value calibrated to the maximum useful response length — never accept the SDK default.</p>
+<p>The <strong>stop sequence setting</strong> specifies strings that, if generated, end the response cleanly. Use stop sequences for structural framing — end after the JSON object closes, end before a new section starts. Stop sequences end generation at the right <em>content</em> boundary, complementing <code>max_tokens</code> which ends at the right <em>length</em> boundary.</p>
+<p>A <strong>length penalty</strong> is a parameter (where supported) that biases the model toward shorter output by progressively penalizing longer continuations. Less precise than <code>max_tokens</code> but useful for biasing toward concise answers without hard truncation.</p>
+<p><strong>JSON schema output</strong> (Chapter 5) constrains the model to emit JSON conforming to a specific schema. The constrained-decoding mechanism stops the model from emitting tokens that would violate the schema, which usually means earlier termination — the response is structurally complete the moment the schema is satisfied. JSON schema output saves output tokens and eliminates parse-failure retry loops.</p>
+<p><strong>Concise mode</strong> is a generic name for any vendor-specific or prompt-level setting that biases toward shorter responses. Where it exists as a vendor parameter (some smaller models offer it), use it. Where it doesn't, use a prompt-level <strong>concise output instruction</strong> (Chapter 13).</p>
+<p>A <strong>verbosity parameter</strong> (where supported) is a more graded version of concise mode — a numeric setting that scales how much the model writes. Set it once per endpoint based on the use case.</p>
+<p>The <strong>reasoning budget</strong> and <strong>thinking token limit</strong> (Chapter 4) bound how many internal reasoning tokens the model can produce on reasoning-capable models. Always cap the reasoning budget — uncapped is a path to surprise bills.</p>
+<p>The <strong>reasoning effort setting</strong> is OpenAI's o-series equivalent — <code>reasoning.effort = "low" | "medium" | "high"</code> controls how much internal deliberation the model does. Higher effort = better answers on hard problems = more reasoning tokens billed at the output rate.</p>
+<h2 id="truncation-detection-and-postprocessing">Truncation Detection and Postprocessing</h2>
+<p><strong>Truncation detection</strong> is the practice of detecting when a response was cut off by <code>max_tokens</code> and handling it appropriately — by retrying with a higher cap, by asking the model to continue, or by failing fast and surfacing the issue. Detection signals: the response's stop reason is <code>"max_tokens"</code>, the JSON didn't parse, the text ends mid-sentence.</p>
+<p>Without truncation detection, an over-tight <code>max_tokens</code> cap looks like a quality regression — answers seem to "trail off" inexplicably. With detection, you can retry intelligently or alert.</p>
+<p><strong>Streaming cancellation</strong> is the client-side abort of a streaming response that has gone off the rails — the model started looping, repeating itself, or generating obviously bad output. Most vendor APIs let you close the stream and stop being billed for further tokens (or at least minimize the additional tokens). Cancellation requires the client to actually monitor the stream content; see also <strong>early stopping</strong>.</p>
+<p><strong>Early stopping</strong> is the broader pattern: examine the partial response as it streams and abort if it shows pathological signs (excessive repetition, format violations). Early stopping needs careful tuning — false positives cancel valid responses unnecessarily — but for high-volume endpoints with predictable output shapes it can save 10–20% of output cost.</p>
+<p><strong>Output postprocessing</strong> is everything you do to a completed response before returning it to the user — parsing, validation, redaction, formatting, error wrapping. Postprocessing doesn't reduce the <em>generation</em> cost (the tokens were already produced) but it can prevent costly retries and downstream errors. Always include <code>outcome</code> tagging here so the log line (Chapter 9) gets the right success/failure mark.</p>
+<p><strong>Output validation</strong> is the specific check that the response satisfies expected constraints (parsed correctly, fields present, values in range). Use <strong>schema enforcement</strong> — JSON Schema, Pydantic models, Zod schemas — rather than ad-hoc string matching.</p>
+<h4 id="diagram-output-control-settings-and-their-effects">Diagram: Output Control Settings and Their Effects</h4>
+<iframe src="../../sims/output-control-settings/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Output Control Settings and Their Effects</summary>
+<p>Type: chart
+<strong>sim-id:</strong> output-control-settings<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the distribution of output token counts under different output-control configurations (default, with max_tokens, with stop sequence, with concise instruction, all combined) so learners can see each setting's contribution.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: differentiate</p>
+<p>Learning objective: Differentiate the cost impact of each output-control setting and combine them effectively.</p>
+<p>Chart type: Multiple histograms (small multiples)
+- Each histogram: distribution of per-response output tokens for one configuration
+- 5 histograms in a row: Baseline / +max_tokens=500 / +stop_sequence / +concise_instruction / +all combined</p>
+<p>Below each histogram:
+- Median output tokens
+- Average cost per response
+- Truncation rate (% of responses that hit max_tokens)</p>
+<p>Interactive controls:
+- Slider: max_tokens cap (100–4,000)
+- Toggle each setting on/off
+- Toggle: "Show truncation rate overlay"</p>
+<p>Default state: All settings combined, max_tokens=500</p>
+<p>Implementation: Chart.js multi-histogram, responsive grid</p>
+</details>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Always Cap Reasoning Budgets</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+Reasoning models bill internal thinking at the output rate. An uncapped thinking budget can consume 30,000+ tokens of invisible deliberation on a single request — billed at $15/MTok or higher. The cap is a one-line setting and the cost difference is often 10×. Of all the things in this chapter, this is the one to do today. Where did all the tokens go? Spoiler: into reasoning the model didn't really need.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now spend output tokens deliberately. You design <strong>routing policies</strong> built around the <strong>cheap-first cascade</strong> pattern, with explicit <strong>escalation triggers</strong> and <strong>confidence thresholds</strong> at each <strong>quality gate</strong>, and <strong>fallback models</strong> for failure cases. You may apply <strong>cross-vendor routing</strong> for cost or capability arbitrage, behind a <strong>vendor-neutral abstraction</strong> that mitigates <strong>vendor lock-in risk</strong>. You drive <strong>per-task model selection</strong> with a <strong>task classifier</strong> or <strong>difficulty estimation</strong> step, and you measure <strong>routing cost savings</strong> against <strong>routing quality risk</strong> via the A/B framework from Chapter 12. On every request you bound output with the toolkit: <strong>max tokens setting</strong>, <strong>stop sequence setting</strong>, <strong>length penalty</strong>, <strong>JSON schema output</strong> with <strong>schema enforcement</strong>, <strong>concise mode</strong>, <strong>verbosity parameter</strong>, <strong>reasoning budget</strong>, <strong>thinking token limit</strong>, <strong>reasoning effort setting</strong>. You handle responses with <strong>truncation detection</strong>, <strong>streaming cancellation</strong>, <strong>early stopping</strong>, <strong>output postprocessing</strong>, and rigorous <strong>output validation</strong>.</p>
+<p>Chapter 18 puts a per-session ceiling on the whole picture — agent budget policies that prevent runaway sessions from ever happening.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Why does cheap-first cascading produce such large savings?</strong> Most workloads have a long tail where the cheap model is fully adequate. Paying full price for the cheap call always and the expensive call only on escalation — typically 20% of requests — produces 50–80% cost reductions.</li>
+<li><strong>What's the difference between max_tokens and a stop sequence?</strong> max_tokens caps total output length (truncates mid-sentence if hit). Stop sequences end generation cleanly at a specified string boundary. Use both — they serve different purposes.</li>
+<li><strong>Why is reasoning_budget critical for o-series and extended-thinking models?</strong> Reasoning tokens are billed at the output rate. Uncapped reasoning can consume tens of thousands of invisible tokens per request — easily 10× the visible cost.</li>
+<li><strong>What is a vendor-neutral abstraction?</strong> A shared interface in your code that maps to each vendor's specific SDK behind the scenes, so you can switch vendors without rewriting application code.</li>
+<li><strong>What's the right way to validate routed-cheap responses?</strong> A quality gate that checks structure (schema), confidence (logprobs or uncertainty markers), and behavior (length, format). On gate failure, escalate to the next-tier model.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 17</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Routing and output bounded. Next chapter installs the safety net under the whole stack: agent budget policies that cap how much any session, engineer, or PR can spend.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1224,6 +1773,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

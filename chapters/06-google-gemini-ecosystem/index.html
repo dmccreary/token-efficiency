@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="The Gemini API, Pro/Flash/Ultra family, the long context window, Vertex AI and AI Studio surfaces, Gemini caching and grounding, plus the cross-vendor tokenizer drift that emerges once all three vendors are in view">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../07-coding-harnesses-agentic-loops/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>6. The Google Gemini Ecosystem - Token Efficiency</title>
+        <title>The Google Gemini Ecosystem - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              6. The Google Gemini Ecosystem
+              The Google Gemini Ecosystem
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -487,6 +485,126 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-api-and-two-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini API and Two Surfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-model-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini Model Family
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-long-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Long Context Window
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gemini Caching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gemini Caching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cross-vendor-caching-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cross-Vendor Caching Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-tools-and-code-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling, Tools, and Code Execution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multimodal-input-and-safety-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multimodal Input and Safety Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-streaming-batch-and-token-counting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gemini Streaming, Batch, and Token Counting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini Tokenizer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-vendor-tokenizer-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Vendor Tokenizer Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Vendor Tokenizer Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cross-vendor-token-count-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cross-Vendor Token Count Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -823,7 +941,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +950,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1277,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1325,126 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-api-and-two-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini API and Two Surfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-model-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini Model Family
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-long-context-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Long Context Window
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gemini Caching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gemini Caching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cross-vendor-caching-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cross-Vendor Caching Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling-tools-and-code-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Calling, Tools, and Code Execution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multimodal-input-and-safety-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multimodal Input and Safety Settings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-streaming-batch-and-token-counting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gemini Streaming, Batch, and Token Counting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gemini-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Gemini Tokenizer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-vendor-tokenizer-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cross-Vendor Tokenizer Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Vendor Tokenizer Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-cross-vendor-token-count-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Cross-Vendor Token Count Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1161,13 +1504,243 @@
 <li><a href="../05-openai-ecosystem/">Chapter 5: The OpenAI Ecosystem</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Vendor #3: Gemini, Plus the Cross-Vendor View</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Gemini is the third major vendor and the one with the most distinctive cost shape — the longest context window in the industry (1M tokens), aggressive Flash pricing, and built-in grounding to Google Search. Once we finish here, you'll have all three vendors mapped, and we'll close with a cross-vendor view: how the same prompt costs different amounts of money on each, and what to do about it.</p>
+</div>
+<h2 id="the-gemini-api-and-two-surfaces">The Gemini API and Two Surfaces</h2>
+<p>The <strong>Google Gemini API</strong> is the HTTPS surface for Gemini models, and it is reachable through two distinct product surfaces with subtly different defaults and pricing.</p>
+<p><strong>Google AI Studio</strong> is the developer-facing surface — a free playground at <code>aistudio.google.com</code> and a public API at <code>generativelanguage.googleapis.com</code>. AI Studio targets individual developers and small teams; it has a generous free tier, simple API key authentication, and the same model lineup as Vertex.</p>
+<p><strong>Vertex AI</strong> is the enterprise surface — the Gemini models exposed through Google Cloud at <code>&lt;region&gt;-aiplatform.googleapis.com</code>. Vertex uses GCP IAM for authentication (no separate API key), supports VPC-SC for private networking, offers data-residency guarantees, and bills through your existing GCP project. Vertex pricing per token is similar to AI Studio but unlocks enterprise features like grounding, customer-managed encryption keys, and committed-use discounts.</p>
+<p>The decision rule: prototype on AI Studio, ship to production on Vertex if your organization is GCP-shaped or has compliance requirements; stay on AI Studio if you're a small team without those constraints. Both surfaces use the same model names and tokenize text identically, so moving between them is straightforward.</p>
+<p>The <strong>Gemini SDK</strong> is the official client — <code>google-genai</code> on PyPI is the modern unified client that works against both AI Studio and Vertex, configured by which credentials you provide. The older <code>google-generativeai</code> and <code>google-cloud-aiplatform</code> packages still exist; for new code, use <code>google-genai</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">google</span> <span class="kn">import</span> <span class="n">genai</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">genai</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>  <span class="c1"># AI Studio mode</span>
+<span class="c1"># or</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">genai</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">vertexai</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;us-central1&quot;</span><span class="p">)</span>  <span class="c1"># Vertex mode</span>
+
+<span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">generate_content</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gemini-2.0-flash&quot;</span><span class="p">,</span>
+    <span class="n">contents</span><span class="o">=</span><span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">usage_metadata</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="the-gemini-model-family">The Gemini Model Family</h2>
+<p>The <strong>Gemini model family</strong> spans three capability tiers, named on a similar pattern to the Claude family:</p>
+<ul>
+<li><strong>Gemini Pro</strong> is the high-capability tier — the model to reach for when reasoning quality matters. Comparable in role to Claude Sonnet or GPT-4o. Supports the long context window mode.</li>
+<li><strong>Gemini Flash</strong> is the high-throughput tier — fast, cheap, and surprisingly capable. The default first choice for production workloads, especially anything with high request volume. Often costs less than $0.20/MTok input on the smaller Flash variants.</li>
+<li><strong>Gemini Ultra</strong> is the largest, slowest, and most capable tier (when available; not all generations ship Ultra). Reserve for genuinely hard tasks where the cost is justified.</li>
+</ul>
+<p>The pricing differential between tiers is the most aggressive of the three vendors — Flash is often 10–20× cheaper than Pro on the same generation. That makes Gemini particularly well-suited to routing patterns (Chapter 17) where the cheap-first cascade really pays off.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Typical Use</th>
+<th>Relative Cost</th>
+<th>Long Context Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flash</td>
+<td>High-throughput, classification, extraction</td>
+<td>1× (baseline)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>General-purpose reasoning</td>
+<td>~5×–10× Flash</td>
+<td>Yes (1M-token mode)</td>
+</tr>
+<tr>
+<td>Ultra</td>
+<td>Hardest reasoning tasks</td>
+<td>~5× Pro</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-long-context-window">The Long Context Window</h2>
+<p>Gemini's defining feature is the <strong>long context window</strong>. Pro and Flash both support context lengths well beyond what other vendors offer at production-grade quality, and <strong>one million context</strong> mode (1M tokens) is available on Pro and selected Flash variants. For comparison, Claude's standard context is 200K and OpenAI's flagship models top out at a few hundred thousand.</p>
+<p>A million tokens is roughly 750,000 words — about 10 average novels, or the entire codebase of a medium-sized project, or thousands of pages of legal documents. The cost shape this enables:</p>
+<ul>
+<li>Single-shot document Q&amp;A on documents that would otherwise require RAG (Chapter 15) — you can paste the whole document into the prompt and ask questions directly</li>
+<li>Whole-codebase code search and explanation — a single prompt can include an entire repository</li>
+<li>Long-form analysis where prior context matters — multi-hour conversations stay coherent without external memory</li>
+</ul>
+<p>The catch is twofold. First, you pay for every input token, so a 500K-token request is genuinely expensive even if the answer is one sentence — the per-call cost can reach several dollars on Pro. Second, context quality is not uniform across long windows; the <strong>lost-in-the-middle</strong> effect (Chapter 16) means content buried in the middle of a 500K-token prompt may be retrieved less reliably than content near the start or end. Long context is a tool, not a panacea — pair it with attention to placement.</p>
+<h2 id="gemini-caching">Gemini Caching</h2>
+<p><strong>Gemini caching</strong> is Google's prompt-caching mechanism, structurally similar to Anthropic's but with a different lifecycle and pricing model. There are two flavors:</p>
+<ul>
+<li><strong>Implicit caching</strong> is automatic — the API caches stable prefixes of repeated requests without any opt-in, and applies a discount to subsequent hits. You get savings without code changes; you also have less control over what gets cached and when.</li>
+<li><strong>Explicit caching</strong> is opt-in via a <code>caches.create()</code> call that creates a named cache resource with a TTL. Your subsequent generation requests reference the cache by ID. This is the version to use for predictable, large savings on long stable prefixes — typical savings are 50–75% off the cached portion.</li>
+</ul>
+<p>The Gemini caching minimum is meaningful: caches must be at least 1,024 tokens (Flash) or 4,096 tokens (Pro) to be useful, with cache TTLs starting at one minute and configurable up to several hours. There is also a <strong>storage cost</strong> for cached content (charged per million-tokens-per-hour) on top of the read discount — unlike Anthropic, which only charges at write/read time. For long-lived caches with many readers, the storage cost is well worth it; for short-lived or low-hit-rate caches, it can erode the savings.</p>
+<p>The diagram below contrasts the three vendor caching models:</p>
+<h4 id="diagram-cross-vendor-caching-comparison">Diagram: Cross-Vendor Caching Comparison</h4>
+<iframe src="../../sims/cross-vendor-caching-comparison/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Cross-Vendor Caching Comparison</summary>
+<p>Type: chart
+<strong>sim-id:</strong> cross-vendor-caching-comparison<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Plot the per-request cost over a sequence of N requests for the same workload on Anthropic, OpenAI (when prompt caching is enabled), and Gemini, so the structural differences in caching mechanics become visible.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: compare</p>
+<p>Learning objective: Compare the caching cost models of three vendors and recommend a vendor for a workload based on prefix length, request volume, and cache lifetime.</p>
+<p>Chart type: Multi-line chart
+- X-axis: Request number (1 to 50)
+- Y-axis: Cumulative cost ($)</p>
+<p>Data series:
+1. Anthropic (cache write at request 1 with 1.25× premium, then 0.10× reads)
+2. OpenAI (when enabled, similar structure with different multipliers)
+3. Gemini implicit (slow ramp, less control)
+4. Gemini explicit (large drop after cache creation, plus per-hour storage cost adding small linear growth)
+5. No caching baseline (linear, full price every request)</p>
+<p>Interactive controls:
+- Slider: Stable prefix size (500 to 50,000 tokens)
+- Slider: Cache lifetime (1 minute to 24 hours)
+- Slider: Request frequency (per minute)
+- Toggle: "Show storage cost on Gemini explicit"</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show all five lines
+  Stage 2: Highlight the crossover points where vendor A becomes cheaper than vendor B
+  Stage 3: Show a summary table at bottom: total cost over 50 requests, % savings vs no-cache</p>
+<p>Default values:
+- Prefix: 5,000 tokens
+- Lifetime: 1 hour
+- Frequency: 1/min
+- Storage cost shown</p>
+<p>Implementation: Chart.js multi-line, responsive width</p>
+</details>
+<h2 id="function-calling-tools-and-code-execution">Function Calling, Tools, and Code Execution</h2>
+<p><strong>Gemini function calling</strong> matches the pattern from Claude and OpenAI: declare tools with name, description, and JSON-schema parameters; the model can emit structured tool calls; your application executes them and returns results. The implementation details:</p>
+<ul>
+<li>Tools are declared via the <code>tools</code> parameter on <code>generate_content</code></li>
+<li>Each tool is wrapped as a <code>FunctionDeclaration</code></li>
+<li>The response includes <code>function_calls</code> when the model decides to use one</li>
+</ul>
+<p><strong>Gemini tool config</strong> is the equivalent of OpenAI's <code>tool_choice</code> parameter — it controls whether the model is forced to call a function, forbidden from doing so, or left to decide. The <code>function_calling_config.mode</code> field accepts <code>AUTO</code>, <code>ANY</code> (must call something), or <code>NONE</code> (must not call).</p>
+<p><strong>Gemini code execution</strong> is a built-in tool that lets the model execute Python code in a sandbox and use the results in its response. Enable it by including <code>tools=[{"code_execution": {}}]</code>. The model can write code, see the output, and incorporate it — useful for math problems, data manipulation, or chart generation. The execution tokens count toward the response total, so a single code-execution turn can cost more than a normal turn.</p>
+<p><strong>Gemini grounding</strong> is Google's native integration with Google Search. Enable it by including <code>tools=[{"google_search": {}}]</code> and the model can issue search queries and cite sources in the response. This is genuinely differentiated — neither Anthropic nor OpenAI offer comparable first-party search integration. Grounding adds tokens for the retrieved snippets and for source citations, but for any task that benefits from current web information, the cost is justified.</p>
+<h2 id="multimodal-input-and-safety-settings">Multimodal Input and Safety Settings</h2>
+<p><strong>Gemini multimodal input</strong> is the broadest of the three vendors: text, images, audio, video, and PDF documents are all supported as input content types. Video in particular is distinctive — Gemini Pro can process several minutes of video in a single request, sampling frames and audio together. Token costs vary widely by modality:</p>
+<ul>
+<li>Images: ~250–1,000 tokens per image depending on resolution</li>
+<li>Audio: ~32 tokens per second</li>
+<li>Video: ~250 tokens per frame, sampled at ~1fps by default</li>
+<li>PDF: text-extracted at the standard text rate, plus image rates for embedded images</li>
+</ul>
+<p>Always log multimodal token costs separately by modality — they have very different cost-per-content profiles.</p>
+<p><strong>Gemini safety settings</strong> are configurable thresholds for content categories (harassment, hate speech, sexually explicit, dangerous content). Each category has thresholds from <code>BLOCK_NONE</code> to <code>BLOCK_LOW_AND_ABOVE</code>. The default thresholds are conservative; adjust per use case. Safety filters that fire return a <code>finish_reason</code> of <code>SAFETY</code> instead of generating output — these failed requests still cost input tokens but not output tokens.</p>
+<h2 id="gemini-streaming-batch-and-token-counting">Gemini Streaming, Batch, and Token Counting</h2>
+<p><strong>Gemini streaming</strong> uses the <code>generate_content_stream()</code> method (or equivalent in your language) and yields chunks as the model generates them. The final chunk includes the full <code>usage_metadata</code> for cost accounting.</p>
+<p><strong>Gemini batch mode</strong> is the Gemini specialization of the Batch API pattern from Chapter 3. Submit a batch job (typically via Cloud Storage on Vertex), receive results within a 24-hour window, pay 50% of the synchronous price. Standard pattern; standard discount.</p>
+<p><strong>Gemini token counting</strong> is provided via a <code>count_tokens()</code> method on the SDK, which returns the exact token count for a given content blob without running the model. It is free or extremely cheap. The Google-published tokenizer is also available for fully-local counting in environments where the API call is undesirable.</p>
+<h2 id="the-gemini-tokenizer">The Gemini Tokenizer</h2>
+<p>The <strong>Gemini tokenizer</strong> is a SentencePiece-based tokenizer (Chapter 2) — distinct from Claude's BPE and OpenAI's tiktoken. Practical implications:</p>
+<ul>
+<li>Slightly more efficient on multilingual content than English-trained BPE tokenizers</li>
+<li>Slightly less efficient on long English prose than tiktoken's <code>o200k_base</code></li>
+<li>Different vocabulary, so the same string produces a different token count than Claude or OpenAI</li>
+</ul>
+<p>Which brings us to the synthesis concept this chapter has been building toward.</p>
+<h2 id="cross-vendor-tokenizer-drift">Cross-Vendor Tokenizer Drift</h2>
+<p><strong>Cross-vendor tokenizer drift</strong> is the observation that the same string of text produces different token counts on each vendor's tokenizer — sometimes by 20–30%. This is the single biggest gotcha in cross-vendor cost comparison.</p>
+<p>Concrete example: the sentence <em>"Pemba audited the cache hit rate and recommended a 90% reduction."</em> tokenizes to roughly:</p>
+<ul>
+<li>Claude tokenizer: ~17 tokens</li>
+<li>tiktoken (cl100k): ~16 tokens</li>
+<li>tiktoken (o200k): ~14 tokens</li>
+<li>Gemini tokenizer: ~15 tokens</li>
+</ul>
+<p>A 21% spread on a one-line sentence. Multiplied across millions of requests, the per-vendor token-count differences cascade into per-vendor cost differences that are not visible from the rate card alone.</p>
+<p>The implication for cross-vendor benchmarking: never compare $/MTok rates directly. Always:</p>
+<ol>
+<li>Take a representative sample of your real production traffic</li>
+<li>Tokenize it with each vendor's tokenizer</li>
+<li>Multiply each tokenization by the vendor's input price</li>
+<li>Compare the resulting per-million-real-requests cost — not the headline price</li>
+</ol>
+<p>A vendor that looks 20% cheaper per token may actually be 5% more expensive on your traffic shape. Or 40% cheaper, depending. Tokenizer drift is invisible unless you measure for it.</p>
+<h4 id="diagram-cross-vendor-token-count-drift">Diagram: Cross-Vendor Token Count Drift</h4>
+<iframe src="../../sims/cross-vendor-token-drift/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Cross-Vendor Token Count Drift</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> cross-vendor-token-drift<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Let learners type or paste text and see the same content tokenized by each vendor's tokenizer side by side, with the resulting token counts and a per-vendor cost estimate.</p>
+<p>Bloom Level: Evaluate (L5)
+Bloom Verb: assess</p>
+<p>Learning objective: Assess which vendor offers the lowest cost for a given content shape by comparing tokenizations across all three vendors.</p>
+<p>Canvas layout:
+- Top: Multi-line text input (default: a paragraph mixing English, code, and a Japanese sentence)
+- Middle: Three columns side by side, one per vendor (Claude, OpenAI, Gemini), each showing token chips and a token count
+- Bottom: A bar chart showing per-vendor cost for the input text at each vendor's published input price</p>
+<p>Interactive controls:
+- Text area
+- Buttons: "Load: English prose" / "Load: Code snippet" / "Load: Multilingual" / "Load: Long document (~10K tokens)"
+- Dropdown per column: which model tier to use for cost calculation (e.g. Claude Sonnet, GPT-4o, Gemini Pro)</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show three side-by-side tokenizations with chips
+  Stage 2: Show the count delta below each column ("Claude: 17 tokens", etc.)
+  Stage 3: Show the per-vendor cost calculation at the bottom
+  Stage 4: Highlight the cheapest vendor in green for the current input</p>
+<p>Default state: English prose example, all three columns visible</p>
+<p>Implementation: p5.js with responsive width; uses simplified tokenization simulators for each vendor (illustrative, not bit-exact)</p>
+</details>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Compare on Real Traffic, Not on Rate Cards</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+The most expensive lesson in vendor selection is "we picked Vendor A because it's $2/MTok cheaper, then our bill came in higher than the alternative." Always tokenize a real sample of your traffic with each vendor's actual tokenizer before deciding. Where did all the tokens go? Sometimes: into a tokenizer mismatch you didn't measure for.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now build Gemini applications and you have all three vendors mapped. You authenticate against the <strong>Google Gemini API</strong> through either the <strong>Google AI Studio</strong> surface (developer-friendly, simple API keys) or <strong>Vertex AI</strong> (enterprise, GCP IAM, data residency), using the <strong>Gemini SDK</strong> (<code>google-genai</code>). You select a model from the <strong>Gemini model family</strong> — <strong>Gemini Flash</strong> for high-throughput, <strong>Gemini Pro</strong> for general reasoning, <strong>Gemini Ultra</strong> for the hardest tasks. You exploit the <strong>long context window</strong> and the <strong>one million context</strong> mode when document scale demands it. You use <strong>Gemini caching</strong> (implicit for free savings, explicit for predictable savings on large prefixes). You add <strong>Gemini function calling</strong> with <strong>Gemini tool config</strong>, and the differentiated capabilities <strong>Gemini code execution</strong> and <strong>Gemini grounding</strong>. You handle <strong>Gemini multimodal input</strong> (text, image, audio, video, PDF) with appropriate per-modality token accounting and configure <strong>Gemini safety settings</strong> for your use case. You stream with <strong>Gemini streaming</strong>, batch with <strong>Gemini batch mode</strong>, and count tokens locally with <strong>Gemini token counting</strong> and the <strong>Gemini tokenizer</strong>. And — most importantly across all three vendors — you account for <strong>cross-vendor tokenizer drift</strong> when comparing costs.</p>
+<p>Chapter 7 leaves the API world and enters the harness world: how Claude Code, Codex CLI, and Antigravity accumulate tokens across multi-turn agent sessions.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What's the main practical difference between AI Studio and Vertex AI?</strong> AI Studio is developer-friendly with simple API keys; Vertex is enterprise-grade with GCP IAM, data residency, and VPC-SC support.</li>
+<li><strong>What does "1M context" enable that 200K does not?</strong> Single-shot whole-document or whole-codebase analysis without an external retrieval system.</li>
+<li><strong>What's the difference between implicit and explicit Gemini caching?</strong> Implicit is automatic with no code changes; explicit creates a named cache resource you reference, with predictable larger savings but added storage cost.</li>
+<li><strong>What is cross-vendor tokenizer drift?</strong> The same text produces different token counts on each vendor's tokenizer — sometimes by 20–30% — so per-token rate comparisons are misleading without a real-traffic measurement.</li>
+<li><strong>What's distinctive about Gemini grounding?</strong> First-party Google Search integration as a built-in tool — neither Anthropic nor OpenAI offer comparable native search.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 6</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+All three vendors mapped: Claude, OpenAI, Gemini. You can read any of their APIs, structure prompts to cache, and compare costs on real traffic. The next chapter shifts gears — from raw API calls to agentic harnesses, where token costs accumulate across whole sessions instead of single requests.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1212,6 +1785,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

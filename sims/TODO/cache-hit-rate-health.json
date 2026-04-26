@@ -1,0 +1,14 @@
+{
+  "sim_id": "cache-hit-rate-health",
+  "diagram_name": "Cache Hit Rate Health Indicators",
+  "chapter_number": 14,
+  "chapter_title": "Prompt Caching Patterns",
+  "chapter_dir": "14-prompt-caching-patterns",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "distinguish",
+  "learning_objective": "Distinguish healthy and degraded cache hit-rate patterns and diagnose the likely root cause of each degradation pattern.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** cache-hit-rate-health<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show four representative cache-hit-rate time series (healthy, sudden drop, slow erosion, sawtooth) so learners can recognize each pattern and identify the likely root cause.\n\nBloom Level: Analyze (L4)\nBloom Verb: distinguish\n\nLearning objective: Distinguish healthy and degraded cache hit-rate patterns and diagnose the likely root cause of each degradation pattern.\n\nChart type: Four small multiples (line charts)\n- Each chart: cache hit rate over 30 days, Y axis 0%–100%\n\nPatterns:\n1. Healthy: Steady at ~88% with small daily TTL dips\n2. Sudden drop: Steady at 88%, then a cliff to 5% on day 14\n3. Slow erosion: Starts at 88%, gradually drifts down to 40% over 30 days\n4. Sawtooth: Oscillates between 0% and 60% in a daily cycle\n\nBelow each chart:\n- A diagnostic caption identifying the pattern\n- A \"likely cause\" hint\n- A \"what to check\" action\n\nInteractive controls:\n- Click any chart: open a detailed-view modal with timeline annotations\n- Dropdown: \"What changed on day 14?\" prompting hypothesis generation\n\nDefault state: All four charts visible side by side\n\nImplementation: Chart.js multi-line, responsive grid layout"
+}

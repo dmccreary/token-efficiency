@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cross-Vendor Caching Comparison</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Cross-Vendor Caching Comparison</span>
+    <span class="subtitle">Cumulative cost over 50 requests for the same workload</span>
+</div>
+
+<div class="chart-wrap">
+    <canvas id="costChart"></canvas>
+</div>
+
+<div class="summary" id="summary">
+    <div class="summary-title">Total cost over 50 requests &amp; savings vs. no-cache</div>
+    <table id="summaryTable">
+        <thead>
+            <tr><th>Vendor</th><th>Total cost</th><th>vs. No-cache</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div class="controls">
+    <div class="caps-row">
+        <label class="cap-block">
+            Stable prefix (tokens): <span id="prefixVal">5,000</span>
+            <input type="range" id="prefix" min="500" max="50000" step="500" value="5000">
+        </label>
+        <label class="cap-block">
+            Cache lifetime (minutes): <span id="ttlVal">60</span>
+            <input type="range" id="ttl" min="1" max="1440" step="1" value="60">
+        </label>
+        <label class="cap-block">
+            Request frequency (per min): <span id="freqVal">1</span>
+            <input type="range" id="freq" min="0.1" max="10" step="0.1" value="1">
+        </label>
+        <label class="cap-block toggle-block">
+            <input type="checkbox" id="storage" checked>
+            Show storage cost on Gemini explicit
+        </label>
+    </div>
+</div>
+
+</main>
+<script src="cross-vendor-caching-comparison.js"></script>
+</body>
+</html>

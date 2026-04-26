@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Skills as a token-optimization primitive — anatomy, triggers, lazy loading, task-skill binding, misfires, and the practice of refactoring prose-heavy skills into script-backed versions">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../09-structured-logging/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>8. The Skills System - Token Efficiency</title>
+        <title>The Skills System - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              8. The Skills System
+              The Skills System
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -534,6 +532,180 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#what-is-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Is a Skill?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Is a Skill?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anatomy-of-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anatomy of a Skill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-anthropic-skill-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Anthropic Skill Format
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-skills-get-invoked" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Skills Get Invoked
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Skills Get Invoked">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill-trigger-and-skill-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Trigger and Skill Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eager-listing-vs-lazy-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eager Listing vs. Lazy Loading
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-decomposition-and-task-skill-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Decomposition and Task-Skill Binding
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Decomposition and Task-Skill Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-task-decomposition-and-skill-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Task Decomposition and Skill Binding
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-skill-selection-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      When Skill Selection Goes Wrong
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-refactoring-from-prose-to-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Refactoring: From Prose to Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Refactoring: From Prose to Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-prose-is-expensive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Prose Is Expensive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell-and-python-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shell and Python Scripts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-refactoring-and-the-token-reduction-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Refactoring and the Token Reduction Ratio
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Refactoring and the Token Reduction Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-skill-refactoring-before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Skill Refactoring Before-and-After
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-skill-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Skill Library
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +995,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +1004,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1331,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1379,180 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Is a Skill?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Is a Skill?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anatomy-of-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anatomy of a Skill
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-anthropic-skill-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Anthropic Skill Format
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-skills-get-invoked" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Skills Get Invoked
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Skills Get Invoked">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill-trigger-and-skill-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Trigger and Skill Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eager-listing-vs-lazy-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eager Listing vs. Lazy Loading
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-decomposition-and-task-skill-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Decomposition and Task-Skill Binding
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task Decomposition and Task-Skill Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-task-decomposition-and-skill-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Task Decomposition and Skill Binding
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-skill-selection-goes-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      When Skill Selection Goes Wrong
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-refactoring-from-prose-to-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Refactoring: From Prose to Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Refactoring: From Prose to Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-prose-is-expensive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Prose Is Expensive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell-and-python-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shell and Python Scripts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-refactoring-and-the-token-reduction-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skill Refactoring and the Token Reduction Ratio
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Refactoring and the Token Reduction Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-skill-refactoring-before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Skill Refactoring Before-and-After
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-skill-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Skill Library
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1163,13 +1614,248 @@
 <li><a href="../07-coding-harnesses-agentic-loops/">Chapter 7: AI Coding Harnesses and Agentic Loops</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Skills — The Lazy-Loading Knowledge Base</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Chapter 7 ended with a problem: the harness system prompt is huge, and stuffing every capability the agent might need directly into it makes every request expensive. Skills are the solution. They keep the <em>trigger description</em> in the context window (cheap) and load the <em>body</em> only when fired (lazy). Done well, Skills can move 30%+ of a typical session's baseline cost off the bill. Where did all the tokens go? Spoiler: out of the system prompt, into a Skill that only loads when needed.</p>
+</div>
+<h2 id="what-is-a-skill">What Is a Skill?</h2>
+<p>A <strong>skill</strong> is a self-contained, declaratively-described capability that an agent can discover and invoke when a relevant task arises. Conceptually, a Skill is a small bundle that says: "If the user asks for X, do the following." The bundle contains a short <em>trigger description</em> (always loaded) and a <em>body</em> (loaded only when the trigger fires).</p>
+<p>The cost-optimization motivation is precise. Without Skills, all the operational knowledge an agent might need has to live in the harness system prompt — every workflow, every command, every standard procedure — bloating every single request. With Skills, the system prompt only carries a list of trigger descriptions ("you can call the database-migration skill when the user asks about migrations"), and the actual procedural content loads on demand.</p>
+<h3 id="anatomy-of-a-skill">Anatomy of a Skill</h3>
+<p>The standard Skill structure has six visible parts. Before walking through them, here is the practical mental model: a Skill is shaped like a markdown file with structured frontmatter, a body that the model will read on invocation, and (optionally) a directory of bundled scripts and reference assets that the body can call out to.</p>
+<p>The parts:</p>
+<ul>
+<li><strong>Skill frontmatter</strong> — the YAML block at the top of the Skill file containing structured metadata: <code>name</code>, <code>description</code>, <code>version</code>, <code>model</code> overrides, and any tool-permission configuration. Frontmatter is parsed by the harness and used to register the Skill.</li>
+<li><strong>Skill description</strong> — a one-to-three-sentence trigger summary in the frontmatter. This is the part that lives in the context window at all times. It must be specific enough to fire on the right requests and short enough that loading it costs almost nothing.</li>
+<li><strong>Skill body</strong> — the markdown content of the Skill file (everything after the frontmatter). The body contains the actual instructions the model follows when the Skill is invoked. Bodies range from a few hundred tokens to several thousand. The body is <em>not</em> loaded into context until the Skill fires.</li>
+<li><strong>Skill bundle</strong> — the directory containing the Skill file and any associated assets. The convention is <code>skills/&lt;skill-name&gt;/SKILL.md</code> plus subdirectories for scripts, references, and templates.</li>
+<li><strong>Bundled script</strong> — an executable script (shell, Python, Node, etc.) that lives inside the Skill bundle and is invoked by the Skill body to perform deterministic work without consuming tokens. Bundled scripts are the heart of token-efficient Skill design (covered in detail below).</li>
+<li><strong>Skill asset file</strong> — any non-script support file in the bundle: a reference document, a template, a JSON schema, a glossary. Assets are read by the body on demand, not loaded eagerly.</li>
+</ul>
+<h3 id="the-anthropic-skill-format">The Anthropic Skill Format</h3>
+<p>The <strong>Anthropic Skill format</strong> is the published convention for Skills in Claude Code (and the broader Anthropic SDK Skills system). A minimal Skill on this format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code>---
+name: rename-symbol
+<span class="gu">description: Use this skill when the user asks to rename a symbol (function, variable, class) across a codebase. Handles language-aware refactors and updates imports.</span>
+<span class="gu">---</span>
+
+<span class="gh"># Rename Symbol Skill</span>
+
+To rename a symbol across the codebase:
+
+<span class="k">1.</span> Identify the language from the file extension
+<span class="k">2.</span> Run <span class="sb">`bin/find-references.sh &lt;symbol&gt;`</span> to enumerate occurrences
+<span class="k">3.</span> For each file, use the Edit tool to replace the symbol consistently
+<span class="k">4.</span> Update imports/exports if the symbol is exported
+</code></pre></div></td></tr></table></div>
+<p>The <code>description</code> is the trigger; the body below is loaded only when the trigger fires.</p>
+<h2 id="how-skills-get-invoked">How Skills Get Invoked</h2>
+<h3 id="skill-trigger-and-skill-selection">Skill Trigger and Skill Selection</h3>
+<p>A <strong>skill trigger</strong> is the conditional logic — typically expressed in the Skill's description field — that tells the harness when to invoke this Skill. Triggers are not executable predicates; they are descriptions that the model interprets in context. A good trigger is specific about the task category and explicit about boundary cases ("Use when X. Do not use when Y.").</p>
+<p><strong>Skill selection</strong> is the process by which the harness picks which Skill (if any) to invoke for a given user request. The selection is performed by the model itself, reading the trigger descriptions of all available Skills and choosing one (or none, or sometimes a chain). The model's selection decision is an LLM judgment — it can be wrong, which leads us to the misfire concept below.</p>
+<p>A <strong>skill invocation</strong> is the moment the harness loads the Skill body into context and the model begins executing the Skill's instructions. From the model's perspective, this is a transparent context expansion: the Skill body simply appears in the conversation as if it had always been there.</p>
+<h3 id="eager-listing-vs-lazy-loading">Eager Listing vs. Lazy Loading</h3>
+<p>These two patterns describe what <em>is</em> loaded into the context window at any given time:</p>
+<p><strong>Eager skill listing</strong> is the default: every Skill's frontmatter (specifically the <code>name</code> and <code>description</code>) is loaded into the harness system prompt at session start. The model can therefore see what Skills exist and choose one when relevant. The <em>bodies</em> are not loaded eagerly — only the descriptions.</p>
+<p><strong>Lazy skill loading</strong> is what happens when a Skill fires: the body (and any referenced bundled scripts or assets) is read into context just-in-time. The body is unloaded again as the conversation moves on (or stays in scope, depending on the harness — implementations vary).</p>
+<p>The cost shape of this design is the whole point of Skills:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Eagerly Loaded</th>
+<th>Cost Per Session</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skill descriptions (one-liners)</td>
+<td>Yes</td>
+<td>Small — N skills × ~50 tokens each</td>
+</tr>
+<tr>
+<td>Skill bodies</td>
+<td>No (only when fired)</td>
+<td>Zero unless invoked</td>
+</tr>
+<tr>
+<td>Bundled scripts and assets</td>
+<td>No (only when read by body)</td>
+<td>Zero unless invoked</td>
+</tr>
+</tbody>
+</table>
+<p>A Skill library of 50 Skills with detailed instructions might be 100,000 tokens of total content, but the eager footprint is only ~2,500 tokens of descriptions. That is a 40× compression of "available knowledge" relative to "context cost."</p>
+<h2 id="task-decomposition-and-task-skill-binding">Task Decomposition and Task-Skill Binding</h2>
+<p><strong>Task decomposition</strong> is the process by which the harness (with the model's help) breaks a complex user request into a sequence of discrete tasks, each of which can be addressed by a Skill or by the base capabilities of the model. Decomposition is what enables Skills to compose: a single user request might invoke a "research" skill, then a "write report" skill, then a "format as PDF" skill in sequence.</p>
+<p><strong>Task-skill binding</strong> is the matching of a decomposed task to the best-fitting Skill from the available library. Binding happens via the same model-judgment mechanism as Skill selection — the model reads the task description and the available Skill triggers and chooses.</p>
+<p>The diagram below shows the full flow from user request to bound Skill invocation:</p>
+<h4 id="diagram-task-decomposition-and-skill-binding">Diagram: Task Decomposition and Skill Binding</h4>
+<iframe src="../../sims/task-skill-binding-flow/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Task Decomposition and Skill Binding</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> task-skill-binding-flow<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show how a single user request flows through task decomposition into multiple bound Skills, with token-cost annotations showing the savings versus loading every Skill body eagerly.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning objective: Examine how the harness decomposes a user request and binds each task to a Skill, and quantify the token savings vs. an eager-load alternative.</p>
+<p>Visual style: Flowchart with three swimlanes (User, Harness, Skills Library)</p>
+<p>Steps:
+1. User → Harness: "Generate a chapter outline for my new course on Token Optimization"
+2. Harness (System Prompt with N Skill descriptions, total ~2,500 tokens)
+3. Harness performs task decomposition:
+   - Task 1: "analyze course description"
+   - Task 2: "design chapter structure"
+   - Task 3: "validate dependency order"
+4. Task-skill binding:
+   - Task 1 → course-description-analyzer skill (loads body, 1,800 tokens)
+   - Task 2 → book-chapter-generator skill (loads body, 3,200 tokens)
+   - Task 3 → invokes a bundled Python script (zero tokens for the script body)
+5. Each Skill executes in turn, results bubble back to user</p>
+<p>Annotations:
+- Eager-load alternative: "Would have loaded all 50 Skill bodies = 100K tokens upfront"
+- Lazy-load actual: "Loaded only 2 of 50 bodies = 5K tokens, and a script = ~50 tokens"
+- Highlight the script invocation: "Replaces ~2,000 tokens of prose instructions with deterministic execution"</p>
+<p>Interactive controls:
+- Hover any step to see token cost
+- Toggle: "Show eager-load comparison"</p>
+<p>Implementation: Mermaid flowchart with swimlanes</p>
+</details>
+<h2 id="when-skill-selection-goes-wrong">When Skill Selection Goes Wrong</h2>
+<p>Skill selection is an LLM judgment, and judgments can be wrong in two ways. Both have specific names and specific costs.</p>
+<p>A <strong>skill misfire</strong> is any case where the wrong Skill (or no Skill) is invoked for a given task. Misfires fall into two categories:</p>
+<ul>
+<li>A <strong>false positive trigger</strong> is when a Skill fires on a task it should not have. Cost: the body of the wrong Skill loads into context (wasted tokens), and the model wastes additional tokens following its instructions before realizing the mismatch. False positives are usually caused by overly broad trigger descriptions ("use this skill for any data-related task" — too vague).</li>
+<li>A <strong>false negative trigger</strong> is when a Skill that should have fired did not. Cost: the model proceeds without the Skill's expertise and either produces a worse result or burns substantial tokens reinventing what the Skill encoded. False negatives are usually caused by under-specific descriptions that don't surface to the model when relevant.</li>
+</ul>
+<p><strong>Trigger precision</strong> is the metric for how well a Skill's description discriminates between the cases where it should fire and the cases where it should not. High-precision descriptions:</p>
+<ul>
+<li>Lead with the <em>task pattern</em>, not the <em>technology</em> ("Use when generating chapter content for an intelligent textbook" beats "Use for textbook stuff")</li>
+<li>List exclusions explicitly ("Do NOT use when chapter structure has not been created yet — use book-chapter-generator first")</li>
+<li>Mention the upstream and downstream context ("Use after book-chapter-generator and before quiz-generator")</li>
+<li>Are specific enough that two competing Skills cannot both fit</li>
+</ul>
+<p>The diagnostic loop is straightforward: log every Skill invocation, examine the cases where the wrong Skill fired or the right one didn't, and revise the descriptions iteratively. This is one of the highest-leverage tuning activities in any harness deployment.</p>
+<h2 id="skill-refactoring-from-prose-to-scripts">Skill Refactoring: From Prose to Scripts</h2>
+<p>The single biggest cost win in Skill design is <strong>script delegation</strong> — moving deterministic procedural work out of model-readable prose and into bundled scripts that the Skill body invokes.</p>
+<h3 id="why-prose-is-expensive">Why Prose Is Expensive</h3>
+<p>When a Skill body says, in prose, "now compute the SHA-256 hash of the file and check if it matches the expected value," the model reads those instructions, generates a tool call to a hashing utility, reads the result, and reasons about whether it matches — a sequence that consumes tokens at every step. The model is essentially being asked to execute deterministic logic by simulating it through generation.</p>
+<p>When the same work is delegated to a script — <code>bin/verify-hash.sh &lt;file&gt; &lt;expected&gt;</code> — the script runs in zero model-tokens, returns a single line of result, and the model only spends tokens on the part that genuinely requires judgment.</p>
+<h3 id="shell-and-python-scripts">Shell and Python Scripts</h3>
+<p>A <strong>shell script skill</strong> is a Skill where significant logic lives in shell scripts (<code>bin/*.sh</code>) bundled with the Skill. Shell scripts are best for:</p>
+<ul>
+<li>File operations (find, grep, replace patterns)</li>
+<li>Process orchestration (running other tools)</li>
+<li>Simple text transformations (sed, awk, jq pipelines)</li>
+<li>Anything that's easier to express as a pipeline than as prose</li>
+</ul>
+<p>A <strong>python script skill</strong> is the same idea using Python (<code>bin/*.py</code>). Python is better for:</p>
+<ul>
+<li>JSON, YAML, and structured data manipulation</li>
+<li>Mathematical computation</li>
+<li>API calls with retry/backoff logic</li>
+<li>Anything requiring data structures more complex than text streams</li>
+</ul>
+<p>The Skill body itself becomes a thin orchestration layer: "Read the input. Call <code>bin/process.py</code>. Interpret the output. Decide next step." All the heavy lifting happens in scripts, all the judgment happens in the model.</p>
+<h3 id="skill-refactoring-and-the-token-reduction-ratio">Skill Refactoring and the Token Reduction Ratio</h3>
+<p><strong>Skill refactoring</strong> is the practice of taking a prose-heavy Skill and rewriting it to delegate as much deterministic work as possible to scripts. The methodology:</p>
+<ol>
+<li>Identify every step in the Skill body that is fully deterministic (no judgment required)</li>
+<li>Extract that step into a script</li>
+<li>Replace the prose with a one-line invocation</li>
+<li>Verify the Skill still produces correct output on a test set</li>
+<li>Measure token usage before and after</li>
+</ol>
+<p>The <strong>token reduction ratio</strong> is the per-invocation token usage of the refactored Skill divided by the original. Well-executed refactors typically achieve a 0.5–0.7 ratio (30–50% reduction); aggressive refactors on highly-procedural Skills can reach 0.3 or lower (70%+ reduction).</p>
+<div class="arithmatex">\[
+\text{Token Reduction Ratio} = \frac{\text{Tokens after refactor}}{\text{Tokens before refactor}}
+\]</div>
+<p>A 0.7 ratio applied across a Skill library used in 10,000 sessions per month at $0.50 average baseline cost is $1,500/month in direct savings — and the savings recur every month thereafter.</p>
+<h4 id="diagram-skill-refactoring-before-and-after">Diagram: Skill Refactoring Before-and-After</h4>
+<iframe src="../../sims/skill-refactoring-before-after/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Skill Refactoring Before-and-After</summary>
+<p>Type: chart
+<strong>sim-id:</strong> skill-refactoring-before-after<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the token cost of a representative Skill before and after script-delegation refactoring, broken down by step, so the source of the savings is visible.</p>
+<p>Bloom Level: Evaluate (L5)
+Bloom Verb: justify</p>
+<p>Learning objective: Justify a Skill refactoring decision by quantifying the per-invocation token reduction and projecting the monthly savings at expected invocation volume.</p>
+<p>Chart type: Grouped bar chart
+- X-axis: Skill step (Step 1: Read inputs, Step 2: Validate schema, Step 3: Compute hash, ..., Step 7: Format output)
+- Y-axis: Tokens consumed by step</p>
+<p>Two grouped series:
+1. Before refactor (gray bars) — every step has prose-driven token cost
+2. After refactor (green bars) — deterministic steps drop to ~0 (script-delegated), judgment steps unchanged</p>
+<p>Below the chart:
+- Total before, total after, ratio
+- Monthly savings projection panel (sliders: invocations/month, $/MTok)</p>
+<p>Interactive controls:
+- Toggle each step: "Refactored to script" / "Still in prose" — recomputes totals
+- Slider: invocations per month</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the before bars at full height
+  Stage 2: As steps are toggled to refactored, watch the green bars drop
+  Stage 3: Show the running ratio and monthly savings live</p>
+<p>Default: 5 of 7 steps refactored to scripts</p>
+<p>Implementation: Chart.js grouped bars, responsive width</p>
+</details>
+<div class="admonition mascot-tip">
+<p class="admonition-title">The Skill Library Audit</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+Once a quarter, walk your Skill library and ask three questions per Skill: (1) Does the trigger description fire on the right cases and only those? (2) Could any prose step in the body be replaced by a script? (3) Is anyone actually using this Skill? Skills you wrote but no one invokes are pure overhead — eager-loaded descriptions paying for nothing. Cheap systems are pruned systems.</p>
+</div>
+<h2 id="the-skill-library">The Skill Library</h2>
+<p>A <strong>skill library</strong> is the collection of Skills available to a particular harness instance — typically a directory like <code>~/.claude/skills/</code> (user-level), <code>.claude/skills/</code> (project-level), or a packaged set distributed with a plugin. Libraries can be merged from multiple sources; later sources usually override earlier ones for same-named Skills.</p>
+<p>Library hygiene matters because every Skill in the library contributes its description to the eager-loaded portion of the system prompt. A library of 200 Skills, each with a 100-token description, is 20,000 tokens of system-prompt overhead per request — every request, every session. That overhead is real money: at $3/MTok input cached at 10%, it's $0.006 per request just to know what Skills exist. Across millions of requests, the difference between a curated 30-Skill library and a sprawling 200-Skill library is meaningful.</p>
+<p>The principle: include a Skill in your library only if it earns its eager-load cost through enough actual invocations. Track invocation counts; deprecate Skills that haven't fired in a quarter; keep the library lean.</p>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now design and operate a token-efficient Skill system. A <strong>skill</strong> is a self-contained capability with a <strong>skill description</strong> (eagerly loaded), a <strong>skill body</strong> (lazily loaded), and a <strong>skill bundle</strong> that may contain <strong>bundled scripts</strong> and <strong>skill asset files</strong>, all conforming to the <strong>Anthropic skill format</strong> with proper <strong>skill frontmatter</strong>. The harness performs <strong>task decomposition</strong> on user requests and uses <strong>task-skill binding</strong> to drive <strong>skill selection</strong>, firing a <strong>skill trigger</strong> that results in a <strong>skill invocation</strong>. The whole design depends on <strong>lazy skill loading</strong> rather than <strong>eager skill listing</strong> — only descriptions live in the context window. You watch for <strong>skill misfires</strong>, distinguishing <strong>false positive triggers</strong> from <strong>false negative triggers</strong>, and tune <strong>trigger precision</strong> iteratively. You curate a focused <strong>skill library</strong>. Most importantly, you exploit <strong>script delegation</strong> through <strong>shell script skills</strong> and <strong>python script skills</strong> to drive the <strong>token reduction ratio</strong> of your <strong>skill refactoring</strong> efforts down toward 0.5 or below — the structural cost win that pays back every invocation forever.</p>
+<p>Chapter 9 starts the instrumentation half of the book: structured logging that gives you the data to do all of this analysis on real production traffic.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Why are Skills more token-efficient than putting everything in the system prompt?</strong> Only the description is eagerly loaded; the body is lazy-loaded only when the Skill fires. A 50-Skill library can have 100K tokens of total content but only ~2.5K tokens of eager footprint.</li>
+<li><strong>What is a false positive trigger?</strong> A Skill firing when it should not have — usually caused by an overly broad trigger description.</li>
+<li><strong>What is the token reduction ratio?</strong> The ratio of post-refactor tokens to pre-refactor tokens for a single Skill invocation. Lower is better; 0.5–0.7 is typical for a script-delegation refactor.</li>
+<li><strong>When should logic live in a bundled script rather than Skill prose?</strong> When the work is fully deterministic (no judgment required) — file operations, hash computation, JSON manipulation, API calls. The model only consumes tokens for the parts that genuinely require reasoning.</li>
+<li><strong>Why does a sprawling Skill library cost more even when most Skills aren't invoked?</strong> Every Skill description is eagerly loaded into the system prompt on every request. Libraries with many unused Skills pay description-loading cost forever for zero benefit.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 8</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Skills, lazy loading, script delegation — you now have the structural primitive that makes large agent capabilities affordable. Next chapter pivots to instrumentation: structured logging, the foundation that lets you measure everything we've discussed.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1214,6 +1900,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

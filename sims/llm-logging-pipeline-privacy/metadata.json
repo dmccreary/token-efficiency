@@ -1,0 +1,44 @@
+{
+  "title": "LLM Logging Pipeline with Privacy Filters",
+  "creator": "Dan McCreary",
+  "subject": "LLM Token Efficiency",
+  "description": "Interactive Mermaid flowchart of an LLM logging pipeline with PII detection, redaction, cost computation, and retention.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "LLM Operations",
+    "topic": "Structured Logging for LLM Calls",
+    "learningObjectives": [
+      "Implement an LLM logging pipeline that captures every required field while satisfying PII redaction and retention requirements."
+    ],
+    "bloomsTaxonomy": "Apply (L3)",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Basic understanding of structured logging", "Familiarity with JSON"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 720},
+    "responsive": true,
+    "dependencies": ["mermaid@11"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": false
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive flowchart with live JSONL output",
+    "keyQuestions": [
+      "What fields are required in every log line?",
+      "Which path runs when PII is detected?",
+      "How does truncation length affect storage cost?"
+    ],
+    "commonMisconceptions": [
+      "PII redaction is async — it must be synchronous before the line is emitted.",
+      "prompt_hash can be computed from the redacted prompt — it must be computed from the original."
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "09-structured-logging"
+}

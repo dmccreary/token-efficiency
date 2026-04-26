@@ -1,0 +1,14 @@
+{
+  "sim_id": "rag-pipeline-cost-annotations",
+  "diagram_name": "RAG Pipeline with Cost Annotations",
+  "chapter_number": 15,
+  "chapter_title": "Retrieval-Augmented Generation Optimization",
+  "chapter_dir": "15-rag-optimization",
+  "library": "Mermaid",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "examine",
+  "learning_objective": "Examine where in the RAG pipeline retrieved tokens accumulate and identify the highest-leverage stages for cost reduction.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** rag-pipeline-cost-annotations<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the standard RAG pipeline (embed query → vector search → rerank → prune → inject → generate) with token-cost annotations at each stage so learners can identify where bloat enters and where pruning helps.\n\nBloom Level: Analyze (L4)\nBloom Verb: examine\n\nLearning objective: Examine where in the RAG pipeline retrieved tokens accumulate and identify the highest-leverage stages for cost reduction.\n\nVisual style: Horizontal flowchart with labeled stages\n\nStages (left to right):\n1. User Query (input)\n2. Query Embedding (separate cheap embedding API call)\n3. Vector Search → returns top-K=20 chunks (no LLM cost yet, just vector DB)\n4. Reranker → narrows to top-N=5\n5. Context Pruning → drops low-score chunks (e.g., 5 → 3)\n6. Context Injection → format and prepend to prompt\n7. LLM Generation → input cost = (system prompt + injected context + user query); output cost = response\n\nCost annotations at each stage:\n- Vector search: ~\\$0 per query\n- Reranker: ~\\$0.001 per query\n- Context injection: 1,500 tokens × \\$3/MTok = \\$0.0045 input\n- LLM generation: \\$0.005 input + \\$0.003 output = \\$0.008\n- Total: ~\\$0.014/query\n\nInteractive controls:\n- Slider: K (5–50) — recomputes injected context size and total cost\n- Slider: Reranker N (1–20)\n- Toggle: \"Disable reranker\" — shows the cost increase\n- Toggle: \"Disable pruning\" — shows the cost increase\n\nData Visibility Requirements:\n  Stage 1: Show the default pipeline with all annotations\n  Stage 2: As sliders move, recompute injected token count and total cost live\n  Stage 3: When reranker or pruning is disabled, highlight the cost delta in red\n\nDefault state: K=20, N=5, pruning on, reranker on\n\nImplementation: Mermaid flowchart with cost annotations, responsive layout"
+}

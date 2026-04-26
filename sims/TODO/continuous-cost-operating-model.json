@@ -1,0 +1,14 @@
+{
+  "sim_id": "continuous-cost-operating-model",
+  "diagram_name": "The Continuous Cost-Monitoring Operating Model",
+  "chapter_number": 20,
+  "chapter_title": "Capstone Projects and Continuous Practice",
+  "chapter_dir": "20-capstone-projects-practice",
+  "library": "p5.js",
+  "bloom_level": "Create (L6)",
+  "bloom_verb": "design",
+  "learning_objective": "Design a continuous cost-monitoring operating model that sustains engineering capability over time.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: infographic\n**sim-id:** continuous-cost-operating-model<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show how the artifacts and rituals from this book combine into a sustainable operating model — daily, weekly, monthly, quarterly cadences each with their own activities and outputs.\n\nBloom Level: Create (L6)\nBloom Verb: design\n\nLearning objective: Design a continuous cost-monitoring operating model that sustains engineering capability over time.\n\nCanvas layout:\n- Concentric rings labeled by cadence (innermost: Daily, then Weekly, Monthly, Quarterly)\n- Each ring contains the key activities at that cadence\n\nActivities:\n- Daily ring: Dashboard checks, alert response, regression-test results\n- Weekly ring: Engineering manager review, optimization backlog grooming, manager weekly report\n- Monthly ring: Cost analysis notebook, before-after reports for shipped optimizations, budget vs. actual review\n- Quarterly ring: Set new cost reduction target, refresh reproducible benchmark, update budget policy document, plan next quarter's optimization theme\n\nVisual elements:\n- Each activity is a small icon with a label\n- Connecting arrows show information flow between rings (daily alerts feed weekly reviews; weekly reviews feed monthly retrospectives; monthly results feed quarterly planning)\n\nInteractive controls:\n- Click any activity: see the artifact it produces and who's accountable\n- Toggle: \"Show owners\" — color-codes by role (engineer, EM, finance, compliance)\n\nDefault state: All rings visible with all activities labeled\n\nImplementation: p5.js with responsive width"
+}

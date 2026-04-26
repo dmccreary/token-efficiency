@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="The Messages API, the Claude model family, prompt caching, extended thinking, tool use, streaming, batch, and vision input — Anthropic's full surface area mapped to the cost framework">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../05-openai-ecosystem/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>4. The Anthropic Claude Ecosystem - Token Efficiency</title>
+        <title>The Anthropic Claude Ecosystem - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              4. The Anthropic Claude Ecosystem
+              The Anthropic Claude Ecosystem
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -445,6 +443,180 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-api-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      The API Surface
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The API Surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-api-and-the-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic API and the SDK
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-claude-messages-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Messages API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-claude-model-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Model Family
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Claude Model Family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-claude-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Tokenizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anthropic-system-prompts-and-message-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic System Prompts and Message Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anthropic-prompt-caching-the-single-biggest-lever" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic Prompt Caching — The Single Biggest Lever
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anthropic Prompt Caching — The Single Biggest Lever">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cache-control-breakpoints-and-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Control, Breakpoints, and TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-read-tokens-cache-write-tokens-and-the-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Read Tokens, Cache Write Tokens, and the Math
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache Read Tokens, Cache Write Tokens, and the Math">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-anthropic-prompt-caching-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Anthropic Prompt Caching Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-thinking-and-the-thinking-token-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Thinking and the Thinking Token Budget
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-tool-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claude Tool Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop Reasons
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming-batch-and-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming, Batch, and Vision
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Streaming, Batch, and Vision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-tool-use-loop-with-cost-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Tool Use Loop with Cost Annotations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -823,7 +995,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +1004,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1331,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1379,180 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-api-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      The API Surface
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The API Surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-api-and-the-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic API and the SDK
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-claude-messages-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Messages API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-claude-model-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Model Family
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Claude Model Family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-claude-tokenizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Claude Tokenizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anthropic-system-prompts-and-message-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic System Prompts and Message Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anthropic-prompt-caching-the-single-biggest-lever" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anthropic Prompt Caching — The Single Biggest Lever
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anthropic Prompt Caching — The Single Biggest Lever">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cache-control-breakpoints-and-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Control, Breakpoints, and TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache-read-tokens-cache-write-tokens-and-the-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache Read Tokens, Cache Write Tokens, and the Math
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cache Read Tokens, Cache Write Tokens, and the Math">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-anthropic-prompt-caching-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Anthropic Prompt Caching Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-thinking-and-the-thinking-token-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Thinking and the Thinking Token Budget
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-tool-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claude Tool Use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stop-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop Reasons
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming-batch-and-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Streaming, Batch, and Vision
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Streaming, Batch, and Vision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-tool-use-loop-with-cost-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Tool Use Loop with Cost Annotations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1163,13 +1614,306 @@
 <li><a href="../03-pricing-economics-async-apis/">Chapter 3: Pricing, Economics, and Async API Modes</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Vendor #1: Claude</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Anthropic's Claude is the first vendor we'll examine in depth. The headline cost feature is prompt caching — typically 90% off your input bill on the right traffic shape — and the model family scales cleanly from cheap-and-fast to slow-and-expensive. By the end of this chapter you'll be calling the Messages API, configuring <code>cache_control</code>, and verifying cache hits in the response. Every token counts — and Claude makes most of them cacheable.</p>
+</div>
+<h2 id="the-api-surface">The API Surface</h2>
+<h3 id="anthropic-api-and-the-sdk">Anthropic API and the SDK</h3>
+<p>The <strong>Anthropic API</strong> is the HTTPS surface that exposes Claude to your application — <code>https://api.anthropic.com/v1/...</code> for direct access, plus mirrored surfaces on Amazon Bedrock and Google Vertex AI for enterprise customers who prefer to bill through their cloud provider. Every request is authenticated with an API key sent in the <code>x-api-key</code> header.</p>
+<p>The <strong>Anthropic SDK</strong> is Anthropic's official client library — <code>anthropic</code> on PyPI, <code>@anthropic-ai/sdk</code> on npm — that wraps the raw HTTP API in idiomatic types for Python, TypeScript, Java, Go, and a few other languages. Use the SDK whenever possible: it handles retries, streaming, and the small ergonomic differences between request and response shapes that you would otherwise have to discover by reading the changelog.</p>
+<p><strong>API key management</strong> is the operational discipline of issuing, rotating, scoping, and revoking the credentials your application uses. The non-negotiable rules:</p>
+<ul>
+<li>One key per environment (dev, staging, prod) so a leaked dev key never burns prod budget</li>
+<li>Keys live in your secret manager (AWS Secrets Manager, GCP Secret Manager, Vault), never in source control</li>
+<li>Every key has a budget cap configured in the Anthropic console — even a leaked key cannot spend more than the cap</li>
+<li>Keys are rotated on a schedule (quarterly is reasonable) and immediately on any suspected compromise</li>
+</ul>
+<h3 id="the-claude-messages-api">The Claude Messages API</h3>
+<p>The <strong>Claude Messages API</strong> is the single endpoint (<code>POST /v1/messages</code>) for all Claude conversational requests. It replaces an older completion-style API and is the only one that supports the modern features we care about — caching, tool use, vision, extended thinking. Every request is a JSON body containing a <code>model</code>, a <code>messages</code> array, an optional <code>system</code> string, and parameters like <code>max_tokens</code>, <code>temperature</code>, <code>tools</code>, and <code>stream</code>.</p>
+<p>The <code>messages</code> array is a sequence of objects with role <code>"user"</code> or <code>"assistant"</code> and a <code>content</code> field. The <code>content</code> field is not a plain string in the modern API — it is a list of <strong>message content blocks</strong>, each typed: a <code>text</code> block, a <code>tool_use</code> block, a <code>tool_result</code> block, or an <code>image</code> block. This typed structure is what makes tool use, vision, and partial caching possible inside a single message.</p>
+<p>A minimal request looks like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">anthropic</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">()</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">system</span><span class="o">=</span><span class="s2">&quot;You are a helpful assistant.&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;What is the capital of France?&quot;</span><span class="p">}],</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">usage</span><span class="p">)</span>  <span class="c1"># {input_tokens, output_tokens, cache_creation_input_tokens, cache_read_input_tokens}</span>
+</code></pre></div></td></tr></table></div>
+<p>The <code>usage</code> object on the response is the most important field in the entire chapter — it carries the four token counts that drive every cost calculation downstream. Read it. Log it. Build dashboards on it.</p>
+<h2 id="the-claude-model-family">The Claude Model Family</h2>
+<p>The <strong>Claude model family</strong> is Anthropic's lineup of three model sizes, each tuned for a different cost-quality point on the Pareto frontier introduced in Chapter 3. The naming convention is consistent across generations: capability tiers Opus, Sonnet, and Haiku, with version numbers appended (Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5).</p>
+<ul>
+<li><strong>Claude Opus</strong> is the flagship — the largest, smartest, slowest, and most expensive. Use it when raw reasoning quality matters more than per-call cost: deep research, complex code refactors, hard analysis tasks. Pricing is roughly $15/MTok input and $75/MTok output (current generation).</li>
+<li><strong>Claude Sonnet</strong> is the workhorse — strong general capability at a fraction of the Opus price. The default first choice for most production workloads. Pricing is roughly $3/MTok input and $15/MTok output.</li>
+<li><strong>Claude Haiku</strong> is the fast/cheap model — built for high-throughput, latency-sensitive, or budget-constrained workloads. Surprisingly capable on routine tasks. Pricing is roughly $0.80/MTok input and $4/MTok output.</li>
+</ul>
+<p>Before showing the comparison table, here is the rule of thumb: the price difference between adjacent tiers is roughly 4–5×, while the quality difference is closer to 5–15 percentage points on most benchmarks. That makes routing (Chapter 17) extremely high-leverage on Anthropic — a workload that ships everything to Opus is leaving most of the cost reduction on the table.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Relative Cost (input)</th>
+<th>Relative Cost (output)</th>
+<th>Typical Use</th>
+<th>Latency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Opus</td>
+<td>~5× Sonnet</td>
+<td>~5× Sonnet</td>
+<td>Hard reasoning, agent planning</td>
+<td>Slowest</td>
+</tr>
+<tr>
+<td>Sonnet</td>
+<td>1× (baseline)</td>
+<td>1× (baseline)</td>
+<td>General production workloads</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Haiku</td>
+<td>~0.25× Sonnet</td>
+<td>~0.25× Sonnet</td>
+<td>Classification, extraction, routing</td>
+<td>Fastest</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-claude-tokenizer">The Claude Tokenizer</h3>
+<p>The <strong>Claude tokenizer</strong> is a BPE-family tokenizer (Chapter 2) shared across the entire Claude model family. Vocabulary size is in the standard 100K-token range. Anthropic publishes the tokenizer for client-side token estimation — install via <code>pip install anthropic[tokenizer]</code> or use the <code>count_tokens</code> method on the SDK.</p>
+<p>Two practical notes about the Claude tokenizer:</p>
+<ul>
+<li>It tokenizes English code about 10–15% more efficiently than the older GPT-3.5 tokenizer but slightly less efficiently than the newest tiktoken variants on long English prose. Always re-tokenize your real traffic when comparing across vendors.</li>
+<li>Image content blocks contribute tokens too. A standard image consumes roughly 1,500–1,800 input tokens depending on resolution, and that count is reported in the response <code>usage</code> object.</li>
+</ul>
+<h2 id="anthropic-system-prompts-and-message-structure">Anthropic System Prompts and Message Structure</h2>
+<p>The <strong>Anthropic system prompt</strong> is a separate top-level field on the request (<code>system: "..."</code>), not a message in the <code>messages</code> array. That separation is deliberate: the system field has dedicated cache semantics (it is the natural cache target) and the model treats system content with higher priority than later user content. A typical production request has a multi-thousand-token system prompt and short user messages.</p>
+<p>Each entry in the <code>messages</code> array carries one or more <strong>message content blocks</strong>. The block types you will use:</p>
+<ul>
+<li><code>text</code> — ordinary text content</li>
+<li><code>image</code> — base64-encoded or URL-referenced image (for Claude vision input)</li>
+<li><code>tool_use</code> — emitted by the assistant; declares "I want to call this tool with these arguments"</li>
+<li><code>tool_result</code> — emitted by the user role; carries the result of a previously-called tool back to the model</li>
+</ul>
+<p>This block-level structure matters for caching: the <strong>cache control parameter</strong> (covered next) attaches to specific blocks, not to entire messages.</p>
+<h2 id="anthropic-prompt-caching-the-single-biggest-lever">Anthropic Prompt Caching — The Single Biggest Lever</h2>
+<p>This is the optimization that, when applied correctly, will save more money than any other change in this chapter combined.</p>
+<p><strong>Anthropic prompt caching</strong> lets you mark a portion of your request as cacheable. The first time Anthropic sees that exact prefix, they process and cache it (charged at a small premium — see "cache write" below). On every subsequent request that ships the same prefix within the cache TTL, the cached portion is charged at roughly <strong>10% of the normal input rate</strong> instead of the full rate.</p>
+<h3 id="cache-control-breakpoints-and-ttl">Cache Control, Breakpoints, and TTL</h3>
+<p>The <strong>cache control parameter</strong> is the JSON property you attach to a content block to mark "everything up to and including this block should be cached." The marker creates a <strong>cache breakpoint</strong> — Anthropic will cache the entire prefix from the start of the request through this block. You can place up to four breakpoints in a single request, dividing the prompt into stable-and-volatile sections.</p>
+<p>The <strong>cache TTL</strong> is how long the cached prefix is retained without being touched. The default is 5 minutes; an extended 1-hour TTL is available at a slightly higher cache-write cost. After the TTL expires, the next request has to re-cache (paying the cache-write premium again). This is why workloads with steady traffic cache better than bursty workloads — steady traffic naturally keeps the cache warm.</p>
+<p>A request with caching looks like:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">system</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">LONG_SYSTEM_PROMPT</span><span class="p">,</span>  <span class="c1"># 5,000 tokens of stable instructions</span>
+            <span class="s2">&quot;cache_control&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ephemeral&quot;</span><span class="p">},</span>  <span class="c1"># cache breakpoint here</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_question</span><span class="p">}],</span>  <span class="c1"># this varies per request</span>
+<span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="cache-read-tokens-cache-write-tokens-and-the-math">Cache Read Tokens, Cache Write Tokens, and the Math</h3>
+<p>The response <code>usage</code> object now reports four token counts:</p>
+<ul>
+<li><code>input_tokens</code> — uncached input (the volatile suffix; typically the user message)</li>
+<li><code>cache_creation_input_tokens</code> — tokens written to cache on this request (only nonzero on the <em>first</em> request of a cycle)</li>
+<li><code>cache_read_input_tokens</code> — tokens read from cache on this request (the savings line)</li>
+<li><code>output_tokens</code> — same as before</li>
+</ul>
+<p><strong>Cache write tokens</strong> are charged at roughly 1.25× the normal input rate (a 25% premium for the privilege of caching). <strong>Cache read tokens</strong> are charged at roughly 0.10× the normal input rate (a 90% discount). The break-even point — how many reads it takes for caching to pay off — is just two: the second hit already has you ahead.</p>
+<p>To make this concrete, for a Sonnet-class model with input at $3/MTok:</p>
+<div class="arithmatex">\[
+\text{Break-even reads} = \frac{P_{\text{write}} - P_{\text{normal}}}{P_{\text{normal}} - P_{\text{read}}} = \frac{1.25 - 1.0}{1.0 - 0.10} = 0.28
+\]</div>
+<p>In practice you need to amortize one write across enough reads to offset the premium, and the math says one extra read is enough. Any request prefix that will be reused even twice should be cached. The diagram below visualizes the math:</p>
+<h4 id="diagram-anthropic-prompt-caching-lifecycle">Diagram: Anthropic Prompt Caching Lifecycle</h4>
+<iframe src="../../sims/anthropic-prompt-caching-lifecycle/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Anthropic Prompt Caching Lifecycle</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> anthropic-prompt-caching-lifecycle<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a sequence of requests against a stable system prompt with caching enabled, breaking down each request into write/read/uncached/output tokens and accumulating the running cost vs. the no-cache baseline.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning objective: Calculate the cumulative cost of N requests with and without caching, and identify the break-even point (always reached after request 2).</p>
+<p>Canvas layout:
+- Top half (full width): A horizontal sequence of request "cards" labeled R1, R2, R3, ..., each showing a small stacked bar of token categories (cache write, cache read, uncached input, output)
+- Bottom half: A line chart with two series (cumulative cost with caching, cumulative cost without caching) over request number</p>
+<p>Interactive controls:
+- Slider: System prompt size (500–10,000 tokens, default 5,000)
+- Slider: User message size (50–500 tokens, default 200)
+- Slider: Output size (100–2,000 tokens, default 500)
+- Slider: Number of requests (1–20, default 10)
+- Toggle: Enable caching (default on)
+- Toggle: 5-min TTL vs 1-hour TTL
+- Button: "Add stale gap (TTL expires)" — inserts a 5-minute pause that forces a new cache write at the next request</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show R1 with a tall "cache write" bar and the system prompt cost at 1.25× normal
+  Stage 2: Show R2..RN with tall "cache read" bars at 0.10× normal — visually striking how much smaller they are
+  Stage 3: Show the line chart diverging — caching curve flattens, no-caching curve grows linearly
+  Stage 4: Show running cost values and percentage savings</p>
+<p>Default values:
+- System prompt: 5,000 tokens
+- User: 200 tokens, output: 500 tokens
+- Caching: on
+- TTL: 5 min
+- Requests: 10</p>
+<p>Implementation: p5.js with responsive width</p>
+</details>
+<div class="admonition mascot-tip">
+<p class="admonition-title">The Cache Pays for Itself on Request Two</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+The arithmetic here is unusually friendly: write costs 1.25×, reads cost 0.10×, so a single follow-up read more than pays back the write premium. Translation: cache <em>anything</em> you'll send more than once. The only common reason not to cache is when the prefix legitimately changes every request — which, once you look, is rarer than you'd think. Where did all the tokens go? Spoiler: the system prompt. Cache it.</p>
+</div>
+<h2 id="extended-thinking-and-the-thinking-token-budget">Extended Thinking and the Thinking Token Budget</h2>
+<p><strong>Extended thinking</strong> is Claude's mode where the model produces a hidden chain of internal reasoning before producing the final visible answer. The thinking content is not shown to the user (it is not in the response <code>text</code> blocks) but it is billed at the output token rate, since the model is generating those tokens.</p>
+<p>The <strong>thinking token budget</strong> is a parameter (<code>thinking: { type: "enabled", budget_tokens: N }</code>) that caps how many reasoning tokens the model is allowed to use on a given request. Higher budgets give the model more room to deliberate on hard problems; lower budgets hold cost down on routine ones. Reasonable starting points:</p>
+<ul>
+<li>1,024 tokens for everyday Sonnet calls where you want a small reasoning boost</li>
+<li>8,000 tokens for hard problems where you want substantial deliberation</li>
+<li>32,000+ tokens reserved for genuine deep-reasoning workloads</li>
+</ul>
+<p>The cost impact is substantial. A request that returns a 200-token visible answer can consume 5,000 thinking tokens behind the scenes, billed at the output rate — a 25× hidden cost multiplier. Always cap the thinking budget appropriately; an unbounded thinking budget on a high-volume endpoint is one of the easiest ways to surprise yourself on the monthly bill.</p>
+<h2 id="claude-tool-use">Claude Tool Use</h2>
+<p><strong>Claude tool use</strong> is the mechanism by which the model can ask your application to execute a function and return the result. Tool use turns Claude from "answer my question" into "use these capabilities to accomplish a goal."</p>
+<p>A tool-use request includes a <code>tools</code> parameter — an array of <strong>tool definition schemas</strong>, each describing the tool's name, purpose, and input parameters in a JSON-schema-like format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Get the current weather for a location.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;input_schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<p>When the model decides to call a tool, the response includes a <code>tool_use</code> content block with the tool name and JSON arguments. Your application executes the tool, then sends a follow-up request that appends a <code>tool_result</code> block (in a user-role message) carrying the result. The model receives that result and continues — possibly calling more tools, possibly producing the final answer.</p>
+<p>The cost shape of tool use is important: every tool definition adds tokens to the system area of every request (tool definitions are repeated on every turn so the model knows what's available), and every tool-call iteration is a full round-trip with input+output tokens. Tool definitions are excellent caching candidates — they almost never change between requests within a session.</p>
+<h2 id="stop-reasons">Stop Reasons</h2>
+<p>Every Claude response includes a <strong>stop reason</strong> in the response object — a small string that tells you <em>why</em> generation ended:</p>
+<ul>
+<li><code>"end_turn"</code> — the model decided it was done (clean stop)</li>
+<li><code>"max_tokens"</code> — generation hit the <code>max_tokens</code> ceiling and was cut off (your hard cap fired)</li>
+<li><code>"stop_sequence"</code> — generation hit a configured stop sequence</li>
+<li><code>"tool_use"</code> — the model emitted a tool call and is awaiting a tool result before continuing</li>
+<li><code>"refusal"</code> — the model declined to respond on safety grounds</li>
+</ul>
+<p>Logging the stop reason on every request is a small instrumentation investment with high analytical payoff. A spike in <code>max_tokens</code> stop reasons means your <code>max_tokens</code> cap is firing more often (output is being truncated mid-sentence). A spike in <code>tool_use</code> means agent loops are getting longer. Both are diagnostics you'll want before users notice.</p>
+<h2 id="streaming-batch-and-vision">Streaming, Batch, and Vision</h2>
+<p><strong>Anthropic streaming</strong> is the standard server-sent-events pattern: pass <code>stream=True</code>, receive a sequence of typed events (<code>message_start</code>, <code>content_block_start</code>, <code>content_block_delta</code>, <code>message_delta</code>, <code>message_stop</code>). The final <code>message_delta</code> event carries the complete <code>usage</code> object, so cost accounting works the same as non-streaming. Streaming does not change cost, only latency-to-first-token.</p>
+<p>The <strong>Anthropic Batch API</strong> is Anthropic's specialization of the generic Batch API pattern from Chapter 3. Submit a JSONL file of up to 100,000 requests; Anthropic processes them within a 24-hour window; download results from a presigned URL. The batch discount is 50% off both input and output prices (and stacks with prompt caching — cached batch reads are a dramatic combination of discounts). Batch is the right path for any workload that doesn't need interactive latency.</p>
+<p><strong>Claude vision input</strong> lets you send images as <code>image</code> content blocks (base64-encoded or referenced by URL). The model can describe images, extract text, answer questions about charts, and reason about diagrams. Each image consumes 1,500–1,800 input tokens depending on resolution, reported separately in the <code>usage</code> object. For high-image-volume applications, this token category can rival text input — log it from day one.</p>
+<h4 id="diagram-tool-use-loop-with-cost-annotations">Diagram: Tool Use Loop with Cost Annotations</h4>
+<iframe src="../../sims/tool-use-loop-cost/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Tool Use Loop with Cost Annotations</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> tool-use-loop-cost<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a multi-turn tool-use loop (model calls tool, gets result, calls another tool, eventually answers) and annotate each turn with input/output token counts so the cumulative cost is visible.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning objective: Examine how tool-use loops accumulate input tokens (the entire prior conversation is re-sent on every turn) and identify the tool definitions and system prompt as cache targets.</p>
+<p>Visual style: Sequence diagram (vertical), with the model on the left and the application on the right</p>
+<p>Steps:
+1. App → Model: System prompt (5K tokens, cached) + tools (1K tokens, cached) + user question (50 tokens, uncached)
+2. Model → App: Tool call: get_weather("Paris") — small assistant message
+3. App → Model: All previous content + tool_result (50 tokens) — re-sends the whole stack
+4. Model → App: Tool call: get_forecast("Paris") — another small turn
+5. App → Model: All previous content + tool_result — even larger re-send
+6. Model → App: Final answer text (200 tokens)</p>
+<p>Annotations on each turn:
+- Cached input tokens (green)
+- Uncached input tokens (orange)
+- Output tokens (red)
+- Running total cost on the right margin</p>
+<p>Interactive controls:
+- Toggle: "Show cache savings" — gray out the cached portion to make the savings visible
+- Slider: Number of tool-call iterations (1–10)</p>
+<p>Implementation: Mermaid sequence diagram, responsive layout</p>
+</details>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Tool Loops Multiply Tokens</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+A 5-iteration tool loop sends the same system prompt and tool definitions five times — once per turn. Without caching, you pay full price for that prefix five times. With caching, the second through fifth turns hit cache reads at 10% of the normal rate. On a tool-heavy agent, this single setting often cuts the bill in half. Cheap systems are caching systems.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now build a Claude application end-to-end. You authenticate against the <strong>Anthropic API</strong> with a scoped, budget-capped key managed by the <strong>Anthropic SDK</strong>. You call the <strong>Claude Messages API</strong> with a model from the <strong>Claude model family</strong> (<strong>Opus</strong>, <strong>Sonnet</strong>, or <strong>Haiku</strong>) selected to match your cost-quality target. You estimate token counts client-side with the <strong>Claude tokenizer</strong>. You structure each request as an <strong>Anthropic system prompt</strong> plus a <code>messages</code> array of <strong>message content blocks</strong>. You enable <strong>Anthropic prompt caching</strong> by attaching a <strong>cache control parameter</strong> to a stable prefix block, creating a <strong>cache breakpoint</strong> that survives for the <strong>cache TTL</strong>, and you read <strong>cache read tokens</strong> and <strong>cache write tokens</strong> off the response <code>usage</code> object. You enable <strong>extended thinking</strong> with a bounded <strong>thinking token budget</strong> for hard problems. You add <strong>Claude tool use</strong> with <strong>tool definition schemas</strong> and handle <strong>tool result blocks</strong> in follow-up turns. You log the <strong>stop reason</strong> on every response. You use <strong>Anthropic streaming</strong> for interactive latency, the <strong>Anthropic batch API</strong> for non-interactive workloads, and <strong>Claude vision input</strong> when the task involves images.</p>
+<p>Chapter 5 walks the same path for OpenAI: same framework, different surface, different idiosyncrasies.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What is the cache write price relative to normal input?</strong> Roughly 1.25× — a 25% premium for the privilege of caching.</li>
+<li><strong>What is the cache read price relative to normal input?</strong> Roughly 0.10× — a 90% discount.</li>
+<li><strong>How many cache reads do you need before caching breaks even?</strong> Just one extra read after the write — the math is unusually friendly.</li>
+<li><strong>Where in a Claude request does the system prompt live?</strong> In a top-level <code>system</code> field, separate from the <code>messages</code> array.</li>
+<li><strong>What does a <code>stop_reason</code> of <code>"max_tokens"</code> indicate?</strong> Your <code>max_tokens</code> ceiling fired and the response was truncated. If you see a spike, your cap may be too low or your prompt is asking for more than necessary.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 4</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Claude is your first vendor. Cache the system prompt, cap the thinking budget, log the stop reason, and you're already operating one of the leanest LLM stacks available. Next stop: OpenAI, where the levers are similar but the names and idiosyncrasies differ.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1214,6 +1958,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

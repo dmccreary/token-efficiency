@@ -1,0 +1,14 @@
+{
+  "sim_id": "privacy-compliance-pipeline",
+  "diagram_name": "Privacy and Compliance Pipeline",
+  "chapter_number": 19,
+  "chapter_title": "Batch Job Operations, Privacy, and Compliance",
+  "chapter_dir": "19-batch-privacy-compliance",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a privacy-and-compliance-aware LLM request pipeline that satisfies GDPR, HIPAA, and SOC2 requirements simultaneously.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** privacy-compliance-pipeline<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show how a single LLM request flows through the privacy and compliance controls — from input PII redaction through to audit trail emission — so the layered defense pattern is visible.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a privacy-and-compliance-aware LLM request pipeline that satisfies GDPR, HIPAA, and SOC2 requirements simultaneously.\n\nVisual style: Vertical flow diagram with side annotations for each compliance framework\n\nSteps:\n1. User input received (with PII)\n2. Field redaction (SSN, credit card, etc., replaced with placeholders) → audit event\n3. Free-text PII detection on remaining content → tokenize names with reversible tokens\n4. Prompt assembly with redacted/tokenized content\n5. Region check: enforce data residency by routing to in-region LLM endpoint\n6. LLM call with vendor on no-train, low-retention enterprise tier\n7. Response received\n8. Response PII detection (model may have surfaced PII from training data)\n9. Re-tokenize identifiers in response back to readable form (only for authorized recipient)\n10. Log line emitted: includes redacted prompt hash, no raw content, audit-trail event\n11. Response delivered to user\n\nRight-side annotations:\n- \"GDPR: lawful basis documented\" at step 1\n- \"HIPAA: PHI never leaves redaction boundary\" at step 2\n- \"Data residency enforced\" at step 5\n- \"SOC2: audit event for change to redaction policy\" at step 11\n\nInteractive controls:\n- Toggle each compliance framework on/off — show which controls are required by each\n- Click any step to see the failure mode if that control were missing\n\nImplementation: Mermaid flowchart with side annotations, responsive layout"
+}

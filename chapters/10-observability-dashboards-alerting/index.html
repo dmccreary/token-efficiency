@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="From raw logs to actionable signals — OpenTelemetry conventions, metrics, dashboards for cost and hit rate and latency, anomaly detection, alerting rules, and cross-service tracing">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../11-log-file-analysis/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>10. Observability, Dashboards, and Alerting - Token Efficiency</title>
+        <title>Observability, Dashboards, and Alerting - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              10. Observability, Dashboards, and Alerting
+              Observability, Dashboards, and Alerting
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -576,6 +574,174 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#observability-vs-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observability vs. Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opentelemetry-and-the-llm-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenTelemetry and the LLM Conventions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-counters-and-histograms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics: Counters and Histograms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboards-that-earn-their-pixels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboards That Earn Their Pixels
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dashboards That Earn Their Pixels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-cost-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cost Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hit-rate-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Hit Rate Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-latency-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Latency Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-volume-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token Volume Chart
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token Volume Chart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-llm-ops-dashboard-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: LLM Ops Dashboard Layout
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-series-aggregation-aggregation-periods-and-cardinality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Series Aggregation, Aggregation Periods, and Cardinality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anomaly-detection-and-alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection and Alerting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anomaly Detection and Alerting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerting Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alerting Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-spike-alert-with-drill-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Spike Alert with Drill-Down
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drill-down-analysis-and-cross-service-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drill-Down Analysis and Cross-Service Tracing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +989,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +998,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1325,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1373,174 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observability-vs-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observability vs. Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opentelemetry-and-the-llm-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenTelemetry and the LLM Conventions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-counters-and-histograms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics: Counters and Histograms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dashboards-that-earn-their-pixels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboards That Earn Their Pixels
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dashboards That Earn Their Pixels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-cost-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Cost Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hit-rate-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Hit Rate Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-latency-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Latency Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-volume-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token Volume Chart
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token Volume Chart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-llm-ops-dashboard-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: LLM Ops Dashboard Layout
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-series-aggregation-aggregation-periods-and-cardinality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Series Aggregation, Aggregation Periods, and Cardinality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anomaly-detection-and-alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection and Alerting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anomaly Detection and Alerting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anomaly-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anomaly Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerting Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alerting Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-spike-alert-with-drill-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Spike Alert with Drill-Down
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drill-down-analysis-and-cross-service-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drill-Down Analysis and Cross-Service Tracing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1157,13 +1596,190 @@
 <li><a href="../09-structured-logging/">Chapter 9: Structured Logging for LLM Calls</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Logs Become Signal</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Logs by themselves are just lines on disk. This chapter turns them into the signals that pager you when something goes wrong: metrics, dashboards, and alerts. By the end you'll know which charts every LLM team should have in front of them and which alerts should fire before users notice anything. Cheap systems are the ones whose owners notice the spike before the bill closes.</p>
+</div>
+<h2 id="observability-vs-monitoring">Observability vs. Monitoring</h2>
+<p><strong>Observability</strong> is the property of a system that allows operators to ask arbitrary questions about its internal state from outside, by examining its outputs (logs, metrics, traces). The contrast is with classical monitoring — pre-defined dashboards for pre-defined questions — and the difference matters because LLM applications generate questions you didn't anticipate at deployment time.</p>
+<p>The three pillars of observability are logs (Chapter 9), metrics (this chapter), and traces (covered briefly here, then in Chapter 11). Each answers a different kind of question:</p>
+<ul>
+<li>Metrics: "What is the rate, frequency, or distribution of X?"</li>
+<li>Logs: "What exactly happened in this specific event?"</li>
+<li>Traces: "How did this request flow through my system?"</li>
+</ul>
+<p>For LLM applications, you need all three. Token spikes show up first in metrics. Diagnosing the cause requires the underlying logs. Understanding why a single user's session was expensive requires traces.</p>
+<h2 id="opentelemetry-and-the-llm-conventions">OpenTelemetry and the LLM Conventions</h2>
+<p><strong>OpenTelemetry</strong> (often abbreviated <strong>OTel</strong>) is the open-source vendor-neutral standard for emitting telemetry data — logs, metrics, and traces — from applications to whatever backend you choose (Datadog, New Relic, Grafana Cloud, self-hosted Prometheus + Tempo + Loki, etc.). OTel ships SDKs for every major language and a collector daemon that forwards data to backends.</p>
+<p>The value of OpenTelemetry for LLM applications is precisely the vendor-neutrality: you instrument once with OTel APIs and switch backends without touching the application. For a multi-vendor LLM environment (Chapter 6), this neutrality matters even more — you don't want your observability tied to a specific LLM vendor's proprietary tracing.</p>
+<p>The <strong>OTel LLM conventions</strong> (formally the "OpenTelemetry Semantic Conventions for Generative AI") are a published spec that defines the standard attribute names for LLM-related telemetry. Examples:</p>
+<ul>
+<li><code>gen_ai.system</code> — vendor identifier (<code>"anthropic"</code>, <code>"openai"</code>, <code>"vertex_ai"</code>)</li>
+<li><code>gen_ai.request.model</code> — model name</li>
+<li><code>gen_ai.usage.input_tokens</code> — input token count</li>
+<li><code>gen_ai.usage.output_tokens</code> — output token count</li>
+<li><code>gen_ai.response.finish_reasons</code> — array of stop reasons</li>
+</ul>
+<p>Adopting these conventions early means your dashboards and queries work across vendors without per-vendor field translation. The conventions are still evolving; pin a version and revisit annually.</p>
+<h2 id="metrics-counters-and-histograms">Metrics: Counters and Histograms</h2>
+<p>A <strong>metric</strong> is a numerical measurement that is recorded over time and aggregated for analysis. Metrics are cheap to emit, cheap to store (only the aggregated value plus a timestamp, not every individual event), and fast to query. They are the right tool for "how much, how often, how slow" questions.</p>
+<p>LLM observability uses two metric types primarily.</p>
+<p>A <strong>counter metric</strong> is a monotonically-increasing integer that counts occurrences of an event. Counters are aggregated by summing within time windows. Examples for LLM systems:</p>
+<ul>
+<li><code>llm.requests.count</code> — number of LLM API calls (tagged by model, feature)</li>
+<li><code>llm.tokens.input.count</code> — total input tokens consumed</li>
+<li><code>llm.tokens.output.count</code> — total output tokens generated</li>
+<li><code>llm.cost.total</code> — running cost in dollars (counted in micro-dollars to stay integer)</li>
+</ul>
+<p>A <strong>histogram metric</strong> is a distribution of values over time, capturing not just an average but the full shape (P50, P95, P99 percentiles, min, max). Histograms are essential for latency and per-request cost — averages hide the long tail where the actual problems live. Examples:</p>
+<ul>
+<li><code>llm.latency.ms</code> — request latency distribution</li>
+<li><code>llm.tokens.per_request</code> — token-count distribution</li>
+<li><code>llm.cost.per_request_usd</code> — per-request cost distribution</li>
+</ul>
+<p>The general rule: count rates with counters, measure shapes with histograms. Average latency is a useless metric; P99 latency is actionable.</p>
+<h2 id="dashboards-that-earn-their-pixels">Dashboards That Earn Their Pixels</h2>
+<p>A <strong>dashboard</strong> is a curated visual layout of metrics and charts that a particular role (engineer, manager, finance) consults to understand system state. The discipline is to build dashboards from the question backwards — start with "what decision will this dashboard support?" and lay out only the panels that answer that question.</p>
+<p>Three dashboards every LLM team should have:</p>
+<h3 id="the-cost-dashboard">The Cost Dashboard</h3>
+<p>The <strong>cost dashboard</strong> tracks dollars spent over time, broken down by every dimension that supports a decision:</p>
+<ul>
+<li>Cost over time (daily and monthly), with the budget line overlaid</li>
+<li>Cost by feature (which features dominate spend?)</li>
+<li>Cost by model (where is the routing not working?)</li>
+<li>Cost per user / cost per outcome (unit economics from Chapter 3)</li>
+<li>Burn rate vs. monthly forecast (Chapter 3 again)</li>
+</ul>
+<p>The cost dashboard is the one engineering managers and finance look at. Build it first; build it well; keep the budget line prominent.</p>
+<h3 id="the-hit-rate-dashboard">The Hit Rate Dashboard</h3>
+<p>The <strong>hit rate dashboard</strong> tracks prompt-cache effectiveness — the ratio of cached input tokens to total input tokens, by feature and by model:</p>
+<div class="arithmatex">\[
+\text{Cache Hit Rate} = \frac{\text{Cached input tokens}}{\text{Total input tokens}}
+\]</div>
+<p>A healthy production system with caching enabled shows hit rates in the 70–95% range on cacheable workloads. A drop in hit rate is usually the first sign that someone changed a system prompt and accidentally invalidated the cache breakpoint. The hit rate dashboard turns those silent regressions into a visible trend break.</p>
+<h3 id="the-latency-dashboard">The Latency Dashboard</h3>
+<p>The <strong>latency dashboard</strong> tracks request latency distributions over time. Show P50, P95, and P99 separately — the average is misleading. Break down by model and by feature.</p>
+<p>The latency dashboard answers "is the user experience getting worse?" before users complain. Its companion metric is time-to-first-token (TTFT) for streaming endpoints — TTFT often matters more than total latency to perceived responsiveness.</p>
+<h3 id="the-token-volume-chart">The Token Volume Chart</h3>
+<p>The <strong>token volume chart</strong> is a simple but consistently-useful panel: input and output tokens consumed per unit time, stacked or side-by-side, with cached tokens called out separately. It surfaces trends in raw consumption that the cost view obscures (because cost mixes volume and price).</p>
+<p>The diagram below sketches the layout of a typical LLM ops dashboard:</p>
+<h4 id="diagram-llm-ops-dashboard-layout">Diagram: LLM Ops Dashboard Layout</h4>
+<iframe src="../../sims/llm-ops-dashboard-layout/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>LLM Ops Dashboard Layout</summary>
+<p>Type: infographic
+<strong>sim-id:</strong> llm-ops-dashboard-layout<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a representative LLM observability dashboard — the panels, their relative positioning, and what each panel answers — as a wireframe so learners can copy the structure to their own backend.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement an LLM observability dashboard with the panels needed to answer cost, latency, and cache-effectiveness questions for a production team.</p>
+<p>Canvas layout:
+- Grid of 6 panels (3 columns × 2 rows)
+- Top row: Cost over time | Cost by feature | Cost by model
+- Bottom row: Cache hit rate | Latency P50/P95/P99 | Token volume</p>
+<p>Each panel is rendered as a simplified chart (line, bar, stacked area) with synthetic but realistic data.</p>
+<p>Interactive controls:
+- Hover any panel: show full description of what it answers and which decisions it supports
+- Toggle: "Healthy state" vs "Incident state" — flips the data to show what an incident looks like
+- Toggle: "Alert overlay" — highlights panels where alerting rules would have fired in incident state</p>
+<p>Default state: Healthy data, no alerts</p>
+<p>Implementation: p5.js, responsive width</p>
+</details>
+<h2 id="time-series-aggregation-aggregation-periods-and-cardinality">Time Series Aggregation, Aggregation Periods, and Cardinality</h2>
+<p><strong>Time series aggregation</strong> is the process of bucketing event data into time windows and computing aggregate values per window. Every dashboard panel is some flavor of time series aggregation — sum cost per hour, P95 latency per minute, request count per day.</p>
+<p>The <strong>aggregation period</strong> is the size of those buckets. Smaller periods give finer resolution but more storage and slower queries; larger periods smooth over real signals. Reasonable defaults:</p>
+<ul>
+<li>1-minute buckets for the last hour (debugging recent issues)</li>
+<li>5-minute buckets for the last day (operational dashboards)</li>
+<li>1-hour buckets for the last month (trend analysis)</li>
+<li>1-day buckets for longer windows (forecasting, capacity planning)</li>
+</ul>
+<p>Modern observability backends auto-downsample older data into coarser buckets, so you don't need to configure this manually for retention — but you do need to understand it when you query.</p>
+<p><strong>Cardinality concern</strong> is the warning that high-cardinality fields (fields with many distinct values) explode the cost of metric storage. A metric tagged with <code>user_id</code> has cardinality equal to your user count — a million users means a million separate time series for that one metric, each with its own time-bucketed values. Most metrics backends charge per active series; a million-series metric is a million-dollar surprise.</p>
+<p>The rule: tag metrics only with low-cardinality dimensions. Model name (low cardinality, ~10 distinct values), feature (low cardinality, ~50), vendor (very low, 3) — fine. User ID (high cardinality), trace ID (very high), prompt hash (potentially very high) — never as metric tags. For per-user analysis, use the underlying logs (Chapter 9) or a separate analytical store, not a metrics backend.</p>
+<h2 id="anomaly-detection-and-alerting">Anomaly Detection and Alerting</h2>
+<h3 id="anomaly-detection">Anomaly Detection</h3>
+<p><strong>Anomaly detection</strong> is the automated identification of unusual patterns in time-series data without a pre-defined threshold. Anomaly detection is what catches "today's traffic looks different from a normal Tuesday" without anyone having to specify what "normal" means.</p>
+<p>The two common approaches for LLM metrics:</p>
+<ul>
+<li><strong>Statistical anomaly detection</strong> — compute rolling mean and standard deviation, flag anything more than N standard deviations from the mean. Simple, predictable, works well for stable workloads.</li>
+<li><strong>ML-based anomaly detection</strong> — train a model on historical patterns and flag deviations. More powerful but harder to debug; modern observability tools (Datadog, Grafana, Honeycomb) offer this as a managed feature.</li>
+</ul>
+<p>Anomaly detection complements alerting; it doesn't replace it. Use anomaly detection to surface unexpected patterns that humans can investigate; use alerting (next) for known thresholds where automated action is required.</p>
+<h3 id="alerting-rules">Alerting Rules</h3>
+<p>An <strong>alerting rule</strong> is a pre-configured condition on metrics that, when true, fires a notification (page, email, Slack message). Good alerting rules are specific, actionable, and rare — every false positive trains responders to ignore the next alert.</p>
+<p>Two LLM-specific alerts every team should configure:</p>
+<p>A <strong>token spike alert</strong> fires when token consumption per unit time exceeds a normal-range threshold. Spikes usually indicate a broken prompt template (a loop that retries with a growing prompt), an exploit (an attacker probing for prompt injection), or a viral feature (good news, but capacity needs adjustment). Alert on both rate-of-change ("tokens-per-minute increased 5× in the last 10 minutes") and absolute value ("tokens-per-minute exceeded N").</p>
+<p>A <strong>cost threshold alert</strong> fires when cumulative spend in a window crosses a fraction of the budget. Standard thresholds: 50%, 75%, 90% of monthly budget. By the 75% alert, action is required; by the 90% alert, the action should already be in progress.</p>
+<p>Alert fatigue is the silent killer of any monitoring system. Every alert should have a documented runbook: "When this fires, look at X, then do Y." If you can't write the runbook, the alert isn't useful — delete it.</p>
+<h4 id="diagram-token-spike-alert-with-drill-down">Diagram: Token Spike Alert with Drill-Down</h4>
+<iframe src="../../sims/token-spike-alert-drilldown/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Token Spike Alert with Drill-Down</summary>
+<p>Type: chart
+<strong>sim-id:</strong> token-spike-alert-drilldown<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a token-rate time series with a sudden spike, the alert threshold being crossed, and a drill-down panel that breaks the spike down by feature and user to identify the cause.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: deconstruct</p>
+<p>Learning objective: Deconstruct a token spike using drill-down analysis to identify the contributing feature, user, or template responsible.</p>
+<p>Chart type: Line chart with breakdown panels
+- Top: Tokens per minute over the last 24 hours (line) with alert threshold (horizontal red dashed line)
+- Bottom (revealed on click): Three small breakdown panels showing the spike's contribution by feature, user, and prompt_hash</p>
+<p>Interactive controls:
+- Click anywhere on the spike: reveals the drill-down panels for that timestamp
+- Slider: Alert threshold (recomputes which spikes would have fired)
+- Toggle: "Show baseline range" (mean ± 2σ envelope)</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the time series with one obvious spike around hour 14
+  Stage 2: When user clicks the spike, show the breakdown: feature X dominates (85%), user Y dominates within feature X
+  Stage 3: Show the prompt_hash that explains the spike</p>
+<p>Default: 24-hour window, threshold visible, drill-down hidden until clicked</p>
+<p>Implementation: Chart.js + simple HTML drill-down panels, responsive width</p>
+</details>
+<h2 id="drill-down-analysis-and-cross-service-tracing">Drill-Down Analysis and Cross-Service Tracing</h2>
+<p><strong>Drill-down analysis</strong> is the workflow of moving from an aggregate (a spike in a chart) to the underlying records that explain it (the specific user, feature, or prompt template responsible). Drill-down depends on having both the metric (for the aggregate view) and the underlying logs (for the records) wired together — usually by sharing dimensions (model, feature, vendor) and identifiers (trace_id).</p>
+<p>Modern observability backends make drill-down a click — clicking a point on a metric chart pivots to the matching log records. This is the workflow your team will use 80% of the time during incidents; build for it.</p>
+<p><strong>Cross-service tracing</strong> is the practice of propagating a trace ID from the edge of your system through every downstream service, including LLM calls. With cross-service tracing you can answer "what was happening in the rest of my system when this expensive LLM call fired?" — was it a retry storm? A cache miss in the database that triggered a fallback to LLM-based answers? A regression in a feature flag?</p>
+<p>Cross-service tracing requires every service to participate (read incoming trace headers, log them, propagate them on outgoing calls). It's an organization-wide investment, not just an LLM-team investment, but the LLM team is often the loudest beneficiary because LLM calls are the most expensive single operations in the trace.</p>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Build the Cost Dashboard First</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+Of all the dashboards in this chapter, the cost dashboard is the one your CFO will quote. Build it first, make it accurate, and link it from your team page. Engineers who can answer "what did that feature cost last week?" in five seconds get the budget conversations they want; engineers who can't, get the budget conversations they don't.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now build the observability stack on top of the structured logs from Chapter 9. You define <strong>observability</strong> as the property of being able to ask arbitrary questions from outside, then implement it with <strong>OpenTelemetry</strong> SDKs adopting the <strong>OTel LLM conventions</strong> so your instrumentation is vendor-neutral. You emit two metric types — <strong>counter metrics</strong> for rates, <strong>histogram metrics</strong> for distributions — and aggregate them via <strong>time series aggregation</strong> at appropriate <strong>aggregation periods</strong>, taking care to avoid <strong>cardinality concerns</strong> by tagging only on low-cardinality dimensions. You build the standard dashboards: <strong>cost dashboard</strong>, <strong>hit rate dashboard</strong>, <strong>latency dashboard</strong>, <strong>token volume chart</strong>. You add <strong>anomaly detection</strong> for unexpected patterns and tight <strong>alerting rules</strong> for known thresholds — including the <strong>token spike alert</strong> and <strong>cost threshold alert</strong> every LLM team needs. When alerts fire, <strong>drill-down analysis</strong> moves you from aggregate to root cause, and <strong>cross-service tracing</strong> lets you correlate LLM behavior with the rest of your stack.</p>
+<p>Chapter 11 takes the same data and applies analysis-notebook techniques to find optimization opportunities offline.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What's the difference between a counter and a histogram?</strong> A counter accumulates a count of events; a histogram captures the full distribution of a value (percentiles, min, max).</li>
+<li><strong>Why are user_id and trace_id bad metric tags?</strong> They have very high cardinality — tagging a metric with them creates one time series per distinct value, which can be millions, exploding storage cost.</li>
+<li><strong>What does the hit rate dashboard tell you?</strong> What fraction of your input tokens are being served from cache. A drop usually indicates a recent change broke a cache breakpoint.</li>
+<li><strong>What's the difference between anomaly detection and alerting?</strong> Anomaly detection surfaces unexpected patterns without pre-defined thresholds; alerting fires on pre-configured conditions where action is required.</li>
+<li><strong>What is drill-down analysis?</strong> Moving from an aggregate metric (a spike in a chart) to the underlying log records that explain it — the standard incident-response workflow.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 10</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Dashboards built, alerts configured, traces flowing. The signals are in place. Next chapter takes the same data offline and turns it into the cost-reduction backlog that will guide your optimization work.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1208,6 +1824,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

@@ -1,0 +1,14 @@
+{
+  "sim_id": "llm-ops-dashboard-layout",
+  "diagram_name": "LLM Ops Dashboard Layout",
+  "chapter_number": 10,
+  "chapter_title": "Observability, Dashboards, and Alerting",
+  "chapter_dir": "10-observability-dashboards-alerting",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement an LLM observability dashboard with the panels needed to answer cost, latency, and cache-effectiveness questions for a production team.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: infographic\n**sim-id:** llm-ops-dashboard-layout<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show a representative LLM observability dashboard — the panels, their relative positioning, and what each panel answers — as a wireframe so learners can copy the structure to their own backend.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement an LLM observability dashboard with the panels needed to answer cost, latency, and cache-effectiveness questions for a production team.\n\nCanvas layout:\n- Grid of 6 panels (3 columns × 2 rows)\n- Top row: Cost over time | Cost by feature | Cost by model\n- Bottom row: Cache hit rate | Latency P50/P95/P99 | Token volume\n\nEach panel is rendered as a simplified chart (line, bar, stacked area) with synthetic but realistic data.\n\nInteractive controls:\n- Hover any panel: show full description of what it answers and which decisions it supports\n- Toggle: \"Healthy state\" vs \"Incident state\" — flips the data to show what an incident looks like\n- Toggle: \"Alert overlay\" — highlights panels where alerting rules would have fired in incident state\n\nDefault state: Healthy data, no alerts\n\nImplementation: p5.js, responsive width"
+}

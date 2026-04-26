@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Operating batch workloads safely — submission, status, idempotency, retry and backoff — plus the compliance frameworks (GDPR, HIPAA, SOC2), data residency, vendor data retention, opt-out, hashing, and audit trails">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../20-capstone-projects-practice/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>19. Batch Job Operations, Privacy, and Compliance - Token Efficiency</title>
+        <title>Batch Job Operations, Privacy, and Compliance - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              19. Batch Job Operations, Privacy, and Compliance
+              Batch Job Operations, Privacy, and Compliance
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -765,6 +763,198 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#batch-as-a-cost-lever-operationally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch as a Cost Lever, Operationally
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Batch as a Cost Lever, Operationally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-job-submission-and-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Job Submission and Status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughput-optimization-and-latency-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throughput Optimization and Latency Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-queue-result-polling-and-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Queue, Result Polling, and Webhooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-retry-and-backoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Idempotency, Retry, and Backoff
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Idempotency, Retry, and Backoff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-batch-job-lifecycle-with-retry-and-webhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Batch Job Lifecycle with Retry and Webhook
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-the-frameworks-youll-encounter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance: The Frameworks You'll Encounter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance: The Frameworks You'll Encounter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-residency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Residency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vendor-data-retention-and-opt-out-of-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vendor Data Retention and Opt-Out of Training
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-privacy-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging Privacy Risk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-primitives-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Primitives in Detail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy Primitives in Detail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive-field-redaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sensitive Field Redaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashing-sensitive-strings-and-tokenized-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing Sensitive Strings and Tokenized Identifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anonymization-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anonymization Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compliance-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance Risk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Trail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Trail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-privacy-and-compliance-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Privacy and Compliance Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +1013,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +1022,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1349,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1397,198 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#batch-as-a-cost-lever-operationally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch as a Cost Lever, Operationally
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Batch as a Cost Lever, Operationally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-job-submission-and-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch Job Submission and Status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#throughput-optimization-and-latency-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throughput Optimization and Latency Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-queue-result-polling-and-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Queue, Result Polling, and Webhooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-retry-and-backoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Idempotency, Retry, and Backoff
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Idempotency, Retry, and Backoff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-batch-job-lifecycle-with-retry-and-webhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Batch Job Lifecycle with Retry and Webhook
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-the-frameworks-youll-encounter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance: The Frameworks You'll Encounter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance: The Frameworks You'll Encounter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-residency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Residency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vendor-data-retention-and-opt-out-of-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vendor Data Retention and Opt-Out of Training
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-privacy-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging Privacy Risk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-primitives-in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Primitives in Detail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Privacy Primitives in Detail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive-field-redaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sensitive Field Redaction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashing-sensitive-strings-and-tokenized-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing Sensitive Strings and Tokenized Identifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anonymization-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anonymization Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compliance-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance Risk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audit Trail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Trail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-privacy-and-compliance-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Privacy and Compliance Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1163,13 +1650,221 @@
 <li><a href="../12-ab-testing-methodology/">Chapter 12: A/B Testing Methodology for LLMs</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Operations: Batch and Compliance</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+This chapter is the operations chapter — the things you have to do to ship LLM workloads safely in a regulated industry. Two big topics: running batch jobs robustly (the 50% discount you should be exploiting) and meeting the privacy and compliance requirements that govern what can hit the model at all. Cheap systems and compliant systems are the same systems — neither survives shortcuts.</p>
+</div>
+<h2 id="batch-as-a-cost-lever-operationally">Batch as a Cost Lever, Operationally</h2>
+<p>Chapter 3 introduced the <strong>batch versus synchronous</strong> decision and the <strong>batch discount rate</strong> (typically 50%). This chapter covers the operational details that make batch work in practice — the difference between "let's send everything to batch" and "we have a robust batch pipeline that handles failures, retries, and audit requirements."</p>
+<h3 id="batch-job-submission-and-status">Batch Job Submission and Status</h3>
+<p><strong>Batch job submission</strong> is the API call that uploads a batch of requests to the vendor. The pattern is consistent across vendors:</p>
+<ol>
+<li>Construct a JSONL file where each line is a request payload (with all the parameters of a normal API call plus a per-line <code>custom_id</code>)</li>
+<li>Upload the file to the vendor (sometimes via a separate file-upload endpoint, sometimes inline)</li>
+<li>Submit a batch job referencing the uploaded file</li>
+<li>Receive a job ID</li>
+</ol>
+<p>The <strong>batch job status</strong> is queried via a status endpoint that returns one of: <code>pending</code> (queued, not yet started), <code>in_progress</code> (running), <code>completed</code> (results available), <code>failed</code> (job-level failure — partial results may exist), <code>expired</code> (the batch window passed without completion). Status is what you poll or webhook against to know when results are ready.</p>
+<p>The <strong>batch window</strong> is the maximum time within which the vendor commits to completing the job — typically 24 hours, sometimes 12 hours for premium tiers. The window is a soft commitment for non-priority batch; a hard commitment for some enterprise contracts. Plan for the upper bound, not the average.</p>
+<h3 id="throughput-optimization-and-latency-tolerance">Throughput Optimization and Latency Tolerance</h3>
+<p><strong>Throughput optimization</strong> is the art of getting maximum batch processing per unit time within the vendor's batch quota. Practical levers:</p>
+<ul>
+<li><strong>Batch sizing</strong> — larger batches typically process faster per request than many small batches; aim for the vendor's recommended size (often 1,000–50,000 requests per batch)</li>
+<li><strong>Concurrent batches</strong> — most vendors allow multiple batches in flight simultaneously, up to a quota; for very large workloads, fan out into N concurrent batches rather than one huge one</li>
+<li><strong>Off-peak submission</strong> — batch jobs sometimes complete faster when submitted during low-demand windows (overnight in the vendor's primary region); not guaranteed but often helps</li>
+</ul>
+<p><strong>Latency tolerance</strong> is the property of a workload that determines whether it belongs on batch in the first place. The cleanest framing: if a 24-hour delay is acceptable, batch is the right path. If a 1-hour delay is acceptable, batch may still work (most jobs finish well under the window). If response is needed in seconds, batch is wrong; use synchronous or async (Chapter 3).</p>
+<h3 id="job-queue-result-polling-and-webhooks">Job Queue, Result Polling, and Webhooks</h3>
+<p>A <strong>job queue</strong> is your application-side data structure that tracks submitted batch jobs from submission through completion. Even when the vendor handles the actual queuing, you need your own queue for tracking — what was submitted, what's still in flight, what completed, what failed and needs retry.</p>
+<p><strong>Result polling</strong> is the simplest way to check whether a batch is done — periodically call the status endpoint. Polling intervals should be exponential or backed-off; checking every second wastes API calls and contributes to your rate-limit budget. A reasonable default: poll every 5 minutes for the first hour, every 30 minutes after that.</p>
+<p><strong>Webhook notification</strong> is the better alternative when supported: the vendor calls a URL you provide when the batch completes, eliminating polling entirely. Webhooks require a publicly-reachable endpoint and signature verification (the vendor signs the payload; you verify before trusting it). Use webhooks for any batch workload of meaningful volume — they reduce both latency and operational overhead.</p>
+<h3 id="idempotency-retry-and-backoff">Idempotency, Retry, and Backoff</h3>
+<p>An <strong>idempotency key</strong> is a unique identifier you attach to a request such that the vendor recognizes a re-submitted identical request and returns the same result rather than processing twice. Idempotency keys are the safety net for retries — without them, a network blip during job submission can result in the same batch running twice.</p>
+<p>A <strong>retry policy</strong> specifies when and how to re-submit a failed request. Standard patterns:</p>
+<ul>
+<li>Retry on transient errors (5xx HTTP responses, timeouts, network errors) — the request didn't complete; safe to retry</li>
+<li>Don't retry on permanent errors (4xx responses other than rate limits) — the request was rejected on its merits; retrying won't help</li>
+<li>Retry rate-limit errors (429) with longer backoff — the vendor needs you to slow down</li>
+</ul>
+<p>A <strong>backoff strategy</strong> is the delay schedule between retries. Exponential backoff (double the delay after each failure) is standard; add jitter (random variation) to prevent synchronized retry storms across many concurrent clients. A typical setting: initial delay 1 second, multiplier 2.0, max delay 60 seconds, jitter ±20%, max 5 attempts.</p>
+<p>For batch specifically, the retry granularity matters: retry the whole batch (simple but wastes already-completed work) or retry only the failed sub-requests (more complex but more efficient on partial failures). Most vendors return per-request status in the result file, enabling per-request retry.</p>
+<h4 id="diagram-batch-job-lifecycle-with-retry-and-webhook">Diagram: Batch Job Lifecycle with Retry and Webhook</h4>
+<iframe src="../../sims/batch-job-lifecycle/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Batch Job Lifecycle with Retry and Webhook</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> batch-job-lifecycle<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the full batch job lifecycle from submission through result download, including failure handling and webhook-based notification.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement a robust batch pipeline including idempotency, retry, and webhook-based completion notification.</p>
+<p>Visual style: State machine diagram with annotations</p>
+<p>States:
+- Not Submitted (initial)
+- Pending (vendor accepted, queued)
+- In Progress (vendor processing)
+- Completed (results available)
+- Partial (some requests succeeded, some failed)
+- Failed (job-level failure, no results)
+- Expired (window passed without completion)</p>
+<p>Transitions:
+- Submit (with idempotency_key) → Pending
+- Vendor schedules → In Progress
+- Vendor finishes → Completed | Partial | Failed
+- Window passes → Expired
+- Webhook fires from Completed/Partial/Failed
+- App downloads results, marks job done</p>
+<p>Annotations:
+- "Retry sub-requests" arrow from Partial → "build new batch from failed only"
+- "Idempotency key prevents double-processing on retry"
+- "Webhook signature verified before trusting"</p>
+<p>Interactive controls:
+- Click any state: see expected duration and what to do next
+- Toggle: "Use polling instead of webhook" — show the difference</p>
+<p>Implementation: Mermaid state diagram, responsive layout</p>
+</details>
+<h2 id="compliance-the-frameworks-youll-encounter">Compliance: The Frameworks You'll Encounter</h2>
+<p>Compliance is not a cost optimization. It's the constraint that determines what you're <em>allowed</em> to do — and the cost of getting it wrong (regulatory fines, breach disclosure, lost contracts) far exceeds any LLM bill. The major frameworks any production LLM team will encounter:</p>
+<p><strong>GDPR</strong> (General Data Protection Regulation) is the EU regulation governing personal data of EU residents. Key implications for LLM systems: you need a lawful basis to process any personal data (including in prompts), users have rights to access/correct/delete their data (which extends to derived data like embeddings), and cross-border data transfers require additional safeguards (Standard Contractual Clauses or equivalent). GDPR applies whenever EU residents' data is involved, regardless of where your servers are.</p>
+<p><strong>HIPAA</strong> (Health Insurance Portability and Accountability Act) is the US framework governing protected health information (PHI). LLM systems touching PHI need the vendor to be a HIPAA-eligible business associate (with a signed Business Associate Agreement), need PHI to never appear in non-HIPAA-eligible logs, and need audit trails that satisfy HIPAA's logging requirements. Anthropic, OpenAI, and Google all offer HIPAA-eligible deployments — but on specific infrastructure surfaces (typically Vertex AI for Google, Azure OpenAI for OpenAI, Anthropic on AWS Bedrock with BAA).</p>
+<p><strong>SOC2 audit</strong> is the security-attestation framework most B2B SaaS customers expect. SOC2 doesn't dictate specific controls but requires documented practices around security, availability, processing integrity, confidentiality, and privacy. For LLM systems, the audit-relevant areas include access control (who can see prompts/responses?), encryption in transit and at rest, change management for prompt templates, and incident response plans.</p>
+<p>These frameworks are not mutually exclusive — many production deployments need to satisfy all three simultaneously, plus jurisdiction-specific additions (CCPA, PIPEDA, etc.). The good news: most controls satisfy multiple frameworks at once.</p>
+<h3 id="data-residency">Data Residency</h3>
+<p><strong>Data residency</strong> is the requirement that data be processed and stored in a specific geographic jurisdiction. EU customer data must stay in the EU; some healthcare data must stay in-country; some government contracts require US-only processing.</p>
+<p>For LLM vendors, data residency translates to choosing the right deployment surface and region:</p>
+<ul>
+<li>Anthropic on Bedrock: choose AWS regions in the right jurisdiction</li>
+<li>OpenAI on Azure: choose Azure regions in the right jurisdiction</li>
+<li>Gemini on Vertex AI: choose GCP regions in the right jurisdiction</li>
+<li>Direct vendor APIs: typically less granular control over residency</li>
+</ul>
+<p>Logging respects residency too — your structured logs (Chapter 9) need to live in the right region, not get shipped to a default US-based log aggregator.</p>
+<h3 id="vendor-data-retention-and-opt-out-of-training">Vendor Data Retention and Opt-Out of Training</h3>
+<p><strong>Vendor data retention</strong> is how long the vendor keeps your prompts and responses. The default policies vary; the relevant fact for compliance is what the vendor commits to in their enterprise agreement:</p>
+<ul>
+<li>Default consumer/developer tiers often retain inputs for some period (30 days for abuse monitoring is typical)</li>
+<li>Enterprise tiers typically offer zero retention or short configurable retention</li>
+<li>Healthcare/financial deployments typically commit to no retention beyond what's needed to return the response</li>
+</ul>
+<p><strong>Opt-out of training</strong> is the related and critical commitment: that the vendor will not use your prompts and responses to train future models. Default consumer tiers historically often defaulted to <em>opt-in</em> (your data trains models unless you opt out); enterprise tiers default to opt-out and contractually guarantee it. Verify this in writing for any sensitive workload — "we don't train on your data" is meaningless without contractual force.</p>
+<h3 id="logging-privacy-risk">Logging Privacy Risk</h3>
+<p><strong>Logging privacy risk</strong> is the standing concern that your <em>own</em> logs (Chapter 9) become a privacy liability if they capture content they shouldn't. The major risks:</p>
+<ul>
+<li>Raw prompts in logs that contain user PII</li>
+<li>Raw responses in logs that contain PII the model surfaced from training data</li>
+<li>Trace fields (user_id, session_id) that link to identifiable individuals when correlated with other systems</li>
+<li>Long retention windows that accumulate years of personal data</li>
+</ul>
+<p>The mitigations from Chapter 9 (PII detection, PII redaction, prompt truncation, retention policies) all apply directly. Logging is the privacy attack surface most teams under-estimate; treat it as the first-class compliance concern it is.</p>
+<h2 id="privacy-primitives-in-detail">Privacy Primitives in Detail</h2>
+<h3 id="sensitive-field-redaction">Sensitive Field Redaction</h3>
+<p><strong>Sensitive field redaction</strong> is the practice of identifying specific fields that should be masked before processing — the SSN field, the credit card field, the medical-record-number field — and removing them at the application boundary. Field-level redaction is more reliable than free-text PII detection (Chapter 9) for <em>known</em> sensitive fields; combine both.</p>
+<p>A redaction-aware request might: redact the SSN field to <code>XXXX-XX-1234</code> before sending the prompt to the LLM, log only the redacted version, and document the redaction in the audit trail. The downstream model never sees the raw SSN; if logs leak, the SSN doesn't.</p>
+<h3 id="hashing-sensitive-strings-and-tokenized-identifiers">Hashing Sensitive Strings and Tokenized Identifiers</h3>
+<p><strong>Hashing sensitive strings</strong> is the practice of one-way-hashing fields that need to be present in some form (for joining, deduplication, indexing) but shouldn't be stored in cleartext. SHA-256 with a per-tenant salt is the standard. Hashing is not the same as encryption — you cannot reverse the hash, only verify whether a candidate matches.</p>
+<p>A <strong>tokenized identifier</strong> is a similar concept with a different mechanism: replace a sensitive value (an email, a customer ID) with a randomly-generated token via a tokenization service (a key-value store mapping tokens to values, accessible only with proper authorization). Tokenized identifiers can be reversed to the original value when needed, but only by services with permission.</p>
+<p>The choice between hashing and tokenization:</p>
+<ul>
+<li>Hashing: when you only ever need equality comparison, never the original value</li>
+<li>Tokenization: when you may need the original later but want to keep it out of routine log/data flows</li>
+</ul>
+<h3 id="anonymization-strategy">Anonymization Strategy</h3>
+<p>An <strong>anonymization strategy</strong> is the broader policy for transforming personal data into non-personal-data form before LLM processing or logging. Genuine anonymization (irreversible, can't be re-identified) is harder than it sounds — common techniques like name removal often leave enough quasi-identifiers (zip code + birth date + gender) for re-identification.</p>
+<p>The practical anonymization toolkit:</p>
+<ul>
+<li>Field redaction for known sensitive fields</li>
+<li>Free-text PII detection and replacement for unknown sensitive fragments</li>
+<li>k-anonymity (group records so each is indistinguishable from at least k others)</li>
+<li>Differential privacy (add calibrated noise to aggregates)</li>
+</ul>
+<p>For LLM applications, full anonymization is often impractical (the user's query needs to be specific enough to answer). The realistic compromise: redact what can be redacted, document what couldn't, limit retention, and don't pretend the result is anonymous when it's only de-identified.</p>
+<h3 id="compliance-risk">Compliance Risk</h3>
+<p><strong>Compliance risk</strong> is the residual exposure after controls are in place — the probability times impact of a compliance failure. Risk assessments quantify it; risk registers track it; insurance covers it.</p>
+<p>For LLM systems, the high-impact compliance failure modes include: prompt injection that exfiltrates other users' data through the model, log breaches that expose PII, vendor incidents that exfiltrate your prompts, training-data contamination by data you sent the vendor. The probability of each varies; the impact ranges from "annoying" to "company-ending."</p>
+<p>Risk reduction is the work this chapter has been describing — controls layered such that no single failure produces catastrophic exposure.</p>
+<h2 id="audit-trail">Audit Trail</h2>
+<p>An <strong>audit trail</strong> is the chronological record of every event with compliance significance — who accessed what data when, what configurations were changed, what compliance-relevant requests were made. Audit trails are required by SOC2, useful for HIPAA, often subpoenaed during legal investigations.</p>
+<p>For LLM systems, audit trail entries should include:</p>
+<ul>
+<li>Every API key issuance, rotation, and revocation</li>
+<li>Every change to prompt templates (treating them as code in a versioned system, every commit becomes an audit event)</li>
+<li>Every change to budget policies and routing policies</li>
+<li>Every privileged access to logs (especially logs that may contain PII)</li>
+<li>Every compliance-related configuration change (retention policy edits, redaction rule changes)</li>
+</ul>
+<p>The audit trail is its own data store, separate from operational logs, with its own retention policy (typically 7 years) and its own access controls (read-only for most, write-only for the application, full access for compliance officers).</p>
+<h4 id="diagram-privacy-and-compliance-pipeline">Diagram: Privacy and Compliance Pipeline</h4>
+<iframe src="../../sims/privacy-compliance-pipeline/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Privacy and Compliance Pipeline</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> privacy-compliance-pipeline<br/>
+<strong>Library:</strong> Mermaid<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show how a single LLM request flows through the privacy and compliance controls — from input PII redaction through to audit trail emission — so the layered defense pattern is visible.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning objective: Implement a privacy-and-compliance-aware LLM request pipeline that satisfies GDPR, HIPAA, and SOC2 requirements simultaneously.</p>
+<p>Visual style: Vertical flow diagram with side annotations for each compliance framework</p>
+<p>Steps:
+1. User input received (with PII)
+2. Field redaction (SSN, credit card, etc., replaced with placeholders) → audit event
+3. Free-text PII detection on remaining content → tokenize names with reversible tokens
+4. Prompt assembly with redacted/tokenized content
+5. Region check: enforce data residency by routing to in-region LLM endpoint
+6. LLM call with vendor on no-train, low-retention enterprise tier
+7. Response received
+8. Response PII detection (model may have surfaced PII from training data)
+9. Re-tokenize identifiers in response back to readable form (only for authorized recipient)
+10. Log line emitted: includes redacted prompt hash, no raw content, audit-trail event
+11. Response delivered to user</p>
+<p>Right-side annotations:
+- "GDPR: lawful basis documented" at step 1
+- "HIPAA: PHI never leaves redaction boundary" at step 2
+- "Data residency enforced" at step 5
+- "SOC2: audit event for change to redaction policy" at step 11</p>
+<p>Interactive controls:
+- Toggle each compliance framework on/off — show which controls are required by each
+- Click any step to see the failure mode if that control were missing</p>
+<p>Implementation: Mermaid flowchart with side annotations, responsive layout</p>
+</details>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Compliance Mistakes Are Not Recoverable</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+Cost mistakes can be fixed by next month. Compliance mistakes — sending PHI to a non-BAA vendor, training a model on customer data without consent, retaining PII past its lawful basis — often can't. Once data is in the vendor's training set, you cannot remove it. Once a breach has been disclosed, the news cycle has happened. Build the controls before you ship; the team that has to add them retroactively is the one whose Q4 looks rough.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now operate batch workloads safely and meet the compliance bar that production deployments require. On the batch side: you handle <strong>batch job submission</strong> through the standard upload-and-submit pattern, track <strong>batch job status</strong> via either <strong>result polling</strong> or <strong>webhook notification</strong>, respect the <strong>batch window</strong> to capture the <strong>batch discount rate</strong>, and make the <strong>batch versus synchronous</strong> decision based on the workload's <strong>latency tolerance</strong>. You manage your own <strong>job queue</strong>, drive <strong>throughput optimization</strong> through batch sizing and concurrency, and ensure correctness with <strong>idempotency keys</strong>, a <strong>retry policy</strong>, and an exponential <strong>backoff strategy</strong>. On the compliance side: you understand and satisfy <strong>GDPR</strong>, <strong>HIPAA</strong>, and the <strong>SOC2 audit</strong> simultaneously. You enforce <strong>data residency</strong> by choosing the right vendor surface and regions; you negotiate <strong>vendor data retention</strong> and <strong>opt-out of training</strong> terms in enterprise agreements. You apply <strong>sensitive field redaction</strong>, <strong>hashing sensitive strings</strong>, <strong>tokenized identifiers</strong>, and a documented <strong>anonymization strategy</strong> to bound <strong>logging privacy risk</strong> and <strong>compliance risk</strong>. You maintain a separate <strong>audit trail</strong> with appropriate retention and access controls.</p>
+<p>Chapter 20 is the capstone — putting all 19 chapters together into the projects, evals, and continuous-practice patterns that turn this book's contents into ongoing engineering capability.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>What's the difference between an idempotency key and a request_id?</strong> request_id uniquely identifies a single request; idempotency_key tells the vendor "if you've seen this key before, return the prior result instead of processing again." The vendor uses it to deduplicate retries.</li>
+<li><strong>Why should LLM workloads on batch use webhooks instead of polling when possible?</strong> Polling consumes API calls and adds latency. Webhooks deliver completion notification immediately, with one less moving part.</li>
+<li><strong>What does "opt-out of training" guarantee?</strong> That the vendor will not include your prompts and responses in training data for future models. The default tiers don't always include this; enterprise contracts do.</li>
+<li><strong>Why is hashing not the same as anonymization?</strong> Hashing prevents recovery of the original value but allows equality comparison — two requests with the same SSN still hash to the same value. With enough auxiliary data, hashed records can often be re-identified.</li>
+<li><strong>What goes in an audit trail vs. operational logs?</strong> Operational logs record what the application did (every LLM call, cost, latency). Audit trails record compliance-significant events: configuration changes, key rotations, prompt template versions, privileged access. Different retention, different access controls.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 19</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+Operations and compliance covered. Next chapter is the capstone — the projects, evals, and continuous practices that turn everything into long-term engineering capability.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1214,6 +1909,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

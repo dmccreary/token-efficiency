@@ -1,0 +1,14 @@
+{
+  "sim_id": "budget-hierarchy-roll-up",
+  "diagram_name": "Per-Engineer / Per-PR / Per-Repo Budget Hierarchy",
+  "chapter_number": 18,
+  "chapter_title": "Agent Budget Policies and Session Limits",
+  "chapter_dir": "18-agent-budget-policies",
+  "library": "p5.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "organize",
+  "learning_objective": "Organize per-session costs into the hierarchical budget structure (PR → engineer → repo → organization) and identify which level would fire first.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: infographic\n**sim-id:** budget-hierarchy-roll-up<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show how individual session costs roll up through PR, engineer, repo, and organization budgets, with each level's cap and current consumption visible.\n\nBloom Level: Analyze (L4)\nBloom Verb: organize\n\nLearning objective: Organize per-session costs into the hierarchical budget structure (PR → engineer → repo → organization) and identify which level would fire first.\n\nCanvas layout:\n- Pyramid diagram with five levels (Session → PR → Engineer → Repo → Organization), each level wider than the one above\n- Each level shows: scope label, current consumption (% of cap), cap value\n- Arrows show the roll-up relationship\n\nInteractive controls:\n- Click any level: drill down into the contributing items at the next level\n- Slider: time window (this session, this PR, this week, this month)\n- Toggle: \"Highlight at-risk levels\" (>75% of cap)\n\nData Visibility Requirements:\n  Stage 1: Show all five levels with example data\n  Stage 2: When user clicks the Engineer level, show the contributing PRs\n  Stage 3: When at-risk highlighting is on, color levels above 75% in orange and 90% in red\n\nDefault state: All levels healthy\n\nImplementation: p5.js with responsive width"
+}

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A guide to understanding and improving token efficiency in language models.">
+        <meta name="description" content="Finding the money — log aggregation, top-N drivers, Pareto analysis, outlier detection, runaway prompts and pathological loops, percentile analysis, and the analysis-notebook workflow that ties them together">
       
       
       
@@ -17,12 +17,12 @@
         <link rel="next" href="../12-ab-testing-methodology/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../img/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>11. Log File Analysis and Cost Hotspots - Token Efficiency</title>
+        <title>Log File Analysis and Cost Hotspots - Token Efficiency</title>
       
     
     
@@ -94,8 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -112,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              11. Log File Analysis and Cost Hotspots
+              Log File Analysis and Cost Hotspots
             
           </span>
         </div>
@@ -201,8 +200,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../img/mascot/neutral.png" alt="logo">
 
     </a>
     Token Efficiency
@@ -597,6 +595,156 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#log-file-analysis-as-a-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log File Analysis as a Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Aggregation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-standard-roll-ups" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Three Standard Roll-Ups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-n-cost-drivers-and-pareto-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-N Cost Drivers and Pareto Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top-N Cost Drivers and Pareto Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pareto-analysis-of-per-feature-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pareto Analysis of Per-Feature Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outlier-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outlier Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Outlier Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runaway-prompts-and-pathological-agent-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runaway Prompts and Pathological Agent Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-template-grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Template Grouping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#percentile-analysis-p50-p95-p99" class="md-nav__link">
+    <span class="md-ellipsis">
+      Percentile Analysis: P50, P95, P99
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Percentile Analysis: P50, P95, P99">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-long-tail-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Long-Tail Cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Long-Tail Cost">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-count-distribution-and-long-tail-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Count Distribution and Long-Tail Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cohort-and-funnel-analyses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cohort and Funnel Analyses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-analysis-notebook-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Analysis Notebook Workflow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -823,7 +971,7 @@
             
   
   <span class="md-ellipsis">
-    Learning Graph
+    MicroSims
   </span>
   
 
@@ -832,6 +980,174 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of MicroSims
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-decision-matrix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A/B Test Outcome Decision Matrix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/agent-budget-policy-multi-limit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agent Budget Policy with Multiple Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/anthropic-prompt-caching-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anthropic Prompt Caching Lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/ab-test-sample-size-calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample Size Calculator for LLM A/B Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Learning Graph
           </label>
@@ -991,69 +1307,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            MicroSims
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../sims/graph-viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Learning Graph Viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1102,6 +1355,156 @@
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-file-analysis-as-a-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log File Analysis as a Discipline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Log Aggregation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-standard-roll-ups" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Three Standard Roll-Ups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-n-cost-drivers-and-pareto-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top-N Cost Drivers and Pareto Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top-N Cost Drivers and Pareto Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pareto-analysis-of-per-feature-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pareto Analysis of Per-Feature Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outlier-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outlier Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Outlier Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runaway-prompts-and-pathological-agent-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runaway Prompts and Pathological Agent Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-template-grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt Template Grouping
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#percentile-analysis-p50-p95-p99" class="md-nav__link">
+    <span class="md-ellipsis">
+      Percentile Analysis: P50, P95, P99
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Percentile Analysis: P50, P95, P99">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-long-tail-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Long-Tail Cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Long-Tail Cost">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-count-distribution-and-long-tail-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Count Distribution and Long-Tail Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cohort-and-funnel-analyses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cohort and Funnel Analyses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-analysis-notebook-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Analysis Notebook Workflow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
     </span>
   </a>
   
@@ -1159,13 +1562,209 @@
 <li><a href="../10-observability-dashboards-alerting/">Chapter 10: Observability, Dashboards, and Alerting</a></li>
 </ul>
 <hr />
-<p>TODO: Generate Chapter Content</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Where Did All the Tokens Go?</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Dashboards (Chapter 10) tell you something is off. This chapter shows you how to dig into the logs and find exactly <em>what</em> is off — which feature is bleeding tokens, which user is responsible, which prompt template is the culprit. The output of this chapter is a ranked optimization backlog you can hand to engineering. Cheap systems are systems whose owners can answer "where did all the tokens go?" in under five minutes.</p>
+</div>
+<h2 id="log-file-analysis-as-a-discipline">Log File Analysis as a Discipline</h2>
+<p><strong>Log file analysis</strong> is the practice of querying, aggregating, and exploring the structured log records from Chapter 9 to extract actionable insights — typically about cost, but also about quality regressions, latency problems, and emerging usage patterns. Where dashboards (Chapter 10) are real-time and curated, log analysis is offline and exploratory.</p>
+<p>The standard workflow:</p>
+<ol>
+<li>Pull a representative sample of log records (a week, a month) into an analytical store</li>
+<li>Aggregate by the dimensions that matter (feature, user, model, template)</li>
+<li>Sort to surface the largest contributors</li>
+<li>Drill into the contributors to find the root cause</li>
+<li>Translate findings into specific optimization proposals</li>
+</ol>
+<p>The output is not a chart. It's a ranked list of optimization opportunities with estimated dollar savings and implementation effort. That list is the backlog.</p>
+<h2 id="log-aggregation">Log Aggregation</h2>
+<p><strong>Log aggregation</strong> is the foundational operation: collapse millions of individual log records into per-dimension totals. SQL-flavored pseudocode:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">  </span><span class="n">feature</span><span class="p">,</span>
+<span class="w">  </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">request_count</span><span class="p">,</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">input_tokens</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_input_tokens</span><span class="p">,</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">output_tokens</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_output_tokens</span><span class="p">,</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="n">cost_usd</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_cost_usd</span><span class="p">,</span>
+<span class="w">  </span><span class="k">AVG</span><span class="p">(</span><span class="n">latency_ms</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_latency_ms</span><span class="p">,</span>
+<span class="w">  </span><span class="n">PERCENTILE_CONT</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">95</span><span class="p">)</span><span class="w"> </span><span class="n">WITHIN</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">latency_ms</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p95_latency_ms</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">llm_call_logs</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">NOW</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;7 days&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">feature</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_cost_usd</span><span class="w"> </span><span class="k">DESC</span>
+</code></pre></div></td></tr></table></div>
+<p>This single query, run once a week, surfaces 80% of the optimization opportunities most teams have. The remaining 20% requires the more specialized analyses below.</p>
+<h2 id="the-three-standard-roll-ups">The Three Standard Roll-Ups</h2>
+<p>Three per-dimension cost roll-ups answer different questions and should be run regularly:</p>
+<p>A <strong>per-feature cost roll-up</strong> aggregates cost by <code>feature</code> tag. Answers: which product features dominate the bill? Combined with feature usage analytics, it tells you which features are profitable. A feature that costs $5,000/month in tokens but generates $500 in revenue is a problem worth surfacing.</p>
+<p>A <strong>per-user cost roll-up</strong> aggregates cost by hashed <code>user_id</code>. Answers: which users are unprofitable? In a freemium product, the long tail of low-spending users subsidizes the cost of a small number of heavy users. Knowing where the line is helps with pricing-tier design and abuse detection.</p>
+<p>A <strong>per-model cost roll-up</strong> aggregates cost by <code>model</code> field. Answers: where is routing not working? If a feature claims to use Haiku but the per-model roll-up shows 80% of its cost on Sonnet, your routing logic isn't doing what you think it's doing.</p>
+<h2 id="top-n-cost-drivers-and-pareto-analysis">Top-N Cost Drivers and Pareto Analysis</h2>
+<p>The <strong>top-N cost drivers</strong> are the N largest contributors to total cost on any chosen dimension. Top-10 features, top-20 users, top-50 prompt templates. Top-N analysis is the simplest and most actionable form of cost analysis — it directs attention to the small number of items where intervention pays back the most.</p>
+<p><strong>Pareto analysis</strong> is the related observation that LLM costs almost always follow a power-law distribution: a small fraction of features (or users, or templates) accounts for the majority of cost. The 80/20 rule is a useful heuristic; in practice the ratio is often steeper (90/10 or 95/5).</p>
+<p>The implication is encouraging: you don't have to fix 100 things to get a 50% cost reduction. You usually have to fix 5. The Pareto chart visualizes this directly:</p>
+<h4 id="diagram-pareto-analysis-of-per-feature-cost">Diagram: Pareto Analysis of Per-Feature Cost</h4>
+<iframe src="../../sims/pareto-feature-cost/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Pareto Analysis of Per-Feature Cost</summary>
+<p>Type: chart
+<strong>sim-id:</strong> pareto-feature-cost<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a representative per-feature cost distribution as a sorted bar chart with an overlaid cumulative-share line, demonstrating the power-law shape and identifying the "vital few" features that dominate cost.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: identify</p>
+<p>Learning objective: Identify the vital-few features responsible for the majority of LLM cost using Pareto analysis on real-shaped data.</p>
+<p>Chart type: Combination chart (sorted bars + line)
+- X-axis: Feature name (sorted by cost descending)
+- Y-axis (left): Monthly cost ($)
+- Y-axis (right): Cumulative share of total cost (%)</p>
+<p>Data: 25 features with costs following a power-law distribution
+- Top 3 features: ~60% of cost
+- Top 5 features: ~80% of cost
+- Bottom 15 features: ~5% of cost combined</p>
+<p>Visual elements:
+- Bars colored by cost magnitude (red for top 5, orange for next 5, gray for the rest)
+- Cumulative line crossing the 80% mark with a callout
+- A "vital few / trivial many" annotation pointing at the 80% threshold</p>
+<p>Interactive controls:
+- Slider: "Pareto target" (50% / 80% / 90%) — recomputes how many features fall under the threshold
+- Toggle: "Show cumulative line"
+- Hover any bar: show feature name, cost, share</p>
+<p>Default: 80% target, cumulative line on</p>
+<p>Implementation: Chart.js dual-axis combo, responsive width</p>
+</details>
+<h2 id="outlier-detection">Outlier Detection</h2>
+<p><strong>Outlier detection</strong> is the process of finding individual log records (or aggregate cells) whose values are far from the typical distribution. Outliers in LLM logs come in a few characteristic shapes:</p>
+<ul>
+<li><strong>Single requests with abnormally large token counts</strong> — usually a runaway prompt or a user pasting a giant document</li>
+<li><strong>Single sessions with abnormally large cumulative cost</strong> — usually a pathological agent loop</li>
+<li><strong>Per-feature daily totals with sudden jumps</strong> — usually a deployment that broke a prompt template</li>
+</ul>
+<p>The simplest outlier detection is statistical: compute mean and standard deviation per dimension, flag anything more than 3σ from the mean. More sophisticated approaches use median and median absolute deviation (MAD), which are robust to the outliers themselves contaminating the mean.</p>
+<p>For LLM logs, the most useful outlier detection is "show me the top 100 single requests by cost, sorted descending." Almost every issue worth investigating shows up in that list.</p>
+<h3 id="runaway-prompts-and-pathological-agent-loops">Runaway Prompts and Pathological Agent Loops</h3>
+<p>Two specific outlier patterns deserve their own names because they recur:</p>
+<p>A <strong>runaway prompt</strong> is a single LLM request with an unexpectedly massive token count — typically input. Common causes: a retry loop that keeps appending the previous response to the prompt and trying again, a templating bug that interpolates the entire database into one variable, or a recursive function that builds the prompt by appending its own output.</p>
+<p>A <strong>pathological agent loop</strong> is the harness equivalent (Chapter 7): an agent session that iterates dozens or hundreds of times without making progress, each iteration carrying the full prior conversation as input. Pathological loops can rack up hundreds of dollars in a single session if no budget cap (Chapter 18) is in place.</p>
+<p>Both patterns show up in outlier detection as single records (or sessions) with token counts 10–100× the typical. Both should fire alerts in real time (Chapter 10) but log analysis is what tells you they happened <em>before</em> the alerts were configured.</p>
+<p>A <strong>cost hotspot</strong> is the more general term for any aggregate cell — a feature, a user, a template, a time-of-day — where cost concentrates disproportionately. Hotspots are the natural targets of optimization work.</p>
+<h2 id="prompt-template-grouping">Prompt Template Grouping</h2>
+<p><strong>Prompt template grouping</strong> is the analysis where you aggregate logs by <code>prompt_hash</code> (Chapter 9) to see which prompt templates account for which fraction of cost. This is a particularly high-value analysis because it surfaces optimization opportunities at the most actionable level: "this specific template, used for this feature, is responsible for X% of monthly cost — and the average input is Y tokens, so trimming the template by Z tokens saves $N/month."</p>
+<p>Without prompt hashing in your logs, this analysis is impossible — every request looks unique because the rendered prompts differ. With prompt hashing, the templates surface clearly even when the variable parts vary.</p>
+<p>Sorted by cost, the top-10 prompt templates typically account for 70–90% of all cost. Each one becomes a candidate for the prompt-engineering optimizations in Chapter 13.</p>
+<h2 id="percentile-analysis-p50-p95-p99">Percentile Analysis: P50, P95, P99</h2>
+<p>Averages lie about LLM workloads because the distribution is heavy-tailed. The right tool is the percentile.</p>
+<p>A <strong>histogram of token counts</strong> is the underlying view: bucket all log records by token count and plot the count per bucket. The histogram shows the full distribution shape — a small mode near the typical request size, a long tail extending out to the rare expensive requests.</p>
+<p>From the distribution come three key percentiles:</p>
+<ul>
+<li><strong>P50 token usage</strong> — the median, the typical request size. Half of all requests are smaller, half are larger.</li>
+<li><strong>P95 token usage</strong> — the 95th percentile, the size that 5% of requests exceed. The boundary between "common" and "unusual."</li>
+<li><strong>P99 token usage</strong> — the 99th percentile, the size that 1% of requests exceed. The boundary between "unusual" and "outlier."</li>
+</ul>
+<p>The P99 / P50 ratio is a useful summary statistic. A ratio of 5–10 is a normal heavy-tailed workload; a ratio above 50 indicates pathology — your top 1% of requests are dramatically larger than typical, and they are almost certainly the runaway-prompt or pathological-loop patterns above.</p>
+<h3 id="the-long-tail-cost">The Long-Tail Cost</h3>
+<p>The <strong>long-tail cost</strong> is the dollar share of the tail of the distribution — the contribution of the largest 1% (or 5%) of requests to total cost. Long-tail cost is high in agent-heavy workloads (a few sessions explode) and low in chat-heavy workloads (every request is roughly the same size).</p>
+<p>The optimization implication: if long-tail cost is high (more than 30% of total cost from the top 1% of requests), the right optimization target is the tail itself — budget caps (Chapter 18), max-token limits, output controls. If long-tail cost is low (less than 10%), the right target is the body of the distribution — system prompt trimming, caching, model routing.</p>
+<p>The histogram below shows what each shape looks like:</p>
+<h4 id="diagram-token-count-distribution-and-long-tail-cost">Diagram: Token Count Distribution and Long-Tail Cost</h4>
+<iframe src="../../sims/token-distribution-long-tail/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Token Count Distribution and Long-Tail Cost</summary>
+<p>Type: chart
+<strong>sim-id:</strong> token-distribution-long-tail<br/>
+<strong>Library:</strong> Chart.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show a histogram of per-request token counts with P50/P95/P99 markers, plus a side panel computing the long-tail cost share, so learners can identify whether their workload is body-heavy or tail-heavy.</p>
+<p>Bloom Level: Evaluate (L5)
+Bloom Verb: assess</p>
+<p>Learning objective: Assess whether a workload's optimization priority should be the body of the distribution (typical requests) or the tail (rare runaways).</p>
+<p>Chart type: Histogram with overlaid percentile markers + a side bar panel
+- Main chart: histogram of input token count per request, log-scale X axis
+- Vertical lines: P50 (green), P95 (orange), P99 (red)
+- Side panel: bar chart of cost share by percentile band (P0–P50, P50–P95, P95–P99, P99–P100)</p>
+<p>Interactive controls:
+- Dropdown: workload shape ("Body-heavy chat", "Tail-heavy agent", "Bimodal", "Mixed")
+- Toggle: "Show cost share annotations"
+- Slider: token-budget cap line — show how a cap at N tokens would have prevented the tail</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the histogram with percentile markers
+  Stage 2: Show the cost-share bars by percentile band (often the P99–P100 bar dominates in agent workloads)
+  Stage 3: When a token budget cap is set, gray out the records above the cap and recompute remaining cost</p>
+<p>Default: Mixed workload, cap line off</p>
+<p>Implementation: Chart.js, responsive width</p>
+</details>
+<h2 id="cohort-and-funnel-analyses">Cohort and Funnel Analyses</h2>
+<p>Two cross-cutting analyses are worth knowing for LLM-specific use cases:</p>
+<p><strong>Cohort analysis</strong> groups users by some shared property — signup date, plan tier, region — and tracks per-cohort cost or behavior over time. Cohorts answer questions like "are new users converging to lower per-user cost as they learn the product, or are they staying expensive?" or "did the new pricing tier change the per-cohort cost profile?"</p>
+<p><strong>Funnel analysis</strong> tracks users through a sequence of steps in a workflow, measuring where they drop off and how much each step costs. For LLM workflows, funnel analysis surfaces the steps that consume disproportionate tokens relative to their conversion rate — a multi-step LLM-driven onboarding flow whose third step costs $2 per user but converts only 30% is a candidate for redesign.</p>
+<h2 id="the-analysis-notebook-workflow">The Analysis Notebook Workflow</h2>
+<p>An <strong>analysis notebook</strong> is a Jupyter (or similar) notebook that ingests log data and produces the per-week or per-month cost analysis report. Notebooks are the right format for this work because:</p>
+<ul>
+<li>The analysis is iterative — you start with one query, the result raises a question, you write the next query</li>
+<li>The output is a mix of charts, tables, and prose — exactly what notebooks render</li>
+<li>The notebook itself is the documentation — the queries that produced the report are right next to the report</li>
+<li>Notebooks are reproducible and versionable — re-run next month against new data and you get the same shape of report</li>
+</ul>
+<p>A standard LLM cost-analysis notebook outline:</p>
+<ol>
+<li>Load logs for the chosen window</li>
+<li>Total cost, total tokens, total request count (the headline numbers)</li>
+<li>Per-feature, per-user, per-model roll-ups (the standard three)</li>
+<li>Top-N cost drivers per dimension</li>
+<li>Pareto chart of per-feature cost</li>
+<li>Histogram of per-request token counts with percentiles</li>
+<li>Top 100 single requests by cost (outlier inspection)</li>
+<li>Top 100 sessions by cumulative cost (pathological-loop inspection)</li>
+<li>Prompt template top-N</li>
+<li>Findings + ranked optimization backlog</li>
+</ol>
+<p>Run the notebook monthly. Compare to the prior month. Track the optimization-backlog completion rate alongside the cost trend.</p>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Five Queries Find Most of the Wins</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+The first time you run a serious cost analysis on a production LLM workload, expect to find one or two cost hotspots that account for a third of the bill — usually a runaway template that no one noticed, or a feature that's accidentally using Opus. Fix those two and you've justified the entire instrumentation investment in week one. Where did all the tokens go? Spoiler: into a hotspot you didn't know existed.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You can now run the offline analysis pipeline that turns logs into action. You apply <strong>log file analysis</strong> as a discipline: query the structured logs from Chapter 9 with <strong>log aggregation</strong> to produce per-dimension totals, then sort by <strong>top-N cost drivers</strong> to surface the largest contributors. You confirm the typical power-law distribution with <strong>Pareto analysis</strong> and use <strong>outlier detection</strong> to find <strong>runaway prompts</strong> and <strong>pathological agent loops</strong> — both forms of <strong>cost hotspot</strong>. You run the three standard roll-ups (<strong>per-feature cost roll-up</strong>, <strong>per-user cost roll-up</strong>, <strong>per-model cost roll-up</strong>) and the more specialized <strong>prompt template grouping</strong>, <strong>cohort analysis</strong>, and <strong>funnel analysis</strong>. You characterize the distribution with a <strong>histogram of token counts</strong> annotated with <strong>P50 token usage</strong>, <strong>P95 token usage</strong>, and <strong>P99 token usage</strong>, and you compute the <strong>long-tail cost</strong> share to decide where to target optimization. You package the whole thing in an <strong>analysis notebook</strong> that runs monthly and produces a ranked optimization backlog.</p>
+<p>Chapter 12 takes those backlog items and tests them rigorously with proper A/B methodology before shipping.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Why is the per-model cost roll-up useful?</strong> It tells you whether routing logic is actually sending requests to the cheap model you intended. Drift between intent and reality shows up here first.</li>
+<li><strong>What's a pathological agent loop?</strong> A harness session that iterates without progress, each turn carrying the full prior conversation as input. Cost can spike dramatically because of the quadratic growth pattern.</li>
+<li><strong>What does a P99/P50 ratio above 50 indicate?</strong> Pathology — your top 1% of requests are dramatically larger than typical, almost always runaway prompts or pathological loops.</li>
+<li><strong>Why aggregate by prompt_hash instead of by rendered prompt?</strong> Rendered prompts vary per request because of variable interpolation. Hashing the template groups requests that used the same template even when the variables differed — the right granularity for per-template optimization.</li>
+<li><strong>What's the right output of a monthly cost analysis?</strong> Not a dashboard — a ranked optimization backlog with estimated dollar savings and implementation effort per item.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 11</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+The backlog is in hand. Next chapter teaches you how to test each backlog item rigorously before shipping — because a 30% cost reduction that drops quality 10 points is a regression, not a win.</p>
+</div>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -1210,6 +1809,10 @@
     
     
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

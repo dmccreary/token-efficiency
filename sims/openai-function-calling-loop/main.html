@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Function Calling Loop with Tool Choice</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        window.mermaid = mermaid;
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            sequence: { useMaxWidth: true, mirrorActors: false, showSequenceNumbers: true }
+        });
+    </script>
+</head>
+<body>
+<main>
+<div class="toolbar">
+    <span class="toolbar-title">Function Calling Loop with Tool Choice</span>
+    <div class="toolbar-controls">
+        <label class="control-block">
+            tool_choice =
+            <select id="toolChoice">
+                <option value="auto" selected>auto</option>
+                <option value="none">none</option>
+                <option value="required">required</option>
+                <option value="specific">{"function": "get_weather"}</option>
+            </select>
+        </label>
+        <label class="toggle">
+            <input type="checkbox" id="costToggle" checked>
+            <span>Show token costs at each step</span>
+        </label>
+    </div>
+</div>
+
+<div class="container">
+    <div class="diagram-panel">
+        <div id="mermaidContainer" class="mermaid"></div>
+    </div>
+    <aside class="info-panel">
+        <h3>What this setting does</h3>
+        <div id="explainBox" class="explain-box"></div>
+        <h3>When to use it</h3>
+        <div id="whenBox" class="when-box"></div>
+        <h3>Round-trip cost</h3>
+        <div id="costBox" class="cost-box"></div>
+    </aside>
+</div>
+</main>
+<script src="openai-function-calling-loop.js"></script>
+</body>
+</html>

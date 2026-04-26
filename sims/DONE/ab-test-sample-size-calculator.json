@@ -1,0 +1,14 @@
+{
+  "sim_id": "ab-test-sample-size-calculator",
+  "diagram_name": "Sample Size Calculator for LLM A/B Tests",
+  "chapter_number": 12,
+  "chapter_title": "A/B Testing Methodology for LLMs",
+  "chapter_dir": "12-ab-testing-methodology",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "calculate",
+  "learning_objective": "Calculate the sample size needed to detect a target effect at a chosen power and significance level for an LLM A/B test.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: microsim\n**sim-id:** ab-test-sample-size-calculator<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Let learners adjust effect size, baseline variance, power, and significance and see the required sample size live, building intuition for the tradeoffs.\n\nBloom Level: Apply (L3)\nBloom Verb: calculate\n\nLearning objective: Calculate the sample size needed to detect a target effect at a chosen power and significance level for an LLM A/B test.\n\nCanvas layout:\n- Top half: Four sliders (effect size, baseline variance, power, significance) with current values\n- Bottom half: A large numeric readout of \"Required samples per group\" plus a small chart showing how the required N changes as one slider moves\n\nInteractive controls:\n- Slider: Minimum detectable effect (1% to 50%, default 10%)\n- Slider: Baseline coefficient of variation (10% to 200%, default 50%)\n- Slider: Statistical power (0.5 to 0.99, default 0.8)\n- Slider: Significance level (0.01 to 0.20, default 0.05)\n- Toggle: \"Apply CUPED 50% variance reduction\"\n\nData Visibility Requirements:\n  Stage 1: Show all sliders at defaults with the resulting required N\n  Stage 2: As each slider moves, recompute and re-display N\n  Stage 3: With CUPED toggled on, show the reduced N alongside the original\n\nBehavior:\n- Smaller effect → much larger N (inverse-square)\n- Higher variance → larger N\n- Higher power → larger N\n- Lower significance threshold → larger N\n\nDefault state: 10% effect, 50% CV, 0.8 power, 0.05 significance, CUPED off\nResult at defaults: ~1,500 samples per group\n\nImplementation: p5.js with responsive width"
+}
