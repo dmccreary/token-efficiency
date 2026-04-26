@@ -1,0 +1,1564 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A 12-panel graphic novel about Cedar Ridge High School's beloved Pemba Bot, the runaway bill that almost killed it, and the Compact Knowledge Graph that saved it.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/red-panda-chatbot/">
+      
+      
+        <link rel="prev" href="../story-ideas/">
+      
+      
+        <link rel="next" href="../../learning-graph/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>The Red-Panda Chatbot — How a High School Cut Token Cost 40× - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Red-Panda Chatbot — How a High School Cut Token Cost 40× - Token Efficiency">
+      
+        <meta property="og:description" content="A 12-panel graphic novel about Cedar Ridge High School's beloved Pemba Bot, the runaway bill that almost killed it, and the Compact Knowledge Graph that saved it.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/red-panda-chatbot/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/red-panda-chatbot/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Red-Panda Chatbot — How a High School Cut Token Cost 40× - Token Efficiency">
+      
+        <meta name="twitter:description" content="A 12-panel graphic novel about Cedar Ridge High School's beloved Pemba Bot, the runaway bill that almost killed it, and the Compact Knowledge Graph that saved it.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/red-panda-chatbot/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-red-panda-chatbot-how-a-high-school-cut-token-cost-40" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Red-Panda Chatbot — How a High School Cut Token Cost 40×
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Course Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Chapters
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    MicroSims
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Case Studies
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Stories
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Story Ideas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    The Red-Panda Chatbot
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    The Red-Panda Chatbot
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-a-mascot-a-bill-and-one-clever-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – A Mascot, A Bill, and One Clever Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Launch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-embedding-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Embedding Everything
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-a-month-of-joy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: A Month of Joy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-meeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Meeting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Audit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-realization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Realization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-building-the-compact-knowledge-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Building the Compact Knowledge Graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-hybrid-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Hybrid Router
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-10-the-numbers-come-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 10: The Numbers Come In
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-11-the-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 11: The Renewal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-12-the-lesson" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 12: The Lesson
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 12: The Lesson">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-cedar-ridge-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the Cedar Ridge Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Learning Graph
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    License
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-a-mascot-a-bill-and-one-clever-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – A Mascot, A Bill, and One Clever Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Launch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-embedding-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Embedding Everything
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-a-month-of-joy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: A Month of Joy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-meeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Meeting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Audit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-realization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Realization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-building-the-compact-knowledge-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Building the Compact Knowledge Graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-hybrid-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Hybrid Router
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-10-the-numbers-come-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 10: The Numbers Come In
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-11-the-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 11: The Renewal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-12-the-lesson" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 12: The Lesson
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 12: The Lesson">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-cedar-ridge-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the Cedar Ridge Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/red-panda-chatbot/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-red-panda-chatbot-how-a-high-school-cut-token-cost-40">The Red-Panda Chatbot — How a High School Cut Token Cost 40×</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="cover.png" data-desc-position="bottom"><img alt="" src="cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon style with clean lines and a friendly, optimistic mood. Center: a cheerful red panda named Pemba — russet (deep red-brown) fur on top, cream-colored belly and face markings, signature white facial mask with black tear marks below alert eyes, small wire-rim engineer's glasses, bushy tail with alternating russet and cream rings, no clothing or hoodie — standing on a school chalkboard ledge holding a small four-column CSV printout in one paw. To the left of Pemba, looming like a leaning tower: a giant precarious stack of cluttered PDF documents and a tangled vector-store cloud. To the right of Pemba, neat and small: a tidy little graph diagram of nodes and arrows representing courses and prerequisites. Above the chalkboard, the title text "The Red-Panda Chatbot" in chunky chalk-style hand-lettering, with a subtitle "A Cedar Ridge High School Story" beneath it. School pennants and lockers in the background. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), and a dash of burnt orange (#d35400). Emotional tone: warm, witty, and optimistic — a tiny clever solution about to defeat a giant bloated one. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is a 12-panel educational graphic novel for the Token Optimization textbook. Setting: Cedar Ridge High School, a fictional U.S. public high school, present day. Art style: modern flat vector cartoon illustration with clean lines, warm flat colors, and a friendly mid-2020s educational-graphic-novel feel. Characters appear in every panel and must remain visually consistent:
+
+- **Pemba** — the red panda mascot of Cedar Ridge High and the chatbot's avatar. Russet fur on top, cream belly and face markings, white facial mask with black tear marks below alert eyes, small wire-rim engineer's glasses, bushy tail with alternating russet and cream rings. **No hoodie, no clothing.** Friendly closed-mouth smile in neutral poses; expressive in emotional moments.
+- **Jamie** — student tech club president. Teen, brown skin, curly dark hair, denim jacket over a Cedar Ridge t-shirt, always carrying a laptop.
+- **Maya** — tech club co-founder. Teen, light skin, round black glasses, short bob haircut, wears a t-shirt with retro pixel art.
+- **Mr. Alvarez** — computer science teacher and faculty advisor. Middle-aged Latino man, salt-and-pepper beard, kind eyes, wears a cardigan over a button-down shirt.
+- **Principal Reyes** — middle-aged Black woman, professional blazer, reading glasses on a chain, fair-but-firm demeanor.
+
+Color palette across the series: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), and burnt orange (#d35400) for accents. Maintain consistent character appearances and style across all 12 panels. The story arc: a launch celebration, a slow realization that costs are unsustainable, a careful audit of the data, the discovery that most queries are structural, the build of a Compact Knowledge Graph, a hybrid router that keeps RAG only for explanatory questions, and a 40× cost drop that saves the program.
+</details>
+
+<h3 id="prologue-a-mascot-a-bill-and-one-clever-idea">Prologue – A Mascot, A Bill, and One Clever Idea</h3>
+<p>The student tech club at Cedar Ridge High built something they were proud of: Pemba Bot, a friendly chatbot featuring their red-panda mascot, ready to answer any question a student could think of. It worked. Students loved it. And then the bill arrived. This is the story of how a small team of high-schoolers turned a runaway cloud invoice into a 40× cost reduction by reaching for the right shape of data — and how Pemba the Red Panda finally got to do a small celebration dance.</p>
+<h2 id="panel-1-the-launch">Panel 1: The Launch</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-01.png" data-desc-position="bottom"><img alt="" src="panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 12. The scene is the Cedar Ridge High School library on the first day of school, present day. Center stage: a launch banner reading "PEMBA BOT IS LIVE" stretched across a row of laptops on tables. To the right, Jamie (teen with brown skin, curly dark hair, denim jacket over a Cedar Ridge t-shirt, holding a laptop) high-fives Maya (teen with light skin, round black glasses, short bob, retro-pixel-art t-shirt). To the left, Pemba the red panda — russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail, no clothing — pops out of a laptop screen waving a paw. A few students in the background look up from their phones with curious smiles. Balloons in russet and cream float near the ceiling. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), and burnt orange (#d35400). Emotional tone: triumphant, warm, full of first-day-of-school energy. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>September. The tech club had spent all summer building Pemba Bot, and on launch day the library was packed with students testing their first questions: "When does robotics club meet?" "What's the prerequisite for AP Calc?" The answers came back in seconds, friendly and accurate. Jamie and Maya high-fived so hard their palms stung.</p>
+<h2 id="panel-2-embedding-everything">Panel 2: Embedding Everything</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-02.png" data-desc-position="bottom"><img alt="" src="panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 12. Make the characters and style consistent with the prior panel. The scene is a montage flashback to the build phase, set in a basement classroom turned into a maker space. Jamie and Maya are pulling stacks of PDFs — student handbooks, course catalogs, club bylaws, field-trip permission slips — off shelves and feeding them into a glowing laptop labeled "Vector Store." Pemba sits on top of the laptop, wide-eyed, a little overwhelmed, watching the document pile grow taller than the kids. Floating around them: cartoon vector arrows pulling text into a swirling cloud of tiny number tiles. A whiteboard in the background reads "embed EVERYTHING — RAG forever!" with an enthusiastic exclamation point. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: well-meaning enthusiasm tipping toward "oh no." Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The build was simple, or so it had seemed. They embedded every PDF the school had ever published — student handbooks, course catalogs, club bylaws, field-trip permission slips going back six years — into a vector database. <em>More documents means smarter answers, right?</em> Pemba, perched on Maya's laptop, watched the document pile climb past the ceiling tiles and tilted his head. <em>Oh dear.</em></p>
+<h2 id="panel-3-a-month-of-joy">Panel 3: A Month of Joy</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-03.png" data-desc-position="bottom"><img alt="" src="panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 12. Make the characters and style consistent with the prior panel. A split-screen montage of three students using Pemba Bot in different parts of the school: a girl in the cafeteria typing "what clubs meet Thursday?" on her phone, a boy at his locker asking "where is Room 214B?" on a tablet, a student in the gym asking "what does AP Chemistry require?" on a laptop. In each mini-panel, Pemba pops up on the screen smiling with a thumbs-up, a tiny answer bubble next to him. Above the montage, a small calendar shows the month of September with checkmarks on every day. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: cheerful, busy, success in motion. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>For three weeks Pemba Bot was the most popular thing at Cedar Ridge High. Students asked about clubs, schedules, room numbers, prerequisites, dress codes — and got friendly, well-formed answers every time. The tech club fielded compliments from teachers in the hallway. Jamie started carrying a notebook to keep track of feature requests.</p>
+<h2 id="panel-4-the-email">Panel 4: The Email</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-04.png" data-desc-position="bottom"><img alt="" src="panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 12. Make the characters and style consistent with the prior panel. The scene is Principal Reyes's office. Principal Reyes — middle-aged Black woman, professional blazer, reading glasses on a chain — sits at her desk staring at a desktop monitor. The monitor screen shows a cloud-services invoice with a large red number: "$1,100.00" and a subject line "Pemba Bot — September Usage." Her eyes are wide. Her coffee mug is paused halfway to her lips. A framed photo of the school robotics team sits on the desk. Through the office window behind her, the school hallway is visible with students walking past. Color palette: deep russet, warm cream, slate, burnt orange, with the invoice number rendered in a deep alarming red. Emotional tone: stunned silence, the moment a number registers. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Then, on the first Monday of October, Principal Reyes opened her email and saw a number that made her coffee stop halfway to her lips. $1,100 in cloud charges. For one month. For a chatbot. She put the mug down very carefully and reached for her phone.</p>
+<h2 id="panel-5-the-meeting">Panel 5: The Meeting</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-05.png" data-desc-position="bottom"><img alt="" src="panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 12. Make the characters and style consistent with the prior panel. The scene is Principal Reyes's office, more crowded now. Principal Reyes sits behind her desk, hands folded, expression fair-but-firm. Across from her, in chairs that feel a little small: Jamie holding her closed laptop tightly, Maya adjusting her round black glasses nervously, and Mr. Alvarez — middle-aged Latino man, salt-and-pepper beard, cardigan over a button-down — sitting between them with a calm, encouraging expression. Pemba peeks shyly from behind Maya's laptop bag, ears slightly back. On the wall, a printout of the invoice is taped up with the \$1,100 visible. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: serious but not punitive — a tough conversation that respects the team. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The meeting was short, kind, and unambiguous. The school could not afford $1,100 a month. At the current growth rate, it would be $3,000 by Thanksgiving. Principal Reyes wasn't angry — she was the person who'd championed the project. But unless the team could bring the cost down, Pemba Bot would have to go offline by the end of the month.</p>
+<h2 id="panel-6-the-audit">Panel 6: The Audit</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-06.png" data-desc-position="bottom"><img alt="" src="panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 12. Make the characters and style consistent with the prior panel. The scene is the maker space at night. The room is lit by laptop screens and a single warm desk lamp. Jamie and Maya hunch over a long table covered in printed log files, sticky notes in russet and cream, and an open pizza box. A whiteboard behind them is covered in tally marks under categories: "schedule questions," "prerequisite questions," "club questions," "explain-it questions." The schedule and prerequisite columns are massively taller than the explain-it column. Pemba sits cross-legged on the table holding a tiny calculator, eyes focused, glasses glinting. Color palette: deep russet, warm cream, slate, burnt orange, with warm lamp-light yellow as accent. Emotional tone: late-night problem-solving — focused, cozy, on the edge of a breakthrough. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>That night, they pulled every query log Pemba Bot had answered. They printed them. They categorized them on a whiteboard with hash marks. By midnight a pattern was impossible to miss: the questions weren't really <em>open-ended</em>. Almost all of them had a specific shape — <em>what depends on what, what's scheduled when, what category does this fit into.</em></p>
+<h2 id="panel-7-the-realization">Panel 7: The Realization</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-07.png" data-desc-position="bottom"><img alt="" src="panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 12. Make the characters and style consistent with the prior panel. The scene is a close-up on Maya's laptop screen showing a clean horizontal bar chart titled "Pemba Bot — Query Types." Four bars: "Prerequisite paths" (long bar, ~35%), "Schedule lookups" (long bar, ~28%), "Taxonomy/category" (medium bar, ~17%), "Explain-it / definitions" (short bar, ~20%). A bracket on the right groups the first three bars and is labeled "STRUCTURAL — 80%." Around the laptop: Maya wide-eyed pointing at the screen, Jamie's mouth open mid-gasp, and Pemba on top of the laptop with both paws raised triumphantly, ears perked, eyes lit up — a "lightbulb" moment expressed by a small glowing bulb above his head. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: the click of understanding — eureka in a quiet room. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Eighty percent of the questions had structure. Only one in five was a true "explain it like I'm five." That meant Pemba Bot was paying RAG prices — embedding queries, fetching big chunks of prose, stuffing thousands of tokens into the context window — to answer questions a <em>list</em> could answer. Maya whispered, <em>"It's not a search problem. It's a graph problem."</em> Pemba's ears perked all the way up.</p>
+<h2 id="panel-8-building-the-compact-knowledge-graph">Panel 8: Building the Compact Knowledge Graph</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-08.png" data-desc-position="bottom"><img alt="" src="panel-08.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 08. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 8 of 12. Make the characters and style consistent with the prior panel. The scene is the maker space the next morning. A large whiteboard dominates the back wall, covered in a clean directed graph: round nodes labeled with course names ("Algebra I," "Geometry," "Algebra II," "Pre-Calc," "AP Calc," "Chemistry," "AP Chem," "Robotics Club," "Drama Club") connected by clean arrows showing prerequisite relationships. To the side of the graph, a laptop screen shows a CSV with columns "ConceptID, Label, Dependencies, Category." Jamie stands at the whiteboard with a marker, sketching one more arrow. Maya types at the laptop. Mr. Alvarez stands behind them with arms crossed, smiling proudly. Pemba sits on the laptop holding the CSV up like a trophy. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: collaborative momentum — a team building something elegant together. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Over a single weekend, with Mr. Alvarez bringing donuts and asking sharp questions, the team built a Compact Knowledge Graph: 180 concepts — every course, every club, every meeting time, every prerequisite — encoded as a four-column CSV. ConceptID, Label, Dependencies, Category. The whole graph fit in 8 KB. Smaller than a single PDF page. <em>"This is the index,"</em> Maya said. <em>"There is no other index."</em></p>
+<h2 id="panel-9-the-hybrid-router">Panel 9: The Hybrid Router</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-09.png" data-desc-position="bottom"><img alt="" src="panel-09.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 09. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 9 of 12. Make the characters and style consistent with the prior panel. The scene is centered on a clean architectural diagram drawn on a whiteboard. At the top, a single box labeled "Student Question." From it, a downward arrow splits at a diamond-shaped "Router" node into two paths. The left path goes to a neat little box labeled "Compact Knowledge Graph (CKG) — 269 tokens" with a small graph icon, captioned "structural questions: prerequisites, schedules, categories." The right path goes to a slightly larger box labeled "RAG — 3,000 tokens" with a stack-of-documents icon, captioned "explain-it questions only." Both paths converge on a final box labeled "Pemba's Answer." Jamie stands beside the diagram pointing at the router with a marker, while Pemba — perched on top of the diamond — wears a tiny conductor's pose, paws raised as if directing traffic. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: clarity and design pride — the moment a clean architecture clicks. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The fix wasn't to abandon RAG — it was to <em>route around it</em>. Structural questions go to the CKG, where a few lines of Python answer them by walking the graph. Open-ended explanatory questions still flow to RAG. Two paths, one router, one bot. Pemba, perched on the router node, looked very pleased with himself.</p>
+<h2 id="panel-10-the-numbers-come-in">Panel 10: The Numbers Come In</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-10.png" data-desc-position="bottom"><img alt="" src="panel-10.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 10. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 10 of 12. Make the characters and style consistent with the prior panel. The scene is the maker space, daytime, festive. A large monitor displays a side-by-side comparison: "Before — \$1,100/month, 3,000 tokens/query, 80% RAG" on the left in a faded slate color, and "After — \$27/month, 269 tokens/query, 80% CKG" on the right in bright russet, with a giant arrow between them and the label "40× cost reduction." Confetti in russet and cream falls from above. Jamie leaps in the air with a fist pump, Maya laughs with both hands on her cheeks, Mr. Alvarez claps from the side. Pemba is mid-celebration dance — back paws hopping, front paws raised, tail swishing in a dramatic curve, glasses slightly askew. Color palette: deep russet, warm cream, slate, burnt orange, with a sprinkle of bright accent yellow for the confetti highlights. Emotional tone: pure celebration — the moment a hard problem becomes a small one. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The next months's bill came in at the equivalent of $27 a month. Forty-times cheaper. Quality went <em>up</em>, not down — the CKG could not invent fake prerequisites the way RAG sometimes had. Pemba, who had been holding it together with great dignity, finally let loose: a tiny celebration dance, complete with tail-swish and slightly-askew glasses.</p>
+<h2 id="panel-11-the-renewal">Panel 11: The Renewal</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-11.png" data-desc-position="bottom"><img alt="" src="panel-11.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 11. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 11 of 12. Make the characters and style consistent with the prior panel. The scene is Principal Reyes's office, warmer and brighter than in panel 5. Principal Reyes — same character as before, professional blazer, reading glasses — sits at her desk smiling, signing a one-page renewal form. Jamie, Maya, and Mr. Alvarez stand on the other side of the desk, relieved and grinning. Maya holds a small printout of the cost-comparison chart, showing the 40× drop. Pemba sits on the corner of the desk holding a tiny rolled-up CSV like a diploma, very pleased with himself. Through the window, the school hallway is bright with mid-morning sun. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: warm relief and quiet pride — the moment a project survives. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Principal Reyes signed the renewal with a small smile. <em>"Pemba Bot stays,"</em> she said. <em>"And next semester, you teach the rest of the staff how you did it."</em> Maya tried to keep a straight face and failed. Pemba sat on the corner of the desk holding a rolled-up CSV like a tiny diploma.</p>
+<h2 id="panel-12-the-lesson">Panel 12: The Lesson</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="panel-12.png" data-desc-position="bottom"><img alt="" src="panel-12.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 12. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 12 of 12. Make the characters and style consistent with the prior panel. The scene is the Cedar Ridge classroom at the end of the day, golden afternoon light streaming through the windows. Pemba — russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail, no clothing — stands on a small stool at a chalkboard, paw raised, mid-writing. The chalkboard reads, in clean chunky chalk handwriting: "Every token counts — and counting is fun." Below that, in smaller chalk text: "Cheap systems are happy systems." A small chalk drawing of a tiny graph (four nodes, three arrows) sits in the lower corner of the chalkboard. Jamie, Maya, and Mr. Alvarez sit at desks in the foreground, watching with warm smiles. Color palette: deep russet, warm cream, slate, burnt orange, golden afternoon light as accent. Emotional tone: contented, wise, and warm — the satisfying close of a story well told. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The next afternoon, Pemba climbed onto a small stool at the front of the classroom and wrote on the chalkboard in big, deliberate letters: <em>Every token counts — and counting is fun.</em> And underneath, smaller: <em>Cheap systems are happy systems.</em> Jamie copied both lines into her notebook. The bell rang. Pemba bowed.</p>
+<h3 id="epilogue-what-the-cedar-ridge-team-did-right">Epilogue – What the Cedar Ridge Team Did Right</h3>
+<p>The Cedar Ridge team didn't out-engineer a billion-dollar AI lab — they out-<em>observed</em> one. They watched what their users actually asked, noticed that 80% of the traffic had a <em>shape</em>, and matched the data structure to the question structure. RAG wasn't wrong; it was just the wrong tool for prerequisite paths. The lesson scales: if any chunk of your traffic is structural, a small graph will beat a big search every time.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How the Cedar Ridge Team Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The default RAG architecture was burning cash on simple structural questions</td>
+<td>They audited query logs and discovered 80% of queries were structural</td>
+<td>Audit your queries before tuning your retriever — measure the <em>shape</em> of demand</td>
+</tr>
+<tr>
+<td>Embedding every PDF made every query expensive whether it needed prose or not</td>
+<td>They built a 180-concept Compact Knowledge Graph as a tiny CSV index</td>
+<td>When data has structure, give it a structure — not a vector store</td>
+</tr>
+<tr>
+<td>Mixing structural and explanatory queries on one expensive path bled budget</td>
+<td>They added a hybrid router: CKG for structure, RAG for prose</td>
+<td>Match the architecture to the query type — one size never fits all</td>
+</tr>
+<tr>
+<td>The team had no idea where the cost was coming from until the invoice arrived</td>
+<td>They printed and categorized every log line in one focused weekend</td>
+<td>The first dashboard pays for itself — observability comes before optimization</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>The story you just read is fiction, but the technique is real and replicable. The next time you reach for RAG by reflex, pause and ask: <em>what shape is this question?</em> If the answer is "I want to know what depends on X, or what's in category Y, or what comes before Z" — you may not need a search at all. You may need a little graph. And every token you don't retrieve is a token you don't pay for.</p>
+<hr>
+<p><em>"Every token counts — and counting is fun."</em>
+— Pemba</p>
+<p><em>"It's not a search problem. It's a graph problem."</em>
+— Maya, Cedar Ridge Tech Club</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Retrieval-augmented_generation">Wikipedia: Retrieval-augmented generation</a> — Background on the standard RAG architecture that Cedar Ridge started with and partly kept</li>
+<li><a href="https://en.wikipedia.org/wiki/Knowledge_graph">Wikipedia: Knowledge graph</a> — General introduction to the family of techniques the Compact Knowledge Graph belongs to</li>
+<li><a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">Wikipedia: Directed acyclic graph</a> — The DAG structure that makes prerequisite relationships deterministically traversable</li>
+<li><a href="https://github.com/Yarmoluk/ckg-benchmark">CKG Benchmark — Yarmoluk &amp; McCreary (2026)</a> — The open-source benchmark paper, dataset, and evaluation harness behind the 40× result</li>
+<li><a href="../../case-studies/little-graph/">A Little Graph Saves a Lot of Tokens — Case Study</a> — The textbook's full case-study writeup with the headline F1, RDS, and per-query cost numbers</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../story-ideas/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Story Ideas">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Story Ideas
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../learning-graph/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
