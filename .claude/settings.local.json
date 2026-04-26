@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python analyze-graph.py learning-graph.csv quality-metrics.md)",
+      "Bash(python3 -c ' *)",
+      "Bash(python csv-to-json.py learning-graph.csv learning-graph.json color-config.json metadata.json taxonomy-names.json)",
+      "Bash(./validate-learning-graph.sh learning-graph.json)",
+      "Bash(python taxonomy-distribution.py learning-graph.csv taxonomy-distribution.md)"
+    ]
+  }
+}
