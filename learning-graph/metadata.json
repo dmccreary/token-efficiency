@@ -1,0 +1,10 @@
+{
+  "title": "Token Optimization",
+  "description": "A detailed course on measuring, analyzing, and reducing the cost of generative AI. Covers LLM and tokenization fundamentals, the Anthropic Claude, OpenAI, and Google Gemini ecosystems and their harness tools (Claude Code, Codex, Antigravity), Skills as a token-optimization primitive, structured logging, observability, A/B testing, prompt and cache optimization, RAG tuning, model routing, output control, agent budget policies, batch APIs, and privacy and compliance.",
+  "creator": "Dan McCreary",
+  "date": "2026-04-25",
+  "version": "1.0",
+  "format": "Learning Graph JSON v1.0",
+  "schema": "https://raw.githubusercontent.com/dmccreary/learning-graphs/refs/heads/main/src/schema/learning-graph-schema.json",
+  "license": "CC BY-NC-SA 4.0 DEED"
+}
