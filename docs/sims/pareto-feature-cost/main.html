@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Pareto Analysis of Per-Feature Cost</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Pareto Analysis of Per-Feature Cost</span>
+    <span class="subtitle">Identify the vital few features driving the majority of LLM spend</span>
+</div>
+
+<div class="controls">
+    <label class="control-block">
+        Pareto target:
+        <select id="target">
+            <option value="50">50% (vital very-few)</option>
+            <option value="80" selected>80% (classical Pareto)</option>
+            <option value="90">90% (almost everything)</option>
+        </select>
+    </label>
+    <label class="control-block">
+        <input type="checkbox" id="cumToggle" checked>
+        Show cumulative-share line
+    </label>
+</div>
+
+<div class="status" id="status">At an 80% target, N features account for 80% of cost — the rest are the long tail.</div>
+
+<div class="chart-wrap">
+    <canvas id="paretoChart"></canvas>
+</div>
+
+</main>
+<script src="pareto-feature-cost.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>A/B Test Outcome Decision Matrix</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        window.mermaid = mermaid;
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+        });
+    </script>
+</head>
+<body>
+<main>
+<div class="toolbar">
+    <span class="toolbar-title">A/B Test Outcome Decision Matrix</span>
+    <label class="toggle">
+        <input type="checkbox" id="noveltyToggle">
+        <span>Show novelty-effect risk overlay</span>
+    </label>
+</div>
+
+<div class="container">
+    <div class="diagram-panel">
+        <div id="mermaidContainer" class="mermaid"></div>
+    </div>
+    <aside class="info-panel">
+        <div class="legend">
+            <div class="legend-title">Color Key</div>
+            <div class="legend-item"><span class="dot" style="background:#c62828"></span>Do not ship</div>
+            <div class="legend-item"><span class="dot" style="background:#f9a825"></span>Defer</div>
+            <div class="legend-item"><span class="dot" style="background:#2e7d32"></span>Ship</div>
+            <div class="legend-item"><span class="dot" style="background:#0277bd"></span>Decision</div>
+            <div class="legend-item"><span class="dot" style="background:#7b1fa2"></span>Novelty risk</div>
+        </div>
+        <h3>Worked Example</h3>
+        <div id="panelWrap">
+            <div id="panel">
+                <div class="info-placeholder">Hover any node to see what it means. Hover a leaf (red, yellow, or green) to see a worked example with real A/B test numbers.</div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</main>
+<script src="ab-test-decision-matrix.js"></script>
+</body>
+</html>

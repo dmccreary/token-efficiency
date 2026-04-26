@@ -1,0 +1,93 @@
+/* Tool Use Loop with Cost Annotations - sequence diagram + cost panel */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: #1f2937;
+}
+
+.toolbar {
+    height: 48px;
+    padding: 8px 14px;
+    background: #37474f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.toolbar-title { font-weight: 600; font-size: 15px; }
+.toolbar-controls { display: flex; align-items: center; gap: 18px; }
+.control-block { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.control-block input[type=range] { width: 110px; }
+.toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+.toggle input { cursor: pointer; }
+
+.container {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 48px);
+}
+
+.diagram-panel {
+    width: 65%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8px;
+    overflow: auto;
+}
+.mermaid { width: 100%; min-width: 0; }
+.mermaid svg { max-width: 100%; height: auto; }
+
+.info-panel {
+    width: 35%;
+    height: 100%;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    padding: 10px 14px;
+    overflow: auto;
+}
+
+.legend {
+    margin-bottom: 10px;
+    font-size: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 10px;
+    background: #fff;
+}
+.legend-title { font-weight: 600; margin-bottom: 4px; color: #334155; }
+.legend-item { display: flex; align-items: center; gap: 6px; padding: 2px 0; color: #475569; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+
+.info-panel h3 {
+    font-size: 14px;
+    color: #333;
+    margin: 8px 0 6px 0;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #c1440e;
+}
+
+.cost-summary {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.cost-row { display: flex; justify-content: space-between; padding: 2px 0; }
+.cost-label { color: #475569; }
+.cost-divider { height: 1px; background: #e2e8f0; margin: 4px 0; }
+.cost-row.total { font-weight: 700; color: #c1440e; }
+.cost-row.noche { color: #64748b; }
+.cost-row.save  { color: #2e7d32; font-weight: 700; }
+
+.targets { font-size: 12px; line-height: 1.45; color: #334155; }
+.target-item { padding: 4px 0; }

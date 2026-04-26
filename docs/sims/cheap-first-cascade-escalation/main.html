@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Cheap-First Cascade with Escalation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        window.mermaid = mermaid;
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+        });
+    </script>
+</head>
+<body>
+<main>
+<div class="toolbar">
+    <span class="toolbar-title">Cheap-First Cascade with Escalation</span>
+    <label class="toggle">
+        <input type="checkbox" id="opusToggle" checked>
+        <span>Add Opus tier</span>
+    </label>
+    <label class="toggle">
+        <input type="checkbox" id="costToggle" checked>
+        <span>Show expected cost</span>
+    </label>
+</div>
+
+<div class="container">
+    <div class="diagram-panel">
+        <div id="mermaidContainer" class="mermaid"></div>
+    </div>
+    <aside class="info-panel">
+        <h3>Cascade Probabilities</h3>
+        <div class="control-row">
+            <label>Cheap-pass rate: <span id="cheapPctVal">80</span>%</label>
+            <input type="range" id="cheapPct" min="50" max="95" step="1" value="80">
+        </label>
+        <div class="control-row">
+            <label>Confidence threshold (logprob Δ): <span id="confVal">2.0</span></label>
+            <input type="range" id="confSlider" min="0.5" max="5" step="0.1" value="2.0">
+        </div>
+        <div class="readouts">
+            <div class="readout-row"><span>P(cheap pass)</span><span id="pCheap">0.80</span></div>
+            <div class="readout-row"><span>P(sonnet pass)</span><span id="pSon">0.18</span></div>
+            <div class="readout-row"><span>P(opus pass)</span><span id="pOpus">0.02</span></div>
+        </div>
+        <h3>Expected Cost</h3>
+        <div class="cost-block">
+            <div class="cost-row"><span>Cheap-only baseline</span><span id="cBase">$0.001</span></div>
+            <div class="cost-row"><span>Cascade expected</span><span class="big" id="cCascade">$0.0024</span></div>
+            <div class="cost-row"><span>Always-Opus baseline</span><span id="cOpus">$0.026</span></div>
+            <div class="cost-row good"><span>Reduction vs. Opus</span><span id="cReduce">91%</span></div>
+        </div>
+        <div class="formula" id="formula">
+            E[cost] = 0.80 × $0.001 + 0.18 × $0.006 + 0.02 × $0.026 = $0.0024
+        </div>
+    </aside>
+</div>
+</main>
+<script src="cheap-first-cascade-escalation.js"></script>
+</body>
+</html>

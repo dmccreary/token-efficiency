@@ -1,0 +1,14 @@
+{
+  "sim_id": "llm-logging-pipeline-privacy",
+  "diagram_name": "LLM Logging Pipeline with Privacy Filters",
+  "chapter_number": 9,
+  "chapter_title": "Structured Logging for LLM Calls",
+  "chapter_dir": "09-structured-logging",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement an LLM logging pipeline that captures every required field while satisfying PII redaction and retention requirements.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** llm-logging-pipeline-privacy<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the full path of an LLM call from application code through the LLM API and out to a log storage backend, with PII detection and redaction stages clearly marked.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement an LLM logging pipeline that captures every required field while satisfying PII redaction and retention requirements.\n\nVisual style: Vertical flowchart with branches\n\nSteps:\n1. Application code: build prompt, call LLM API\n2. LLM API: returns response with usage metadata\n3. Logging middleware (synchronous):\n   - Compute prompt_hash\n   - Detect PII in prompt and response\n   - Branch:\n     - If PII detected: redact → log redacted version with pii_redacted=true\n     - If no PII: log full prompt (truncated to N tokens) with pii_redacted=false\n   - Compute cost_usd from usage and price table\n   - Add trace_id / span_id / session_id / request_id / user_id / feature\n4. Emit JSONL log line to local stream\n5. Log forwarder (asynchronous): ship to object storage and analytics warehouse\n6. Retention policy: delete records older than N days\n\nAnnotations:\n- Highlight which fields are required vs. optional\n- Show the redaction transformation on a sample prompt\n- Show the cost computation: usage * price → cost_usd\n\nInteractive controls:\n- Toggle: PII detected (true/false) — shows different log output\n- Slider: Truncation length (100–2000 tokens)\n\nImplementation: Mermaid flowchart, responsive layout"
+}

@@ -1,0 +1,43 @@
+{
+  "title": "Embedding Space Concept",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization",
+  "description": "Interactive MicroSim for embedding space concept",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "adult",
+      "professional"
+    ],
+    "subjectArea": "Computer Science / Generative AI",
+    "topic": "Embedding Space Concept",
+    "learningObjectives": [
+      "Explain how tokens are projected into a high-dimensional embedding space where semantic similarity corresponds to vector proximity."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "duration": "15-20 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 600
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "02-sampling-tokenization-embeddings"
+}

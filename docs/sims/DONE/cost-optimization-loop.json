@@ -1,0 +1,14 @@
+{
+  "sim_id": "cost-optimization-loop",
+  "diagram_name": "The Cost Optimization Loop",
+  "chapter_number": 20,
+  "chapter_title": "Capstone Projects and Continuous Practice",
+  "chapter_dir": "20-capstone-projects-practice",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement the end-to-end optimization loop and identify which artifacts each stage produces.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** cost-optimization-loop<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the full repeating cycle from baseline measurement through hypothesis, A/B test, pilot, canary, full rollout, before-after report, and back to the next baseline.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement the end-to-end optimization loop and identify which artifacts each stage produces.\n\nVisual style: Circular flow diagram\n\nStages (clockwise):\n1. Baseline cost measurement → Snapshot artifact\n2. Log file analysis → Optimization backlog\n3. Pick top-ranked hypothesis → Hypothesis spec\n4. Design A/B test → Test plan\n5. Pilot rollout → Initial production data\n6. Canary deployment → Wider validation\n7. Full rollout → All traffic on new version\n8. Before-after report → Evidence artifact\n9. Update baseline ← (loop returns to step 1)\n\nAnnotations on each transition:\n- \"If guardrails fail at any stage → cost reduction postmortem\"\n- \"If hypothesis disconfirmed → archive and pick next\"\n- \"If wins exceed expectations → adjust target upward\"\n\nInteractive controls:\n- Click any stage: show the artifact format and example\n- Toggle: \"Show failure paths\" — adds the postmortem and disconfirmation branches\n\nImplementation: Mermaid flowchart (circular layout), responsive"
+}

@@ -1,0 +1,14 @@
+{
+  "sim_id": "batch-job-lifecycle",
+  "diagram_name": "Batch Job Lifecycle with Retry and Webhook",
+  "chapter_number": 19,
+  "chapter_title": "Batch Job Operations, Privacy, and Compliance",
+  "chapter_dir": "19-batch-privacy-compliance",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a robust batch pipeline including idempotency, retry, and webhook-based completion notification.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** batch-job-lifecycle<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the full batch job lifecycle from submission through result download, including failure handling and webhook-based notification.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a robust batch pipeline including idempotency, retry, and webhook-based completion notification.\n\nVisual style: State machine diagram with annotations\n\nStates:\n- Not Submitted (initial)\n- Pending (vendor accepted, queued)\n- In Progress (vendor processing)\n- Completed (results available)\n- Partial (some requests succeeded, some failed)\n- Failed (job-level failure, no results)\n- Expired (window passed without completion)\n\nTransitions:\n- Submit (with idempotency_key) → Pending\n- Vendor schedules → In Progress\n- Vendor finishes → Completed | Partial | Failed\n- Window passes → Expired\n- Webhook fires from Completed/Partial/Failed\n- App downloads results, marks job done\n\nAnnotations:\n- \"Retry sub-requests\" arrow from Partial → \"build new batch from failed only\"\n- \"Idempotency key prevents double-processing on retry\"\n- \"Webhook signature verified before trusting\"\n\nInteractive controls:\n- Click any state: see expected duration and what to do next\n- Toggle: \"Use polling instead of webhook\" — show the difference\n\nImplementation: Mermaid state diagram, responsive layout"
+}

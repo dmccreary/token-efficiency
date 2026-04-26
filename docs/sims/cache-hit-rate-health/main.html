@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Cache Hit Rate Health</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Cache Hit Rate Health — pattern recognition</span><span class="subtitle">Four 30-day patterns and what each means</span></div>
+<div class="meters-grid" style="grid-template-columns: repeat(2, 1fr); gap:12px">
+  <div class="meter"><div class="meter-label">1. Healthy</div><canvas id="c1"></canvas><div class="meter-readout" id="r1"></div></div>
+  <div class="meter"><div class="meter-label">2. Sudden drop</div><canvas id="c2"></canvas><div class="meter-readout" id="r2"></div></div>
+  <div class="meter"><div class="meter-label">3. Slow erosion</div><canvas id="c3"></canvas><div class="meter-readout" id="r3"></div></div>
+  <div class="meter"><div class="meter-label">4. Sawtooth</div><canvas id="c4"></canvas><div class="meter-readout" id="r4"></div></div>
+</div>
+<div class="status" id="status">Hover any chart to see the diagnostic caption, likely cause, and what to check.</div>
+</main>
+<script src="cache-hit-rate-health.js"></script>
+</body>
+</html>

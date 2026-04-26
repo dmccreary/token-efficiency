@@ -1,0 +1,14 @@
+{
+  "sim_id": "ab-test-decision-matrix",
+  "diagram_name": "A/B Test Outcome Decision Matrix",
+  "chapter_number": 12,
+  "chapter_title": "A/B Testing Methodology for LLMs",
+  "chapter_dir": "12-ab-testing-methodology",
+  "library": "Mermaid",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "judge",
+  "learning_objective": "Judge whether to ship a treatment based on its primary-metric and guardrail-metric outcomes.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** ab-test-decision-matrix<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the decision tree for shipping or not shipping a treatment based on primary metric and guardrails — making the \"ship if primary improves AND no guardrails regress\" rule concrete.\n\nBloom Level: Evaluate (L5)\nBloom Verb: judge\n\nLearning objective: Judge whether to ship a treatment based on its primary-metric and guardrail-metric outcomes.\n\nVisual style: Decision tree\n\nTree structure:\n- Root: Did primary metric improve significantly?\n  - No → \"Do not ship — no evidence of benefit\"\n  - Yes → Did any guardrail regress significantly?\n    - Yes → \"Do not ship — improvement does not justify guardrail regression\"\n    - No → Is effect size large enough to justify implementation cost?\n      - No → \"Defer — flag effect, look for larger wins\"\n      - Yes → \"Ship the treatment\"\n\nAnnotations:\n- At each leaf, show example A/B test results with the relevant numbers\n- Color: red for \"do not ship\", yellow for \"defer\", green for \"ship\"\n\nInteractive controls:\n- Click any leaf to see a worked example\n- Toggle: \"Show novelty-effect risk overlay\" — adds a \"wait two more weeks\" branch when the test is short\n\nImplementation: Mermaid flowchart, responsive layout"
+}

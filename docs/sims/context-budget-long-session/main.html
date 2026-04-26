@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Context Window Budget Allocation Over a Long Session</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Context Window Budget Allocation Over a Long Session</span>
+    <span class="subtitle">Watch compaction events redistribute tokens across 200 turns</span>
+</div>
+
+<div class="chart-pane">
+    <canvas id="stackChart"></canvas>
+</div>
+
+<div class="readouts">
+    <div class="readout"><span class="readout-label">Compactions:</span> <span id="rCompactions">0</span></div>
+    <div class="readout"><span class="readout-label">Peak tokens:</span> <span id="rPeak">0</span></div>
+    <div class="readout"><span class="readout-label">Avg tokens / turn:</span> <span id="rAvg">0</span></div>
+    <div class="readout"><span class="readout-label">Detail loss:</span> <span id="rLoss">0%</span></div>
+</div>
+
+<div class="controls">
+    <label class="control-block">
+        Compaction threshold: <span id="threshVal">80</span>K tokens
+        <input type="range" id="threshSlider" min="50000" max="150000" step="5000" value="80000">
+    </label>
+    <label class="control-block">
+        Compaction aggressiveness: <span id="aggVal">50</span>%
+        <input type="range" id="aggSlider" min="20" max="90" step="5" value="50">
+    </label>
+    <label class="control-toggle">
+        <input type="checkbox" id="useLTM" checked>
+        Use long-term memory
+    </label>
+    <label class="control-toggle">
+        <input type="checkbox" id="slidingOnly">
+        Sliding-window only mode
+    </label>
+</div>
+</main>
+<script src="context-budget-long-session.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "sim_id": "token-spike-alert-drilldown",
+  "diagram_name": "Token Spike Alert with Drill-Down",
+  "chapter_number": 10,
+  "chapter_title": "Observability, Dashboards, and Alerting",
+  "chapter_dir": "10-observability-dashboards-alerting",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "deconstruct",
+  "learning_objective": "Deconstruct a token spike using drill-down analysis to identify the contributing feature, user, or template responsible.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** token-spike-alert-drilldown<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show a token-rate time series with a sudden spike, the alert threshold being crossed, and a drill-down panel that breaks the spike down by feature and user to identify the cause.\n\nBloom Level: Analyze (L4)\nBloom Verb: deconstruct\n\nLearning objective: Deconstruct a token spike using drill-down analysis to identify the contributing feature, user, or template responsible.\n\nChart type: Line chart with breakdown panels\n- Top: Tokens per minute over the last 24 hours (line) with alert threshold (horizontal red dashed line)\n- Bottom (revealed on click): Three small breakdown panels showing the spike's contribution by feature, user, and prompt_hash\n\nInteractive controls:\n- Click anywhere on the spike: reveals the drill-down panels for that timestamp\n- Slider: Alert threshold (recomputes which spikes would have fired)\n- Toggle: \"Show baseline range\" (mean ± 2σ envelope)\n\nData Visibility Requirements:\n  Stage 1: Show the time series with one obvious spike around hour 14\n  Stage 2: When user clicks the spike, show the breakdown: feature X dominates (85%), user Y dominates within feature X\n  Stage 3: Show the prompt_hash that explains the spike\n\nDefault: 24-hour window, threshold visible, drill-down hidden until clicked\n\nImplementation: Chart.js + simple HTML drill-down panels, responsive width"
+}

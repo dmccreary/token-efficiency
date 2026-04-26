@@ -1,0 +1,14 @@
+{
+  "sim_id": "memory-architecture-long-short",
+  "diagram_name": "Long-Term and Short-Term Memory Architecture",
+  "chapter_number": 16,
+  "chapter_title": "Context Window Management",
+  "chapter_dir": "16-context-window-management",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "explain",
+  "learning_objective": "Explain how short-term and long-term memory differ in lifecycle, retrieval, and per-turn token cost.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** memory-architecture-long-short<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show the data flow between recent conversation (short-term) and persistent memory files (long-term), with the compaction step that moves content from short to long.\n\nBloom Level: Understand (L2)\nBloom Verb: explain\n\nLearning objective: Explain how short-term and long-term memory differ in lifecycle, retrieval, and per-turn token cost.\n\nCanvas layout:\n- Left third: \"Short-Term Memory\" — a stack of recent turn cards (last 10–20 turns)\n- Middle third: A \"Compaction\" arrow with a small LLM-icon labeled \"Summarize\"\n- Right third: \"Long-Term Memory\" — a stack of memory file cards (project facts, prior decisions, key learnings)\n- Bottom: \"Per-turn input flow\" — arrows showing what gets included in the next API call (system prompt + selectively-retrieved long-term + all of short-term + new user message)\n\nVisual elements:\n- Each memory file card shows its title and token size\n- Each turn card shows turn number and token size\n- The compaction arrow shows \"20 turns × 1K tokens → 1 summary × 200 tokens\" annotation\n\nInteractive controls:\n- Button: \"Add new turn\" — adds a card to short-term, eventually triggers compaction when threshold is reached\n- Button: \"Manually compact now\" — immediately summarizes the oldest turns into a new long-term memory file\n- Slider: Compaction threshold (10–50 turns)\n- Toggle: \"Show per-turn input cost\"\n\nData Visibility Requirements:\n  Stage 1: Show the default state (short-term has 8 turns, long-term has 3 files)\n  Stage 2: When user clicks \"Add new turn\", animate a card sliding into short-term\n  Stage 3: When threshold is hit, animate the oldest turns flowing through compaction into a new long-term file\n  Stage 4: Show the per-turn cost dropping after compaction\n\nDefault state: 8 short-term turns, 3 long-term files, threshold = 15\n\nImplementation: p5.js with responsive width"
+}

@@ -1,0 +1,44 @@
+{
+  "title": "Token Spike Alert with Drill-Down",
+  "creator": "Dan McCreary",
+  "subject": "LLM Token Efficiency",
+  "description": "Interactive Chart.js time series with click-to-drill-down panels that decompose a token spike by feature, user, and prompt template.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "LLM Operations",
+    "topic": "Observability, Dashboards, and Alerting",
+    "learningObjectives": [
+      "Deconstruct a token spike using drill-down analysis to identify the contributing feature, user, or template responsible."
+    ],
+    "bloomsTaxonomy": "Analyze (L4)",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Basic time-series literacy", "Familiarity with percentile-based alerting"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Chart.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 590},
+    "responsive": true,
+    "dependencies": ["chart.js@4.4.4"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": false
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Click-driven decomposition with three breakdown dimensions",
+    "keyQuestions": [
+      "Which feature is responsible for the spike?",
+      "Within that feature, which user dominates?",
+      "Within that user, which prompt template fires the most tokens?"
+    ],
+    "commonMisconceptions": [
+      "All users contribute equally to a spike — they almost never do.",
+      "An alert at the global level tells you the cause — it tells you only the symptom."
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "10-observability-dashboards-alerting"
+}

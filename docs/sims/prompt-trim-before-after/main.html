@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Prompt Trim Before/After</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Prompt Trim — Before vs After</span><span class="subtitle">Cumulative impact of prompt-engineering techniques</span></div>
+<div class="status" id="status">Toggle techniques on/off to see incremental contribution.</div>
+<div class="timeline" style="height: 320px"><canvas id="chart"></canvas></div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block"><input type="checkbox" id="t1" checked> System prompt hygiene</label>
+<label class="control-block"><input type="checkbox" id="t2" checked> Schema minimization</label>
+<label class="control-block"><input type="checkbox" id="t3" checked> Few-shot pruning</label>
+<label class="control-block"><input type="checkbox" id="t4" checked> Concise output instruction</label>
+</div>
+<div class="control-row">
+<label class="control-block">Monthly request volume: <span id="volVal">100,000</span><input type="range" id="volSlider" min="1000" max="10000000" step="1000" value="100000" style="width:280px"></label>
+</div>
+</div>
+</main>
+<script src="prompt-trim-before-after.js"></script>
+</body>
+</html>

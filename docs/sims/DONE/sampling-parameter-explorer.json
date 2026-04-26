@@ -1,0 +1,14 @@
+{
+  "sim_id": "sampling-parameter-explorer",
+  "diagram_name": "Sampling Parameter Explorer",
+  "chapter_number": 2,
+  "chapter_title": "Sampling, Tokenization, and Embeddings",
+  "chapter_dir": "02-sampling-tokenization-embeddings",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "demonstrate",
+  "learning_objective": "Demonstrate how temperature and top-p modify a fixed token probability distribution and predict the resulting selection behavior.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: microsim\n**sim-id:** sampling-parameter-explorer<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Let learners adjust temperature and top-p and see how the resulting probability distribution over candidate next tokens changes shape, then see which token would be sampled.\n\nBloom Level: Apply (L3)\nBloom Verb: demonstrate\n\nLearning objective: Demonstrate how temperature and top-p modify a fixed token probability distribution and predict the resulting selection behavior.\n\nCanvas layout:\n- Top half (full width): Bar chart with token labels on the X axis and probability on the Y axis, showing 10 candidate next tokens for the prompt \"The red panda climbed the ___\"\n- Bottom half: Two sliders, two readout fields, and a \"Sample 100 times\" button\n\nDefault candidate tokens and base probabilities:\n- \"tree\": 0.45\n- \"bamboo\": 0.20\n- \"branch\": 0.10\n- \"rock\": 0.07\n- \"fence\": 0.05\n- \"ladder\": 0.05\n- \"stairs\": 0.04\n- \"wall\": 0.02\n- \"roof\": 0.01\n- \"mountain\": 0.01\n\nInteractive controls:\n- Slider: Temperature (0.0 to 2.0, step 0.1, default 1.0)\n- Slider: Top-P (0.0 to 1.0, step 0.05, default 1.0)\n- Button: \"Sample 1 token\" (picks once based on the modified distribution and highlights it)\n- Button: \"Sample 100 times\" (runs 100 samples and overlays a frequency histogram on the bars)\n- Button: \"Reset to defaults\"\n\nData Visibility Requirements:\n  Stage 1: Show the base probability distribution (sliders at defaults)\n  Stage 2: When temperature slider changes, recompute and redraw the bars (lower T sharpens, higher T flattens)\n  Stage 3: When top-p slider changes, gray out bars that fall outside the nucleus\n  Stage 4: After \"Sample 100 times\", overlay a histogram on each bar showing actual sample frequency vs. theoretical probability\n\nInstructional Rationale: Apply objective requires hands-on parameter manipulation. The slider + histogram pattern lets learners predict an outcome and verify it empirically.\n\nImplementation:\n- p5.js with responsive width\n- updateCanvasSize() in setup()\n- Use p5.js builtin createSlider and createButton"
+}

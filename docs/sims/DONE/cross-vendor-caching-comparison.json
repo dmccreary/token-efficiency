@@ -1,0 +1,14 @@
+{
+  "sim_id": "cross-vendor-caching-comparison",
+  "diagram_name": "Cross-Vendor Caching Comparison",
+  "chapter_number": 6,
+  "chapter_title": "The Google Gemini Ecosystem",
+  "chapter_dir": "06-google-gemini-ecosystem",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "compare",
+  "learning_objective": "Compare the caching cost models of three vendors and recommend a vendor for a workload based on prefix length, request volume, and cache lifetime.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** cross-vendor-caching-comparison<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Plot the per-request cost over a sequence of N requests for the same workload on Anthropic, OpenAI (when prompt caching is enabled), and Gemini, so the structural differences in caching mechanics become visible.\n\nBloom Level: Analyze (L4)\nBloom Verb: compare\n\nLearning objective: Compare the caching cost models of three vendors and recommend a vendor for a workload based on prefix length, request volume, and cache lifetime.\n\nChart type: Multi-line chart\n- X-axis: Request number (1 to 50)\n- Y-axis: Cumulative cost (\\$)\n\nData series:\n1. Anthropic (cache write at request 1 with 1.25× premium, then 0.10× reads)\n2. OpenAI (when enabled, similar structure with different multipliers)\n3. Gemini implicit (slow ramp, less control)\n4. Gemini explicit (large drop after cache creation, plus per-hour storage cost adding small linear growth)\n5. No caching baseline (linear, full price every request)\n\nInteractive controls:\n- Slider: Stable prefix size (500 to 50,000 tokens)\n- Slider: Cache lifetime (1 minute to 24 hours)\n- Slider: Request frequency (per minute)\n- Toggle: \"Show storage cost on Gemini explicit\"\n\nData Visibility Requirements:\n  Stage 1: Show all five lines\n  Stage 2: Highlight the crossover points where vendor A becomes cheaper than vendor B\n  Stage 3: Show a summary table at bottom: total cost over 50 requests, % savings vs no-cache\n\nDefault values:\n- Prefix: 5,000 tokens\n- Lifetime: 1 hour\n- Frequency: 1/min\n- Storage cost shown\n\nImplementation: Chart.js multi-line, responsive width"
+}

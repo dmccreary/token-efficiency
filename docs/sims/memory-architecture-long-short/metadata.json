@@ -1,0 +1,40 @@
+{
+  "title": "Long-Term and Short-Term Memory Architecture",
+  "creator": "Dan McCreary",
+  "subject": "Token Efficiency",
+  "description": "Three-column architecture diagram showing how short-term turns flow through compaction into long-term memory files, with per-turn cost.",
+  "date": "2026-04-25",
+  "educational": {
+    "subjectArea": "LLM Engineering",
+    "topic": "Context Window Management",
+    "learningObjectives": [
+      "Explain how short-term and long-term memory differ in lifecycle, retrieval, and per-turn token cost."
+    ],
+    "bloomsTaxonomy": "Understand (L2)",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Chapter 16: context window, system prompt, turn-by-turn cost"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 640},
+    "responsive": true,
+    "dependencies": ["p5@1.11.10"],
+    "accessibility": {"hasAltText": false, "keyboardNavigable": true}
+  },
+  "pedagogical": {
+    "teachingStrategy": "Three-column architecture with animated compaction",
+    "keyQuestions": [
+      "What is the lifecycle difference between short-term and long-term memory?",
+      "Why does per-turn cost drop after compaction?",
+      "When should an operator manually compact?"
+    ],
+    "commonMisconceptions": [
+      "Long-term memory is included in every turn",
+      "Compaction is the same as forgetting"
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "16-context-window-management"
+}

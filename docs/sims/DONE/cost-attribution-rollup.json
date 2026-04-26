@@ -1,0 +1,14 @@
+{
+  "sim_id": "cost-attribution-rollup",
+  "diagram_name": "Cost Attribution Roll-Up",
+  "chapter_number": 3,
+  "chapter_title": "Pricing, Economics, and Async API Modes",
+  "chapter_dir": "03-pricing-economics-async-apis",
+  "library": "p5.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "differentiate",
+  "learning_objective": "Differentiate cost-per-request, cost-per-feature, cost-per-user, and cost-per-outcome from the same underlying request log, and explain how each surface a different optimization opportunity.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: microsim\n**sim-id:** cost-attribution-rollup<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show how individual LLM call costs roll up by feature, by user, and by outcome — making the same total cost tell different stories depending on which dimension you slice by.\n\nBloom Level: Analyze (L4)\nBloom Verb: differentiate\n\nLearning objective: Differentiate cost-per-request, cost-per-feature, cost-per-user, and cost-per-outcome from the same underlying request log, and explain how each surface a different optimization opportunity.\n\nCanvas layout:\n- Left column (40%): Sortable table of 30 sample requests with columns [request_id, model, feature, user_id, input_tokens, output_tokens, cost, success?]\n- Right column (60%): Roll-up panel with four tabs at the top: \"By Request\", \"By Feature\", \"By User\", \"By Outcome\"\n\nSample data (pre-populated):\n- 30 requests across 3 features (summarize, chat, classify), 5 users (u1–u5), 2 models (haiku, sonnet)\n- Realistic cost distribution: a few large outliers, most small\n- Mix of success/failure outcomes\n\nInteractive controls:\n- Tab buttons: \"By Request\" | \"By Feature\" | \"By User\" | \"By Outcome\"\n- Sort dropdown for each tab (sort ascending or descending by cost)\n- Highlight: clicking a row in the right panel highlights the underlying requests in the left panel\n\nData Visibility Requirements:\n  Tab 1 (By Request): Show raw cost per request as a sorted bar chart, top 10\n  Tab 2 (By Feature): Group requests by feature, show total and average cost per feature with request counts\n  Tab 3 (By User): Group requests by user_id, show total cost per user; highlight any user above an \"alert\" threshold\n  Tab 4 (By Outcome): Show cost-per-successful-outcome (total cost / success count) per feature, with success rate as a secondary bar\n\nDefault state: \"By Feature\" tab, sorted descending by total cost\n\nInstructional Rationale: Analyze objective requires the learner to manipulate the same data through multiple lenses. Tab-based view-switching with linked highlighting makes it concrete that the underlying data is unchanged — only the aggregation differs.\n\nImplementation:\n- p5.js with responsive width\n- Pre-baked dataset; no server calls\n- Use createButton for tabs and createSelect for sort"
+}

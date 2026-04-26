@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Tool Use Loop with Cost Annotations</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        window.mermaid = mermaid;
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            sequence: { useMaxWidth: true, mirrorActors: false, showSequenceNumbers: true }
+        });
+    </script>
+</head>
+<body>
+<main>
+<div class="toolbar">
+    <span class="toolbar-title">Tool Use Loop with Cost Annotations</span>
+    <div class="toolbar-controls">
+        <label class="control-block">
+            Iterations:
+            <input type="range" id="iterSlider" min="1" max="6" step="1" value="3">
+            <span id="iterVal">3</span>
+        </label>
+        <label class="toggle">
+            <input type="checkbox" id="cacheToggle" checked>
+            <span>Show cache savings</span>
+        </label>
+    </div>
+</div>
+
+<div class="container">
+    <div class="diagram-panel">
+        <div id="mermaidContainer" class="mermaid"></div>
+    </div>
+    <aside class="info-panel">
+        <div class="legend">
+            <div class="legend-title">Token Color Key</div>
+            <div class="legend-item"><span class="dot" style="background:#2e7d32"></span>Cached input (0.10x)</div>
+            <div class="legend-item"><span class="dot" style="background:#c1440e"></span>Uncached input (1.0x)</div>
+            <div class="legend-item"><span class="dot" style="background:#7b1fa2"></span>Output (5x)</div>
+            <div class="legend-item"><span class="dot" style="background:#cbd5e1"></span>Cache write (1.25x)</div>
+        </div>
+        <h3>Running Total</h3>
+        <div id="costSummary" class="cost-summary">
+            <div class="cost-row"><span class="cost-label">Cached input:</span> <span id="cumCached">0</span> tok</div>
+            <div class="cost-row"><span class="cost-label">Uncached input:</span> <span id="cumUncached">0</span> tok</div>
+            <div class="cost-row"><span class="cost-label">Output:</span> <span id="cumOutput">0</span> tok</div>
+            <div class="cost-divider"></div>
+            <div class="cost-row total"><span class="cost-label">Effective cost:</span> <span id="cumEffective">0</span> units</div>
+            <div class="cost-row noche"><span class="cost-label">Without caching:</span> <span id="cumNoCache">0</span> units</div>
+            <div class="cost-row save"><span class="cost-label">Savings:</span> <span id="cumSavings">0%</span></div>
+        </div>
+        <h3>Cache Targets</h3>
+        <div class="targets">
+            <div class="target-item"><strong>System prompt</strong> (5,000 tok) — paid 1.25x once, then 0.10x on every reuse.</div>
+            <div class="target-item"><strong>Tool definitions</strong> (1,000 tok) — same pattern. Stable across the session.</div>
+            <div class="target-item"><strong>Conversation history</strong> grows linearly — uncached unless you explicitly mark a cache breakpoint.</div>
+        </div>
+    </aside>
+</div>
+</main>
+<script src="tool-use-loop-cost.js"></script>
+</body>
+</html>

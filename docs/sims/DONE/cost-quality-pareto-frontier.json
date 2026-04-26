@@ -1,0 +1,14 @@
+{
+  "sim_id": "cost-quality-pareto-frontier",
+  "diagram_name": "Cost-Quality Pareto Frontier",
+  "chapter_number": 3,
+  "chapter_title": "Pricing, Economics, and Async API Modes",
+  "chapter_dir": "03-pricing-economics-async-apis",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "judge",
+  "learning_objective": "Judge which model configurations are worth considering for a given workload and which are strictly dominated.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** cost-quality-pareto-frontier<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Plot a set of model configurations on cost-vs-quality axes, draw the Pareto frontier connecting the non-dominated points, and gray out the dominated points to make the \"never choose these\" set obvious.\n\nBloom Level: Evaluate (L5)\nBloom Verb: judge\n\nLearning objective: Judge which model configurations are worth considering for a given workload and which are strictly dominated.\n\nChart type: Scatter plot with overlaid frontier line\n- X-axis: Cost per request (\\$, log scale, 0.001 to 1.0)\n- Y-axis: Quality score (0–100)\n\nData points (representative model configurations):\n- \"Tiny model\": cost \\$0.001, quality 60\n- \"Small model, no caching\": cost \\$0.005, quality 75\n- \"Small model, with caching\": cost \\$0.002, quality 75\n- \"Mid model, no caching\": cost \\$0.020, quality 85\n- \"Mid model, with caching\": cost \\$0.008, quality 85\n- \"Large model\": cost \\$0.100, quality 92\n- \"Large model + thinking\": cost \\$0.300, quality 95\n- Several deliberately-dominated points: \"Mid model expensive prompt\": \\$0.030, quality 80; \"Small model verbose prompt\": \\$0.015, quality 70\n\nFrontier line: Connect the non-dominated points (Tiny → Small+caching → Mid+caching → Large → Large+thinking)\n\nInteractive controls:\n- Slider: \"Quality requirement floor\" (0–100) — draws a horizontal line; points below get grayed out\n- Slider: \"Cost ceiling per request\" — draws a vertical line; points above get grayed out\n- Hover over any point: show its label, exact cost and quality, and whether it's on the frontier\n\nData Visibility Requirements:\n  Stage 1: Plot all points labeled\n  Stage 2: Highlight Pareto-frontier points in green and dominated points in gray\n  Stage 3: Draw the frontier line connecting frontier points\n  Stage 4: When sliders move, recompute which points satisfy both constraints and emphasize those\n\nDefault state: All points visible, no constraints applied\n\nImplementation: Chart.js scatter, responsive width"
+}

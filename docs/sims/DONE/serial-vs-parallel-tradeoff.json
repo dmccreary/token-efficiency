@@ -1,0 +1,14 @@
+{
+  "sim_id": "serial-vs-parallel-tradeoff",
+  "diagram_name": "Serial vs. Parallel Execution Cost-Latency Tradeoff",
+  "chapter_number": 7,
+  "chapter_title": "AI Coding Harnesses and Agentic Loops",
+  "chapter_dir": "07-coding-harnesses-agentic-loops",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "judge",
+  "learning_objective": "Judge whether a particular multi-task workload should run serially or in parallel based on cost, latency, and the parallel token penalty.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** serial-vs-parallel-tradeoff<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show wall-clock time and total token cost for the same multi-task workload executed serially vs. with various parallelism factors, surfacing the parallel token penalty.\n\nBloom Level: Evaluate (L5)\nBloom Verb: judge\n\nLearning objective: Judge whether a particular multi-task workload should run serially or in parallel based on cost, latency, and the parallel token penalty.\n\nChart type: Dual-axis bar chart\n- X-axis: Parallelism factor (1, 2, 4, 8, 16)\n- Y-axis (left): Wall-clock time (seconds)\n- Y-axis (right): Total token cost (\\$)\n\nTwo bar series at each X position:\n- Time bars (blue, left axis)\n- Cost bars (orange, right axis)\n\nInteractive controls:\n- Slider: Number of independent subtasks (4–32)\n- Slider: System prompt size per subagent (1K–20K tokens)\n- Slider: Average tokens consumed by one subtask\n- Toggle: \"Caching on/off\" — when off, the parallel penalty is much steeper\n\nData Visibility Requirements:\n  Stage 1: Show the wall-clock-time bars decreasing as parallelism grows\n  Stage 2: Show the cost bars increasing as parallelism grows (the penalty)\n  Stage 3: Highlight the \"knee\" where added parallelism stops reducing time meaningfully but cost keeps growing\n\nDefault state: 8 subtasks, 8K system prompt, 5K avg subtask, caching on\n\nImplementation: Chart.js dual-axis, responsive width"
+}

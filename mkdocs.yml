@@ -1,31 +1,6 @@
 site_name: Token Efficiency
 site_description: A guide to understanding and improving token efficiency in language models.
 
-theme:
-  name: material
-  palette:
-    - scheme: default
-      primary: deep orange
-      accent: blue grey
-
-extra_css:
-  - css/mascot.css
-
-markdown_extensions:
-  - admonition
-  - md_in_html
-  - attr_list
-  - footnotes
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight:
-      linenums: true
-  - pymdownx.arithmatex:
-      generic: true
-
-extra_javascript:
-  - js/mathjax.js
-  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
   - Home: index.md
@@ -52,6 +27,67 @@ nav:
       - 18. Agent Budget Policies and Session Limits: chapters/18-agent-budget-policies/index.md
       - 19. Batch Job Operations, Privacy, and Compliance: chapters/19-batch-privacy-compliance/index.md
       - 20. Capstone Projects and Continuous Practice: chapters/20-capstone-projects-practice/index.md
+  
+  - MicroSims:
+    - List of MicroSims: sims/index.md
+    - A/B Test Outcome Decision Matrix: sims/ab-test-decision-matrix/index.md
+    - Agent Budget Policy with Multiple Limits: sims/agent-budget-policy-multi-limit/index.md
+    - Anthropic Prompt Caching Lifecycle: sims/anthropic-prompt-caching-lifecycle/index.md
+    - Batch Job Lifecycle: sims/batch-job-lifecycle/index.md
+    - BPE Tokenization Pipeline: sims/bpe-tokenization-pipeline/index.md
+    - Budget Hierarchy Roll-Up: sims/budget-hierarchy-roll-up/index.md
+    - Burn Rate Monthly Forecast: sims/burn-rate-monthly-forecast/index.md
+    - Cache Hit Rate Health: sims/cache-hit-rate-health/index.md
+    - Cheap-First Cascade with Escalation: sims/cheap-first-cascade-escalation/index.md
+    - Context Window Budget Allocation Over a Long Session: sims/context-budget-long-session/index.md
+    - Continuous Cost Operating Model: sims/continuous-cost-operating-model/index.md
+    - Conversation Message Structure: sims/conversation-message-structure/index.md
+    - Cost Attribution Rollup: sims/cost-attribution-rollup/index.md
+    - Cost Optimization Loop: sims/cost-optimization-loop/index.md
+    - Cost-Quality Pareto Frontier: sims/cost-quality-pareto-frontier/index.md
+    - Cross-Vendor Caching Comparison: sims/cross-vendor-caching-comparison/index.md
+    - Cross-Vendor Token Count Drift: sims/cross-vendor-token-drift/index.md
+    - Embedding Space Concept: sims/embedding-space-concept/index.md
+    - Function Calling Loop with Tool Choice: sims/openai-function-calling-loop/index.md
+    - Interactive Tokenizer Explorer: sims/interactive-tokenizer-explorer/index.md
+    - Learning Graph Viewer: sims/graph-viewer/index.md
+    - LLM Logging Pipeline with Privacy Filters: sims/llm-logging-pipeline-privacy/index.md
+    - LLM Ops Dashboard Layout: sims/llm-ops-dashboard-layout/index.md
+    - Long-Term and Short-Term Memory Architecture: sims/memory-architecture-long-short/index.md
+    - OpenAI Token Usage Object Anatomy: sims/openai-token-usage-anatomy/index.md
+    - Output Control Settings: sims/output-control-settings/index.md
+    - Pareto Analysis of Per-Feature Cost: sims/pareto-feature-cost/index.md
+    - Precision/Recall Tradeoff for K Selection: sims/rag-precision-recall-k/index.md
+    - Privacy Compliance Pipeline: sims/privacy-compliance-pipeline/index.md
+    - Prompt Anatomy Budget: sims/prompt-anatomy-budget/index.md
+    - Prompt Trim Before/After: sims/prompt-trim-before-after/index.md
+    - RAG Pipeline Cost Annotations: sims/rag-pipeline-cost-annotations/index.md
+    - Sample Size Calculator for LLM A/B Tests: sims/ab-test-sample-size-calculator/index.md
+    - Sampling Parameter Explorer: sims/sampling-parameter-explorer/index.md
+    - Serial vs Parallel Tradeoff: sims/serial-vs-parallel-tradeoff/index.md
+    - Session Token Accumulation: sims/session-token-accumulation/index.md
+    - Skill Refactoring Before/After: sims/skill-refactoring-before-after/index.md
+    - Stable Prefix / Volatile Suffix: sims/stable-prefix-volatile-suffix/index.md
+    - Sync, Async, and Batch API Flow: sims/sync-async-batch-api-flow/index.md
+    - Task to Skill Binding Flow: sims/task-skill-binding-flow/index.md
+    - Token Distribution Long Tail: sims/token-distribution-long-tail/index.md
+    - Token Lifecycle from Input to Output: sims/token-lifecycle-flow/index.md
+    - Token Spike Alert with Drill-Down: sims/token-spike-alert-drilldown/index.md
+    - Tool Use Loop with Cost Annotations: sims/tool-use-loop-cost/index.md
+
+
+
+
+
+
+  - Case Studies:
+    - List of Case Studies: case-studies/index.md
+    - Textbook Dashboard: case-studies/textbook-dashboard/index.md
+    #- Case Study 1: Optimizing a Customer Support Bot: case-studies/case-study-1/index.md
+    #- Case Study 2: Reducing Costs in a Content Generation Pipeline: case-studies/case-study-2/index.md
+    #- Case Study 3: Improving Token Efficiency in a Retrieval-Augmented Generation System: case-studies/case-study-3/index.md
+
+ 
   - Learning Graph:
       - Introduction: learning-graph/index.md
       - Course Description Assessment: learning-graph/course-description-assessment.md
@@ -60,5 +96,36 @@ nav:
       - Concept Taxonomy: learning-graph/concept-taxonomy.md
       - Taxonomy Distribution Report: learning-graph/taxonomy-distribution.md
       - Mascot Style Guide: learning-graph/mascot-test.md
-  - MicroSims:
-      - Learning Graph Viewer: sims/graph-viewer/index.md
+
+  - About: about.md
+  
+
+theme:
+  name: material
+  logo: img/mascot/neutral.png
+  favicon: img/favicon.png
+  palette:
+    - scheme: default
+      primary: deep orange
+      accent: blue grey
+
+extra_css:
+  - css/mascot.css
+  - css/extra.css
+
+markdown_extensions:
+  - admonition
+  - md_in_html
+  - attr_list
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - js/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - js/extra.js

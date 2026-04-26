@@ -1,0 +1,14 @@
+{
+  "sim_id": "session-token-accumulation",
+  "diagram_name": "Session Token Accumulation Over Tool-Call Iterations",
+  "chapter_number": 7,
+  "chapter_title": "AI Coding Harnesses and Agentic Loops",
+  "chapter_dir": "07-coding-harnesses-agentic-loops",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "examine",
+  "learning_objective": "Examine how harness sessions accumulate tokens turn by turn and identify which components grow linearly vs. quadratically.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** session-token-accumulation<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show how a coding-harness session accumulates input and output tokens turn by turn, with and without prompt caching, so the structural inevitability of growth is visible.\n\nBloom Level: Analyze (L4)\nBloom Verb: examine\n\nLearning objective: Examine how harness sessions accumulate tokens turn by turn and identify which components grow linearly vs. quadratically.\n\nChart type: Stacked area chart with line overlay\n- X-axis: Tool-call iteration number (1 to 50)\n- Y-axis: Cumulative tokens\n\nStacked areas:\n- Harness system prompt (constant per turn — but stacked sum grows linearly with N)\n- Tool definitions (same shape)\n- Conversation history (grows linearly per turn — sum is quadratic in N)\n- Tool results (varies; mostly linear)\n- Output (varies)\n\nOverlay lines:\n- Cumulative cost without caching (\\$)\n- Cumulative cost with caching (\\$, lower curve)\n\nInteractive controls:\n- Slider: System prompt size (5,000–20,000 tokens)\n- Slider: Average tool result size (200–5,000 tokens)\n- Slider: Average output size per turn (200–2,000 tokens)\n- Slider: Number of iterations (5–100)\n- Toggle: Enable caching (default on)\n\nData Visibility Requirements:\n  Stage 1: Show the stacked areas for each turn\n  Stage 2: Show the cumulative-cost overlay lines diverging based on caching\n  Stage 3: Annotate any \"compaction event\" insertions (manual or auto) where the conversation-history area drops sharply\n\nDefault state: 50 iterations, caching on, 8K system prompt, 1K avg tool result\n\nImplementation: Chart.js stacked area, responsive width"
+}

@@ -1,0 +1,14 @@
+{
+  "sim_id": "tool-use-loop-cost",
+  "diagram_name": "Tool Use Loop with Cost Annotations",
+  "chapter_number": 4,
+  "chapter_title": "The Anthropic Claude Ecosystem",
+  "chapter_dir": "04-anthropic-claude-ecosystem",
+  "library": "Mermaid",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "examine",
+  "learning_objective": "Examine how tool-use loops accumulate input tokens (the entire prior conversation is re-sent on every turn) and identify the tool definitions and system prompt as cache targets.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** tool-use-loop-cost<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show a multi-turn tool-use loop (model calls tool, gets result, calls another tool, eventually answers) and annotate each turn with input/output token counts so the cumulative cost is visible.\n\nBloom Level: Analyze (L4)\nBloom Verb: examine\n\nLearning objective: Examine how tool-use loops accumulate input tokens (the entire prior conversation is re-sent on every turn) and identify the tool definitions and system prompt as cache targets.\n\nVisual style: Sequence diagram (vertical), with the model on the left and the application on the right\n\nSteps:\n1. App → Model: System prompt (5K tokens, cached) + tools (1K tokens, cached) + user question (50 tokens, uncached)\n2. Model → App: Tool call: get_weather(\"Paris\") — small assistant message\n3. App → Model: All previous content + tool_result (50 tokens) — re-sends the whole stack\n4. Model → App: Tool call: get_forecast(\"Paris\") — another small turn\n5. App → Model: All previous content + tool_result — even larger re-send\n6. Model → App: Final answer text (200 tokens)\n\nAnnotations on each turn:\n- Cached input tokens (green)\n- Uncached input tokens (orange)\n- Output tokens (red)\n- Running total cost on the right margin\n\nInteractive controls:\n- Toggle: \"Show cache savings\" — gray out the cached portion to make the savings visible\n- Slider: Number of tool-call iterations (1–10)\n\nImplementation: Mermaid sequence diagram, responsive layout"
+}

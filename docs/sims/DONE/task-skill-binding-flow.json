@@ -1,0 +1,14 @@
+{
+  "sim_id": "task-skill-binding-flow",
+  "diagram_name": "Task Decomposition and Skill Binding",
+  "chapter_number": 8,
+  "chapter_title": "The Skills System",
+  "chapter_dir": "08-skills-system",
+  "library": "Mermaid",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "examine",
+  "learning_objective": "Examine how the harness decomposes a user request and binds each task to a Skill, and quantify the token savings vs. an eager-load alternative.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** task-skill-binding-flow<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show how a single user request flows through task decomposition into multiple bound Skills, with token-cost annotations showing the savings versus loading every Skill body eagerly.\n\nBloom Level: Analyze (L4)\nBloom Verb: examine\n\nLearning objective: Examine how the harness decomposes a user request and binds each task to a Skill, and quantify the token savings vs. an eager-load alternative.\n\nVisual style: Flowchart with three swimlanes (User, Harness, Skills Library)\n\nSteps:\n1. User → Harness: \"Generate a chapter outline for my new course on Token Optimization\"\n2. Harness (System Prompt with N Skill descriptions, total ~2,500 tokens)\n3. Harness performs task decomposition:\n   - Task 1: \"analyze course description\"\n   - Task 2: \"design chapter structure\"\n   - Task 3: \"validate dependency order\"\n4. Task-skill binding:\n   - Task 1 → course-description-analyzer skill (loads body, 1,800 tokens)\n   - Task 2 → book-chapter-generator skill (loads body, 3,200 tokens)\n   - Task 3 → invokes a bundled Python script (zero tokens for the script body)\n5. Each Skill executes in turn, results bubble back to user\n\nAnnotations:\n- Eager-load alternative: \"Would have loaded all 50 Skill bodies = 100K tokens upfront\"\n- Lazy-load actual: \"Loaded only 2 of 50 bodies = 5K tokens, and a script = ~50 tokens\"\n- Highlight the script invocation: \"Replaces ~2,000 tokens of prose instructions with deterministic execution\"\n\nInteractive controls:\n- Hover any step to see token cost\n- Toggle: \"Show eager-load comparison\"\n\nImplementation: Mermaid flowchart with swimlanes"
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Context Window Budget Allocation Over a Long Session",
+  "creator": "Dan McCreary",
+  "subject": "Token Efficiency",
+  "description": "Stacked area chart of context window allocation over 200 turns, with compaction events.",
+  "date": "2026-04-25",
+  "educational": {
+    "subjectArea": "LLM Engineering",
+    "topic": "Context Window Management",
+    "learningObjectives": [
+      "Implement a context window budget that maintains affordable per-turn cost across a session that exceeds 100 turns."
+    ],
+    "bloomsTaxonomy": "Apply (L3)",
+    "duration": "20-25 minutes",
+    "prerequisites": ["Chapter 16: context window components, compaction, sliding window, long-term memory"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Chart.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 560},
+    "responsive": true,
+    "dependencies": ["chart.js@4.4.4"],
+    "accessibility": {"hasAltText": false, "keyboardNavigable": true}
+  },
+  "pedagogical": {
+    "teachingStrategy": "End-to-end policy simulation",
+    "keyQuestions": [
+      "How many compaction events does a 200-turn session trigger at threshold T?",
+      "What is the cost-fidelity tradeoff of the threshold knob?",
+      "When is sliding-window-only the right choice?"
+    ],
+    "commonMisconceptions": [
+      "Compaction is the same as forgetting",
+      "Threshold is purely a cost knob"
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "16-context-window-management"
+}

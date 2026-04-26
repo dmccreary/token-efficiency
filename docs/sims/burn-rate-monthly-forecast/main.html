@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Burn Rate Monthly Forecast</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+<span class="title">Burn Rate Monthly Forecast</span>
+<span class="subtitle">Daily spend, cumulative spend, linear forecast, vs. budget</span>
+</div>
+<div class="status" id="statusBanner">Loading…</div>
+<div class="timeline"><canvas id="chart"></canvas></div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block">Today is day <span id="dayVal">18</span><input type="range" id="daySlider" min="1" max="30" step="1" value="18" style="width:200px"></label>
+<label class="control-block">Burn multiplier <span id="burnVal">1.0</span><input type="range" id="burnSlider" min="0.5" max="2.0" step="0.05" value="1.0" style="width:200px"></label>
+<label class="control-block"><input type="checkbox" id="seasonality"> Apply weekday/weekend seasonality</label>
+<label class="control-block">Budget $<span id="budgetVal">30,000</span><input type="range" id="budgetSlider" min="10000" max="60000" step="1000" value="30000" style="width:200px"></label>
+</div>
+</div>
+</main>
+<script src="burn-rate-monthly-forecast.js"></script>
+</body>
+</html>

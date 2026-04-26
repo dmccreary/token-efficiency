@@ -1,0 +1,14 @@
+{
+  "sim_id": "token-lifecycle-flow",
+  "diagram_name": "Token Lifecycle from Input to Output",
+  "chapter_number": 1,
+  "chapter_title": "LLMs, Tokens, and Generation Basics",
+  "chapter_dir": "01-llms-tokens-generation-basics",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "explain",
+  "learning_objective": "Explain how raw text is converted to tokens, processed in parallel, and emitted autoregressively, including which stages are billed as input versus output.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** token-lifecycle-flow<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show the end-to-end flow of how a user prompt becomes input tokens, gets processed by the model, and is emitted as output tokens one at a time. Reinforces the input-once / output-serially asymmetry that drives pricing.\n\nBloom Level: Understand (L2)\nBloom Verb: explain\n\nLearning objective: Explain how raw text is converted to tokens, processed in parallel, and emitted autoregressively, including which stages are billed as input versus output.\n\nVisual elements (left to right):\n1. \"Raw Text\" box containing the string: \"Write a haiku about pandas.\"\n2. Arrow labeled \"tokenize\" leading to a \"Tokens (Input)\" box showing the token sequence as colored chips: [Write][ a][ haiku][ about][ pandas][.]\n3. Arrow labeled \"send to model\" leading to an \"LLM\" rectangle (Transformer block)\n4. Arrow labeled \"generate next token\" leading to a \"Tokens (Output)\" box where chips appear one at a time with a small index counter: [Bamboo][ leaves][...]\n5. Arrow labeled \"detokenize\" leading to a \"Generated Text\" box that fills in word-by-word\n\nVisual style: Block diagram with arrows. Input tokens shown in cool blue, output tokens shown in warm orange to reinforce the pricing asymmetry. Each output token chip has a small \"\\$\" badge larger than the input chips.\n\nAnnotations:\n- Above input section: \"Read once, in parallel — cheaper\"\n- Above output section: \"Generated one at a time — pricier\"\n- Bottom legend: blue = input tokens, orange = output tokens\n\nImplementation: p5.js with responsive width. Animation steps through one output token per second so the autoregressive nature is visible. Reset button returns to start."
+}

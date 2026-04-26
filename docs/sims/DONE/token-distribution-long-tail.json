@@ -1,0 +1,14 @@
+{
+  "sim_id": "token-distribution-long-tail",
+  "diagram_name": "Token Count Distribution and Long-Tail Cost",
+  "chapter_number": 11,
+  "chapter_title": "Log File Analysis and Cost Hotspots",
+  "chapter_dir": "11-log-file-analysis",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "assess",
+  "learning_objective": "Assess whether a workload's optimization priority should be the body of the distribution (typical requests) or the tail (rare runaways).",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** token-distribution-long-tail<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show a histogram of per-request token counts with P50/P95/P99 markers, plus a side panel computing the long-tail cost share, so learners can identify whether their workload is body-heavy or tail-heavy.\n\nBloom Level: Evaluate (L5)\nBloom Verb: assess\n\nLearning objective: Assess whether a workload's optimization priority should be the body of the distribution (typical requests) or the tail (rare runaways).\n\nChart type: Histogram with overlaid percentile markers + a side bar panel\n- Main chart: histogram of input token count per request, log-scale X axis\n- Vertical lines: P50 (green), P95 (orange), P99 (red)\n- Side panel: bar chart of cost share by percentile band (P0–P50, P50–P95, P95–P99, P99–P100)\n\nInteractive controls:\n- Dropdown: workload shape (\"Body-heavy chat\", \"Tail-heavy agent\", \"Bimodal\", \"Mixed\")\n- Toggle: \"Show cost share annotations\"\n- Slider: token-budget cap line — show how a cap at N tokens would have prevented the tail\n\nData Visibility Requirements:\n  Stage 1: Show the histogram with percentile markers\n  Stage 2: Show the cost-share bars by percentile band (often the P99–P100 bar dominates in agent workloads)\n  Stage 3: When a token budget cap is set, gray out the records above the cap and recompute remaining cost\n\nDefault: Mixed workload, cap line off\n\nImplementation: Chart.js, responsive width"
+}

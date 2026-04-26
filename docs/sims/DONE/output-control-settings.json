@@ -1,0 +1,14 @@
+{
+  "sim_id": "output-control-settings",
+  "diagram_name": "Output Control Settings and Their Effects",
+  "chapter_number": 17,
+  "chapter_title": "Model Routing and Output Control",
+  "chapter_dir": "17-routing-output-control",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "differentiate",
+  "learning_objective": "Differentiate the cost impact of each output-control setting and combine them effectively.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** output-control-settings<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show the distribution of output token counts under different output-control configurations (default, with max_tokens, with stop sequence, with concise instruction, all combined) so learners can see each setting's contribution.\n\nBloom Level: Analyze (L4)\nBloom Verb: differentiate\n\nLearning objective: Differentiate the cost impact of each output-control setting and combine them effectively.\n\nChart type: Multiple histograms (small multiples)\n- Each histogram: distribution of per-response output tokens for one configuration\n- 5 histograms in a row: Baseline / +max_tokens=500 / +stop_sequence / +concise_instruction / +all combined\n\nBelow each histogram:\n- Median output tokens\n- Average cost per response\n- Truncation rate (% of responses that hit max_tokens)\n\nInteractive controls:\n- Slider: max_tokens cap (100–4,000)\n- Toggle each setting on/off\n- Toggle: \"Show truncation rate overlay\"\n\nDefault state: All settings combined, max_tokens=500\n\nImplementation: Chart.js multi-histogram, responsive grid"
+}

@@ -1,0 +1,14 @@
+{
+  "sim_id": "context-budget-long-session",
+  "diagram_name": "Context Window Budget Allocation Over a Long Session",
+  "chapter_number": 16,
+  "chapter_title": "Context Window Management",
+  "chapter_dir": "16-context-window-management",
+  "library": "Chart.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a context window budget that maintains affordable per-turn cost across a session that exceeds 100 turns.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** context-budget-long-session<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show how the context window is allocated across components turn-by-turn during a long session, with compaction events visible as drops in the conversation-history allocation.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a context window budget that maintains affordable per-turn cost across a session that exceeds 100 turns.\n\nChart type: Stacked area chart over time\n- X-axis: Turn number (1 to 200)\n- Y-axis: Tokens\n\nStacked components (bottom to top):\n- System prompt + tool defs (constant ~10K)\n- Long-term memory included (variable, ~5K average)\n- Conversation history (grows linearly until compaction events)\n- RAG context (variable per turn)\n- Output reservation (constant 4K)\n\nInteractive controls:\n- Slider: Compaction threshold (50K–150K tokens)\n- Slider: Compaction aggressiveness (how many old turns get summarized)\n- Toggle: \"Use long-term memory\" — when on, older content gets distilled instead of dropped\n- Toggle: \"Use sliding window only\" — disables long-term memory; show how detail is lost\n\nData Visibility Requirements:\n  Stage 1: Show the stacked allocation evolving over 200 turns\n  Stage 2: At each compaction event, show conversation-history dropping and long-term-memory increasing slightly\n  Stage 3: With sliding-window-only mode, show conversation-history bouncing up and down without growing long-term\n\nDefault state: Compaction threshold at 80K, long-term memory on\n\nImplementation: Chart.js stacked area, responsive width"
+}

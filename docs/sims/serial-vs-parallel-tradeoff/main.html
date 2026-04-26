@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Serial vs Parallel Tradeoff</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Serial vs Parallel: time vs cost tradeoff</span><span class="subtitle">The parallel token penalty surfaces here</span></div>
+<div class="status" id="status">Loading…</div>
+<div class="timeline" style="height: 300px"><canvas id="chart"></canvas></div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block">Subtasks: <span id="nVal">8</span><input type="range" id="nSlider" min="4" max="32" step="1" value="8" style="width:200px"></label>
+<label class="control-block">System prompt size (per subagent): <span id="spVal">8000</span><input type="range" id="spSlider" min="1000" max="20000" step="500" value="8000" style="width:200px"></label>
+<label class="control-block">Avg subtask tokens: <span id="stVal">5000</span><input type="range" id="stSlider" min="1000" max="20000" step="500" value="5000" style="width:200px"></label>
+<label class="control-block"><input type="checkbox" id="cacheOn" checked> Caching on</label>
+</div>
+</div>
+</main>
+<script src="serial-vs-parallel-tradeoff.js"></script>
+</body>
+</html>

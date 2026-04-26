@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Agent Budget Policy with Multiple Limits</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Agent Budget Policy with Multiple Limits</span>
+    <span class="subtitle">Watch which cap fires first under each scenario</span>
+</div>
+
+<div class="meters-grid">
+    <div class="meter">
+        <div class="meter-label">Tokens used / Cap</div>
+        <canvas id="meterTokens"></canvas>
+        <div class="meter-readout" id="readoutTokens">0 / 50,000</div>
+    </div>
+    <div class="meter">
+        <div class="meter-label">Tool calls / Cap</div>
+        <canvas id="meterCalls"></canvas>
+        <div class="meter-readout" id="readoutCalls">0 / 25</div>
+    </div>
+    <div class="meter">
+        <div class="meter-label">Iterations / Cap</div>
+        <canvas id="meterIters"></canvas>
+        <div class="meter-readout" id="readoutIters">0 / 15</div>
+    </div>
+    <div class="meter">
+        <div class="meter-label">Wall clock / Cap (sec)</div>
+        <canvas id="meterClock"></canvas>
+        <div class="meter-readout" id="readoutClock">0 / 120</div>
+    </div>
+</div>
+
+<div class="status" id="status">Choose a scenario, set caps, and click Run session.</div>
+
+<div class="timeline">
+    <div class="meter-label">Per-iteration consumption</div>
+    <canvas id="timeline"></canvas>
+</div>
+
+<div class="controls">
+    <div class="control-row">
+        <label class="control-block">
+            Scenario
+            <select id="scenario">
+                <option value="healthy">Healthy session</option>
+                <option value="tokens">Token runaway</option>
+                <option value="calls">Tool-call explosion</option>
+                <option value="loop">Stuck loop</option>
+            </select>
+        </label>
+        <label class="control-block">
+            <input type="checkbox" id="graceful">
+            Enable graceful degradation at 75%
+        </label>
+        <button id="runBtn" class="primary">Run session</button>
+        <button id="resetBtn">Reset</button>
+    </div>
+    <div class="caps-row">
+        <label class="cap-block">
+            Token cap: <span id="capTokensVal">50,000</span>
+            <input type="range" id="capTokens" min="5000" max="200000" step="5000" value="50000">
+        </label>
+        <label class="cap-block">
+            Tool-call cap: <span id="capCallsVal">25</span>
+            <input type="range" id="capCalls" min="5" max="100" step="1" value="25">
+        </label>
+        <label class="cap-block">
+            Iteration cap: <span id="capItersVal">15</span>
+            <input type="range" id="capIters" min="3" max="50" step="1" value="15">
+        </label>
+        <label class="cap-block">
+            Wall-clock cap (s): <span id="capClockVal">120</span>
+            <input type="range" id="capClock" min="30" max="600" step="10" value="120">
+        </label>
+    </div>
+</div>
+
+</main>
+<script src="agent-budget-policy-multi-limit.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "sim_id": "openai-token-usage-anatomy",
+  "diagram_name": "OpenAI Token Usage Object Anatomy",
+  "chapter_number": 5,
+  "chapter_title": "The OpenAI Ecosystem",
+  "chapter_dir": "05-openai-ecosystem",
+  "library": "p5.js",
+  "bloom_level": "Remember (L1)",
+  "bloom_verb": "identify",
+  "learning_objective": "Identify each field of the OpenAI token usage object and map it to its billing category.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** openai-token-usage-anatomy<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show a representative OpenAI Chat Completions response side-by-side with a labeled breakdown of where each token-count field comes from.\n\nBloom Level: Remember (L1)\nBloom Verb: identify\n\nLearning objective: Identify each field of the OpenAI token usage object and map it to its billing category.\n\nCanvas layout:\n- Left half: A formatted JSON block showing a real-shaped response with `id`, `model`, `choices`, and `usage` fields highlighted\n- Right half: A vertical stack of labeled \"billing category\" boxes (Input / Output / Reasoning / Total)\n- Connecting lines between JSON fields and billing categories\n\nHighlighted fields in the JSON:\n- `usage.prompt_tokens` → Input box\n- `usage.completion_tokens` → Output box\n- `usage.completion_tokens_details.reasoning_tokens` → Reasoning box (sub-component of Output)\n- `usage.total_tokens` → sum check\n- `model` → connects to a \"rate card\" lookup callout that shows price per token for that model\n\nInteractive controls:\n- Toggle: \"Show reasoning model\" — switches between a GPT-4o response (no reasoning_tokens) and an o3 response (with reasoning_tokens)\n- Hover any field: highlights the corresponding billing category and shows the math\n\nDefault state: GPT-4o response shown, no reasoning tokens\n\nImplementation: p5.js with responsive width"
+}

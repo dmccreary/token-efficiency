@@ -1,0 +1,14 @@
+{
+  "sim_id": "skill-refactoring-before-after",
+  "diagram_name": "Skill Refactoring Before-and-After",
+  "chapter_number": 8,
+  "chapter_title": "The Skills System",
+  "chapter_dir": "08-skills-system",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "justify",
+  "learning_objective": "Justify a Skill refactoring decision by quantifying the per-invocation token reduction and projecting the monthly savings at expected invocation volume.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** skill-refactoring-before-after<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show the token cost of a representative Skill before and after script-delegation refactoring, broken down by step, so the source of the savings is visible.\n\nBloom Level: Evaluate (L5)\nBloom Verb: justify\n\nLearning objective: Justify a Skill refactoring decision by quantifying the per-invocation token reduction and projecting the monthly savings at expected invocation volume.\n\nChart type: Grouped bar chart\n- X-axis: Skill step (Step 1: Read inputs, Step 2: Validate schema, Step 3: Compute hash, ..., Step 7: Format output)\n- Y-axis: Tokens consumed by step\n\nTwo grouped series:\n1. Before refactor (gray bars) — every step has prose-driven token cost\n2. After refactor (green bars) — deterministic steps drop to ~0 (script-delegated), judgment steps unchanged\n\nBelow the chart:\n- Total before, total after, ratio\n- Monthly savings projection panel (sliders: invocations/month, \\$/MTok)\n\nInteractive controls:\n- Toggle each step: \"Refactored to script\" / \"Still in prose\" — recomputes totals\n- Slider: invocations per month\n\nData Visibility Requirements:\n  Stage 1: Show the before bars at full height\n  Stage 2: As steps are toggled to refactored, watch the green bars drop\n  Stage 3: Show the running ratio and monthly savings live\n\nDefault: 5 of 7 steps refactored to scripts\n\nImplementation: Chart.js grouped bars, responsive width"
+}

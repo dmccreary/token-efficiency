@@ -1,0 +1,43 @@
+{
+  "title": "Interactive Tokenizer Explorer",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization",
+  "description": "Interactive MicroSim for interactive tokenizer explorer",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "adult",
+      "professional"
+    ],
+    "subjectArea": "Computer Science / Generative AI",
+    "topic": "Interactive Tokenizer Explorer",
+    "learningObjectives": [
+      "Interpret how a tokenizer segments text into subword units, and predict the token count of a string before sending it to an API."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "duration": "15-20 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 600
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "01-llms-tokens-generation-basics"
+}

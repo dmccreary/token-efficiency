@@ -1,0 +1,14 @@
+{
+  "sim_id": "bpe-tokenization-pipeline",
+  "diagram_name": "BPE Tokenization Pipeline",
+  "chapter_number": 2,
+  "chapter_title": "Sampling, Tokenization, and Embeddings",
+  "chapter_dir": "02-sampling-tokenization-embeddings",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "explain",
+  "learning_objective": "Explain the role of each stage in the tokenization pipeline and identify which stage is responsible for which class of cross-vendor token-count differences.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** bpe-tokenization-pipeline<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show the four sequential stages a string passes through to become a token sequence (Unicode normalization → pre-tokenization → byte initialization → BPE merges), with a concrete example string visible at every stage.\n\nBloom Level: Understand (L2)\nBloom Verb: explain\n\nLearning objective: Explain the role of each stage in the tokenization pipeline and identify which stage is responsible for which class of cross-vendor token-count differences.\n\nCanvas layout:\n- Vertical stack of four labeled stages, each with an input box and an output box\n- A \"Step Forward\" / \"Step Back\" pair of buttons at the bottom\n\nStages:\n1. \"Unicode Normalize (NFC)\" — input shows raw bytes including a combining character; output shows the normalized form\n2. \"Pre-Tokenize (split on whitespace + punctuation)\" — input is the normalized string; output is a list of pre-token chunks like [\"Write\", \" a\", \" haiku\", \".\"]\n3. \"Initialize as bytes\" — each pre-token chunk becomes a sequence of single-byte tokens\n4. \"Apply Merge Rules in order\" — show 3–4 specific merge rules applying one at a time (e.g., \"h\"+\"a\"→\"ha\", \"ha\"+\"i\"→\"hai\", \"hai\"+\"ku\"→\"haiku\")\n\nData Visibility Requirements:\n  Stage 1: Show normalized vs raw bytes side by side\n  Stage 2: Show pre-token chunk list with leading-space pieces highlighted\n  Stage 3: Show byte-level decomposition for one chunk in detail\n  Stage 4: Show the merge rule that just fired (\"ha\" + \"i\" → \"hai\") with arrows on the affected positions\n  Final: Show the resulting compact token sequence with its token count\n\nInteractive controls:\n- Text input: starting string (default \"Write a haiku about café pandas.\")\n- Step Forward / Step Back buttons (advance one merge rule at a time in stage 4)\n- Button: \"Show all stages\" / \"Step through\"\n\nInstructional Rationale: Step-through with concrete data is appropriate for an Understand objective. Each stage shows the *same* input transformed by *one* operation, so learners can isolate which stage causes which effect.\n\nImplementation: p5.js, responsive width, no continuous animation"
+}
