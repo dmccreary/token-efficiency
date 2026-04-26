@@ -1,9 +1,48 @@
 site_name: Token Efficiency
 site_description: A guide to understanding and improving token efficiency in language models.
 
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep orange
+      accent: blue grey
+
+extra_css:
+  - css/mascot.css
+
+markdown_extensions:
+  - admonition
+  - md_in_html
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+
 nav:
   - Home: index.md
   - Course Description: course-description.md
+  - Chapters:
+      - List of Chapters: chapters/index.md
+      - 1. LLMs, Tokens, and Generation Basics: chapters/01-llms-tokens-generation-basics/index.md
+      - 2. Sampling, Tokenization, and Embeddings: chapters/02-sampling-tokenization-embeddings/index.md
+      - 3. Pricing, Economics, and Async API Modes: chapters/03-pricing-economics-async-apis/index.md
+      - 4. The Anthropic Claude Ecosystem: chapters/04-anthropic-claude-ecosystem/index.md
+      - 5. The OpenAI Ecosystem: chapters/05-openai-ecosystem/index.md
+      - 6. The Google Gemini Ecosystem: chapters/06-google-gemini-ecosystem/index.md
+      - 7. AI Coding Harnesses and Agentic Loops: chapters/07-coding-harnesses-agentic-loops/index.md
+      - 8. The Skills System: chapters/08-skills-system/index.md
+      - 9. Structured Logging for LLM Calls: chapters/09-structured-logging/index.md
+      - 10. Observability, Dashboards, and Alerting: chapters/10-observability-dashboards-alerting/index.md
+      - 11. Log File Analysis and Cost Hotspots: chapters/11-log-file-analysis/index.md
+      - 12. A/B Testing Methodology for LLMs: chapters/12-ab-testing-methodology/index.md
+      - 13. Prompt Engineering for Token Efficiency: chapters/13-prompt-engineering-tokens/index.md
+      - 14. Prompt Caching Patterns: chapters/14-prompt-caching-patterns/index.md
+      - 15. Retrieval-Augmented Generation Optimization: chapters/15-rag-optimization/index.md
+      - 16. Context Window Management: chapters/16-context-window-management/index.md
+      - 17. Model Routing and Output Control: chapters/17-routing-output-control/index.md
+      - 18. Agent Budget Policies and Session Limits: chapters/18-agent-budget-policies/index.md
+      - 19. Batch Job Operations, Privacy, and Compliance: chapters/19-batch-privacy-compliance/index.md
+      - 20. Capstone Projects and Continuous Practice: chapters/20-capstone-projects-practice/index.md
   - Learning Graph:
       - Introduction: learning-graph/index.md
       - Course Description Assessment: learning-graph/course-description-assessment.md
@@ -11,3 +50,6 @@ nav:
       - Graph Quality Analysis: learning-graph/quality-metrics.md
       - Concept Taxonomy: learning-graph/concept-taxonomy.md
       - Taxonomy Distribution Report: learning-graph/taxonomy-distribution.md
+      - Mascot Style Guide: learning-graph/mascot-test.md
+  - MicroSims:
+      - Learning Graph Viewer: sims/graph-viewer/index.md
