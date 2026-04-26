@@ -1,0 +1,1649 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="How a four-column CSV beat RAG and GraphRAG on retrieval F1 by ~3.8× while using ~11× fewer tokens per query — and why that result is structural, not incidental.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/case-studies/little-graph/">
+      
+      
+        <link rel="prev" href="../textbook-dashboard/">
+      
+      
+        <link rel="next" href="../../learning-graph/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>A Little Graph Saves a Lot of Tokens - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="A Little Graph Saves a Lot of Tokens - Token Efficiency">
+      
+        <meta property="og:description" content="How a four-column CSV beat RAG and GraphRAG on retrieval F1 by ~3.8× while using ~11× fewer tokens per query — and why that result is structural, not incidental.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/assets/images/social/case-studies/little-graph/index.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/case-studies/little-graph/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="A Little Graph Saves a Lot of Tokens - Token Efficiency">
+      
+        <meta name="twitter:description" content="How a four-column CSV beat RAG and GraphRAG on retrieval F1 by ~3.8× while using ~11× fewer tokens per query — and why that result is structural, not incidental.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/assets/images/social/case-studies/little-graph/index.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a-little-graph-saves-a-lot-of-tokens" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A Little Graph Saves a Lot of Tokens
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Case Studies
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../textbook-dashboard/ui-mockup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Textbook Dashboard UI Mockup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../textbook-dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Textbook Dashboard Walkthrough
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    A Little Graph Saves a Lot of Tokens
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    A Little Graph Saves a Lot of Tokens
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      The setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-ckg-actually-looks-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a CKG actually looks like
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-headline-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      The headline numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-counterintuitive-result-deeper-questions-get-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      The counterintuitive result: deeper questions get better
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-ckg-loses-the-negative-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where CKG loses (the negative control)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-win-is-structural-not-domain-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the win is structural, not domain-specific
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-build-cost-objection-and-why-it-just-collapsed" class="md-nav__link">
+    <span class="md-ellipsis">
+      The build-cost objection — and why it just collapsed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-efficiency-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      The token-efficiency takeaway
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-math-at-production-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cost math at production scale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-the-architecture-doesnt-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      When the architecture doesn't fit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-read-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to read next
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      The setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-ckg-actually-looks-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a CKG actually looks like
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-headline-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      The headline numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-counterintuitive-result-deeper-questions-get-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      The counterintuitive result: deeper questions get better
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-ckg-loses-the-negative-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where CKG loses (the negative control)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-win-is-structural-not-domain-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the win is structural, not domain-specific
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-build-cost-objection-and-why-it-just-collapsed" class="md-nav__link">
+    <span class="md-ellipsis">
+      The build-cost objection — and why it just collapsed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-efficiency-takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      The token-efficiency takeaway
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-math-at-production-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cost math at production scale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-the-architecture-doesnt-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      When the architecture doesn't fit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-read-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What to read next
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/case-studies/little-graph/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="a-little-graph-saves-a-lot-of-tokens">A Little Graph Saves a Lot of Tokens</h1>
+<h2 id="summary">Summary</h2>
+<p>This case study walks through the headline finding of the <strong>CKG Benchmark</strong> paper by Yarmoluk and McCreary (2026): if your domain knowledge can be expressed as a directed acyclic graph (DAG) of concepts and prerequisites, swapping retrieval-augmented generation (RAG) for a tiny pre-authored graph delivers roughly <strong>11× fewer retrieved tokens</strong> and <strong>3.8× higher F1</strong> at the same time. The paper formalizes this as a new architecture — <strong>Compact Knowledge Graphs (CKG)</strong> — and reports a <strong>42× advantage</strong> on the compound efficiency metric (Reasoning Density Score, F1 per token).</p>
+<p>For a textbook on token efficiency, this is one of the cleanest natural experiments in the literature: same model, same temperature, same corpus, three retrieval architectures. The graph wins, and the win is structural rather than a tuning artifact.</p>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">A graph the size of a postcard, beating a vector store the size of a library</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../img/mascot/welcome.png" data-desc-position="bottom"><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome"></a>
+A 200-concept learning graph fits in 6–12 KB of plain text — smaller than this paragraph's HTML render. The CKG Benchmark shows that, on the right kind of question, that little CSV outperforms a 2,000-token RAG context window by nearly four-to-one on accuracy <em>and</em> eleven-to-one on tokens. Every token counts — and counting is fun. Let's count what this little graph saves.</p>
+</div>
+<h2 id="the-setup">The setup</h2>
+<p>The benchmark holds the model and the questions constant and varies only the retrieval architecture.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>RAG baseline</th>
+<th>GraphRAG</th>
+<th>CKG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source</td>
+<td>MkDocs <code>.md</code> chapters</td>
+<td>Same <code>.md</code> chapters</td>
+<td><code>learning-graph.csv</code></td>
+</tr>
+<tr>
+<td>Index build</td>
+<td>Embed + FAISS</td>
+<td>LLM-derived graph</td>
+<td>None (CSV is the index)</td>
+</tr>
+<tr>
+<td>Retrieval</td>
+<td>Top-5 chunks (512 tok, 50 overlap)</td>
+<td>Local/global graph search</td>
+<td>Exact label match + BFS/DFS</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>Claude Sonnet 4.6, T=0</td>
+<td>Claude Sonnet 4.6, T=0</td>
+<td>Claude Sonnet 4.6, T=0</td>
+</tr>
+</tbody>
+</table>
+<p>The corpus — the McCreary Intelligent Textbook Corpus — covers 44 educational domains, 12,261 concepts, and 19,626 prerequisite edges. Question types span entity lookup (T1), one-hop dependencies (T2), full prerequisite paths (T3), taxonomy aggregation (T4), and cross-concept reasoning (T5). 7,758 queries in total.</p>
+<h2 id="what-a-ckg-actually-looks-like">What a CKG actually looks like</h2>
+<p>This is the entire data structure. Four columns. Pipe-delimited integers for the edges.</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>ConceptID,ConceptLabel,Dependencies,TaxonomyID
+1,Number,,FOUND
+2,Function,1,FOUND
+3,Variable,1,FOUND
+4,Composite Function,1|3,FOUND
+...
+</code></pre></div></td></tr></tbody></table></div>
+<p>Formally, a learning graph is a 4-tuple <span class="arithmatex">\( G = (C, E, T, \tau) \)</span>:</p>
+<ul>
+<li><span class="arithmatex">\( C \)</span> is the finite set of named concepts</li>
+<li><span class="arithmatex">\( E \subseteq C \times C \)</span> is the set of directed prerequisite edges</li>
+<li><span class="arithmatex">\( T \)</span> is a small set of taxonomy categories (e.g. <code>FOUND</code>, <code>CORE</code>, <code>ADV</code>)</li>
+<li><span class="arithmatex">\( \tau : C \rightarrow T \)</span> assigns each concept to one category</li>
+</ul>
+<p><span class="arithmatex">\( (C, E) \)</span> must form a DAG — no cycles — which guarantees a valid topological teaching order exists. Three properties fall out of that definition and do all the heavy lifting:</p>
+<ol>
+<li><strong>Finite, enumerable context.</strong> A 200-concept graph fits in 6–12 KB. The whole graph can ride in a single prompt for any realistic domain.</li>
+<li><strong>Deterministic traversal.</strong> Prerequisite chains are computed by BFS or DFS. Answers to structural questions are <em>functions</em>, not <em>predictions</em>.</li>
+<li><strong>Closed vocabulary.</strong> Returning only nodes from <span class="arithmatex">\( C \)</span> means hallucinated entities are impossible by construction.</li>
+</ol>
+<p>That third property is the part most worth pausing on. RAG and GraphRAG can — and do — invent entities under load. CKG cannot, because the only thing it can hand back is a node that exists in the CSV. The hallucination rate isn't <em>low</em>; it's <em>zero</em>.</p>
+<h2 id="the-headline-numbers">The headline numbers</h2>
+<p>Macro-averaged across all 44 domains and all five query types:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th style="text-align: right;">Macro F1</th>
+<th style="text-align: right;">Tokens / query</th>
+<th style="text-align: right;">RDS (F1/tok)</th>
+<th style="text-align: right;">Total cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAG</td>
+<td style="text-align: right;">0.1231</td>
+<td style="text-align: right;">2,982</td>
+<td style="text-align: right;">0.0000482</td>
+<td style="text-align: right;">$76.23</td>
+</tr>
+<tr>
+<td>GraphRAG</td>
+<td style="text-align: right;">0.1200</td>
+<td style="text-align: right;">3,450</td>
+<td style="text-align: right;">0.0000452</td>
+<td style="text-align: right;">$44.43</td>
+</tr>
+<tr>
+<td><strong>CKG</strong></td>
+<td style="text-align: right;"><strong>0.4709</strong></td>
+<td style="text-align: right;"><strong>269</strong></td>
+<td style="text-align: right;"><strong>0.00201</strong></td>
+<td style="text-align: right;"><strong>$7.81</strong></td>
+</tr>
+</tbody>
+</table>
+<p>CKG delivers <strong>3.8× higher F1 than RAG</strong> and <strong>3.9× higher than GraphRAG</strong>, while consuming <strong>11× fewer tokens than RAG</strong> and <strong>13× fewer than GraphRAG</strong>. The retrieved-context size gap is even sharper: RAG drops a mean of 2,392 tokens of chunk text into the prompt; CKG drops 44. That's a <strong>54×</strong> difference in context bloat for <em>worse</em> answers.</p>
+<p>The compound metric the paper introduces — the <strong>Reasoning Density Score</strong> — captures both axes in one number:</p>
+<div class="arithmatex">\[
+\mathrm{RDS}(s, q) = \frac{F_1(s, q)}{\text{tokens\_consumed}(s, q)}
+\]</div>
+<p>CKG's RDS advantage is <strong>42× over RAG</strong> and <strong>44× over GraphRAG</strong>. RDS is the metric that matters for production: it asks "how much correct answer do I get per dollar of tokens?" rather than "how many tokens did I retrieve?"</p>
+<h2 id="the-counterintuitive-result-deeper-questions-get-better">The counterintuitive result: deeper questions get <em>better</em></h2>
+<p>Most retrieval systems degrade as the question requires more hops. RAG has to stitch together transitive relationships from prose that wasn't written to be stitched. The longer the chain, the more the inference frays.</p>
+<p>CKG goes the other way:</p>
+<table>
+<thead>
+<tr>
+<th>Hop depth</th>
+<th style="text-align: right;">RAG F1</th>
+<th style="text-align: right;">CKG F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: right;">0.374</td>
+</tr>
+<tr>
+<td>1</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.519</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;">0.226</td>
+<td style="text-align: right;">0.573</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">0.138</td>
+<td style="text-align: right;">0.671</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.751</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align: right;">0.170</td>
+<td style="text-align: right;"><strong>0.772</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The deepest chains produce the <strong>highest</strong> accuracy for CKG. This isn't subtle, and it isn't a measurement artifact. It happens because BFS/DFS over an explicit edge set doesn't get harder with depth — it just visits more nodes. A 5-hop prerequisite path is as deterministic to compute as a 1-hop one.</p>
+<p>For RAG, every additional hop multiplies the chance that the relevant relationship lives in a chunk that didn't make the top-5 cut. The two architectures aren't on the same scaling curve.</p>
+<div class="admonition mascot-thinking">
+<p class="admonition-title">Why depth helps a graph and hurts a text index</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../img/mascot/thinking.png" data-desc-position="bottom"><img src="../../img/mascot/thinking.png" class="mascot-admonition-img" alt="Pemba thinking"></a>
+Imagine asking "what does <em>Composite Function</em> eventually depend on?" RAG has to find a chunk that mentions Composite Function, then <em>another</em> chunk for each prerequisite, then chase each of those upward — all through embedding similarity over prose written for human readers. CKG just runs one DFS from node 4. The graph already knows. That's the entire trick: when a question is structural, you want a structure, not a search.</p>
+</div>
+<h2 id="where-ckg-loses-the-negative-control">Where CKG loses (the negative control)</h2>
+<p>The paper deliberately includes a query type CKG should <em>fail</em> on: T1 entity lookup. "Define composite function in two sentences." The CKG can return the node — it cannot return prose.</p>
+<table>
+<thead>
+<tr>
+<th>Query type</th>
+<th style="text-align: right;">RAG F1</th>
+<th style="text-align: right;">CKG F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1 entity lookup</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.207</td>
+</tr>
+<tr>
+<td>T2 dependency</td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">0.634</td>
+</tr>
+<tr>
+<td>T3 path</td>
+<td style="text-align: right;">0.201</td>
+<td style="text-align: right;">0.660</td>
+</tr>
+<tr>
+<td>T4 aggregation</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: right;"><strong>0.964</strong></td>
+</tr>
+<tr>
+<td>T5 cross-concept</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.323</td>
+</tr>
+</tbody>
+</table>
+<p>CKG's T1 score is intentionally low. The paper calls this a <em>designed negative control</em>: a benchmark that didn't include a category where the structural approach loses would be rigged. The honest read is "CKG dominates structural questions; for explanatory questions, you still want prose." This is what motivates a hybrid: route T1 to RAG and T2–T4 to CKG.</p>
+<h2 id="why-the-win-is-structural-not-domain-specific">Why the win is <em>structural</em>, not domain-specific</h2>
+<p>The benchmark's Track 2 settles a fair objection. Maybe CKG only works because the McCreary corpus was hand-curated by someone who knew exactly what to include. To test this, the authors built a CKG entirely <em>programmatically</em> — from the ClinicalTrials.gov API, no expert annotation — for GLP-1 / obesity pharmacology.</p>
+<p>The pipeline-generated CKG hit <strong>macro F1 = 0.5298</strong>, <em>exceeding</em> the hand-curated Track 1 average by 12.5%, and preserving a <strong>28× RDS advantage</strong> over RAG on the same domain. The conclusion: <strong>the structural advantage doesn't depend on manual curation</strong>. It depends on whether the domain admits a DAG.</p>
+<h2 id="the-build-cost-objection-and-why-it-just-collapsed">The build-cost objection — and why it just collapsed</h2>
+<p>The traditional objection to structure-first retrieval has been the same for two decades: <em>"Curating a domain graph is prohibitively expensive."</em> That was empirically true when graphs cost a team of experts weeks of work.</p>
+<p>The CKG paper measures it directly. Across nine recorded sessions of an agentic learning-graph generator running on Claude Opus 4.6:</p>
+<ul>
+<li>Mean cost: <strong>$13.94</strong> per graph</li>
+<li>Range: <strong>$9.21 – $21.38</strong></li>
+<li>Mean concept count: 311</li>
+</ul>
+<p>A least-squares fit yields:</p>
+<div class="arithmatex">\[
+\mathrm{Cost}_{\mathrm{Opus\;4.6}}(n) \approx \$8.16 + \$0.019 \cdot n
+\]</div>
+<p>A 200-concept domain graph costs roughly <strong>$12 of compute</strong>. SME review takes 2–4 hours of human time. That's four to five orders of magnitude below historical expert-curation cost — and the per-query savings (Section above: $76 vs $8 across 7,758 queries) pay back the build cost in the low thousands of queries.</p>
+<p>The paper projects a 2027 cost of <strong>$1–$2 per 200-concept graph</strong> once two compounding trends play out:</p>
+<ol>
+<li>Intelligence-per-dollar at the frontier has roughly halved every 9–12 months.</li>
+<li>The current generation workflow re-attaches the growing graph to every assistant turn, producing a super-linear token term. A cache-efficient rewrite (concepts first, dependencies batched, taxonomy last) reduces consumption 2–3× at any model tier.</li>
+</ol>
+<p>At $1–$2 per graph, the build cost is irrelevant relative to any downstream inference workload.</p>
+<h2 id="the-token-efficiency-takeaway">The token-efficiency takeaway</h2>
+<p>The CKG result is a clean instance of the principle this textbook keeps returning to: <strong>the cheapest token is the one you didn't retrieve</strong>. RAG defaults are designed for unstructured corpora. The moment your domain has even a <em>little</em> explicit structure — a list of concepts, a prerequisite ordering, a taxonomy — the unit economics of retrieval shift dramatically.</p>
+<p>Three concrete moves this case study suggests for any production retrieval stack:</p>
+<ol>
+<li><strong>Audit your queries before tuning your retriever.</strong> What fraction are structural (dependency, path, taxonomy aggregation) vs. explanatory (definition, summary)? If structural is more than ~30%, a CKG-style index is on the table.</li>
+<li><strong>Measure RDS, not just F1.</strong> A retriever that hits 0.50 F1 at 3,000 tokens/query and one that hits 0.45 F1 at 270 tokens/query are not "comparable" — the second is roughly 10× cheaper per correct answer at scale.</li>
+<li><strong>Hybrid-route by query type.</strong> Use the structured index for T2–T4 queries; fall back to RAG for T1. The benchmark suggests this hybrid would dominate either pure architecture on a mixed workload.</li>
+</ol>
+<div class="admonition mascot-warning">
+<p class="admonition-title">The footgun: defaulting to RAG without asking whether the question is structural</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../img/mascot/warning.png" data-desc-position="bottom"><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba warning"></a>
+Most teams reach for RAG by reflex because it's the documented happy path. The damage shows up later as a flat, hard-to-debug $/query line that won't compress no matter how aggressively you rerank or chunk. The structural fix is to stop tuning the retriever and start asking what <em>shape</em> the question has. If it's "what depends on X" or "what does X depend on" or "list everything in category Y," you're paying RAG prices for an answer a 6 KB CSV could give you in 269 tokens.</p>
+</div>
+<h2 id="cost-math-at-production-scale">Cost math at production scale</h2>
+<p>Plugging the paper's per-query numbers into a realistic workload makes the architecture choice tangible. The paper's own example — an AI tutoring system serving 10,000 daily sessions with 5–10 retrieval queries each — implies 50,000–100,000 retrievals per day. At Claude Sonnet 4.6 input pricing of $3 per million tokens:</p>
+<div class="arithmatex">\[
+\text{Daily cost} = \frac{\text{queries/day} \cdot \text{tokens/query} \cdot P_i}{1{,}000{,}000}
+\]</div>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th style="text-align: right;">Tokens/query</th>
+<th style="text-align: right;">100K queries/day</th>
+<th style="text-align: right;">30 days</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAG</td>
+<td style="text-align: right;">2,982</td>
+<td style="text-align: right;">$894</td>
+<td style="text-align: right;">$26,838</td>
+</tr>
+<tr>
+<td>GraphRAG</td>
+<td style="text-align: right;">3,450</td>
+<td style="text-align: right;">$1,035</td>
+<td style="text-align: right;">$31,050</td>
+</tr>
+<tr>
+<td>CKG</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: right;">$81</td>
+<td style="text-align: right;">$2,421</td>
+</tr>
+</tbody>
+</table>
+<p>The monthly delta — about <strong>$24,000</strong> in retrieval input tokens alone — is more than the lifetime build cost of every learning graph in the McCreary corpus combined. And that's input tokens <em>only</em>; the savings on output tokens (CKG's tighter context produces tighter answers) compound on top.</p>
+<h2 id="when-the-architecture-doesnt-fit">When the architecture <em>doesn't</em> fit</h2>
+<p>To stay honest, this technique has clear boundaries:</p>
+<ul>
+<li><strong>No stable taxonomy.</strong> Rapidly evolving domains where concepts and relationships change weekly will outpace the SME review loop.</li>
+<li><strong>Open-ended explanatory queries dominate.</strong> If 90% of your traffic is "explain X like I'm five," CKG has nothing prose-y to retrieve. Use RAG.</li>
+<li><strong>Relations beyond prerequisite are central.</strong> The current CKG schema captures one edge type. Domains needing rich, typed relations (e.g. legal precedent graphs, biomedical interaction networks) need a schema extension that the paper flags as future work.</li>
+<li><strong>Single-shot, low-volume workloads.</strong> The build cost only pays back if the graph is queried thousands of times. A one-off analysis isn't worth authoring a graph for.</li>
+</ul>
+<h2 id="what-to-read-next">What to read next</h2>
+<p>The full benchmark, the McCreary corpus, and the evaluation harness are open-source under CC BY 4.0 / MIT.</p>
+<ul>
+<li>Paper repository: <a href="https://github.com/Yarmoluk/ckg-benchmark">github.com/Yarmoluk/ckg-benchmark</a></li>
+<li>Dataset: <a href="https://huggingface.co/datasets/graphify-md/ckg-benchmark">huggingface.co/datasets/graphify-md/ckg-benchmark</a></li>
+<li>Related chapter: <a href="../../chapters/15-rag-optimization/">Chapter 15 — RAG Optimization</a> for the RAG-side tuning levers (chunk size, top-K, reranking, hybrid retrieval) that this case study suggests you should consider <em>after</em> asking whether RAG is the right architecture at all.</li>
+</ul>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">A small structure beats a big search</p>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../img/mascot/celebration.png" data-desc-position="bottom"><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating"></a>
+The CKG result is the kind of finding that makes a token-efficiency engineer's day: a 6 KB file beating a 2,000-token retrieval window on accuracy <em>and</em> cost, on a benchmark designed by people who tried hard to make the comparison fair. Cheap systems are happy systems — and a little graph, it turns out, saves a lot of tokens.</p>
+</div>
+<h2 id="citation">Citation</h2>
+<p>Yarmoluk, D., &amp; McCreary, D. (2026). <em>Benchmarking Knowledge Retrieval Architectures Across 44 Domains: RAG, GraphRAG, and Compact Knowledge Graphs.</em> CKG Benchmark v0.6.x. <a href="https://github.com/Yarmoluk/ckg-benchmark">github.com/Yarmoluk/ckg-benchmark</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../textbook-dashboard/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Textbook Dashboard Walkthrough">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Textbook Dashboard Walkthrough
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../learning-graph/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
