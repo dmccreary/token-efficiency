@@ -1,0 +1,1975 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A deeper look at how text becomes tokens and vectors, and how sampling parameters control what the model emits — the mechanics behind every later cost optimization">
+      
+      
+      
+      
+        <link rel="prev" href="../01-llms-tokens-generation-basics/">
+      
+      
+        <link rel="next" href="../03-pricing-economics-async-apis/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Sampling, Tokenization, and Embeddings - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sampling-tokenization-and-embeddings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sampling, Tokenization, and Embeddings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-llms-tokens-generation-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-go-deeper" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Go Deeper
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subword-tokenization-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subword Tokenization in Depth
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Subword Tokenization in Depth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-characters-to-subwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Characters to Subwords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe-merge-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE Merge Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-tokenization-whitespace-and-unicode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-Tokenization, Whitespace, and Unicode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-Tokenization, Whitespace, and Unicode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-bpe-tokenization-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: BPE Tokenization Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counting-tokens-accurately" class="md-nav__link">
+    <span class="md-ellipsis">
+      Counting Tokens Accurately
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Counting Tokens Accurately">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-counting-apis-vs-local-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Counting APIs vs. Local Estimation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-to-char-ratio-heuristic" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token-to-Char Ratio Heuristic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-count-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Count Caching
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases-code-and-multilingual-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edge Cases: Code and Multilingual Text
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edge Cases: Code and Multilingual Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Tokenization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multilingual-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multilingual Tokenization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sampling-how-the-model-picks-the-next-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sampling: How the Model Picks the Next Token
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sampling: How the Model Picks the Next Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logprobs-and-the-output-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logprobs and the Output Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temperature-and-top-p-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temperature and Top-P Sampling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temperature and Top-P Sampling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-sampling-parameter-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Sampling Parameter Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Families
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-embedding-space-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Embedding Space Concept
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-go-deeper" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Go Deeper
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subword-tokenization-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subword Tokenization in Depth
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Subword Tokenization in Depth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-characters-to-subwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Characters to Subwords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe-merge-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE Merge Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-tokenization-whitespace-and-unicode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-Tokenization, Whitespace, and Unicode
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-Tokenization, Whitespace, and Unicode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-bpe-tokenization-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: BPE Tokenization Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Tokens
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counting-tokens-accurately" class="md-nav__link">
+    <span class="md-ellipsis">
+      Counting Tokens Accurately
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Counting Tokens Accurately">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-counting-apis-vs-local-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Counting APIs vs. Local Estimation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-to-char-ratio-heuristic" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token-to-Char Ratio Heuristic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-count-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Count Caching
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-cases-code-and-multilingual-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      Edge Cases: Code and Multilingual Text
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edge Cases: Code and Multilingual Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Tokenization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multilingual-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multilingual Tokenization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sampling-how-the-model-picks-the-next-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sampling: How the Model Picks the Next Token
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sampling: How the Model Picks the Next Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logprobs-and-the-output-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logprobs and the Output Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temperature-and-top-p-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temperature and Top-P Sampling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temperature and Top-P Sampling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-sampling-parameter-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Sampling Parameter Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Families
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-embedding-space-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Embedding Space Concept
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="sampling-tokenization-and-embeddings">Sampling, Tokenization, and Embeddings</h1>
+<h2 id="summary">Summary</h2>
+<p>A deeper look at how text becomes numbers: byte-pair encoding mechanics, special tokens, multilingual and code tokenization, the embedding concept that underpins both retrieval and similarity, and the sampling parameters (temperature, top-p, logprobs) that control generation.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 21 concepts from the learning graph:</p>
+<ol>
+<li>Temperature</li>
+<li>Top P Sampling</li>
+<li>Logprobs</li>
+<li>Model Family</li>
+<li>Subword Tokenization</li>
+<li>BPE Merge Rules</li>
+<li>Token-To-Char Ratio</li>
+<li>Whitespace Handling</li>
+<li>Unicode Normalization</li>
+<li>Special Tokens</li>
+<li>End-Of-Sequence Token</li>
+<li>Beginning-Of-Sequence Token</li>
+<li>Padding Token</li>
+<li>Token Boundary</li>
+<li>Pre-Tokenization</li>
+<li>Token Counting API</li>
+<li>Local Token Estimation</li>
+<li>Token Count Caching</li>
+<li>Code Tokenization</li>
+<li>Multilingual Tokenization</li>
+<li>Embedding</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-llms-tokens-generation-basics/">Chapter 1: LLMs, Tokens, and Generation Basics</a></li>
+</ul>
+<hr />
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Where Tokens Actually Come From</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Chapter 1 told you that tokens are the unit of account. This chapter opens up the box. By the end you'll be able to predict (within a few percent) how many tokens your prompt will use <em>before</em> you send it, explain why your French translation costs 2× what the English original cost, and tune <code>temperature</code> and <code>top_p</code> like you actually know what they do. Cheap systems start with accurate counts.</p>
+</div>
+<h2 id="why-go-deeper">Why Go Deeper</h2>
+<p>Most cost mistakes in LLM applications come from a fuzzy mental model of tokenization and a superstitious mental model of sampling. Engineers will copy a <code>temperature: 0.7</code> from a tutorial and never touch it again, or they'll estimate cost by dividing character count by 4 and be off by 30% on non-English traffic. This chapter fixes both problems by showing the actual mechanics: how subword tokens are constructed, what the special tokens do, where token counts come from, and how the sampling parameters actually shape the output distribution.</p>
+<h2 id="subword-tokenization-in-depth">Subword Tokenization in Depth</h2>
+<h3 id="from-characters-to-subwords">From Characters to Subwords</h3>
+<p>Chapter 1 introduced <strong>subword tokenization</strong> as the family of algorithms (BPE, SentencePiece) that segment text into units smaller than words but larger than characters. The reason every modern LLM uses subwords rather than whole words or single characters is a tradeoff between two costs:</p>
+<ul>
+<li><strong>Whole-word tokenization</strong> keeps prompts short (one token per common word) but produces a vocabulary of millions of words and breaks completely on any word it has not seen before — including every typo, every product name, every URL.</li>
+<li><strong>Single-character tokenization</strong> handles any input but inflates token counts by roughly 4× and forces the model to learn spelling from scratch.</li>
+</ul>
+<p>Subword tokenization splits the difference. Common words become single tokens. Rare words decompose into 2–4 known fragments. Nothing is ever out-of-vocabulary, because the worst case is one token per byte.</p>
+<h3 id="bpe-merge-rules">BPE Merge Rules</h3>
+<p>The mechanism that produces the subword vocabulary is a list of <strong>BPE merge rules</strong>. During tokenizer training (done once by the vendor, not by you), the algorithm:</p>
+<ol>
+<li>Initializes the vocabulary with every individual byte (256 starting tokens).</li>
+<li>Counts every adjacent pair of tokens in the training corpus.</li>
+<li>Picks the most frequent pair and adds a new token that represents their concatenation. This is one merge rule: <code>(t_a, t_b) → t_new</code>.</li>
+<li>Repeats steps 2–3 thousands of times until the desired vocabulary size is reached.</li>
+</ol>
+<p>At inference time — the part that matters for your bill — the tokenizer applies these merge rules in order to your input string. The tokenizer first breaks the text into initial pieces (one per byte), then walks through the merge rules and applies any that match adjacent positions, repeatedly, until no more merges fire. The final sequence of unmerged-and-merged units is your tokenization.</p>
+<p>The practical consequence is that the <em>order</em> of training-time frequency determines token boundaries: the word "tokenization" might end up as <code>[token][ization]</code> in one tokenizer and <code>[tok][en][iz][ation]</code> in another, depending on which pairs were frequent enough during training to earn an early merge rule.</p>
+<h3 id="pre-tokenization-whitespace-and-unicode">Pre-Tokenization, Whitespace, and Unicode</h3>
+<p>Before BPE merge rules ever fire, the input goes through <strong>pre-tokenization</strong> — a preprocessing pass that splits the raw input on coarse boundaries (typically whitespace and punctuation) so that BPE never tries to merge across, say, the boundary between a word and the next sentence. Pre-tokenization rules vary by vendor and significantly affect token counts; this is one of the main reasons the same string produces different counts across tokenizers.</p>
+<p><strong>Whitespace handling</strong> is part of pre-tokenization, and it has one rule that confuses every newcomer: in most modern tokenizers, the leading space is <em>part of the following token</em>, not a separate token. The token for <code>" panda"</code> (with leading space) is a different ID than the token for <code>"panda"</code> (no space). This is why the same word at the start of a sentence and in the middle of a sentence may be tokenized differently — and why it's almost always more efficient to write <code>"a panda"</code> than <code>"a" + " " + "panda"</code> in code that constructs prompts.</p>
+<p><strong>Unicode normalization</strong> runs even earlier. Unicode allows the same visible character to be encoded in multiple byte sequences (the classic example is "café" — the "é" can be one composed code point or two combining code points). Without normalization, the tokenizer would treat these as different inputs and produce different tokens. Vendors normalize to a standard form (typically NFC or NFKC) before pre-tokenization, so two strings that look identical to a human tokenize identically.</p>
+<p>A <strong>token boundary</strong> is the position in the original string where one token ends and the next begins. Because of pre-tokenization, leading-whitespace rules, and merge order, token boundaries do not align with word boundaries, character boundaries, or even byte boundaries in any predictable way. The diagram below shows the full pipeline:</p>
+<h4 id="diagram-bpe-tokenization-pipeline">Diagram: BPE Tokenization Pipeline</h4>
+<iframe src="../../sims/bpe-tokenization-pipeline/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>BPE Tokenization Pipeline</summary>
+<p>Type: diagram
+<strong>sim-id:</strong> bpe-tokenization-pipeline<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the four sequential stages a string passes through to become a token sequence (Unicode normalization → pre-tokenization → byte initialization → BPE merges), with a concrete example string visible at every stage.</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning objective: Explain the role of each stage in the tokenization pipeline and identify which stage is responsible for which class of cross-vendor token-count differences.</p>
+<p>Canvas layout:
+- Vertical stack of four labeled stages, each with an input box and an output box
+- A "Step Forward" / "Step Back" pair of buttons at the bottom</p>
+<p>Stages:
+1. "Unicode Normalize (NFC)" — input shows raw bytes including a combining character; output shows the normalized form
+2. "Pre-Tokenize (split on whitespace + punctuation)" — input is the normalized string; output is a list of pre-token chunks like ["Write", " a", " haiku", "."]
+3. "Initialize as bytes" — each pre-token chunk becomes a sequence of single-byte tokens
+4. "Apply Merge Rules in order" — show 3–4 specific merge rules applying one at a time (e.g., "h"+"a"→"ha", "ha"+"i"→"hai", "hai"+"ku"→"haiku")</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show normalized vs raw bytes side by side
+  Stage 2: Show pre-token chunk list with leading-space pieces highlighted
+  Stage 3: Show byte-level decomposition for one chunk in detail
+  Stage 4: Show the merge rule that just fired ("ha" + "i" → "hai") with arrows on the affected positions
+  Final: Show the resulting compact token sequence with its token count</p>
+<p>Interactive controls:
+- Text input: starting string (default "Write a haiku about café pandas.")
+- Step Forward / Step Back buttons (advance one merge rule at a time in stage 4)
+- Button: "Show all stages" / "Step through"</p>
+<p>Instructional Rationale: Step-through with concrete data is appropriate for an Understand objective. Each stage shows the <em>same</em> input transformed by <em>one</em> operation, so learners can isolate which stage causes which effect.</p>
+<p>Implementation: p5.js, responsive width, no continuous animation</p>
+</details>
+<h2 id="special-tokens">Special Tokens</h2>
+<p>In addition to the tokens that represent ordinary text, every tokenizer reserves a set of <strong>special tokens</strong> — tokens that don't appear in normal text but carry structural meaning to the model. You don't write these directly in your prompts; the API client adds them on your behalf based on message structure. But they are billed input tokens, so you need to know they exist.</p>
+<p>The three most common special tokens:</p>
+<ul>
+<li><strong>Beginning-of-sequence token</strong> (often written <code>&lt;bos&gt;</code>, <code>&lt;s&gt;</code>, or <code>&lt;|begin_of_text|&gt;</code>) — marks the start of a sequence. Some models require it; some don't.</li>
+<li><strong>End-of-sequence token</strong> (often <code>&lt;eos&gt;</code>, <code>&lt;/s&gt;</code>, or <code>&lt;|end_of_text|&gt;</code>) — marks the end of a sequence. When the model generates this token during output, it stops naturally — this is the "I'm done" signal that makes generation terminate without <code>max_tokens</code> cutting it off.</li>
+<li><strong>Padding token</strong> (often <code>&lt;pad&gt;</code>) — used during <em>training</em> to pad shorter sequences in a batch up to the same length. Padding tokens almost never appear at inference time in API calls (the API handles batching internally), but they exist in the vocabulary.</li>
+</ul>
+<p>Modern chat-style APIs add additional special tokens to mark message roles — things like <code>&lt;|im_start|&gt;system</code>, <code>&lt;|im_start|&gt;user</code>, <code>&lt;|im_start|&gt;assistant</code>, and <code>&lt;|im_end|&gt;</code>. These role-marker tokens are why a "1-token user message" actually costs more like 5–10 input tokens once the role wrapping is added.</p>
+<p>The table below summarizes the special tokens you should know:</p>
+<table>
+<thead>
+<tr>
+<th>Special Token</th>
+<th>Symbol Examples</th>
+<th>When Added</th>
+<th>Billed?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beginning-of-sequence</td>
+<td><code>&lt;bos&gt;</code>, <code>&lt;\|begin_of_text\|&gt;</code></td>
+<td>Start of every request</td>
+<td>Yes (1 token)</td>
+</tr>
+<tr>
+<td>End-of-sequence</td>
+<td><code>&lt;eos&gt;</code>, <code>&lt;\|end_of_text\|&gt;</code></td>
+<td>End of model output (generated)</td>
+<td>Yes (1 output token)</td>
+</tr>
+<tr>
+<td>Padding</td>
+<td><code>&lt;pad&gt;</code></td>
+<td>Training only — not at inference</td>
+<td>No (in API use)</td>
+</tr>
+<tr>
+<td>Role markers</td>
+<td><code>&lt;\|im_start\|&gt;system</code>, etc.</td>
+<td>Wrapping every chat message</td>
+<td>Yes (~3–5 per message)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition mascot-tip">
+<p class="admonition-title">The Hidden Per-Message Tax</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+Every message in a chat-style request carries 3–10 special tokens of role-marker overhead. For applications that send hundreds of small messages (chat UIs, agent loops with many short tool turns), that overhead can outweigh the actual content. If you have a choice between sending one 200-token message and ten 20-token messages, the former is cheaper — same content, one set of role markers instead of ten.</p>
+</div>
+<h2 id="counting-tokens-accurately">Counting Tokens Accurately</h2>
+<p>You cannot optimize what you cannot measure. Every cost decision in the rest of this book starts with knowing the token count of a given string — ideally before it leaves your service.</p>
+<h3 id="token-counting-apis-vs-local-estimation">Token Counting APIs vs. Local Estimation</h3>
+<p>There are two ways to get a token count:</p>
+<ul>
+<li>A <strong>token counting API</strong> is a vendor-provided endpoint (Anthropic's <code>/v1/messages/count_tokens</code>, Google's <code>count_tokens</code> method, etc.) that takes the same input as a regular request and returns the exact token count without actually running the model. These calls are usually free or extremely cheap, but they are network round-trips — adding 50–200 ms of latency per call.</li>
+<li><strong>Local token estimation</strong> uses a tokenizer library installed in your application (OpenAI's <code>tiktoken</code>, Anthropic's published tokenizer, Google's tokenizer) to compute the count entirely in-process, with zero network latency. The library implements the same merge rules as the model, so the count is exact, not an estimate.</li>
+</ul>
+<p>For interactive applications (chat UIs that show "1,250 / 200,000 tokens used" as the user types), local estimation is the only viable option. For one-off cost analysis or for vendors that don't publish a tokenizer library, the API is fine.</p>
+<h3 id="the-token-to-char-ratio-heuristic">The Token-to-Char Ratio Heuristic</h3>
+<p>Sometimes you don't have a tokenizer handy and you just need a rough estimate. The <strong>token-to-char ratio</strong> is a simple heuristic: divide the character count of your text by a constant to estimate the token count.</p>
+<p>The constant depends heavily on the language and content:</p>
+<ul>
+<li>English prose: ~4 characters per token (so <code>tokens ≈ chars / 4</code>)</li>
+<li>English code: ~3.5 characters per token (code has more punctuation and symbols, which tokenize more aggressively)</li>
+<li>Spanish, French, German prose: ~3 characters per token (more accented characters, longer average words)</li>
+<li>Chinese, Japanese, Korean: ~1.5 characters per token (each CJK character often takes a full token)</li>
+<li>Arabic, Hebrew: ~2 characters per token</li>
+</ul>
+<p>The heuristic is fine for back-of-envelope sanity checks ("will this 500,000-character document fit in a 200K context window?") but never use it for billing. It can be off by 30% in either direction depending on content, and small errors compound when you're computing per-feature unit economics.</p>
+<h3 id="token-count-caching">Token Count Caching</h3>
+<p>When you generate the same prompt repeatedly — a system prompt, a fixed instruction template, a stable few-shot block — there is no reason to re-tokenize it on every request. <strong>Token count caching</strong> is the practice of computing the token count once and storing it in a key-value cache (Redis, an in-process LRU, even a static constant) keyed by the prompt's hash.</p>
+<p>This is not the same as the vendor's prompt cache (Chapter 14). Token count caching is purely a <em>client-side</em> optimization that saves CPU cycles in your token estimation logic. It matters in two cases: (1) high-throughput services where local tokenization shows up in CPU profiles, and (2) services that count tokens in tight loops to make routing decisions. For low-throughput services, don't bother — the savings are noise.</p>
+<h2 id="edge-cases-code-and-multilingual-text">Edge Cases: Code and Multilingual Text</h2>
+<h3 id="code-tokenization">Code Tokenization</h3>
+<p><strong>Code tokenization</strong> is a special concern for any application that processes source code (coding assistants, code review bots, doc generators). Code differs from prose in ways that hurt token efficiency:</p>
+<ul>
+<li>Indentation: each level of indentation is typically one token per space or one per tab. A deeply nested function can have 10–20% of its tokens devoted purely to whitespace.</li>
+<li>Punctuation density: parentheses, brackets, semicolons, operators, quotes — every one is usually its own token.</li>
+<li>Identifier fragmentation: <code>getUserById</code> may tokenize as <code>[get][User][By][Id]</code> (4 tokens) rather than the single token a common English word would get.</li>
+</ul>
+<p>Modern model families (GPT-4o, Claude 3.5+, Gemini 1.5+) ship with tokenizers tuned for code, which substantially improves the indentation case (often using a single token for "4 spaces" or "8 spaces"). When choosing a model for a code-heavy workload, the per-token price is only half the story — the tokenizer's code efficiency is the other half.</p>
+<h3 id="multilingual-tokenization">Multilingual Tokenization</h3>
+<p><strong>Multilingual tokenization</strong> is the same concern, even more pronounced. Tokenizers trained predominantly on English produce 2–5× more tokens for the same semantic content in other languages. A 1,000-character paragraph in English might tokenize to 250 tokens; the same paragraph translated to Japanese might tokenize to 1,000 tokens or more on an English-centric tokenizer.</p>
+<p>This affects pricing dramatically. If your product launches in a non-English market and you don't measure the tokenizer impact, you can find that your unit economics that worked in English are unprofitable in the new market — even though you're charging the same price per request. Always re-benchmark token costs when expanding into new languages.</p>
+<h2 id="sampling-how-the-model-picks-the-next-token">Sampling: How the Model Picks the Next Token</h2>
+<h3 id="logprobs-and-the-output-distribution">Logprobs and the Output Distribution</h3>
+<p>We've been describing autoregressive generation as "the model predicts the next token." That phrasing is slightly imprecise. What the model actually produces at each step is a probability distribution over its entire vocabulary — typically 50,000 to 256,000 numbers, each saying "here is how likely each token is to come next." A <strong>logprob</strong> (log-probability) is the natural logarithm of that probability for a given token. Vendors expose logprobs as an optional response field; with logprobs enabled, you can see the model's top-N candidate tokens at each position along with their probabilities.</p>
+<p>Logprobs are the raw material for two important applications:</p>
+<ul>
+<li><strong>Confidence-based routing</strong> (Chapter 17): if the top token's logprob is much higher than the second-place token, the model is confident; if the top two are nearly tied, the model is uncertain and you might escalate to a stronger model.</li>
+<li><strong>Constrained generation</strong>: by examining logprobs, you can detect that the model is about to produce malformed output and intervene before it does.</li>
+</ul>
+<p>Logprobs are not free — requesting them adds a small amount to the response payload — but for cost-routing applications they are cheaper than the alternative (running a second model just to verify the first).</p>
+<h3 id="temperature-and-top-p-sampling">Temperature and Top-P Sampling</h3>
+<p>Given the probability distribution, <em>something</em> has to pick a single token to actually emit. That something is the sampling strategy. The two parameters that control it on every modern API are temperature and top-p.</p>
+<p><strong>Temperature</strong> is a number (typically 0.0 to 2.0) that scales the sharpness of the probability distribution before sampling. At <code>temperature=0</code>, the model deterministically picks the highest-probability token every time — output is repeatable but boring. At <code>temperature=1.0</code>, the distribution is unchanged from the model's raw prediction. At <code>temperature=2.0</code>, the distribution is flattened, making low-probability tokens much more likely — output becomes creative, surprising, and often nonsensical.</p>
+<p><strong>Top-P sampling</strong> (also called nucleus sampling) is a complementary cutoff: instead of considering the entire vocabulary, the model considers only the smallest set of tokens whose combined probability exceeds <code>p</code>. With <code>top_p=0.9</code>, the model picks from only the most likely tokens that together account for 90% of probability mass. This filters out the long tail of unlikely tokens that flat-temperature sampling can occasionally produce.</p>
+<p>These two settings are not redundant — they compose. A common production pattern is <code>temperature=0.7, top_p=0.9</code>, which gives moderate creativity (temperature) while excluding the most absurd outputs (top-p). For deterministic workloads (code generation, structured extraction, tests), use <code>temperature=0</code> and don't worry about top-p.</p>
+<p>The MicroSim below lets you see both parameters in action:</p>
+<h4 id="diagram-sampling-parameter-explorer">Diagram: Sampling Parameter Explorer</h4>
+<iframe src="../../sims/sampling-parameter-explorer/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Sampling Parameter Explorer</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> sampling-parameter-explorer<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Let learners adjust temperature and top-p and see how the resulting probability distribution over candidate next tokens changes shape, then see which token would be sampled.</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: demonstrate</p>
+<p>Learning objective: Demonstrate how temperature and top-p modify a fixed token probability distribution and predict the resulting selection behavior.</p>
+<p>Canvas layout:
+- Top half (full width): Bar chart with token labels on the X axis and probability on the Y axis, showing 10 candidate next tokens for the prompt "The red panda climbed the ___"
+- Bottom half: Two sliders, two readout fields, and a "Sample 100 times" button</p>
+<p>Default candidate tokens and base probabilities:
+- "tree": 0.45
+- "bamboo": 0.20
+- "branch": 0.10
+- "rock": 0.07
+- "fence": 0.05
+- "ladder": 0.05
+- "stairs": 0.04
+- "wall": 0.02
+- "roof": 0.01
+- "mountain": 0.01</p>
+<p>Interactive controls:
+- Slider: Temperature (0.0 to 2.0, step 0.1, default 1.0)
+- Slider: Top-P (0.0 to 1.0, step 0.05, default 1.0)
+- Button: "Sample 1 token" (picks once based on the modified distribution and highlights it)
+- Button: "Sample 100 times" (runs 100 samples and overlays a frequency histogram on the bars)
+- Button: "Reset to defaults"</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the base probability distribution (sliders at defaults)
+  Stage 2: When temperature slider changes, recompute and redraw the bars (lower T sharpens, higher T flattens)
+  Stage 3: When top-p slider changes, gray out bars that fall outside the nucleus
+  Stage 4: After "Sample 100 times", overlay a histogram on each bar showing actual sample frequency vs. theoretical probability</p>
+<p>Instructional Rationale: Apply objective requires hands-on parameter manipulation. The slider + histogram pattern lets learners predict an outcome and verify it empirically.</p>
+<p>Implementation:
+- p5.js with responsive width
+- updateCanvasSize() in setup()
+- Use p5.js builtin createSlider and createButton</p>
+</details>
+<h2 id="model-families">Model Families</h2>
+<p>A <strong>model family</strong> is a vendor's named grouping of related models that share an architecture, a tokenizer, and a generation behavior, but differ in size and capability. The Claude 4 family (Opus, Sonnet, Haiku), the GPT-4 family (GPT-4o, GPT-4o-mini), and the Gemini 2 family (Pro, Flash, Nano) are all examples.</p>
+<p>The cost-optimization point of view on model families is simple: within a family, the smaller models are dramatically cheaper than the larger models — often 10× cheaper per token — and frequently good enough for a large fraction of real tasks. The model-routing pattern in Chapter 17 is essentially "send everything to the small family member first; escalate to the large one only when needed."</p>
+<p>Within a family, the tokenizer is the same. Across families (and across vendors), it usually is not. This is one more reason cross-vendor benchmarking requires care: the same prompt does not have the same token count, so "$X per million tokens" is not directly comparable.</p>
+<h2 id="embeddings">Embeddings</h2>
+<p>So far we've talked about tokens as integer IDs. Inside the model, those integer IDs are immediately looked up in a giant table and converted to vectors — typically 1,024 to 12,288 floating-point numbers per token. Each vector is called an <strong>embedding</strong>, and the table that maps token IDs to embeddings is the embedding matrix.</p>
+<p>Embeddings are how the model represents meaning numerically. Tokens with similar meanings end up near each other in embedding space — the embedding for "panda" sits closer to "bear" than to "automobile". This property is what makes embeddings the foundation of retrieval-augmented generation (Chapter 15): you can embed a query and a corpus of documents, then find the documents whose embeddings are nearest to the query embedding, and feed only those into the LLM.</p>
+<p>For cost purposes, the relevant facts about embeddings are:</p>
+<ul>
+<li>Vendors expose embeddings via separate, much cheaper APIs (often 10–100× cheaper per token than generation APIs). Embedding a million-token corpus costs dollars, not hundreds of dollars.</li>
+<li>Embedding APIs only consume input tokens — there are no output tokens, because the "output" is the vector, not generated text. This is why retrieval-augmented systems are cost-efficient: you embed once, store the vectors, and then retrieve cheaply forever.</li>
+<li>Embeddings are model-specific. An embedding produced by one vendor's embedding model is not comparable to one produced by another. If you switch vendors, you re-embed your corpus.</li>
+</ul>
+<h4 id="diagram-embedding-space-concept">Diagram: Embedding Space Concept</h4>
+<iframe src="../../sims/embedding-space-concept/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Embedding Space Concept</summary>
+<p>Type: diagram
+<strong>sim-id:</strong> embedding-space-concept<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Visualize how semantically related words cluster together in a 2D projection of embedding space, building intuition for similarity-based retrieval.</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: classify</p>
+<p>Learning objective: Classify words by their position in a 2D embedding projection and infer that nearness in embedding space reflects semantic similarity.</p>
+<p>Canvas layout:
+- Main area (full width): 2D scatter plot with axes labeled "Embedding dim 1" and "Embedding dim 2"
+- Below: a text input and a "Find nearest" button</p>
+<p>Data points (pre-positioned to form three clear clusters):
+- Animal cluster: "panda", "bear", "fox", "wolf", "tiger" (cluster around upper-left)
+- Vehicle cluster: "car", "truck", "bus", "bicycle", "motorcycle" (cluster around lower-right)
+- Food cluster: "bamboo", "apple", "rice", "bread", "pasta" (cluster around upper-right)</p>
+<p>Interactive controls:
+- Text input: "Type a word to find nearest neighbors"
+- Button: "Find nearest" — places a marker at an approximate position based on which cluster the word would belong to, then draws lines to its 3 nearest existing points
+- Toggle: "Show clusters" — toggles colored cluster background regions</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show all words plotted as labeled dots in 2D
+  Stage 2: When user types a word and clicks "Find nearest", place a star marker and draw lines to the 3 nearest existing points
+  Stage 3: Show the distance values next to each line</p>
+<p>Default state: All clusters visible, no query</p>
+<p>Implementation:
+- p5.js with responsive width
+- Word positions are hard-coded to form pedagogically clear clusters
+- The "find nearest" computation uses simple Euclidean distance on the 2D positions
+- This is a <em>concept</em> simulator — not a real embedding model</p>
+</details>
+<div class="admonition mascot-thinking">
+<p class="admonition-title">Embeddings Are a Pricing Tier All Their Own</p>
+<p><img src="../../img/mascot/thinking.png" class="mascot-admonition-img" alt="Pemba thinking">
+Notice the structural advantage: embedding APIs have no output tokens, so they sidestep the most expensive billing category entirely. Whenever you can replace a generative API call with a retrieval step backed by embeddings, you're moving work from the most expensive tier to the cheapest one. That's the core economic insight behind RAG, and we'll spend Chapter 15 making it precise.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You now have the second half of the foundational vocabulary. Tokens are produced by a pipeline (Unicode normalization → pre-tokenization → byte initialization → BPE merge rules) that creates <strong>token boundaries</strong> which do not align with anything intuitive. <strong>Special tokens</strong> add structural overhead to every message. <strong>Token counting APIs</strong> and <strong>local token estimation</strong> give you exact counts; the <strong>token-to-char ratio</strong> is a sanity-check heuristic only. <strong>Code tokenization</strong> and <strong>multilingual tokenization</strong> are where naïve cost models break. <strong>Temperature</strong>, <strong>top-P sampling</strong>, and <strong>logprobs</strong> control what the model emits. <strong>Model families</strong> organize vendor offerings into cheap-to-expensive tiers. <strong>Embeddings</strong> convert tokens to vectors and unlock retrieval-based cost optimizations.</p>
+<p>Chapter 3 takes all of this and translates it into actual dollars: per-million-token pricing, unit economics, batch discounts, rate limits, and the cost-quality tradeoff curve.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Why is the leading space part of the following token?</strong> Because pre-tokenization splits on whitespace and BPE then learns merge rules over those whitespace-prefixed chunks; the whitespace becomes a feature of the chunk, not a separate piece.</li>
+<li><strong>Roughly how many tokens does 1,000 characters of English code produce?</strong> About 285 (chars-per-token ratio of ~3.5 for code).</li>
+<li><strong>Roughly how many tokens does 1,000 characters of Japanese produce?</strong> About 660 (chars-per-token ratio of ~1.5 for CJK).</li>
+<li><strong>What does <code>temperature=0</code> do?</strong> Forces deterministic selection of the highest-probability token at every position.</li>
+<li><strong>Why are embeddings cheaper than generation?</strong> Embedding APIs only charge for input tokens — there are no output tokens in the response.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 2</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+You can now predict token counts, explain the merge pipeline, tune sampling, and spot the structural reason embeddings are a pricing bargain. Next chapter, we attach dollar amounts to all of it. Every token counts — and now you can count them accurately.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>

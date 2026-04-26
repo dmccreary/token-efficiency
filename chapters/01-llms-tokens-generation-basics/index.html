@@ -1,0 +1,1951 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A practical mental model of large language models, tokens, prompts, and the generation parameters every engineer needs before optimizing cost">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../02-sampling-tokenization-embeddings/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>LLMs, Tokens, and Generation Basics - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#llms-tokens-and-generation-basics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LLMs, Tokens, and Generation Basics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Token Efficiency
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Chapters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1. LLMs, Tokens, and Generation Basics
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-chapter-comes-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why This Chapter Comes First
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-generative-ai-down-to-a-single-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Generative AI Down to a Single Token
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Generative AI Down to a Single Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generative-ai-foundation-models-and-llms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generative AI, Foundation Models, and LLMs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-llms-actually-produce-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      How LLMs Actually Produce Text
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-the-unit-of-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token: The Unit of Account
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token: The Unit of Account">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-lifecycle-from-input-to-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Lifecycle from Input to Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cached-and-reasoning-tokens-two-specialized-cost-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cached and Reasoning Tokens — Two Specialized Cost Buckets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-text-becomes-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Text Becomes Tokens
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Text Becomes Tokens">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tokenizers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-counts-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Counts in Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Counts in Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-tokenizer-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Tokenizer Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-container-context-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Container: Context Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-structure-of-a-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Structure of a Conversation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Structure of a Conversation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompts-and-message-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompts and Message Roles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompts and Message Roles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-conversation-message-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Conversation Message Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-the-conversation-shape-matters-for-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the Conversation Shape Matters for Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlling the Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlling the Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#max-tokens-stop-sequences-and-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Max Tokens, Stop Sequences, and Streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-worked-example-all-three-levers-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Worked Example: All Three Levers Together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-sampling-tokenization-embeddings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Sampling, Tokenization, and Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-pricing-economics-async-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Pricing, Economics, and Async API Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-anthropic-claude-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Anthropic Claude Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-openai-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The OpenAI Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-google-gemini-ecosystem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Google Gemini Ecosystem
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-coding-harnesses-agentic-loops/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. AI Coding Harnesses and Agentic Loops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-skills-system/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skills System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-structured-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Structured Logging for LLM Calls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-observability-dashboards-alerting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Observability, Dashboards, and Alerting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-log-file-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Log File Analysis and Cost Hotspots
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-ab-testing-methodology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. A/B Testing Methodology for LLMs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-prompt-engineering-tokens/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Prompt Engineering for Token Efficiency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-prompt-caching-patterns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Prompt Caching Patterns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-rag-optimization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Retrieval-Augmented Generation Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-context-window-management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Context Window Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17-routing-output-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    17. Model Routing and Output Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18-agent-budget-policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    18. Agent Budget Policies and Session Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19-batch-privacy-compliance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    19. Batch Job Operations, Privacy, and Compliance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20-capstone-projects-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    20. Capstone Projects and Continuous Practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Enumeration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Graph Quality Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning-graph/mascot-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mascot Style Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sims/graph-viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph Viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-chapter-comes-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why This Chapter Comes First
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-generative-ai-down-to-a-single-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      From Generative AI Down to a Single Token
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Generative AI Down to a Single Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generative-ai-foundation-models-and-llms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generative AI, Foundation Models, and LLMs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-llms-actually-produce-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      How LLMs Actually Produce Text
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-token-the-unit-of-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Token: The Unit of Account
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token: The Unit of Account">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-lifecycle-from-input-to-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Lifecycle from Input to Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cached-and-reasoning-tokens-two-specialized-cost-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cached and Reasoning Tokens — Two Specialized Cost Buckets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-text-becomes-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Text Becomes Tokens
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Text Becomes Tokens">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tokenizers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-counts-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Token Counts in Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Counts in Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-tokenizer-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Tokenizer Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-container-context-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Container: Context Windows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-structure-of-a-conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Structure of a Conversation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Structure of a Conversation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompts-and-message-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompts and Message Roles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompts and Message Roles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-conversation-message-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Conversation Message Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-the-conversation-shape-matters-for-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why the Conversation Shape Matters for Cost
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlling the Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Controlling the Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#max-tokens-stop-sequences-and-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Max Tokens, Stop Sequences, and Streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-worked-example-all-three-levers-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Worked Example: All Three Levers Together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="llms-tokens-and-generation-basics">LLMs, Tokens, and Generation Basics</h1>
+<h2 id="summary">Summary</h2>
+<p>The foundational chapter establishing the core vocabulary used throughout the rest of the book: what an LLM is, what tokens are, how prompts and conversations are structured, and the basic generation parameters that control model output.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 26 concepts from the learning graph:</p>
+<ol>
+<li>Generative AI</li>
+<li>Large Language Model</li>
+<li>Foundation Model</li>
+<li>Transformer Architecture</li>
+<li>Autoregressive Generation</li>
+<li>Token</li>
+<li>Input Token</li>
+<li>Output Token</li>
+<li>Cached Token</li>
+<li>Reasoning Token</li>
+<li>Token Count</li>
+<li>Tokenizer</li>
+<li>Byte Pair Encoding</li>
+<li>SentencePiece</li>
+<li>Vocabulary Size</li>
+<li>Context Window</li>
+<li>Context Length</li>
+<li>Prompt</li>
+<li>System Prompt</li>
+<li>User Message</li>
+<li>Assistant Message</li>
+<li>Conversation Turn</li>
+<li>Multi-Turn Dialogue</li>
+<li>Streaming Response</li>
+<li>Stop Sequence</li>
+<li>Max Tokens Parameter</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter assumes only the prerequisites listed in the <a href="../../course-description/">course description</a>.</p>
+<hr />
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Welcome — Every Token Counts</p>
+<p><img src="../../img/mascot/welcome.png" class="mascot-admonition-img" alt="Pemba waving welcome">
+Hi, I'm Pemba. Before we can save tokens, we need to know what one <em>is</em> — and where they come from. By the end of this chapter you'll be able to look at any LLM API call and answer the question every CFO eventually asks: <em>"What exactly are we paying for?"</em> Every token counts, and counting is fun.</p>
+</div>
+<h2 id="why-this-chapter-comes-first">Why This Chapter Comes First</h2>
+<p>Token optimization is the discipline of building generative AI systems that are fast, useful, and <em>cheap to operate</em>. Every later chapter — pricing, caching, routing, agent budgets — assumes you can read an LLM API call and immediately see the cost surface: how many tokens went in, how many came out, where the model spent its budget, and where the system spent yours. This chapter installs that mental model.</p>
+<p>We'll move from the broadest term (Generative AI) down to the smallest billable unit (a single token), then back out to the structures that wrap tokens in real applications: prompts, conversations, and the generation parameters that decide when the model stops talking. Nothing in this chapter is exotic, but every concept here is a unit of measurement in a downstream cost equation.</p>
+<h2 id="from-generative-ai-down-to-a-single-token">From Generative AI Down to a Single Token</h2>
+<h3 id="generative-ai-foundation-models-and-llms">Generative AI, Foundation Models, and LLMs</h3>
+<p><strong>Generative AI</strong> is the umbrella term for any machine learning system that produces new content — text, code, images, audio, or video — rather than only classifying or predicting from existing inputs. A spam filter is <em>not</em> generative; ChatGPT writing a sonnet <em>is</em>.</p>
+<p>A <strong>foundation model</strong> is a large neural network trained on broad, internet-scale data and intended to be adapted to many downstream tasks rather than one. The term is deliberately general: image foundation models, multimodal foundation models, and code foundation models all exist. When the foundation model's job is to read and produce text, we call it a <strong>large language model</strong>, or <strong>LLM</strong>. Every system you'll instrument in this book — Claude, GPT, Gemini — is a large language model that is also a foundation model that is also generative AI.</p>
+<p>The relationship is hierarchical: every LLM is a foundation model, every foundation model in this book is generative AI, but not every generative AI system is an LLM (image generators, for instance, are not).</p>
+<h3 id="how-llms-actually-produce-text">How LLMs Actually Produce Text</h3>
+<p>Modern LLMs use a <strong>transformer architecture</strong>: a neural network design that processes input by computing how much each position in the input should "attend to" every other position. You don't need the matrix algebra to optimize cost, but you do need one consequence of the design: transformers process input in parallel but produce output one piece at a time. That single fact drives the entire pricing structure of the industry.</p>
+<p>LLMs generate text through <strong>autoregressive generation</strong>. The model reads the entire input, predicts the single most likely next piece of text, appends that piece to the input, and repeats — over and over — until it decides to stop. Each prediction is independent in the sense that the model recomputes from scratch, but each prediction depends on every piece that came before. This is why a 500-word answer takes roughly 500 times longer to produce than a 1-word answer, and costs proportionally more.</p>
+<div class="admonition mascot-thinking">
+<p class="admonition-title">The Two-Stage Cost Pattern</p>
+<p><img src="../../img/mascot/thinking.png" class="mascot-admonition-img" alt="Pemba thinking">
+Notice the asymmetry: the model reads the input <em>once</em> (cheap, parallel) but writes the output <em>one piece at a time</em> (expensive, serial). That's why output tokens are billed at a higher rate than input tokens across every vendor we'll cover. Cheap reading, expensive writing — remember the shape and you'll predict bills before you see them.</p>
+</div>
+<h3 id="the-token-the-unit-of-account">The Token: The Unit of Account</h3>
+<p>The "piece of text" the model reads and writes is called a <strong>token</strong>. A token is roughly 3–4 characters of English text on average — sometimes a whole short word ("the", "and"), sometimes a fragment of a long word ("optim", "ization"), sometimes a single punctuation mark or whitespace character. The exact mapping depends on the <strong>tokenizer</strong> (covered below), but the unit of billing is always the token, never the character or the word.</p>
+<p>Before we can examine the diagram below, we need to define one more pair of terms. An <strong>input token</strong> is any token in the text you send to the model — your prompt, your system message, your conversation history, your retrieved documents. An <strong>output token</strong> is any token the model generates back. Vendors bill input tokens and output tokens at different per-million-token prices, and output tokens are always more expensive (usually 3–5×).</p>
+<h4 id="diagram-token-lifecycle-from-input-to-output">Diagram: Token Lifecycle from Input to Output</h4>
+<iframe src="../../sims/token-lifecycle-flow/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Token Lifecycle from Input to Output</summary>
+<p>Type: diagram
+<strong>sim-id:</strong> token-lifecycle-flow<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show the end-to-end flow of how a user prompt becomes input tokens, gets processed by the model, and is emitted as output tokens one at a time. Reinforces the input-once / output-serially asymmetry that drives pricing.</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning objective: Explain how raw text is converted to tokens, processed in parallel, and emitted autoregressively, including which stages are billed as input versus output.</p>
+<p>Visual elements (left to right):
+1. "Raw Text" box containing the string: "Write a haiku about pandas."
+2. Arrow labeled "tokenize" leading to a "Tokens (Input)" box showing the token sequence as colored chips: [Write][ a][ haiku][ about][ pandas][.]
+3. Arrow labeled "send to model" leading to an "LLM" rectangle (Transformer block)
+4. Arrow labeled "generate next token" leading to a "Tokens (Output)" box where chips appear one at a time with a small index counter: [Bamboo][ leaves][...]
+5. Arrow labeled "detokenize" leading to a "Generated Text" box that fills in word-by-word</p>
+<p>Visual style: Block diagram with arrows. Input tokens shown in cool blue, output tokens shown in warm orange to reinforce the pricing asymmetry. Each output token chip has a small "$" badge larger than the input chips.</p>
+<p>Annotations:
+- Above input section: "Read once, in parallel — cheaper"
+- Above output section: "Generated one at a time — pricier"
+- Bottom legend: blue = input tokens, orange = output tokens</p>
+<p>Implementation: p5.js with responsive width. Animation steps through one output token per second so the autoregressive nature is visible. Reset button returns to start.</p>
+</details>
+<h3 id="cached-and-reasoning-tokens-two-specialized-cost-buckets">Cached and Reasoning Tokens — Two Specialized Cost Buckets</h3>
+<p>Beyond the input/output split, two additional token categories appear on modern bills.</p>
+<p>A <strong>cached token</strong> is an input token that the vendor has already processed for you in a previous request and stored in a fast-access cache. When your next request reuses the same prefix (a long system prompt, a stable set of few-shot examples, an attached document), the vendor charges you a fraction of the normal input price for those reused tokens — typically 10% of the uncached rate. We devote an entire chapter to this single optimization (Chapter 14) because it is usually the highest-leverage cost win available.</p>
+<p>A <strong>reasoning token</strong> is a special category of output token used by "thinking" models — Claude's extended thinking, OpenAI's o-series, Gemini's thinking modes — to perform internal deliberation that the user never sees. The model produces these tokens for itself before producing the final visible answer. You are billed for them at the output rate, even though they never appear in the response field your application reads. A request that returns a 200-token visible answer can easily consume 5,000 reasoning tokens behind the scenes.</p>
+<p>Before we display the comparison table below, here is the pattern: every vendor reports a <strong>token count</strong> for each request — broken down by category — in the API response. Reading those counts is the foundational skill of this book. Now the table can summarize the four categories side by side:</p>
+<table>
+<thead>
+<tr>
+<th>Token Type</th>
+<th>What It Is</th>
+<th>Direction</th>
+<th>Typical Price (relative to input)</th>
+<th>Where It Shows Up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>Tokens you send to the model</td>
+<td>Inbound</td>
+<td>1× (baseline)</td>
+<td>System prompt, user message, history, documents</td>
+</tr>
+<tr>
+<td>Cached input</td>
+<td>Reused input tokens stored by the vendor</td>
+<td>Inbound</td>
+<td>~0.1×</td>
+<td>Stable prefix on repeat requests</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Tokens the model generates for you</td>
+<td>Outbound</td>
+<td>3×–5×</td>
+<td>The visible response text</td>
+</tr>
+<tr>
+<td>Reasoning</td>
+<td>Internal thinking tokens (visible to bill, not to user)</td>
+<td>Outbound</td>
+<td>3×–5×</td>
+<td>Hidden deliberation in thinking models</td>
+</tr>
+</tbody>
+</table>
+<p>Every later chapter will refer back to this table. When we say "drive down output tokens," we mean the third row. When we say "raise the cache hit rate," we mean shift work from row 1 to row 2. When we say "cap the thinking budget," we mean bound row 4.</p>
+<h2 id="how-text-becomes-tokens">How Text Becomes Tokens</h2>
+<h3 id="tokenizers">Tokenizers</h3>
+<p>A <strong>tokenizer</strong> is a deterministic function that converts a string of text into a sequence of integer token IDs (and back again). Each vendor ships its own tokenizer, and the same English sentence will produce different token counts on different vendors' tokenizers — sometimes by 20% or more. This is why "100,000 tokens" on Claude is not the same amount of text as "100,000 tokens" on GPT or Gemini.</p>
+<p>The two tokenization algorithms you will encounter throughout this book are Byte Pair Encoding and SentencePiece. Both produce <strong>subword tokens</strong> — units smaller than whole words but larger than individual characters — chosen by analyzing patterns in massive training corpora.</p>
+<p><strong>Byte Pair Encoding (BPE)</strong> starts with single characters as the initial vocabulary, then repeatedly finds the most frequent adjacent pair of tokens in the training corpus and merges them into a new token. After thousands of merges, the vocabulary contains common whole words ("the", "and"), common word-fragments ("tion", "ing"), and common multi-character punctuation patterns. OpenAI's tiktoken and Anthropic's tokenizer are both BPE-based.</p>
+<p><strong>SentencePiece</strong> is a related family of algorithms (used by Google's models, including Gemini) that treats the input as a raw byte stream — it does not require pre-splitting on whitespace. This makes it well-suited to languages without word boundaries (Chinese, Japanese, Thai) and to code. The practical effect is the same as BPE: input text becomes a sequence of subword token IDs.</p>
+<p>The total number of distinct tokens a tokenizer can produce is its <strong>vocabulary size</strong>, typically between 32,000 and 256,000. A larger vocabulary packs more meaning per token (so the same text uses fewer tokens), but it also makes each token "wider" and increases the size of the model's embedding table. Vocabulary size is a fixed property of each model — you can't tune it, but you should know it when comparing per-million-token prices across vendors.</p>
+<div class="admonition mascot-tip">
+<p class="admonition-title">Compare Tokens, Not Characters</p>
+<p><img src="../../img/mascot/tip.png" class="mascot-admonition-img" alt="Pemba sharing a tip">
+When you benchmark cost across vendors, never compare character counts or word counts. Tokenize your real production traffic with each vendor's tokenizer and compare <em>those</em> numbers. A vendor that looks 20% cheaper per million tokens may actually be 10% more expensive once you account for tokenizer differences. Cheap systems are honest-arithmetic systems.</p>
+</div>
+<h3 id="token-counts-in-practice">Token Counts in Practice</h3>
+<p>Before showing the interactive tokenizer below, here is what you should expect to see when you experiment with it: the same English sentence will produce roughly 6–10 tokens for a 6-word sentence, common words become single tokens, rare words split into two or three tokens, and punctuation is almost always its own token. Whitespace usually attaches to the <em>following</em> word — the token for " panda" (with leading space) is different from the token for "panda" (no space).</p>
+<h4 id="diagram-interactive-tokenizer-explorer">Diagram: Interactive Tokenizer Explorer</h4>
+<iframe src="../../sims/interactive-tokenizer-explorer/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Interactive Tokenizer Explorer</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> interactive-tokenizer-explorer<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Let learners type or paste text and immediately see how it gets segmented into tokens, with a live token count and per-token highlight. Builds intuition that words, characters, and tokens are three different units.</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: interpret</p>
+<p>Learning objective: Interpret how a tokenizer segments text into subword units, and predict the token count of a string before sending it to an API.</p>
+<p>Instructional Rationale: Step-through with concrete data is appropriate for an Understand objective. Continuous animation would obscure the actual token boundaries; a typed-and-revealed pattern lets learners predict and verify.</p>
+<p>Canvas layout:
+- Top half (full width): Multi-line text input area, default text "Write a haiku about red pandas."
+- Middle strip: Three numeric displays side by side — "Characters: NN", "Words: NN", "Tokens: NN"
+- Bottom half: Token visualization area showing each token as a colored chip with the token text inside and a small numeric token-ID below</p>
+<p>Interactive controls:
+- Text input (auto-updates on every keystroke)
+- Dropdown: "Tokenizer family" with options ["BPE (cl100k-style)", "SentencePiece (Gemini-style)"]
+- Button: "Load example: short prompt"
+- Button: "Load example: long document (~500 tokens)"
+- Button: "Load example: code snippet"
+- Button: "Load example: non-English (Japanese)"</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the raw input string in the text box
+  Stage 2: Show the tokenized chips with whitespace explicitly visible (use a "·" character to indicate leading space)
+  Stage 3: Show the running counts (chars, words, tokens) updated live
+  Stage 4: When dropdown changes, show how the same string produces different chip counts under each tokenizer family</p>
+<p>Default values:
+- Tokenizer: BPE
+- Text: "Write a haiku about red pandas."</p>
+<p>Behavior:
+- Tokenization is approximated client-side using a simplified BPE/SentencePiece simulator (not a real model tokenizer — accuracy isn't the point, the <em>pattern</em> is)
+- Hovering a chip shows its byte length below the chip
+- When the same word appears twice in the input, both chips are highlighted in the same color so learners see that identical strings produce identical tokens</p>
+<p>Implementation notes:
+- Use p5.js with responsive width and updateCanvasSize() in setup()
+- Use p5.js builtin createInput, createSelect, createButton (per project conventions)
+- No animation; pure interactive update on text change</p>
+</details>
+<h2 id="the-container-context-windows">The Container: Context Windows</h2>
+<p>A <strong>context window</strong> is the maximum total number of tokens (input + output combined, in most accounting schemes) that a model can process in a single request. The numerical value of that limit, in tokens, is called the <strong>context length</strong>. Modern models advertise context lengths from 8,000 tokens (older models) up to 1,000,000 tokens (Gemini's long-context mode and Claude's 1M-context mode).</p>
+<p>Two facts about context windows govern almost every long-document and long-conversation cost decision:</p>
+<ul>
+<li><strong>You pay for what you put in, even if the model only "uses" part of it.</strong> Sending a 100,000-token document and asking one question costs ~100,000 input tokens, regardless of how much of the document was actually relevant to the answer.</li>
+<li><strong>Latency grows with context length.</strong> A 200,000-token request is not just more expensive than a 2,000-token request — it is also noticeably slower because the model has more input to attend to before producing its first output token.</li>
+</ul>
+<p>Engineers new to LLMs often treat the context window as "free space" up to the limit. It is not. Every token in the window is a token on the bill, and every additional token in the window slows the response. Chapter 16 is dedicated to keeping long sessions inside their context window without paying full price for every turn.</p>
+<h2 id="the-structure-of-a-conversation">The Structure of a Conversation</h2>
+<h3 id="prompts-and-message-roles">Prompts and Message Roles</h3>
+<p>A <strong>prompt</strong> is the complete input you send to the model on a given request. In modern chat-style APIs, a prompt is not a single string — it is a structured list of messages, each tagged with a role.</p>
+<p>The three roles you will use constantly:</p>
+<ul>
+<li><strong>System prompt</strong> — a special message at the start of the conversation, written from the operator's voice (yours, the application developer's), that establishes persona, rules, available tools, output format, and constraints. The model treats system content with higher priority than later user content. System prompts are typically the largest stable prefix in a request, which makes them the prime target for prompt caching (Chapter 14).</li>
+<li><strong>User message</strong> — a turn from the human end-user. Contains the question, the document, the request for help.</li>
+<li><strong>Assistant message</strong> — a turn from the model. Contains the model's prior response in a multi-turn conversation, replayed back to the model so it remembers what it just said.</li>
+</ul>
+<p>A single exchange — one user message followed by one assistant message — is one <strong>conversation turn</strong>. A <strong>multi-turn dialogue</strong> is any conversation with more than one turn, where each new request includes the entire prior history so the model has continuity. Crucially: the entire history is re-sent on every turn. A 10-turn conversation does not "remember" anything internally — turn 11 ships turns 1 through 10 in the input. This is the single most expensive footgun in conversational LLM applications, and it is why Chapter 16's compaction strategies exist.</p>
+<h4 id="diagram-conversation-message-structure">Diagram: Conversation Message Structure</h4>
+<iframe src="../../sims/conversation-message-structure/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details>
+<summary>Conversation Message Structure</summary>
+<p>Type: diagram
+<strong>sim-id:</strong> conversation-message-structure<br/>
+<strong>Library:</strong> p5.js<br/>
+<strong>Status:</strong> Specified</p>
+<p>Purpose: Show how a multi-turn dialogue is sent to the API on each turn — system prompt at the top, then alternating user/assistant messages, with the <em>entire</em> history re-sent on every new request. Make the cumulative token cost across turns immediately visible.</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning objective: Examine how a multi-turn conversation accumulates input tokens on every new turn, and identify the system-prompt prefix as a prime cache target.</p>
+<p>Canvas layout:
+- Left column (60% width): A vertical stack of message cards labeled by role (System, User, Assistant, User, Assistant, ...) with each card showing a token count
+- Right column (40% width): A line chart showing cumulative input tokens on the Y axis and turn number on the X axis</p>
+<p>Visual elements:
+- System prompt card: dark gray, large (showing 800 tokens)
+- User cards: blue, varying small sizes (50–200 tokens each)
+- Assistant cards: orange, varying medium sizes (300–600 tokens each)
+- A "Send Turn N" button that adds one more user/assistant pair and updates the cumulative chart</p>
+<p>Interactive controls:
+- Button: "Send next turn" (advances by one turn, generates random sizes within realistic ranges)
+- Button: "Reset conversation"
+- Checkbox: "Cache the system prompt" — when checked, the cumulative-cost line splits into two: full-price line and cache-discounted line, showing the divergence
+- Slider: System prompt size (200–4000 tokens)</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show only the system prompt card with its token count
+  Stage 2: After "Send next turn", show the user/assistant pair appended below
+  Stage 3: Show the cumulative input token count for <em>this</em> turn (everything above the new user message gets re-sent)
+  Stage 4: After several turns, show how the cumulative cost grows roughly linearly even though only the latest user message is "new"
+  Stage 5: When caching is enabled, show the cache-discounted line diverging from the full-price line</p>
+<p>Default values:
+- System prompt size: 800 tokens
+- Caching: off</p>
+<p>Behavior:
+- Each new turn re-sends every prior message as input
+- The chart updates with both per-turn and cumulative input tokens
+- A small annotation calls out: "Same system prompt sent on every turn — cache target."</p>
+<p>Implementation notes:
+- Use p5.js for both the message stack and the line chart
+- Responsive width</p>
+</details>
+<h3 id="why-the-conversation-shape-matters-for-cost">Why the Conversation Shape Matters for Cost</h3>
+<p>Now that the structure is on the page, three cost facts follow directly:</p>
+<ul>
+<li>The <strong>system prompt is the same on every turn</strong>. That makes it the most cacheable piece of any conversational application. Caching a 2,000-token system prompt saves ~1,800 tokens of full-price input on every request after the first.</li>
+<li><strong>Long histories are expensive even when uninteresting.</strong> Turn 20 of a customer-support chat is paying for 19 prior turns of small talk that the model doesn't need to answer the current question.</li>
+<li><strong>Assistant messages contribute too.</strong> When you replay the model's prior responses back as input, those output tokens (which you already paid for once at the output rate) are now also being paid for at the input rate. They are billed twice — once when generated, once on every subsequent turn they are included.</li>
+</ul>
+<h2 id="controlling-the-output">Controlling the Output</h2>
+<p>Generation does not "just stop when the model is done." It stops because <em>something</em> tells it to stop. There are three primary stopping mechanisms, and every one of them is a cost lever.</p>
+<h3 id="max-tokens-stop-sequences-and-streaming">Max Tokens, Stop Sequences, and Streaming</h3>
+<p>The <strong>max tokens parameter</strong> is a hard upper bound on the number of output tokens the model is allowed to produce in a single response. If the model has not naturally finished by then, generation is cut off mid-sentence. This is your last-resort cost cap: even if a runaway prompt would otherwise produce a 10,000-token essay, <code>max_tokens=500</code> guarantees you pay for at most 500 output tokens.</p>
+<p>A <strong>stop sequence</strong> is a string (or list of strings) that, if generated, immediately ends the response with that string excluded. Stop sequences are how you tell the model "stop after the JSON object closes" or "stop before you start a new section". They are precise — they end generation exactly when a structural boundary is hit, rather than at an arbitrary token count.</p>
+<p>A <strong>streaming response</strong> delivers output tokens to the client incrementally as they are generated, instead of buffering the whole response and sending it at the end. Streaming does not change cost — you pay for every token whether it streams or not — but it dramatically improves perceived latency (the user sees the first word in ~200 ms instead of waiting 8 seconds for the whole answer) and it enables early cancellation: the client can close the stream when it has seen enough, and many vendors will stop billing for tokens generated after cancellation.</p>
+<p>The relationship between these three controls is summarized below — but only after we've defined them all in prose:</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>What It Bounds</th>
+<th>Behavior at Limit</th>
+<th>Primary Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>max_tokens</td>
+<td>Total output token count</td>
+<td>Generation truncates mid-sentence</td>
+<td>Hard cost ceiling</td>
+</tr>
+<tr>
+<td>Stop sequence</td>
+<td>Token <em>content</em></td>
+<td>Generation ends cleanly at the boundary</td>
+<td>Structural framing (JSON, sections)</td>
+</tr>
+<tr>
+<td>Streaming + cancel</td>
+<td>Wall-clock time on the client</td>
+<td>Client closes the connection</td>
+<td>Adaptive output length</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a-worked-example-all-three-levers-together">A Worked Example: All Three Levers Together</h3>
+<p>A well-instrumented chat endpoint typically sets all three at once. Before showing the configuration list below, here is the intuition: <code>max_tokens</code> is your insurance policy against catastrophic runs, the stop sequence is your structural contract with the model, and streaming is your user-experience-and-cancellation strategy.</p>
+<p>A reasonable production default for a JSON-returning endpoint:</p>
+<ul>
+<li><code>max_tokens: 1000</code> — guarantees the bill cannot exceed 1,000 output tokens per request</li>
+<li><code>stop: ["\n\n```\n", "&lt;/response&gt;"]</code> — ends generation cleanly at the structural boundary the application expects</li>
+<li><code>stream: true</code> — delivers tokens as they're produced, so the application can validate JSON incrementally and cancel if the model goes off-format</li>
+</ul>
+<p>With this setup, a normal request finishes well under 1,000 tokens at the stop sequence; a misbehaving request gets capped at 1,000; and a request that starts producing garbage can be killed by the client mid-stream.</p>
+<div class="admonition mascot-warning">
+<p class="admonition-title">Default max_tokens Is Almost Always Wrong</p>
+<p><img src="../../img/mascot/warning.png" class="mascot-admonition-img" alt="Pemba cautioning">
+Many SDKs default <code>max_tokens</code> to a very high value (4,096 or higher) — and many engineers never override it. That means a single buggy prompt can produce a 4,000-token wall of text where 200 would have done. Always set <code>max_tokens</code> to a value calibrated to the <em>actual</em> maximum useful response length for your endpoint. If your endpoint returns a yes/no answer, <code>max_tokens=10</code> is not paranoid — it's correct.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>You now have the vocabulary to read any LLM API call. A request is a <strong>prompt</strong> — a structured list of messages, starting with a <strong>system prompt</strong> and alternating <strong>user</strong> and <strong>assistant</strong> messages — fed through a <strong>tokenizer</strong> (BPE or SentencePiece) into the <strong>input tokens</strong> of an <strong>LLM</strong>. The model performs <strong>autoregressive generation</strong>, producing <strong>output tokens</strong> one at a time (and possibly <strong>reasoning tokens</strong> for itself), until it hits a <strong>stop sequence</strong> or the <strong>max tokens</strong> limit, optionally <strong>streaming</strong> them to the client. Tokens reused from a prior request may be counted as <strong>cached tokens</strong>. The total of all of these is the request's <strong>token count</strong>, and it must fit inside the model's <strong>context window</strong>.</p>
+<p>Every chapter from here forward will optimize one or more of those nouns and verbs. Chapter 2 zooms in on tokenizers and embeddings. Chapter 3 introduces the prices that turn token counts into dollars. By Chapter 14, you'll be writing prompts whose stable prefix is <em>deliberately</em> designed to cache, and by Chapter 18, you'll be writing budget policies that cap the cost of an entire agent session.</p>
+<details class="question">
+<summary>Quick Self-Check — Click to Reveal Answers</summary>
+<ol>
+<li><strong>Which is more expensive per token: input or output?</strong> Output, typically by 3×–5×.</li>
+<li><strong>What's a cached token, and roughly how is it priced?</strong> A reused input token previously processed by the vendor; usually about 10% of the uncached input rate.</li>
+<li><strong>If you send a 50,000-token document and ask one question, how much input do you pay for?</strong> ~50,000 input tokens, regardless of how much of the document the answer used.</li>
+<li><strong>Why do output tokens cost more than input tokens?</strong> Inputs are processed in parallel; outputs are generated one token at a time, autoregressively.</li>
+<li><strong>What gets re-sent on every turn of a multi-turn dialogue?</strong> The full prior history — system prompt, all previous user messages, and all previous assistant messages.</li>
+</ol>
+</details>
+<div class="admonition mascot-celebration">
+<p class="admonition-title">End of Chapter 1</p>
+<p><img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
+You've installed the mental model. Tokens are the unit of account, prompts are the structure, the context window is the container, and <code>max_tokens</code> and stop sequences are the cost ceiling. Cheap systems are happy systems — and now you can spot where the cheap ones differ from the expensive ones. On to tokenization in Chapter 2.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
