@@ -295,3 +295,8 @@ Chapter 7 leaves the API world and enters the harness world: how Claude Code, Co
 !!! mascot-celebration "End of Chapter 6"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     All three vendors mapped: Claude, OpenAI, Gemini. You can read any of their APIs, structure prompts to cache, and compare costs on real traffic. The next chapter shifts gears — from raw API calls to agentic harnesses, where token costs accumulate across whole sessions instead of single requests.
+
+
+---
+
+[See Annotated References](./references.md)

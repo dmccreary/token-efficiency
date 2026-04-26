@@ -284,3 +284,8 @@ Chapter 11 takes the same data and applies analysis-notebook techniques to find 
 !!! mascot-celebration "End of Chapter 10"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Dashboards built, alerts configured, traces flowing. The signals are in place. Next chapter takes the same data offline and turns it into the cost-reduction backlog that will guide your optimization work.
+
+
+---
+
+[See Annotated References](./references.md)

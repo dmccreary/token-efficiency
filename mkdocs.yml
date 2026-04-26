@@ -13,26 +13,66 @@ nav:
   
   - Chapters:
       - List of Chapters: chapters/index.md
-      - 1. LLMs, Tokens, and Generation Basics: chapters/01-llms-tokens-generation-basics/index.md
-      - 2. Sampling, Tokenization, and Embeddings: chapters/02-sampling-tokenization-embeddings/index.md
-      - 3. Pricing, Economics, and Async API Modes: chapters/03-pricing-economics-async-apis/index.md
-      - 4. The Anthropic Claude Ecosystem: chapters/04-anthropic-claude-ecosystem/index.md
-      - 5. The OpenAI Ecosystem: chapters/05-openai-ecosystem/index.md
-      - 6. The Google Gemini Ecosystem: chapters/06-google-gemini-ecosystem/index.md
-      - 7. AI Coding Harnesses and Agentic Loops: chapters/07-coding-harnesses-agentic-loops/index.md
-      - 8. The Skills System: chapters/08-skills-system/index.md
-      - 9. Structured Logging for LLM Calls: chapters/09-structured-logging/index.md
-      - 10. Observability, Dashboards, and Alerting: chapters/10-observability-dashboards-alerting/index.md
-      - 11. Log File Analysis and Cost Hotspots: chapters/11-log-file-analysis/index.md
-      - 12. A/B Testing Methodology for LLMs: chapters/12-ab-testing-methodology/index.md
-      - 13. Prompt Engineering for Token Efficiency: chapters/13-prompt-engineering-tokens/index.md
-      - 14. Prompt Caching Patterns: chapters/14-prompt-caching-patterns/index.md
-      - 15. Retrieval-Augmented Generation Optimization: chapters/15-rag-optimization/index.md
-      - 16. Context Window Management: chapters/16-context-window-management/index.md
-      - 17. Model Routing and Output Control: chapters/17-routing-output-control/index.md
-      - 18. Agent Budget Policies and Session Limits: chapters/18-agent-budget-policies/index.md
-      - 19. Batch Job Operations, Privacy, and Compliance: chapters/19-batch-privacy-compliance/index.md
-      - 20. Capstone Projects and Continuous Practice: chapters/20-capstone-projects-practice/index.md
+      - 1. LLMs, Tokens, and Generation Basics:
+          - Content: chapters/01-llms-tokens-generation-basics/index.md
+          - Annotated References: chapters/01-llms-tokens-generation-basics/references.md
+      - 2. Sampling, Tokenization, and Embeddings:
+          - Content: chapters/02-sampling-tokenization-embeddings/index.md
+          - Annotated References: chapters/02-sampling-tokenization-embeddings/references.md
+      - 3. Pricing, Economics, and Async API Modes:
+          - Content: chapters/03-pricing-economics-async-apis/index.md
+          - Annotated References: chapters/03-pricing-economics-async-apis/references.md
+      - 4. The Anthropic Claude Ecosystem:
+          - Content: chapters/04-anthropic-claude-ecosystem/index.md
+          - Annotated References: chapters/04-anthropic-claude-ecosystem/references.md
+      - 5. The OpenAI Ecosystem:
+          - Content: chapters/05-openai-ecosystem/index.md
+          - Annotated References: chapters/05-openai-ecosystem/references.md
+      - 6. The Google Gemini Ecosystem:
+          - Content: chapters/06-google-gemini-ecosystem/index.md
+          - Annotated References: chapters/06-google-gemini-ecosystem/references.md
+      - 7. AI Coding Harnesses and Agentic Loops:
+          - Content: chapters/07-coding-harnesses-agentic-loops/index.md
+          - Annotated References: chapters/07-coding-harnesses-agentic-loops/references.md
+      - 8. The Skills System:
+          - Content: chapters/08-skills-system/index.md
+          - Annotated References: chapters/08-skills-system/references.md
+      - 9. Structured Logging for LLM Calls:
+          - Content: chapters/09-structured-logging/index.md
+          - Annotated References: chapters/09-structured-logging/references.md
+      - 10. Observability, Dashboards, and Alerting:
+          - Content: chapters/10-observability-dashboards-alerting/index.md
+          - Annotated References: chapters/10-observability-dashboards-alerting/references.md
+      - 11. Log File Analysis and Cost Hotspots:
+          - Content: chapters/11-log-file-analysis/index.md
+          - Annotated References: chapters/11-log-file-analysis/references.md
+      - 12. A/B Testing Methodology for LLMs:
+          - Content: chapters/12-ab-testing-methodology/index.md
+          - Annotated References: chapters/12-ab-testing-methodology/references.md
+      - 13. Prompt Engineering for Token Efficiency:
+          - Content: chapters/13-prompt-engineering-tokens/index.md
+          - Annotated References: chapters/13-prompt-engineering-tokens/references.md
+      - 14. Prompt Caching Patterns:
+          - Content: chapters/14-prompt-caching-patterns/index.md
+          - Annotated References: chapters/14-prompt-caching-patterns/references.md
+      - 15. Retrieval-Augmented Generation Optimization:
+          - Content: chapters/15-rag-optimization/index.md
+          - Annotated References: chapters/15-rag-optimization/references.md
+      - 16. Context Window Management:
+          - Content: chapters/16-context-window-management/index.md
+          - Annotated References: chapters/16-context-window-management/references.md
+      - 17. Model Routing and Output Control:
+          - Content: chapters/17-routing-output-control/index.md
+          - Annotated References: chapters/17-routing-output-control/references.md
+      - 18. Agent Budget Policies and Session Limits:
+          - Content: chapters/18-agent-budget-policies/index.md
+          - Annotated References: chapters/18-agent-budget-policies/references.md
+      - 19. Batch Job Operations, Privacy, and Compliance:
+          - Content: chapters/19-batch-privacy-compliance/index.md
+          - Annotated References: chapters/19-batch-privacy-compliance/references.md
+      - 20. Capstone Projects and Continuous Practice:
+          - Content: chapters/20-capstone-projects-practice/index.md
+          - Annotated References: chapters/20-capstone-projects-practice/references.md
   
   - MicroSims:
     - List of MicroSims: sims/index.md

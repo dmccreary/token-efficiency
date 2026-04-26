@@ -277,3 +277,8 @@ Chapter 17 takes the next step: routing requests to the right model and bounding
 !!! mascot-celebration "End of Chapter 16"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Long sessions tamed. Next chapter handles the second-largest cost lever after caching: routing requests to the right-sized model and controlling output deliberately.
+
+
+---
+
+[See Annotated References](./references.md)

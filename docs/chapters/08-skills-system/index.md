@@ -315,3 +315,8 @@ Chapter 9 starts the instrumentation half of the book: structured logging that g
 !!! mascot-celebration "End of Chapter 8"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Skills, lazy loading, script delegation — you now have the structural primitive that makes large agent capabilities affordable. Next chapter pivots to instrumentation: structured logging, the foundation that lets you measure everything we've discussed.
+
+
+---
+
+[See Annotated References](./references.md)

@@ -296,3 +296,8 @@ Chapter 15 turns to RAG — making sure the retrieved context that hits your pro
 !!! mascot-celebration "End of Chapter 14"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     The single highest-leverage cost optimization is in your hands. Next: tuning RAG so the retrieved context actually earns its tokens.
+
+
+---
+
+[See Annotated References](./references.md)

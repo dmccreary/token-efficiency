@@ -321,3 +321,8 @@ Chapter 20 is the capstone — putting all 19 chapters together into the project
 !!! mascot-celebration "End of Chapter 19"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     Operations and compliance covered. Next chapter is the capstone — the projects, evals, and continuous practices that turn everything into long-term engineering capability.
+
+
+---
+
+[See Annotated References](./references.md)

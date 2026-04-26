@@ -321,3 +321,8 @@ This is the end of the chapter material. What follows is the work — not in thi
 !!! mascot-celebration "Course Complete"
     <img src="../../img/mascot/celebration.png" class="mascot-admonition-img" alt="Pemba celebrating">
     You've finished the textbook. You can read any LLM API call and predict its cost. You can find the hotspots in any production logs. You can ship optimizations defensibly with A/B tests, eval suites, and budget caps. You can build cost as a first-class engineering metric on your team. From here on out, every token saved is one you knew how to save deliberately. Every token counts — and counting is fun. Welcome to the discipline.
+
+
+---
+
+[See Annotated References](./references.md)
