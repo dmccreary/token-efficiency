@@ -126,6 +126,7 @@ nav:
     - List of Case Studies: case-studies/index.md
     - Textbook Dashboard UI Mockup: case-studies/textbook-dashboard/ui-mockup.md
     - Textbook Dashboard Walkthrough: case-studies/textbook-dashboard/index.md
+    - A Little Graph Saves a Lot of Tokens: case-studies/little-graph/index.md
     #- Case Study 1: Optimizing a Customer Support Bot: case-studies/case-study-1/index.md
     #- Case Study 2: Reducing Costs in a Content Generation Pipeline: case-studies/case-study-2/index.md
     #- Case Study 3: Improving Token Efficiency in a Retrieval-Augmented Generation System: case-studies/case-study-3/index.md
