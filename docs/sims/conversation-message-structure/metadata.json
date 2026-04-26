@@ -1,0 +1,43 @@
+{
+  "title": "Conversation Message Structure",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization",
+  "description": "Interactive MicroSim for conversation message structure",
+  "date": "2026-04-26",
+  "educational": {
+    "gradeLevel": [
+      "adult",
+      "professional"
+    ],
+    "subjectArea": "Computer Science / Generative AI",
+    "topic": "Conversation Message Structure",
+    "learningObjectives": [
+      "Analyze how a multi-turn conversation is structured into discrete messages and identify each message's role and contribution to total token count."
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "duration": "15-20 minutes",
+    "prerequisites": [],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 600
+    },
+    "responsive": true,
+    "dependencies": [],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive exploration",
+    "keyQuestions": [],
+    "commonMisconceptions": [],
+    "assessmentOpportunities": []
+  },
+  "chapter": "01-llms-tokens-generation-basics"
+}

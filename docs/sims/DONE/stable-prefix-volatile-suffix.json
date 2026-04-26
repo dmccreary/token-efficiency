@@ -1,0 +1,14 @@
+{
+  "sim_id": "stable-prefix-volatile-suffix",
+  "diagram_name": "Stable Prefix and Volatile Suffix",
+  "chapter_number": 14,
+  "chapter_title": "Prompt Caching Patterns",
+  "chapter_dir": "14-prompt-caching-patterns",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "classify",
+  "learning_objective": "Classify prompt components as stable or volatile and place the cache boundary correctly to maximize the cached portion.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** stable-prefix-volatile-suffix<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Show a typical production prompt as a horizontal stack of components, color-coded by stable vs. volatile, with the cache boundary marked, so learners can see why ordering matters.\n\nBloom Level: Understand (L2)\nBloom Verb: classify\n\nLearning objective: Classify prompt components as stable or volatile and place the cache boundary correctly to maximize the cached portion.\n\nCanvas layout:\n- Main area: A wide horizontal bar representing the prompt, divided into labeled segments\n- Each segment is colored: green for stable, orange for volatile\n- A vertical dashed line marks the current cache boundary position\n- Below the bar: a numeric readout of \"Cached tokens: N | Uncached tokens: M | Cache eligibility: X%\"\n\nDefault segments (left to right):\n- \"System prompt\" (green, 3,000 tokens)\n- \"Tool definitions\" (green, 1,200 tokens)\n- \"Few-shot examples\" (green, 1,500 tokens)\n- \"Retrieved context\" (yellow — sometimes stable, sometimes not, 1,500 tokens)\n- \"Conversation history\" (mixed, 800 tokens)\n- \"Current user message\" (orange, 200 tokens)\n\nInteractive controls:\n- Drag the cache boundary line left or right to see how the eligible token count changes\n- Toggle each segment between stable / volatile / mixed\n- Button: \"Anti-pattern: timestamp in system prompt\" — adds a timestamp to the system prompt segment, marks it volatile, shows the eligible portion drop to zero\n- Button: \"Restructure: move volatile to the end\" — animates volatile segments moving to the right of the boundary\n\nData Visibility Requirements:\n  Stage 1: Show the default arrangement with the cache boundary at the natural stable/volatile join\n  Stage 2: When user toggles a segment to volatile, recompute eligibility live\n  Stage 3: When the anti-pattern button is clicked, show the cascading effect on eligibility\n\nDefault state: Boundary just before \"Current user message\", ~83% cache eligibility\n\nImplementation: p5.js with responsive width and updateCanvasSize()"
+}

@@ -1,0 +1,14 @@
+{
+  "sim_id": "openai-function-calling-loop",
+  "diagram_name": "Function Calling Loop with Tool Choice",
+  "chapter_number": 5,
+  "chapter_title": "The OpenAI Ecosystem",
+  "chapter_dir": "05-openai-ecosystem",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a function-calling round-trip and choose the right `tool_choice` setting based on whether the request needs to call a tool.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** openai-function-calling-loop<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show how function calling works end to end and how `tool_choice` changes the loop shape.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a function-calling round-trip and choose the right `tool_choice` setting based on whether the request needs to call a tool.\n\nVisual style: Sequence diagram with three swimlanes (App, OpenAI API, Tool implementation)\n\nSteps shown:\n1. App → OpenAI: messages + tools array + tool_choice\n2. OpenAI → App: assistant message with `tool_calls` array\n3. App → Tool: invoke the named function with the parsed JSON arguments\n4. Tool → App: returns result\n5. App → OpenAI: original messages + assistant message + tool message with the result\n6. OpenAI → App: final assistant text response\n\nInteractive controls:\n- Dropdown: tool_choice = \"auto\" / \"none\" / \"required\" / \"{specific tool}\"\n- Toggle: \"Show token costs at each step\"\n\nBehaviors:\n- \"auto\": full loop runs as shown\n- \"none\": skips steps 2–5 entirely; model returns text only\n- \"required\": model is forced to emit tool_calls even on a question that wouldn't normally need them\n- \"{specific tool}\": model is forced to call that exact tool\n\nImplementation: Mermaid sequence diagram, responsive layout"
+}

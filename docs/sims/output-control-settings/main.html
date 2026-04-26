@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Output Control Settings</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Output Control Settings — distribution comparison</span><span class="subtitle">Five output-control configurations side by side</span></div>
+<div class="meters-grid" style="grid-template-columns:repeat(5, 1fr); gap:8px">
+  <div class="meter"><div class="meter-label">Baseline</div><canvas id="h0"></canvas><div class="meter-readout" id="r0"></div></div>
+  <div class="meter"><div class="meter-label">+ max_tokens</div><canvas id="h1"></canvas><div class="meter-readout" id="r1"></div></div>
+  <div class="meter"><div class="meter-label">+ stop sequence</div><canvas id="h2"></canvas><div class="meter-readout" id="r2"></div></div>
+  <div class="meter"><div class="meter-label">+ concise instr</div><canvas id="h3"></canvas><div class="meter-readout" id="r3"></div></div>
+  <div class="meter"><div class="meter-label">+ all combined</div><canvas id="h4"></canvas><div class="meter-readout" id="r4"></div></div>
+</div>
+<div class="status" id="status">Each panel shows the per-response output-token distribution under one configuration.</div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block">max_tokens cap: <span id="mtVal">500</span><input type="range" id="mtSlider" min="100" max="4000" step="50" value="500" style="width:200px"></label>
+<label class="control-block"><input type="checkbox" id="showTrunc" checked> Show truncation rate</label>
+</div>
+</div>
+</main>
+<script src="output-control-settings.js"></script>
+</body>
+</html>

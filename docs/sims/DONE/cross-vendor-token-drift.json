@@ -1,0 +1,14 @@
+{
+  "sim_id": "cross-vendor-token-drift",
+  "diagram_name": "Cross-Vendor Token Count Drift",
+  "chapter_number": 6,
+  "chapter_title": "The Google Gemini Ecosystem",
+  "chapter_dir": "06-google-gemini-ecosystem",
+  "library": "p5.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "assess",
+  "learning_objective": "Assess which vendor offers the lowest cost for a given content shape by comparing tokenizations across all three vendors.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: microsim\n**sim-id:** cross-vendor-token-drift<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Let learners type or paste text and see the same content tokenized by each vendor's tokenizer side by side, with the resulting token counts and a per-vendor cost estimate.\n\nBloom Level: Evaluate (L5)\nBloom Verb: assess\n\nLearning objective: Assess which vendor offers the lowest cost for a given content shape by comparing tokenizations across all three vendors.\n\nCanvas layout:\n- Top: Multi-line text input (default: a paragraph mixing English, code, and a Japanese sentence)\n- Middle: Three columns side by side, one per vendor (Claude, OpenAI, Gemini), each showing token chips and a token count\n- Bottom: A bar chart showing per-vendor cost for the input text at each vendor's published input price\n\nInteractive controls:\n- Text area\n- Buttons: \"Load: English prose\" / \"Load: Code snippet\" / \"Load: Multilingual\" / \"Load: Long document (~10K tokens)\"\n- Dropdown per column: which model tier to use for cost calculation (e.g. Claude Sonnet, GPT-4o, Gemini Pro)\n\nData Visibility Requirements:\n  Stage 1: Show three side-by-side tokenizations with chips\n  Stage 2: Show the count delta below each column (\"Claude: 17 tokens\", etc.)\n  Stage 3: Show the per-vendor cost calculation at the bottom\n  Stage 4: Highlight the cheapest vendor in green for the current input\n\nDefault state: English prose example, all three columns visible\n\nImplementation: p5.js with responsive width; uses simplified tokenization simulators for each vendor (illustrative, not bit-exact)"
+}

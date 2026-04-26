@@ -1,0 +1,44 @@
+{
+  "title": "Pareto Analysis of Per-Feature Cost",
+  "creator": "Dan McCreary",
+  "subject": "LLM Token Efficiency",
+  "description": "Interactive Chart.js dual-axis combo (sorted bars + cumulative line) showing the power-law shape of per-feature LLM cost.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "LLM Operations",
+    "topic": "Log File Analysis and Cost Hotspots",
+    "learningObjectives": [
+      "Identify the vital-few features responsible for the majority of LLM cost using Pareto analysis on real-shaped data."
+    ],
+    "bloomsTaxonomy": "Analyze (L4)",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Basic familiarity with bar charts and percentile thinking"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Chart.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 540},
+    "responsive": true,
+    "dependencies": ["chart.js@4.4.4"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": false
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive Pareto chart with vital-few callouts",
+    "keyQuestions": [
+      "Which features make the 80% cut?",
+      "What share of features explain 80% of cost?",
+      "Where does optimizing the long tail stop being worth it?"
+    ],
+    "commonMisconceptions": [
+      "Every feature deserves equal optimization attention.",
+      "The cost distribution is roughly uniform — it almost never is."
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "11-log-file-analysis"
+}

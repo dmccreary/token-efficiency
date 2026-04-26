@@ -1,0 +1,40 @@
+{
+  "title": "Cheap-First Cascade with Escalation",
+  "creator": "Dan McCreary",
+  "subject": "Token Efficiency",
+  "description": "Flowchart MicroSim of cheap-first cascade with live expected-cost calculation.",
+  "date": "2026-04-25",
+  "educational": {
+    "subjectArea": "LLM Engineering",
+    "topic": "Model Routing and Output Control",
+    "learningObjectives": [
+      "Implement a cheap-first cascade with appropriate escalation triggers and quantify the expected cost savings."
+    ],
+    "bloomsTaxonomy": "Apply (L3)",
+    "duration": "20-30 minutes",
+    "prerequisites": ["Chapter 17: model routing, quality gates"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 600},
+    "responsive": true,
+    "dependencies": ["mermaid@11"],
+    "accessibility": {"hasAltText": false, "keyboardNavigable": true}
+  },
+  "pedagogical": {
+    "teachingStrategy": "Live cost calculation with cascade flowchart",
+    "keyQuestions": [
+      "What is the expected cost at each cheap-pass rate?",
+      "When is the Opus tier worth adding?",
+      "Why does raising cheap-pass-rate dominate other optimizations?"
+    ],
+    "commonMisconceptions": [
+      "Path costs are marginal, not cumulative",
+      "Confidence threshold and pass rate are independent"
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "17-routing-output-control"
+}

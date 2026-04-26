@@ -1,0 +1,46 @@
+{
+  "title": "Function Calling Loop with Tool Choice",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization for Generative AI",
+  "description": "Sequence diagram of the OpenAI function-calling round-trip with interactive tool_choice variants and per-step token annotations.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "Generative AI / LLM Operations",
+    "topic": "Function Calling Loop with Tool Choice",
+    "learningObjectives": [
+      "Implement an OpenAI function-calling round trip",
+      "Choose the right tool_choice setting for a given workload"
+    ],
+    "bloomsTaxonomy": "Apply",
+    "duration": "15-20 minutes",
+    "prerequisites": ["OpenAI Chat Completions API", "JSON request / response shape"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 640},
+    "responsive": true,
+    "dependencies": ["mermaid@11"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Interactive sequence diagram with mode selector and contextual explanations",
+    "keyQuestions": [
+      "Which tool_choice setting always uses 2 API round trips?",
+      "When does tool_choice=none waste tokens?"
+    ],
+    "commonMisconceptions": [
+      "Thinking tool_choice=auto always calls a tool",
+      "Thinking tool_choice=required is safe for arbitrary inputs"
+    ],
+    "assessmentOpportunities": [
+      "Pick the right tool_choice setting for a list of described workloads"
+    ]
+  },
+  "chapter": "05-openai-ecosystem"
+}

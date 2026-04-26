@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Skill Refactoring Before/After</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Skill Refactoring — per-step token cost, before vs after</span></div>
+<div class="status" id="status">Toggle each step's "refactored to script" state. Watch totals update.</div>
+<div class="timeline" style="height: 280px"><canvas id="chart"></canvas></div>
+<div class="controls">
+<div class="control-row" id="stepsRow"></div>
+<div class="control-row">
+<label class="control-block">Invocations/month: <span id="invVal">10,000</span><input type="range" id="invSlider" min="100" max="1000000" step="100" value="10000" style="width:240px"></label>
+<label class="control-block">$/MTok input: <span id="prVal">3.00</span><input type="range" id="prSlider" min="1" max="20" step="0.5" value="3" style="width:140px"></label>
+</div>
+</div>
+</main>
+<script src="skill-refactoring-before-after.js"></script>
+</body>
+</html>

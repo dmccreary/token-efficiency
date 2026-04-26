@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Token Spike Alert with Drill-Down</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header">
+    <span class="title">Token Spike Alert with Drill-Down</span>
+    <span class="subtitle">Click the spike to identify which feature, user, and template caused it</span>
+</div>
+
+<div class="controls">
+    <label class="control-block">
+        Alert threshold (tokens/min): <span id="thresholdVal">120,000</span>
+        <input type="range" id="threshold" min="40000" max="300000" step="5000" value="120000">
+    </label>
+    <label class="control-block">
+        <input type="checkbox" id="baselineToggle" checked>
+        Show baseline mean ± 2σ
+    </label>
+    <button id="resetBtn">Reset drill-down</button>
+</div>
+
+<div class="status" id="status">Click a point on the spike (around hour 14) to drill down by feature, user, and prompt template.</div>
+
+<div class="main-chart">
+    <canvas id="timeline"></canvas>
+</div>
+
+<div class="drilldown-grid" id="drilldownGrid">
+    <div class="dd-panel">
+        <div class="dd-label">By feature (% of spike volume)</div>
+        <canvas id="byFeature"></canvas>
+    </div>
+    <div class="dd-panel">
+        <div class="dd-label">By user (top 5)</div>
+        <canvas id="byUser"></canvas>
+    </div>
+    <div class="dd-panel">
+        <div class="dd-label">By prompt_hash (top 5)</div>
+        <canvas id="byHash"></canvas>
+    </div>
+</div>
+
+</main>
+<script src="token-spike-alert-drilldown.js"></script>
+</body>
+</html>

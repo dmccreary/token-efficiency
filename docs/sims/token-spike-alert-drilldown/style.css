@@ -1,0 +1,97 @@
+/* Token Spike Alert with Drill-Down */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+    width: 100%; height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8fafc;
+    color: #1f2937;
+    overflow: hidden;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px 14px;
+    gap: 8px;
+}
+
+.header { display: flex; align-items: baseline; gap: 12px; }
+.title { font-weight: 700; font-size: 16px; color: #37474f; }
+.subtitle { font-size: 12px; color: #64748b; }
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+}
+.control-block { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; }
+.control-block input[type=range] { width: 200px; }
+
+button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    color: #1f2937;
+}
+button:hover { background: #f1f5f9; }
+
+.status {
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: #eff6ff;
+    border-left: 3px solid #0277bd;
+    color: #1e3a8a;
+    min-height: 36px;
+}
+.status.fired { background: #fef2f2; border-left-color: #c62828; color: #7f1d1d; }
+.status.success { background: #f0fdf4; border-left-color: #2e7d32; color: #14532d; }
+
+.main-chart {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    flex: 0 0 auto;
+}
+.main-chart canvas { height: 220px !important; width: 100% !important; }
+
+.drilldown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+.dd-panel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+}
+.dd-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 4px;
+}
+.dd-panel canvas { height: 170px !important; width: 100% !important; flex: 1 1 auto; }
+.dd-panel.empty { background: #f1f5f9; }
+.dd-panel.empty .dd-label { color: #94a3b8; }
+.empty-text {
+    color: #94a3b8;
+    font-size: 12px;
+    text-align: center;
+    padding-top: 50px;
+    font-style: italic;
+}

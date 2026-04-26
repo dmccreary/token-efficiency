@@ -1,0 +1,43 @@
+{
+  "title": "Precision/Recall Tradeoff for K Selection",
+  "creator": "Dan McCreary",
+  "subject": "Token Efficiency",
+  "description": "Interactive MicroSim for justifying a K choice in RAG retrieval based on precision, recall, and per-query cost.",
+  "date": "2026-04-25",
+  "educational": {
+    "subjectArea": "LLM Engineering",
+    "topic": "Retrieval-Augmented Generation Optimization",
+    "learningObjectives": [
+      "Justify a choice of K based on precision, recall, and per-query cost."
+    ],
+    "bloomsTaxonomy": "Evaluate (L5)",
+    "duration": "20-30 minutes",
+    "prerequisites": ["Chapter 15: precision, recall, top-K retrieval, rerankers"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Chart.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 540},
+    "responsive": true,
+    "dependencies": ["chart.js@4.4.4"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Multi-curve evaluation with cost-acceptable zone",
+    "keyQuestions": [
+      "Which K satisfies recall >= 0.85 AND cost <= $0.005?",
+      "Why does the reranker widen the band?",
+      "When does the band disappear entirely?"
+    ],
+    "commonMisconceptions": [
+      "Higher K is always better",
+      "Precision and recall are independent of cost"
+    ],
+    "assessmentOpportunities": []
+  },
+  "chapter": "15-rag-optimization"
+}

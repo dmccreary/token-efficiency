@@ -1,0 +1,14 @@
+{
+  "sim_id": "pareto-feature-cost",
+  "diagram_name": "Pareto Analysis of Per-Feature Cost",
+  "chapter_number": 11,
+  "chapter_title": "Log File Analysis and Cost Hotspots",
+  "chapter_dir": "11-log-file-analysis",
+  "library": "Chart.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "identify",
+  "learning_objective": "Identify the vital-few features responsible for the majority of LLM cost using Pareto analysis on real-shaped data.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** pareto-feature-cost<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show a representative per-feature cost distribution as a sorted bar chart with an overlaid cumulative-share line, demonstrating the power-law shape and identifying the \"vital few\" features that dominate cost.\n\nBloom Level: Analyze (L4)\nBloom Verb: identify\n\nLearning objective: Identify the vital-few features responsible for the majority of LLM cost using Pareto analysis on real-shaped data.\n\nChart type: Combination chart (sorted bars + line)\n- X-axis: Feature name (sorted by cost descending)\n- Y-axis (left): Monthly cost (\\$)\n- Y-axis (right): Cumulative share of total cost (%)\n\nData: 25 features with costs following a power-law distribution\n- Top 3 features: ~60% of cost\n- Top 5 features: ~80% of cost\n- Bottom 15 features: ~5% of cost combined\n\nVisual elements:\n- Bars colored by cost magnitude (red for top 5, orange for next 5, gray for the rest)\n- Cumulative line crossing the 80% mark with a callout\n- A \"vital few / trivial many\" annotation pointing at the 80% threshold\n\nInteractive controls:\n- Slider: \"Pareto target\" (50% / 80% / 90%) — recomputes how many features fall under the threshold\n- Toggle: \"Show cumulative line\"\n- Hover any bar: show feature name, cost, share\n\nDefault: 80% target, cumulative line on\n\nImplementation: Chart.js dual-axis combo, responsive width"
+}

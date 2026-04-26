@@ -1,0 +1,14 @@
+{
+  "sim_id": "rag-precision-recall-k",
+  "diagram_name": "Precision/Recall Tradeoff for K Selection",
+  "chapter_number": 15,
+  "chapter_title": "Retrieval-Augmented Generation Optimization",
+  "chapter_dir": "15-rag-optimization",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "justify",
+  "learning_objective": "Justify a choice of K based on precision, recall, and per-query cost.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** rag-precision-recall-k<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Plot retrieval precision and recall as functions of K for a representative dataset, with cost overlaid, so learners can pick the K that balances quality and cost.\n\nBloom Level: Evaluate (L5)\nBloom Verb: justify\n\nLearning objective: Justify a choice of K based on precision, recall, and per-query cost.\n\nChart type: Multi-line chart with secondary axis\n- X-axis: K (top-K retrieved chunks, 1 to 50)\n- Y-axis (left): Precision and recall (0–1)\n- Y-axis (right): Per-query input cost (\\$)\n\nData series:\n1. Retrieval precision (line, descending — adding more chunks adds more irrelevant ones)\n2. Retrieval recall (line, ascending — adding more chunks finds more relevant ones)\n3. Per-query input cost (line, linear ascending)\n\nMarkers:\n- \"Precision-recall crossover\" point\n- \"Cost-acceptable\" zone (recall ≥ 0.85, cost ≤ \\$0.005)\n- Recommended K range as a shaded band\n\nInteractive controls:\n- Slider: Reranker N (the post-rerank cut)\n- Slider: Chunk size (changes per-K cost)\n- Toggle: \"Use reranker\" — without reranker, precision drops faster as K grows\n\nData Visibility Requirements:\n  Stage 1: Show all three lines for default settings\n  Stage 2: As reranker N changes, recompute and animate\n  Stage 3: Highlight the recommended K band\n\nDefault state: K=20, reranker N=5\n\nImplementation: Chart.js dual-axis multi-line, responsive width"
+}

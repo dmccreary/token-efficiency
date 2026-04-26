@@ -1,0 +1,14 @@
+{
+  "sim_id": "burn-rate-monthly-forecast",
+  "diagram_name": "Burn Rate and Monthly Forecast",
+  "chapter_number": 3,
+  "chapter_title": "Pricing, Economics, and Async API Modes",
+  "chapter_dir": "03-pricing-economics-async-apis",
+  "library": "Chart.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "calculate",
+  "learning_objective": "Calculate a monthly cost forecast from a partial-month burn rate and identify when current spend is on track to exceed the budget.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** burn-rate-monthly-forecast<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show daily LLM spend over a month with the running cumulative spend, a linear forecast from current burn rate, and a budget line, so learners can see when a forecast is on track to bust the budget.\n\nBloom Level: Apply (L3)\nBloom Verb: calculate\n\nLearning objective: Calculate a monthly cost forecast from a partial-month burn rate and identify when current spend is on track to exceed the budget.\n\nChart type: Combination chart\n- X-axis: Day of month (1–30)\n- Y-axis (left): Daily spend (\\$)\n- Y-axis (right): Cumulative spend (\\$)\n\nData series:\n1. Daily spend (blue bars) — actual daily spend up to today (day 18 in default state)\n2. Cumulative spend (solid green line) — running total\n3. Forecast cumulative spend (dashed green line) — extrapolation from current burn rate to day 30\n4. Budget line (red horizontal at \\$30,000)\n\nInteractive controls:\n- Slider: \"Today is day N\" (1–30, default 18) — changes which day is \"now\" and re-extrapolates\n- Slider: \"Adjust daily burn\" (multiplier 0.5–2.0) — scales the post-today forecast\n- Toggle: \"Apply seasonality\" — multiplies weekday forecasts by 1.3, weekend forecasts by 0.6\n\nData Visibility Requirements:\n  Stage 1: Show actual daily spend as bars for days 1 through \"today\"\n  Stage 2: Show cumulative spend as a solid line over the actual data\n  Stage 3: Extrapolate forecast cumulative as a dashed line from \"today\" to day 30\n  Stage 4: Show budget line and label \"ON TRACK\" or \"OVER BUDGET\" based on forecast intersection\n  Stage 5: When seasonality is applied, show how the forecast bends\n\nDefault values:\n- Today: day 18\n- Burn multiplier: 1.0\n- Seasonality: off\n- Budget: \\$30,000\n\nImplementation: Chart.js, responsive width"
+}

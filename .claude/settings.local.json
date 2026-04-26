@@ -12,7 +12,14 @@
       "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/welcome.png)",
       "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/thinking.png)",
       "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/tip.png)",
-      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/warning.png)"
+      "Bash(python /Users/dan/Documents/ws/claude-skills/src/image-utils/trim-padding-from-image.py docs/img/mascot/warning.png)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/fix-iframe-heights.py --project-dir /Users/dan/Documents/ws/token-efficiency --sim ab-test-decision-matrix --verbose)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/validate-sims.py --project-dir /Users/dan/Documents/ws/token-efficiency --sim ab-test-decision-matrix --verbose)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/fix-iframe-heights.py --project-dir /Users/dan/Documents/ws/token-efficiency --sim ab-test-sample-size-calculator --verbose)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/update-mkdocs-nav.py --project-dir /Users/dan/Documents/ws/token-efficiency --verbose)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/fix-iframe-heights.py --project-dir /Users/dan/Documents/ws/token-efficiency --sim agent-budget-policy-multi-limit --verbose)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/validate-sims.py --project-dir /Users/dan/Documents/ws/token-efficiency --format table)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/src/microsim-utils/validate-sims.py --project-dir /Users/dan/Documents/ws/token-efficiency --sim bpe-tokenization-pipeline --verbose)"
     ]
   }
 }

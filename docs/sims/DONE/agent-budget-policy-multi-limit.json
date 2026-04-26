@@ -1,0 +1,14 @@
+{
+  "sim_id": "agent-budget-policy-multi-limit",
+  "diagram_name": "Agent Budget Policy with Multiple Limits",
+  "chapter_number": 18,
+  "chapter_title": "Agent Budget Policies and Session Limits",
+  "chapter_dir": "18-agent-budget-policies",
+  "library": "Chart.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a multi-cap budget policy and identify which cap fires first under different failure modes.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** agent-budget-policy-multi-limit<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show a session in progress with four parallel budget meters (tokens, tool calls, iterations, wall clock) and visualize which one would fire first under different scenarios.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a multi-cap budget policy and identify which cap fires first under different failure modes.\n\nChart type: Multi-meter dashboard\n- Four horizontal \"fuel gauge\" meters: Tokens used / Cap, Tool calls / Cap, Iterations / Cap, Wall clock / Cap\n- A timeline below showing the session's per-iteration consumption\n\nInteractive controls:\n- Sliders to set each cap value\n- Dropdown: scenario (\"Healthy session\", \"Token runaway\", \"Tool-call explosion\", \"Stuck loop\")\n- Button: \"Run session\" — animates iterations until one cap fires\n- Toggle: \"Enable graceful degradation at 75% of any cap\"\n\nData Visibility Requirements:\n  Stage 1: Show all four meters at 0%\n  Stage 2: As the session runs, animate the meters filling at scenario-appropriate rates\n  Stage 3: When the first cap fires, highlight which one and stop the session\n  Stage 4: With graceful degradation on, show consumption rate slowing after 75%\n\nDefault state: Healthy scenario with reasonable caps\n\nImplementation: Chart.js horizontal bar charts as meters, responsive grid layout"
+}

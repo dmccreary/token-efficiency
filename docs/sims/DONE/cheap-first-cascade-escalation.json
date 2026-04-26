@@ -1,0 +1,14 @@
+{
+  "sim_id": "cheap-first-cascade-escalation",
+  "diagram_name": "Cheap-First Cascade with Escalation",
+  "chapter_number": 17,
+  "chapter_title": "Model Routing and Output Control",
+  "chapter_dir": "17-routing-output-control",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "implement",
+  "learning_objective": "Implement a cheap-first cascade with appropriate escalation triggers and quantify the expected cost savings.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** cheap-first-cascade-escalation<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the cheap-first cascade flow with escalation triggers visible at each gate, plus a cost annotation showing per-request expected cost as a function of escalation rate.\n\nBloom Level: Apply (L3)\nBloom Verb: implement\n\nLearning objective: Implement a cheap-first cascade with appropriate escalation triggers and quantify the expected cost savings.\n\nVisual style: Flowchart with three branches\n\nSteps:\n1. User request → Send to cheap model (Haiku, \\$0.001)\n2. Run quality gate:\n   - Format check (JSON valid?)\n   - Confidence check (logprob delta > threshold?)\n   - Length check (within expected range?)\n3. Branch:\n   - If all pass → Return cheap response (cost: \\$0.001)\n   - If any fail → Escalate to expensive model (Sonnet, \\$0.005), return that response (cost: \\$0.001 + \\$0.005 = \\$0.006)\n4. Optional second escalation to most-expensive model (Opus) on second failure\n\nAnnotations:\n- Per-stage cost\n- Per-stage probability (default: 80% cheap-pass, 18% sonnet-pass, 2% opus-pass)\n- Expected cost per request: 0.80 × \\$0.001 + 0.18 × \\$0.006 + 0.02 × \\$0.026 = \\$0.0024\n- Compared to \"always Opus\" baseline (\\$0.026): 91% reduction\n\nInteractive controls:\n- Slider: cheap-pass rate (50%–95%)\n- Slider: confidence threshold\n- Toggle: \"Add Opus tier\" (on/off)\n- Toggle: \"Show expected cost calculation\"\n\nImplementation: Mermaid flowchart with cost annotations, responsive layout"
+}

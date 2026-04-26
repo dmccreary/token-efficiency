@@ -1,0 +1,14 @@
+{
+  "sim_id": "embedding-space-concept",
+  "diagram_name": "Embedding Space Concept",
+  "chapter_number": 2,
+  "chapter_title": "Sampling, Tokenization, and Embeddings",
+  "chapter_dir": "02-sampling-tokenization-embeddings",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "classify",
+  "learning_objective": "Classify words by their position in a 2D embedding projection and infer that nearness in embedding space reflects semantic similarity.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: diagram\n**sim-id:** embedding-space-concept<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Visualize how semantically related words cluster together in a 2D projection of embedding space, building intuition for similarity-based retrieval.\n\nBloom Level: Understand (L2)\nBloom Verb: classify\n\nLearning objective: Classify words by their position in a 2D embedding projection and infer that nearness in embedding space reflects semantic similarity.\n\nCanvas layout:\n- Main area (full width): 2D scatter plot with axes labeled \"Embedding dim 1\" and \"Embedding dim 2\"\n- Below: a text input and a \"Find nearest\" button\n\nData points (pre-positioned to form three clear clusters):\n- Animal cluster: \"panda\", \"bear\", \"fox\", \"wolf\", \"tiger\" (cluster around upper-left)\n- Vehicle cluster: \"car\", \"truck\", \"bus\", \"bicycle\", \"motorcycle\" (cluster around lower-right)\n- Food cluster: \"bamboo\", \"apple\", \"rice\", \"bread\", \"pasta\" (cluster around upper-right)\n\nInteractive controls:\n- Text input: \"Type a word to find nearest neighbors\"\n- Button: \"Find nearest\" — places a marker at an approximate position based on which cluster the word would belong to, then draws lines to its 3 nearest existing points\n- Toggle: \"Show clusters\" — toggles colored cluster background regions\n\nData Visibility Requirements:\n  Stage 1: Show all words plotted as labeled dots in 2D\n  Stage 2: When user types a word and clicks \"Find nearest\", place a star marker and draw lines to the 3 nearest existing points\n  Stage 3: Show the distance values next to each line\n\nDefault state: All clusters visible, no query\n\nImplementation:\n- p5.js with responsive width\n- Word positions are hard-coded to form pedagogically clear clusters\n- The \"find nearest\" computation uses simple Euclidean distance on the 2D positions\n- This is a *concept* simulator — not a real embedding model"
+}

@@ -1,0 +1,46 @@
+{
+  "title": "OpenAI Token Usage Object Anatomy",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization for Generative AI",
+  "description": "Side-by-side anatomy of an OpenAI Chat Completions response with the usage fields connected to billing categories.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "Generative AI / LLM Operations",
+    "topic": "OpenAI Token Usage Object Anatomy",
+    "learningObjectives": [
+      "Identify each field of the OpenAI usage object",
+      "Map each usage field to its billing category"
+    ],
+    "bloomsTaxonomy": "Remember",
+    "duration": "10 minutes",
+    "prerequisites": ["OpenAI API request/response shape"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 640},
+    "responsive": true,
+    "dependencies": ["p5.js@1.11"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Hover-driven labeling with side-by-side JSON and billing categories",
+    "keyQuestions": [
+      "Which field maps to the Input billing category?",
+      "Where do reasoning_tokens appear in the cost breakdown?"
+    ],
+    "commonMisconceptions": [
+      "Thinking reasoning_tokens are billed separately from completion_tokens",
+      "Thinking total_tokens is a billable category"
+    ],
+    "assessmentOpportunities": [
+      "Match each field to its billing category by name"
+    ]
+  },
+  "chapter": "05-openai-ecosystem"
+}

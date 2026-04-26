@@ -1,0 +1,14 @@
+{
+  "sim_id": "prompt-trim-before-after",
+  "diagram_name": "Before-and-After of a Real-World Prompt Trim",
+  "chapter_number": 13,
+  "chapter_title": "Prompt Engineering for Token Efficiency",
+  "chapter_dir": "13-prompt-engineering-tokens",
+  "library": "Chart.js",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "assess",
+  "learning_objective": "Assess the cumulative impact of multiple prompt-engineering techniques on a representative prompt.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: chart\n**sim-id:** prompt-trim-before-after<br/>\n**Library:** Chart.js<br/>\n**Status:** Specified\n\nPurpose: Show a representative production prompt before and after applying the techniques in this chapter, with the per-section token reduction visible.\n\nBloom Level: Evaluate (L5)\nBloom Verb: assess\n\nLearning objective: Assess the cumulative impact of multiple prompt-engineering techniques on a representative prompt.\n\nChart type: Grouped horizontal bar chart\n- Y-axis: Prompt section (System prompt, Tool defs, Few-shot, Retrieved context, User message, Output)\n- X-axis: Token count\n\nTwo grouped series per section:\n1. Before (gray bars)\n2. After (green bars)\n\nSections and example reductions:\n- System prompt: 5,200 → 2,800 (hygiene + instruction compression)\n- Tool defs: 1,800 → 1,400 (schema minimization)\n- Few-shot: 2,400 → 800 (pruning)\n- Retrieved context: 1,500 → 1,500 (no change in this example — handled in Chapter 15)\n- User message: 200 → 200 (no change)\n- Output budget: 1,000 → 400 (concise output instruction)\n\nBelow the chart:\n- Total before / total after / % reduction\n- Monthly savings projection at sample request volume\n\nInteractive controls:\n- Toggle each technique on/off to see incremental contribution\n- Slider: Monthly request volume\n\nDefault state: All techniques applied, 100K requests/month\n\nImplementation: Chart.js horizontal grouped bars, responsive width"
+}

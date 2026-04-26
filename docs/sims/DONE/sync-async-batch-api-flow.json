@@ -1,0 +1,14 @@
+{
+  "sim_id": "sync-async-batch-api-flow",
+  "diagram_name": "Synchronous vs. Async vs. Batch API Flow",
+  "chapter_number": 3,
+  "chapter_title": "Pricing, Economics, and Async API Modes",
+  "chapter_dir": "03-pricing-economics-async-apis",
+  "library": "Mermaid",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "recommend",
+  "learning_objective": "Recommend the appropriate API mode (synchronous, asynchronous, or batch) for a given workload based on latency requirements and cost targets.",
+  "completion_status": "specified",
+  "extracted_date": "2026-04-26",
+  "specification": "Type: workflow\n**sim-id:** sync-async-batch-api-flow<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show the request lifecycle for each of the three API modes side by side, with timing and cost annotations, so learners can match a workload to the right mode.\n\nBloom Level: Evaluate (L5)\nBloom Verb: recommend\n\nLearning objective: Recommend the appropriate API mode (synchronous, asynchronous, or batch) for a given workload based on latency requirements and cost targets.\n\nVisual style: Three vertical swimlanes side by side, each showing a sequence diagram\n\nSwimlane 1: Synchronous\n- Client → Vendor: Send request\n- Vendor: Process (1–10s)\n- Vendor → Client: Return response\n- Annotation: \"Latency: seconds. Cost: 1.0×.\"\n\nSwimlane 2: Asynchronous\n- Client → Vendor: Submit request, receive job ID\n- Client: Free to do other work\n- Vendor: Process (1–60s)\n- Vendor → Client: Webhook callback OR Client polls status\n- Vendor → Client: Return response\n- Annotation: \"Latency: seconds-to-minutes. Cost: 1.0×. Frees the client thread.\"\n\nSwimlane 3: Batch\n- Client → Vendor: Upload JSONL file with many requests\n- Vendor: Schedule and process within 24-hour window\n- Vendor → Client: Notify completion\n- Client → Vendor: Download results JSONL\n- Annotation: \"Latency: hours. Cost: 0.5× (batch discount).\"\n\nInteractive controls:\n- Hover any step to see expanded explanation\n- Toggle: \"Show cost annotations\" / \"Show latency annotations\"\n\nVisual elements:\n- Color coding: blue for sync, purple for async, green for batch\n- A summary table at the bottom comparing the three modes on (latency, cost, when to use)\n\nImplementation: Mermaid sequence diagram, three diagrams arranged horizontally on responsive layout"
+}

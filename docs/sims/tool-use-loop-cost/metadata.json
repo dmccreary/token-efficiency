@@ -1,0 +1,45 @@
+{
+  "title": "Tool Use Loop with Cost Annotations",
+  "creator": "Dan McCreary",
+  "subject": "Token Optimization for Generative AI",
+  "description": "Sequence diagram of a multi-turn tool-use loop with per-turn token annotations showing cumulative input tokens and cache savings.",
+  "date": "2026-04-25",
+  "educational": {
+    "gradeLevel": ["Adult Professional"],
+    "subjectArea": "Generative AI / LLM Operations",
+    "topic": "Tool Use Loop with Cost Annotations",
+    "learningObjectives": [
+      "Examine how tool-use loops accumulate input tokens because the entire prior conversation is re-sent on every turn",
+      "Identify the system prompt and tool definitions as the highest-value prompt-cache targets"
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Anthropic message API basics", "Tool use concept"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "1.0",
+    "canvasDimensions": {"width": "responsive", "height": 720},
+    "responsive": true,
+    "dependencies": ["mermaid@11"],
+    "accessibility": {
+      "hasAltText": false,
+      "keyboardNavigable": true
+    }
+  },
+  "pedagogical": {
+    "teachingStrategy": "Stepwise sequence diagram with cumulative token annotations",
+    "keyQuestions": [
+      "Which portion of the input grows linearly with the number of turns?",
+      "Which portion stays constant and is therefore the best cache target?"
+    ],
+    "commonMisconceptions": [
+      "Thinking the model 'remembers' prior turns automatically (it does not — they are re-sent)"
+    ],
+    "assessmentOpportunities": [
+      "Predict the cumulative input tokens after N iterations"
+    ]
+  },
+  "chapter": "04-anthropic-claude-ecosystem"
+}

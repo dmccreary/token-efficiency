@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Token Distribution Long Tail</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<main>
+<div class="header"><span class="title">Token Distribution — body vs tail</span><span class="subtitle">Where does the bill actually accumulate?</span></div>
+<div class="status" id="status">Loading…</div>
+<div class="meters-grid" style="grid-template-columns: 2fr 1fr; gap:12px">
+<div class="meter"><div class="meter-label">Histogram of input tokens per request (with P50/P95/P99)</div><canvas id="hist"></canvas></div>
+<div class="meter"><div class="meter-label">Cost share by percentile band</div><canvas id="share"></canvas></div>
+</div>
+<div class="controls">
+<div class="control-row">
+<label class="control-block">Workload shape:
+<select id="shape"><option value="body">Body-heavy chat</option><option value="tail">Tail-heavy agent</option><option value="bimodal">Bimodal</option><option value="mixed" selected>Mixed</option></select>
+</label>
+<label class="control-block">Token cap (50K = none): <span id="capVal">none</span><input type="range" id="capSlider" min="500" max="50000" step="500" value="50000" style="width:240px"></label>
+</div>
+</div>
+</main>
+<script src="token-distribution-long-tail.js"></script>
+</body>
+</html>
