@@ -1,10 +1,16 @@
 site_name: Token Efficiency
-site_description: A guide to understanding and improving token efficiency in language models.
+site_description: An interactive intelligent textbook on measuring, analyzing, and reducing the cost of generative AI — vendor-pluralistic across Anthropic Claude, OpenAI, and Google Gemini.
+site_author: Dan McCreary
+site_url: https://dmccreary.github.io/token-efficiency/
+repo_url: https://github.com/dmccreary/token-efficiency
+edit_uri: edit/main/docs/
 
 
 nav:
   - Home: index.md
+  - About: about.md
   - Course Description: course-description.md
+  
   - Chapters:
       - List of Chapters: chapters/index.md
       - 1. LLMs, Tokens, and Generation Basics: chapters/01-llms-tokens-generation-basics/index.md
@@ -76,13 +82,10 @@ nav:
     - Tool Use Loop with Cost Annotations: sims/tool-use-loop-cost/index.md
 
 
-
-
-
-
   - Case Studies:
     - List of Case Studies: case-studies/index.md
-    - Textbook Dashboard: case-studies/textbook-dashboard/index.md
+    - Textbook Dashboard UI Mockup: case-studies/textbook-dashboard/ui-mockup.md
+    - Textbook Dashboard Walkthrough: case-studies/textbook-dashboard/index.md
     #- Case Study 1: Optimizing a Customer Support Bot: case-studies/case-study-1/index.md
     #- Case Study 2: Reducing Costs in a Content Generation Pipeline: case-studies/case-study-2/index.md
     #- Case Study 3: Improving Token Efficiency in a Retrieval-Augmented Generation System: case-studies/case-study-3/index.md
@@ -97,17 +100,32 @@ nav:
       - Taxonomy Distribution Report: learning-graph/taxonomy-distribution.md
       - Mascot Style Guide: learning-graph/mascot-test.md
 
-  - About: about.md
-  
+  - Glossary: glossary.md
+  - License: license.md
+  - Contact: contact.md
+
 
 theme:
   name: material
   logo: img/mascot/neutral.png
-  favicon: img/favicon.png
+  favicon: img/favicon.ico
   palette:
     - scheme: default
       primary: deep orange
       accent: blue grey
+  include_sidebar: true
+  # NOTE: per project CLAUDE.md, do NOT add navigation.tabs — these books use
+  # side navigation optimized for wide landscape screens.
+  features:
+    - content.code.copy        # one-click copy on every code block
+    - content.action.edit      # "edit this page" link via repo_url + edit_uri
+    - navigation.expand        # expand the active section in the sidebar
+    - navigation.path          # breadcrumbs
+    - navigation.prune         # only render visible nav (faster on big sites)
+    - navigation.indexes       # section landing pages from index.md
+    - navigation.top           # back-to-top button on long pages
+    - navigation.footer        # prev/next links in the page footer
+    - toc.follow               # right-side TOC tracks scroll position
 
 extra_css:
   - css/mascot.css
@@ -129,3 +147,64 @@ extra_javascript:
   - js/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - js/extra.js
+
+plugins:
+  - search
+
+  # Auto-generates Open Graph / Twitter social-preview images from each page's
+  # title and description. Requires: pip install "mkdocs-material[imaging]"
+  - social
+
+  # Click-to-zoom for any image. Requires: pip install mkdocs-glightbox
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      slide_effect: slide
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
+
+# Hooks — loaded as raw Python modules, not plugins (avoids name collisions).
+# `plugins/social_override.py` rewrites the og:image / twitter:image tags
+# emitted by the `social` plugin above so that pages with an `image:`
+# frontmatter field use the declared cover image instead of the
+# auto-generated social card under /assets/images/social/.
+hooks:
+  - plugins/social_override.py
+
+# Native MkDocs (1.5+) file-exclusion using gitignore-style patterns.
+# Replaces the third-party mkdocs-exclude plugin — no extra install needed.
+# Excluded files do not appear in the build, search index, sitemap, or nav.
+exclude_docs: |
+  image-prompt*.md
+  /**/image-prompt*.md
+  cover-prompt.md
+  /**/cover-prompt.md
+  TODO.md
+  /**/TODO.md
+
+# Rebuild on changes to docs/ and the config itself when running `mkdocs serve`
+watch:
+  - docs
+  - mkdocs.yml
+
+copyright: Copyright &copy; 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+
+extra:
+  # Suppress the "Made with Material for MkDocs" footer line
+  generator: false
+
+  # Optional: Google Analytics. Uncomment and set property to your G-XXXXXXXX ID.
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXX
+
+  # Intelligent-textbook URI scheme (see
+  # https://dmccreary.github.io/intelligent-textbooks/uri-scheme/)
+  schema: https://dmccreary.github.io/intelligent-textbooks/ns/textbook/v1
+  textbook_name: Token Efficiency
+  textbook_version: "1.0"

@@ -2,15 +2,19 @@
     "cSpell.words": [
         "agentic",
         "Anonymization",
+        "arithmatex",
         "Autoregressive",
         "CUPED",
         "Frontmatter",
         "Hotspot",
+        "linenums",
         "Logit",
         "Logprobs",
         "Multimodal",
+        "pymdownx",
         "Reranker",
         "Subword",
+        "superfences",
         "Tiktoken"
     ]
 }

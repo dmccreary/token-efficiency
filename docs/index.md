@@ -1,9 +1,9 @@
 ---
 title: "Token Efficiency"
 description: "Measuring, analyzing, and reducing the cost of generative AI — a vendor-pluralistic, open-source intelligent textbook for software engineers, ML engineers, and engineering managers."
-image: /token-efficiency/img/cover.png
-og:image: /token-efficiency/img/cover.png
-twitter:image: /token-efficiency/img/cover.png
+image: img/cover.png
+og:image: img/cover.png
+twitter:image: img/cover.png
 hide:
   - toc
 ---
