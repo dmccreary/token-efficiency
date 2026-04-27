@@ -1,0 +1,1860 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A 9-panel graphic novel about a healthtech startup whose beautiful structured logging shipped patient names, diagnoses, and birthdates straight to a vendor without a BAA — and the frantic week that built a real PII redaction pipeline before the audit.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/audit-saved-contract/">
+      
+      
+        <link rel="prev" href="../tokenizer-surprise/">
+      
+      
+        <link rel="next" href="../capstone-quarter-discipline/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>The Audit That Saved the Contract — Two Weeks Before HIPAA, a Logging Reckoning - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Audit That Saved the Contract — Two Weeks Before HIPAA, a Logging Reckoning - Token Efficiency">
+      
+        <meta property="og:description" content="A 9-panel graphic novel about a healthtech startup whose beautiful structured logging shipped patient names, diagnoses, and birthdates straight to a vendor without a BAA — and the frantic week that built a real PII redaction pipeline before the audit.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/audit-saved-contract/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/audit-saved-contract/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Audit That Saved the Contract — Two Weeks Before HIPAA, a Logging Reckoning - Token Efficiency">
+      
+        <meta name="twitter:description" content="A 9-panel graphic novel about a healthtech startup whose beautiful structured logging shipped patient names, diagnoses, and birthdates straight to a vendor without a BAA — and the frantic week that built a real PII redaction pipeline before the audit.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/audit-saved-contract/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-audit-that-saved-the-contract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Audit That Saved the Contract — Two Weeks Before HIPAA, a Logging Reckoning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Stories
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Story Ideas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../red-panda-chatbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. The Red-Panda Chatbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../four-thousand-token-be-helpful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. The 4,000-Token Be Helpful
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cache-that-wasnt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-that-wouldnt-stop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Agent That Wouldn't Stop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../invisible-bill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrong-model-every-job/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Wrong Model for Every Job
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-they-forgot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. The Async They Forgot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-that-wrote-itself/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skill That Wrote Itself
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eternal-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. The Eternal Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-that-lied/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. The A/B Test That Lied
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missing-dashboard-dimension/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. The Missing Dashboard Dimension
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenizer-surprise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-logging-with-no-waist-belt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – Logging With No Waist Belt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-karens-visit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: Karen's Visit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-honest-reckoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The Honest Reckoning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-whiteboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Whiteboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-pii-detector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The PII Detector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-redactor-and-hasher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Redactor and Hasher
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-wednesday-meltdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Wednesday Meltdown
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-audit-day-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Audit Day Walkthrough
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-the-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: The Pass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-day-one-sign" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Day-One Sign
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 9: The Day-One Sign">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-beacon-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the Beacon Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../capstone-quarter-discipline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-logging-with-no-waist-belt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – Logging With No Waist Belt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-karens-visit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: Karen's Visit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-honest-reckoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The Honest Reckoning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-whiteboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Whiteboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-pii-detector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The PII Detector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-redactor-and-hasher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Redactor and Hasher
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-wednesday-meltdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Wednesday Meltdown
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-audit-day-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Audit Day Walkthrough
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-the-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: The Pass
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-day-one-sign" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Day-One Sign
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 9: The Day-One Sign">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-beacon-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the Beacon Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/audit-saved-contract/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-audit-that-saved-the-contract">The Audit That Saved the Contract</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./cover.png" data-desc-position="bottom"><img alt="" src="./cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon illustration style with clean lines and a high-stakes mood. Center: a giant calendar page reading "HIPAA AUDIT — 14 DAYS" prominently in red. To the foreground, an engineer named Yusuf — North African man, late 30s, neat beard, white button-down — and a compliance officer named Karen — older Black woman, gray hair pulled back, sharp blazer — stand looking at a redaction pipeline diagram. The diagram clearly shows PII detection at the trust boundary, hashing, and an audit trail. Behind them, a stack of beautiful but unredacted log files glows with red warning highlights. Above the scene, the title text "The Audit That Saved the Contract" in bold sans-serif lettering. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400), with red accents for the urgency cues. Emotional tone: high-stakes problem-solving — clear-eyed, focused, professional. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is a 9-panel educational graphic novel for the Token Optimization textbook. Setting: a fictional small healthtech startup ("Beacon Health") in the middle of a hospital pilot. Art style: modern flat vector cartoon illustration with clean lines and a serious-but-warm professional mood. Characters appear consistently:
+
+- **Yusuf** — staff engineer, North African man, late 30s, neat beard, white button-down, tired but focused.
+- **Karen** — compliance officer, older Black woman, gray hair pulled back, sharp blazer, calm authority.
+- **Mira** — junior engineer, Middle Eastern woman, mid-20s, headscarf, ponytail-style hijab wrap, hoodie, on-call energy.
+- **Pemba** — recurring red-panda mascot. Russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail. **No clothing.** Cameos at the close.
+
+Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Maintain consistent character appearances across all 9 panels. Emotional tone is high-stakes but never cruel — competence under pressure.
+</details>
+
+<h3 id="prologue-logging-with-no-waist-belt">Prologue – Logging With No Waist Belt</h3>
+<p>Beacon Health was three months into a hospital pilot when their compliance officer, Karen, walked into the engineering bullpen with a single line: <em>"Two weeks until HIPAA audit. I need to see what your logs actually contain."</em> Yusuf, who had spent the previous month proudly building a beautiful structured-logging pipeline that captured every prompt, every completion, and every token count for full observability, felt his stomach drop. He had built the right thing — and shipped it to the wrong place.</p>
+<h2 id="panel-1-karens-visit">Panel 1: Karen's Visit</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-01.png" data-desc-position="bottom"><img alt="" src="./panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 9. Scene: a small startup engineering bullpen, Tuesday morning. Karen — older Black woman, gray hair pulled back, sharp blazer — stands calmly in the doorway holding a single sheet of paper labeled "AUDIT SCOPE." Yusuf — North African man, late 30s, neat beard, white button-down — looks up from his desk, coffee paused mid-sip. Mira — Middle Eastern woman, mid-20s, hijab, hoodie — turns from her monitor with a curious expression. Above the door, a wall calendar shows the audit date circled in red, two weeks away. Color palette: deep russet, warm cream, slate, burnt orange, with red audit-circle accents. Emotional tone: the calm before a major mobilization. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Karen didn't raise her voice. She didn't have to. <em>"Two weeks. I need to see the logs."</em> Yusuf nodded once and pulled up the pipeline. Mira drifted over, sensing the temperature of the room had changed. The first sample log line scrolled past on the projector. It contained a patient's full name, date of birth, and the prompt asking for a differential diagnosis on her chart. Karen read it twice. <em>"This is going to a vendor without a BAA, isn't it."</em></p>
+<h2 id="panel-2-the-honest-reckoning">Panel 2: The Honest Reckoning</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-02.png" data-desc-position="bottom"><img alt="" src="./panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 9. Make the characters and style consistent with the prior panel. Scene: Yusuf at his desk, Karen now seated across from him at a side chair. A laptop between them shows a sample of raw structured log lines, with PII fields highlighted in red: patient names, diagnoses, dates of birth, MRNs. Yusuf is candid, palms on his knees, expression honest and concerned. Karen, calm, takes notes on a yellow legal pad. Mira leans against the doorframe, listening. Color palette: deep russet, warm cream, slate, burnt orange, with red highlight accents on PII fields. Emotional tone: honest accountability — confronting the problem directly. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Yusuf didn't try to soften it. <em>"Yes. The logs go to the same observability vendor we use for the rest of the platform. We don't have a BAA with them. The prompts contain everything you'd expect a clinical AI prompt to contain."</em> Karen nodded slowly, writing on a yellow pad. <em>"I appreciate you saying it directly. We have fourteen days. Let's plan."</em></p>
+<h2 id="panel-3-the-whiteboard">Panel 3: The Whiteboard</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-03.png" data-desc-position="bottom"><img alt="" src="./panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 9. Make the characters and style consistent with the prior panel. Scene: a large whiteboard with a clean architectural diagram. Headers across the top: "1. PII DETECTION (at trust boundary)," "2. REDACTION (before logs leave the perimeter)," "3. HASHING (for fields needed for joins)," "4. AUDIT TRAIL (every redaction event recorded)." A dotted line down the middle of the diagram represents the trust boundary. Yusuf draws; Mira annotates each step with field names: "patient_name → [PATIENT-1A2B], dob → hashed, diagnosis_text → redacted." Karen, seated, reviews against a printed HIPAA technical safeguards reference. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: focused, principled construction. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Yusuf sketched the architecture in twenty minutes. <em>PII detection at the trust boundary. Redaction before logs leave the perimeter. Hashing for the small set of fields needed for joins, with hashes scoped per-tenant. An audit trail recording every redaction event so it could be replayed for compliance review.</em> Karen ran her finger down a printed HIPAA technical-safeguards reference and approved each box. <em>"You build it. I'll write the policy. We meet daily at 4 PM."</em></p>
+<h2 id="panel-4-the-pii-detector">Panel 4: The PII Detector</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-04.png" data-desc-position="bottom"><img alt="" src="./panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 9. Make the characters and style consistent with the prior panel. Scene: a code editor on a monitor showing a Python module that combines a healthcare-tuned NER model with a regex-based fallback for known PII patterns (SSN, MRN, DOB). A unit-test file beside it shows 60+ tests, all green. Mira types; Yusuf reviews on the monitor next to her. A whiteboard in the background has a tally: "Day 2 of 14 — PII detector: shipped." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: focused engineering — the satisfying part of a hard week. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Mira owned the detector. She picked a healthcare-tuned named-entity recognition model and a regex-based fallback for the known-format fields nobody trusted to a model alone — Social Security numbers, MRNs, dates of birth in any of seven formats. Sixty unit tests. A precision-recall curve she could defend with numbers. <em>"The model catches 98.4% of names. The regex catches the structured stuff at 100%. Together: 99.7%. The 0.3% miss-rate triggers a manual-review queue."</em></p>
+<h2 id="panel-5-the-redactor-and-hasher">Panel 5: The Redactor and Hasher</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-05.png" data-desc-position="bottom"><img alt="" src="./panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 9. Make the characters and style consistent with the prior panel. Scene: Yusuf at his desk implementing the redaction pipeline. A monitor shows a sample log line being transformed in flight: raw line at the top with PII highlighted red, then a middle "in-flight" view with the PII replaced by stable per-tenant hashes (e.g., `[PATIENT-9F3A]`), then the final sanitized log line at the bottom with full PII gone. A second window shows a small "audit trail" entry being written for each redaction. The wall calendar tally now reads "Day 5 of 14." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: principled construction — privacy as a first-class system feature. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Yusuf wrote the redactor. Detected PII fields became stable per-tenant hashes — <em>[PATIENT-9F3A]</em> — so analytics could still track that the same patient was being asked about across multiple sessions, without ever leaving the trust boundary as a real name. Each redaction wrote a small audit-trail entry: timestamp, field type, hash output, detector confidence. Karen watched a sample run. <em>"This is what I needed. Keep going."</em></p>
+<h2 id="panel-6-the-wednesday-meltdown">Panel 6: The Wednesday Meltdown</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-06.png" data-desc-position="bottom"><img alt="" src="./panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 9. Make the characters and style consistent with the prior panel. Scene: late Wednesday night, day 9 of 14. The bullpen is dim, lit by laptop screens. A red banner across Yusuf's monitor reads "REDACTOR LATENCY SPIKE — p99 = 2.4s." Mira is on the phone. Yusuf, hand on his forehead, reviews the trace logs. Empty takeout containers on the desk. The wall clock reads 11:47 PM. Color palette: deep russet, warm cream, slate, burnt orange, with a heavier slate-blue night tone. Emotional tone: late-night setback — the realistic middle of a hard week. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Wednesday night, day 9, the redactor's p99 latency spiked to 2.4 seconds. The NER model was running synchronously on a CPU, and the prompts had grown longer than the team's load tests. Yusuf looked at the trace, looked at the clock, and didn't panic. He moved the model to a small GPU instance, batched the requests, and shipped a circuit breaker that fell back to regex-only with a log entry if the GPU was unreachable. By 1:30 AM, p99 was back to 240 milliseconds. He went home and slept four hours.</p>
+<h2 id="panel-7-the-audit-day-walkthrough">Panel 7: The Audit Day Walkthrough</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-07.png" data-desc-position="bottom"><img alt="" src="./panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 9. Make the characters and style consistent with the prior panel. Scene: audit day. A small conference room with two external auditors — one Asian woman in a blazer, one Latino man with a clipboard — seated across from Karen, Yusuf, and Mira. A projected screen shows the redaction pipeline in real time: an inbound log line with PII flowing in, the detected fields, the hashed outputs, the audit-trail entry. Karen is mid-explanation, calm and prepared. Yusuf and Mira sit at the side, ready to answer technical questions. The atmosphere is professional, not adversarial. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: composed competence — the work being shown. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Audit day, the team didn't have to perform. The pipeline performed for them. Karen ran the demo. The auditors saw a raw log line on the left, the detector identifying PII, the hashed output being written to the third-party vendor on the right, and the audit-trail entry recording everything in between. They asked twelve questions. The team had answers for all twelve. The lead auditor closed her laptop after ninety minutes. <em>"That's a clean implementation. We'll write up the report tonight."</em></p>
+<h2 id="panel-8-the-pass">Panel 8: The Pass</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-08.png" data-desc-position="bottom"><img alt="" src="./panel-08.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 08. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 8 of 9. Make the characters and style consistent with the prior panel. Scene: the next morning. Karen walks into the bullpen holding a printed audit report with a green "PASS" stamp visible on the cover. Yusuf and Mira look up from their monitors, exhausted but relieved smiles spreading across their faces. Two other engineers in the background quietly cheer. A small wall sign now reads "Day 15." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: hard-earned relief — the kind of win that costs sleep. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Karen walked in with the report at 9 AM. <em>Pass</em>, with one minor recommendation about expanding the audit-trail retention period. Yusuf's shoulders dropped two inches. Mira sat down for the first time in two days. The hospital pilot continued. The contract — and all the patients it served — survived. Yusuf went home at 11 AM and slept until the next morning.</p>
+<h2 id="panel-9-the-day-one-sign">Panel 9: The Day-One Sign</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-09.png" data-desc-position="bottom"><img alt="" src="./panel-09.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 09. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 9 of 9. Make the characters and style consistent with the prior panel. Scene: a month later. A printed framed sign hangs by the engineering bullpen door, in the spot where new engineers will see it on day one. The sign reads in clean serif lettering: "PRIVACY-SAFE LOGGING IS NOT A TAX. IT IS A SHIP-BLOCKER IF YOU SKIP IT. — Pemba." Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on top of the frame holding a tiny shield. Yusuf, Mira, and a new engineer (just arrived) walk past it on a tour. The new engineer reads the sign and nods seriously. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: institutional learning — a hard lesson made permanent. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>A month later, the team framed Pemba's line and hung it by the engineering bullpen door. <em>Privacy-safe logging is not a tax. It is a ship-blocker if you skip it.</em> Every new engineer's first-day tour included the story behind it. Karen and Yusuf gave the talk together. The point of the talk was never the heroics of the fourteen days — it was that the fourteen days could have been <em>zero</em> days if the pipeline had been built right on day one.</p>
+<h3 id="epilogue-what-the-beacon-team-did-right">Epilogue – What the Beacon Team Did Right</h3>
+<p>Yusuf didn't argue with Karen. He didn't try to minimize the problem or defend the original design. He listened, named the gap honestly, and built the right thing in the time he had. Karen didn't blame, didn't grandstand — she set a hard deadline and a daily checkpoint, and she let the engineers engineer. Mira owned the riskiest piece (the detector) and shipped it with sixty tests. Together they turned a near-miss into a permanent capability. The lesson scales: any system that touches sensitive data needs privacy primitives before it has a single user, not after.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How the Beacon Team Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw PII was being shipped to a vendor without a BAA</td>
+<td>Built PII detection and redaction at the trust boundary</td>
+<td>Privacy redaction belongs at the perimeter, not at the analytics layer</td>
+</tr>
+<tr>
+<td>Hashing was needed for analytics joins, but raw IDs couldn't leave</td>
+<td>Per-tenant stable hashes scoped to never escape the boundary</td>
+<td>Hashing without a scope is just delayed leakage</td>
+</tr>
+<tr>
+<td>The redactor's first build had a 2.4s p99 latency spike</td>
+<td>Moved the NER model to a GPU, batched, added a regex-only circuit breaker</td>
+<td>Privacy systems must meet production latency or they get bypassed</td>
+</tr>
+<tr>
+<td>The lesson could have been buried after the audit</td>
+<td>Hung Pemba's line by the engineering door for new hires</td>
+<td>Make the lesson visible the moment a new engineer walks in</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>If your product touches health data, financial data, education records, or anything else covered by a regulatory framework, ask one question this week: <em>what's in our logs?</em> Not the schema. The actual content. Pull a sample. Look for names, IDs, free-text descriptions of sensitive content. If you find any unredacted, you have a Beacon-shaped fourteen days waiting to happen — except in a real incident, you may not have fourteen days. Build the redaction pipeline now, before you need it.</p>
+<hr>
+<p><em>"Privacy-safe logging is not a tax. It is a ship-blocker if you skip it."</em>
+— Pemba</p>
+<p><em>"That's a clean implementation. We'll write up the report tonight."</em>
+— external lead auditor</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Health_Insurance_Portability_and_Accountability_Act">Wikipedia: Health Insurance Portability and Accountability Act</a> — The U.S. regulatory framework that governs the audit in this story</li>
+<li><a href="https://en.wikipedia.org/wiki/Personal_data">Wikipedia: Personally identifiable information</a> — General background on PII categories and protections</li>
+<li><a href="https://en.wikipedia.org/wiki/Hash_function">Wikipedia: Hash function</a> — The primitive used here for tenant-scoped pseudonymization</li>
+<li><a href="https://www.hhs.gov/hipaa/for-professionals/covered-entities/sample-business-associate-agreement-provisions/index.html">HHS: Business Associate Contracts</a> — The official guidance on BAAs that the story's vendor lacked</li>
+<li><a href="../../chapters/19-batch-privacy-compliance/">Chapter 19 — Batch Operations, Privacy, and Compliance</a> — The textbook chapter that motivates this story's redaction-pipeline design</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../tokenizer-surprise/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 12. The Tokenizer Surprise">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                12. The Tokenizer Surprise
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../capstone-quarter-discipline/" class="md-footer__link md-footer__link--next" aria-label="Next: 14. The Capstone — A Quarter of Discipline">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                14. The Capstone — A Quarter of Discipline
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

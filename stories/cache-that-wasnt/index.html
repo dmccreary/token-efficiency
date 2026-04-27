@@ -1,0 +1,1833 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An 8-panel graphic novel about a fintech team that turned on prompt caching, celebrated, and then discovered two weeks later that a per-request timestamp at the top of every prompt had silently kept the hit rate at zero.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/cache-that-wasnt/">
+      
+      
+        <link rel="prev" href="../four-thousand-token-be-helpful/">
+      
+      
+        <link rel="next" href="../agent-that-wouldnt-stop/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>The Cache That Wasn't — Why a Single Timestamp Killed a 0% Cache Hit Rate - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Cache That Wasn't — Why a Single Timestamp Killed a 0% Cache Hit Rate - Token Efficiency">
+      
+        <meta property="og:description" content="An 8-panel graphic novel about a fintech team that turned on prompt caching, celebrated, and then discovered two weeks later that a per-request timestamp at the top of every prompt had silently kept the hit rate at zero.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/cache-that-wasnt/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/cache-that-wasnt/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Cache That Wasn't — Why a Single Timestamp Killed a 0% Cache Hit Rate - Token Efficiency">
+      
+        <meta name="twitter:description" content="An 8-panel graphic novel about a fintech team that turned on prompt caching, celebrated, and then discovered two weeks later that a per-request timestamp at the top of every prompt had silently kept the hit rate at zero.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/cache-that-wasnt/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-cache-that-wasnt" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Cache That Wasn't — Why a Single Timestamp Killed a 0% Cache Hit Rate
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Stories
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Story Ideas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../red-panda-chatbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. The Red-Panda Chatbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../four-thousand-token-be-helpful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. The 4,000-Token Be Helpful
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-celebration-that-wasnt-earned" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Celebration That Wasn't Earned
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-slack-celebration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Slack Celebration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-two-weeks-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Two Weeks Later
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-pulling-the-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: Pulling the Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-smoking-gun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Smoking Gun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-aikos-face" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: Aiko's Face
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Refactor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-hit-rate-climbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Hit Rate Climbs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-pembas-footnote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Pemba's Footnote
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 8: Pemba's Footnote">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-devon-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Devon Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-that-wouldnt-stop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Agent That Wouldn't Stop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../invisible-bill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrong-model-every-job/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Wrong Model for Every Job
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-they-forgot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. The Async They Forgot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-that-wrote-itself/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skill That Wrote Itself
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eternal-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. The Eternal Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-that-lied/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. The A/B Test That Lied
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missing-dashboard-dimension/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. The Missing Dashboard Dimension
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenizer-surprise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit-saved-contract/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../capstone-quarter-discipline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-celebration-that-wasnt-earned" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Celebration That Wasn't Earned
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-slack-celebration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Slack Celebration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-two-weeks-later" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Two Weeks Later
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-pulling-the-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: Pulling the Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-smoking-gun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Smoking Gun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-aikos-face" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: Aiko's Face
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Refactor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-hit-rate-climbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Hit Rate Climbs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-pembas-footnote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Pemba's Footnote
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 8: Pemba's Footnote">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-devon-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Devon Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/cache-that-wasnt/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-cache-that-wasnt">The Cache That Wasn't</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./cover.png" data-desc-position="bottom"><img alt="" src="./cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon illustration style with clean lines and a noir-inflected mood. Center: a giant locked padlock labeled "PROMPT CACHE" hangs over a pile of dollar bills. A single tiny timestamp sticker — "2026-04-26T17:33:01Z" — is wedged into the keyhole, preventing the lock from closing. To the right, an engineer named Devon — Black man, late 30s, neat beard, navy hoodie, wireless earbuds — stares thoughtfully at the keyhole holding a magnifying glass. Above the scene, the title text "The Cache That Wasn't" in bold sans-serif lettering with a subtle motion-blur effect. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Emotional tone: detective-story curiosity, a mystery about to crack. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is an 8-panel educational graphic novel for the Token Optimization textbook. Setting: a fictional mid-size fintech company, fraud-review team, six months in production. Art style: modern flat vector cartoon illustration with clean lines, slight noir mood. Characters appear consistently:
+
+- **Devon** — senior engineer on the fraud-review team. Black man, late 30s, neat beard, navy hoodie, wireless earbuds, always carrying a small notebook.
+- **Aiko** — junior engineer who set up the original caching call. Japanese-American woman, late 20s, short black hair, denim jacket over a white tee.
+- **Pemba** — recurring red-panda mascot. Russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail. **No clothing.** Cameos in the closing panel.
+
+Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Maintain consistent character appearances across all 8 panels.
+</details>
+
+<h3 id="prologue-the-celebration-that-wasnt-earned">Prologue – The Celebration That Wasn't Earned</h3>
+<p>The fraud-review team flipped on Anthropic's prompt caching, watched their dashboard for an hour, and went home. Slack got a celebratory post. The next month's bill was <em>exactly</em> what it had been before. Two weeks later, Devon went looking for the missing savings — and found that the cache had been technically working, technically billing, and technically empty.</p>
+<h2 id="panel-1-the-slack-celebration">Panel 1: The Slack Celebration</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-01.png" data-desc-position="bottom"><img alt="" src="./panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 8. Scene: a Slack channel #fraud-review-team displayed on a wide monitor. The most recent message reads "🎉 PROMPT CACHING IS LIVE — projected 50% input cost reduction! Going home, see you Monday." with five party emoji reactions. Aiko — Japanese-American woman, late 20s, short black hair, denim jacket over a white tee — stands by the monitor giving a thumbs-up to a colleague off-screen, smiling. The office is otherwise empty, end-of-Friday late-evening lighting through the windows. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confident triumph — premature, but everyone believes it. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Aiko shipped the prompt-caching change on a Friday afternoon. Two lines of code, a <code>cache_control</code> block on the system prompt, a quick smoke test, a celebratory Slack post: <em>50% cost reduction, see you Monday.</em> She closed her laptop, grabbed her coat, and went out for tacos. The team was very pleased.</p>
+<h2 id="panel-2-two-weeks-later">Panel 2: Two Weeks Later</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-02.png" data-desc-position="bottom"><img alt="" src="./panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 8. Make the characters and style consistent with the prior panel. Scene: a finance dashboard displayed on a monitor in a quiet office two weeks later. The dashboard shows a flat input-cost line with no drop visible — same as before caching was enabled. A sticky note on the side of the monitor reads "WHY?" in bold marker. Devon — Black man, late 30s, neat beard, navy hoodie, wireless earbuds — sits cross-legged in his office chair, leaning forward, brow furrowed. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confused, professional concern — something is off. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Two weeks later, Devon was reviewing the monthly cost report and stopped mid-sip. The input-cost line was <em>exactly</em> where it had been before caching went live. No drop. No bend. Not even a wiggle. He pulled out his notebook and wrote one word: <em>Why?</em></p>
+<h2 id="panel-3-pulling-the-logs">Panel 3: Pulling the Logs</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-03.png" data-desc-position="bottom"><img alt="" src="./panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 8. Make the characters and style consistent with the prior panel. Scene: Devon's monitor shows a SQL query executing against the structured-logging table, with results visible. The result column "cache_read_input_tokens" is filled with zeros for every single row, all the way down. Devon's expression has shifted from puzzled to dead-serious. He takes a slow sip of coffee, eyes locked on the screen. Color palette: deep russet, warm cream, slate, burnt orange, with the row of zeros highlighted in subtle red. Emotional tone: the chill of a confirmed suspicion. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>He pulled the structured logs and ran a one-line query: <em>select cache_read_input_tokens from llm_calls limit 100.</em> The column came back full of zeros. Every row. Every single call for two weeks. The cache was <em>technically working</em> — and reading <em>nothing.</em></p>
+<h2 id="panel-4-the-smoking-gun">Panel 4: The Smoking Gun</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-04.png" data-desc-position="bottom"><img alt="" src="./panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 8. Make the characters and style consistent with the prior panel. Scene: a code editor on Devon's monitor showing the system prompt builder function. The first three lines are highlighted with a glowing red box: a generated ISO-8601 timestamp at the very top, then a UUID, then "You are a fraud-review assistant..." Devon points at the screen with a pen, eyes wide. A speech bubble from his mouth reads "There you are." Behind him, the office wall has a printed Anthropic caching docs page taped to it with a hand-circled paragraph saying "the cached prefix must be byte-for-byte identical." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: detective triumph — the moment the case cracks. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>He scrolled to the prompt-builder function and froze. The very first line was a freshly-generated timestamp. The second line was a per-request UUID. <em>Every single cache key was unique.</em> Six months of fraud-review calls had been hashing those two volatile fields straight into the prefix, and the cache had been politely storing entries it would never, ever match.</p>
+<h2 id="panel-5-aikos-face">Panel 5: Aiko's Face</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-05.png" data-desc-position="bottom"><img alt="" src="./panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 8. Make the characters and style consistent with the prior panel. Scene: a video call window on Devon's monitor. Aiko is on screen at her home office, holding a takeout coffee, hand frozen halfway to her mouth, eyes wide as Devon shares his screen showing the timestamp at the top of the prompt. A small chat bubble in the corner reads "oh no." Devon, off-camera in the foreground, has a sympathetic but amused expression. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: the universal "oh no" of recognizing your own mistake — kindly held. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Devon called Aiko. He didn't lecture. He just shared his screen and watched her face. <em>"Oh no,"</em> she whispered, and started laughing, the helpless laugh of a person seeing exactly how it had happened. <em>"I added the timestamp for traceability. I added it BEFORE the system prompt because the helper function appended it on the way in."</em> Devon nodded. <em>"Easiest fix in the world."</em></p>
+<h2 id="panel-6-the-refactor">Panel 6: The Refactor</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-06.png" data-desc-position="bottom"><img alt="" src="./panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 8. Make the characters and style consistent with the prior panel. Scene: a clean diff view on a monitor showing the refactor. The "before" side shows the timestamp and UUID at the top of the prompt followed by the static system message. The "after" side shows the static system message at the top with `cache_control: ephemeral`, followed by a clearly-labeled volatile suffix containing the timestamp and UUID. Devon and Aiko sit side by side, Aiko typing, Devon pointing at the cache_control marker. A small banner across the top of the monitor reads "STABLE PREFIX → VOLATILE SUFFIX." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: collaborative repair — two engineers fixing a thing together. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The fix was thirty lines of code. Move the static system prompt to the top, mark it <code>cache_control: ephemeral</code>, push the timestamp and UUID into a clearly-labeled volatile suffix that comes <em>after</em> the cached block. Aiko typed. Devon read aloud over her shoulder. They shipped it before lunch. Then they waited.</p>
+<h2 id="panel-7-the-hit-rate-climbs">Panel 7: The Hit Rate Climbs</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-07.png" data-desc-position="bottom"><img alt="" src="./panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 8. Make the characters and style consistent with the prior panel. Scene: a real-time dashboard the next morning showing the cache hit rate climbing — a clean line graph rising from 0% at the deploy time to 94% twelve hours later. A new dashboard panel labeled "CACHE HIT RATE — THRESHOLD ALERT" is visible in the corner with a green checkmark. Devon and Aiko stand together at the monitor, both grinning, fist-bumping. A few colleagues in the background look up curiously. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: vindication — the savings were always there, waiting. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>By the next morning, the hit rate was climbing. Eight in the morning: 47%. Noon: 78%. End of day: 94%. The bill bent visibly within the first 24 hours. Aiko added a permanent dashboard panel for cache hit rate with an alert: <em>if this number ever drops below 60% again, page someone.</em> Some lessons only need to be learned once.</p>
+<h2 id="panel-8-pembas-footnote">Panel 8: Pemba's Footnote</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-08.png" data-desc-position="bottom"><img alt="" src="./panel-08.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 08. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 8 of 8. Make the characters and style consistent with the prior panel. Scene: a laptop on Devon's desk shows a draft team postmortem document titled "Caching Incident — Two Weeks of Free Money Left on Floor." At the bottom of the document, in italics: "Lesson: a cache key is only as stable as its first byte." A small red-panda mascot — Pemba, russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail, no clothing — sits on top of the laptop holding a tiny stopwatch, glasses glinting, with a small thought bubble that reads "measure first." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: warm closure with a wink — a habit being formed. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Devon wrote the postmortem in one sentence: <em>A cache key is only as stable as its first byte.</em> He pinned it to the top of the team wiki. Pemba, perched on the corner of the laptop with a tiny stopwatch, added an italicized footnote: <em>Measure first. Celebrate after.</em> The team retired the original Slack post.</p>
+<h3 id="epilogue-what-devon-did-right">Epilogue – What Devon Did Right</h3>
+<p>Devon didn't trust the deploy. He trusted the dashboard — and when the dashboard didn't move, he refused to let the absence of evidence become evidence of absence. The right metric was already in the response (<code>cache_read_input_tokens</code>); it just wasn't being watched. The lesson scales to every cache, every cost optimization, every "we shipped it" moment: until you measure the effect, you don't have one.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How Devon Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Caching was technically enabled but the hit rate was zero</td>
+<td>He pulled the structured logs and queried <code>cache_read_input_tokens</code></td>
+<td>A response field that nobody reads is not a metric — it's a rumor</td>
+</tr>
+<tr>
+<td>A volatile timestamp sat above the static prompt</td>
+<td>He moved the stable prefix to the top, marked it <code>cache_control</code></td>
+<td>Cache prefixes must be byte-for-byte stable; the order of fields is a cost decision</td>
+</tr>
+<tr>
+<td>The original deploy was celebrated without verification</td>
+<td>He added a permanent hit-rate dashboard panel with an alert</td>
+<td>Caching deserves an alarm, not a Slack post</td>
+</tr>
+<tr>
+<td>The team had no postmortem habit for silent failures</td>
+<td>He wrote a one-sentence wiki entry and pinned it</td>
+<td>Silent failures need loud writeups, even when nothing crashed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>If your team has prompt caching enabled, run one query right now: pull <code>cache_read_input_tokens</code> from your last 1,000 calls. If the average is zero, you have a Devon-shaped mystery to solve. The savings have been there the whole time — they're just sitting on the wrong side of an unstable prefix.</p>
+<hr>
+<p><em>"A cache key is only as stable as its first byte."</em>
+— Devon</p>
+<p><em>"I added the timestamp for traceability. I added it before the prompt because the helper function appended it on the way in."</em>
+— Aiko, junior engineer</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Cache_(computing)">Wikipedia: Cache (computing)</a> — Foundational concepts of cache lookup and key matching</li>
+<li><a href="https://en.wikipedia.org/wiki/Cache_invalidation">Wikipedia: Cache invalidation</a> — The "two hard things" problem that this story is a special case of</li>
+<li><a href="https://en.wikipedia.org/wiki/Hash_function">Wikipedia: Hash function</a> — Why a single byte change in the prefix produces a different cache key</li>
+<li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Anthropic: Prompt Caching documentation</a> — The <code>cache_control</code> parameter and the byte-for-byte stable-prefix requirement</li>
+<li><a href="../../chapters/14-prompt-caching-patterns/">Chapter 14 — Prompt Caching Patterns</a> — The textbook chapter covering cache hit rate, stable prefixes, and silent regressions</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../four-thousand-token-be-helpful/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. The 4,000-Token Be Helpful">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                2. The 4,000-Token Be Helpful
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../agent-that-wouldnt-stop/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. The Agent That Wouldn't Stop">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                4. The Agent That Wouldn't Stop
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,0 +1,1860 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A 9-panel graphic novel about a 12-person SaaS startup that received a $48,000 LLM bill they couldn't attribute to a single feature — and the long weekend of structured logging that found the 78% cost driver hiding in plain sight.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/invisible-bill/">
+      
+      
+        <link rel="prev" href="../agent-that-wouldnt-stop/">
+      
+      
+        <link rel="next" href="../wrong-model-every-job/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>The Invisible Bill — How a $48,000 Surprise Forced an Observability Reckoning - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Invisible Bill — How a $48,000 Surprise Forced an Observability Reckoning - Token Efficiency">
+      
+        <meta property="og:description" content="A 9-panel graphic novel about a 12-person SaaS startup that received a $48,000 LLM bill they couldn't attribute to a single feature — and the long weekend of structured logging that found the 78% cost driver hiding in plain sight.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/invisible-bill/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/invisible-bill/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Invisible Bill — How a $48,000 Surprise Forced an Observability Reckoning - Token Efficiency">
+      
+        <meta name="twitter:description" content="A 9-panel graphic novel about a 12-person SaaS startup that received a $48,000 LLM bill they couldn't attribute to a single feature — and the long weekend of structured logging that found the 78% cost driver hiding in plain sight.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/invisible-bill/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-invisible-bill" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Invisible Bill — How a $48,000 Surprise Forced an Observability Reckoning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Stories
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Story Ideas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../red-panda-chatbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. The Red-Panda Chatbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../four-thousand-token-be-helpful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. The 4,000-Token Be Helpful
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cache-that-wasnt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-that-wouldnt-stop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Agent That Wouldn't Stop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-bill-with-no-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Bill With No Author
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-forwarded-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Forwarded Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-diagnostic-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The Diagnostic Failure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-whiteboard-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Whiteboard Plan
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-friday-night-coding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: Friday Night Coding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-saturday-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Saturday Pipeline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-smoking-gun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Smoking Gun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-three-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Three Fixes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-the-monday-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: The Monday Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-pareto-on-the-wall" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Pareto on the Wall
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 9: The Pareto on the Wall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-docuflow-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the DocuFlow Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrong-model-every-job/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Wrong Model for Every Job
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-they-forgot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. The Async They Forgot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-that-wrote-itself/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skill That Wrote Itself
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eternal-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. The Eternal Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-that-lied/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. The A/B Test That Lied
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missing-dashboard-dimension/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. The Missing Dashboard Dimension
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenizer-surprise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit-saved-contract/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../capstone-quarter-discipline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-bill-with-no-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Bill With No Author
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-forwarded-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Forwarded Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-diagnostic-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The Diagnostic Failure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-whiteboard-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Whiteboard Plan
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-friday-night-coding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: Friday Night Coding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-saturday-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Saturday Pipeline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-smoking-gun" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Smoking Gun
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-three-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Three Fixes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-the-monday-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: The Monday Email
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-pareto-on-the-wall" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The Pareto on the Wall
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 9: The Pareto on the Wall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-the-docuflow-team-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What the DocuFlow Team Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/invisible-bill/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-invisible-bill">The Invisible Bill</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./cover.png" data-desc-position="bottom"><img alt="" src="./cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon illustration style with clean lines and an investigative mood. Center: an oversized invoice flutters down from above onto a desk, the top line reading "INVOICE — Anthropic — $48,127.43" with a subject line "???" beside it. Around the desk, three engineers stand stunned: an Asian-American CFO with reading glasses holding the invoice; a Latina engineer with a magnifying glass; a White engineer in a hoodie with a laptop. Pareto-chart shadows on the wall behind them tease at one massive bar dwarfing the rest. Above the scene, the title text "The Invisible Bill" in bold sans-serif lettering. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Emotional tone: opening of a detective story — surprise, dread, curiosity. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is a 9-panel educational graphic novel for the Token Optimization textbook. Setting: a fictional 12-person SaaS startup called "DocuFlow" that ships an AI-augmented document tool. The story spans a single long weekend. Art style: modern flat vector cartoon illustration with clean lines, investigative-mystery mood. Characters appear consistently:
+
+- **Sofia** — Latina senior engineer, late 30s, dark curly hair, glasses, olive cardigan over a t-shirt, holds a magnifying glass in one early panel as a visual joke.
+- **Henry** — White junior engineer, mid-20s, ginger hair, hoodie, jeans, perpetually tired expression.
+- **Mei** — Asian-American CFO, early 50s, reading glasses on a chain, sharp blazer, sympathetic but firm.
+- **Pemba** — recurring red-panda mascot. Russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail. **No clothing.** Cameos in the closing panels.
+
+Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Maintain consistent character appearances across all 9 panels.
+</details>
+
+<h3 id="prologue-the-bill-with-no-author">Prologue – The Bill With No Author</h3>
+<p>When the email arrived, the subject line was just three question marks. The body was an invoice. The amount was $48,127.43. The recipients were everyone on the engineering channel. Mei, the CFO, had forwarded it without comment because she did not need to add one. Nobody on the team could attribute a single dollar of it to a feature, a customer, or a use case. They had built an AI product they could not see.</p>
+<h2 id="panel-1-the-forwarded-email">Panel 1: The Forwarded Email</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-01.png" data-desc-position="bottom"><img alt="" src="./panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 9. Scene: a small open-plan office on a Friday afternoon. A laptop on Sofia's desk shows an email forwarded from Mei (CFO) with the subject "???". The body shows an invoice line: "Anthropic API — $48,127.43 — March." Sofia — Latina, late 30s, glasses, olive cardigan — leans back in her chair, eyes wide, arms folded. Henry — mid-20s, ginger hair, hoodie — walks past with coffee, sees the screen, freezes mid-step. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: shared sinking feeling — the moment a problem is officially the team's. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The forwarded email landed in Sofia's inbox at 3:47 PM on a Friday. The subject line was three question marks and nothing else. The body was a single invoice line. Forty-eight thousand one hundred twenty-seven dollars and forty-three cents. Henry walked past with his coffee, looked at the screen, and said <em>"oh"</em> in a small, careful voice.</p>
+<h2 id="panel-2-the-diagnostic-failure">Panel 2: The Diagnostic Failure</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-02.png" data-desc-position="bottom"><img alt="" src="./panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 9. Make the characters and style consistent with the prior panel. Scene: Sofia at her desk frantically clicking through the Anthropic billing dashboard, which shows only a total. She has three browser tabs open, each showing some aggregate number with no breakdown by feature, user, or call. Behind her, Henry holds a magnifying glass to a printout of "what we know" with three sad bullet points: "the total: $48k," "the model: Sonnet," "the month: March." A whiteboard in the background reads "ATTRIBUTION = ???" Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: helpless detective work — looking for clues that were never recorded. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>For two hours they tried to attribute the cost. The vendor dashboard showed a total. Their own logs showed timestamps and model names. Nothing told them <em>which feature, which customer, which prompt.</em> Sofia leaned back and stared at the ceiling. <em>"We don't have observability. We have a bill."</em></p>
+<h2 id="panel-3-the-whiteboard-plan">Panel 3: The Whiteboard Plan</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-03.png" data-desc-position="bottom"><img alt="" src="./panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 9. Make the characters and style consistent with the prior panel. Scene: a whiteboard at the front of a small meeting room. Sofia stands at the board with a marker, mid-write. The board reads "STRUCTURED LOGGING — WEEKEND PLAN" with a list: "model · prompt_hash · input_tokens · output_tokens · cached_tokens · cost · latency · feature · user · outcome · trace_id." Below: "ANALYSIS NOTEBOOK · Pareto chart · top-N by feature/user/customer." Henry sits at the table, three takeout containers open in front of him. A clock on the wall reads 6:00 PM Friday. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: focused mobilization — the long weekend begins. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Sofia mapped the schema on the whiteboard in twenty minutes. Eleven fields. Nothing fancy: model, prompt hash, token counts, cost, latency, feature name, user ID, outcome, trace ID. <em>"If we'd had this from day one,"</em> she said, <em>"that email would have answered itself."</em> Henry ordered three pizzas. The weekend was officially long.</p>
+<h2 id="panel-4-friday-night-coding">Panel 4: Friday Night Coding</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-04.png" data-desc-position="bottom"><img alt="" src="./panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 9. Make the characters and style consistent with the prior panel. Scene: late Friday night, dim office, two desks lit by laptops. Sofia and Henry sit side by side. Sofia's monitor shows a Python decorator wrapping all LLM calls with structured logging. Henry's monitor shows the JSON log schema being shipped to a logs table. Empty pizza boxes on the floor. A small whiteboard tally on the wall reads "Calls instrumented: 12 / 14 endpoints." Color palette: deep russet, warm cream, slate, burnt orange, with warm laptop-screen glow. Emotional tone: focused late-night build — the satisfying part of the weekend. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>By 11 PM Friday, every LLM call in the codebase was wrapped with a single decorator. Every request now wrote a JSON log line with the full schema before the call returned. By midnight, the production service was emitting structured logs at full traffic. Sofia and Henry tapped knuckles, agreed to sleep four hours, and meet back at 6 AM.</p>
+<h2 id="panel-5-the-saturday-pipeline">Panel 5: The Saturday Pipeline</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-05.png" data-desc-position="bottom"><img alt="" src="./panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 9. Make the characters and style consistent with the prior panel. Scene: Saturday late afternoon. Sofia and Henry at side-by-side desks. Sofia's monitor shows a Jupyter notebook with the structured logs streaming in, a Pareto chart taking shape on the right side. Henry's monitor shows a SQL query running over the logs aggregating cost by feature_name. Coffee cups, a half-eaten salad, a tin of mints. The wall clock reads 4:30 PM. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: productive momentum — the picture coming into focus. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Saturday's mission was the analysis pipeline: stream the logs into a notebook, group by feature, sort by cost. By dinnertime, the first Pareto chart rendered. They both stared at it for a long beat without speaking. One bar was so tall the others looked like baseline noise.</p>
+<h2 id="panel-6-the-smoking-gun">Panel 6: The Smoking Gun</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-06.png" data-desc-position="bottom"><img alt="" src="./panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 9. Make the characters and style consistent with the prior panel. Scene: a large monitor displays a clear Pareto bar chart titled "COST BY FEATURE — MARCH (extrapolated from new logs)." One enormous bar labeled "Summarize Whole Document" dwarfs every other bar, with a label "78% — $37,500." The next-highest bar is barely 6%. Sofia points at the chart. Henry holds a printed customer-traffic log filtered to the same feature, showing one customer running 400-page PDFs through it dozens of times per day. A speech bubble from Henry reads "It's one customer. Who's been doing this for six months." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: detective triumph and dawning embarrassment — found it. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Seventy-eight percent of the entire bill came from a single feature: a "summarize the whole document" button. Cross-referencing the logs with customer IDs revealed the truth: <em>one</em> enterprise customer had been pasting 400-page contracts into the field every morning, sometimes the same one twice. The team had built a feature with no length cap, no rate limit, and no awareness of who was using it.</p>
+<h2 id="panel-7-the-three-fixes">Panel 7: The Three Fixes</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-07.png" data-desc-position="bottom"><img alt="" src="./panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 9. Make the characters and style consistent with the prior panel. Scene: a Sunday-morning whiteboard with three labeled boxes: "1. LENGTH CAP (truncate beyond 50K tokens, ask user to confirm)," "2. SUMMARIZATION CASCADE (chunk + summarize + reduce — cuts cost 6x)," "3. PER-CUSTOMER RATE LIMIT (no more than 20 full-doc summaries/day)." Sofia, marker in hand, is mid-write. Henry, on a couch with a laptop on his knees, checks each box off as the code ships. A small wall clock reads 10:30 AM Sunday. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confident triage — three concrete moves, all shippable in a day. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Sunday morning, three fixes went up on the whiteboard. A length cap with a polite "this is going to be expensive — confirm?" prompt. A chunk-summarize-reduce cascade that cut full-document cost by six times. A per-customer rate limit on the heaviest feature. By noon, all three were shipped behind a feature flag and rolled out to 10% of traffic for the night.</p>
+<h2 id="panel-8-the-monday-email">Panel 8: The Monday Email</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-08.png" data-desc-position="bottom"><img alt="" src="./panel-08.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 08. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 8 of 9. Make the characters and style consistent with the prior panel. Scene: Monday morning, 8:30 AM. Sofia at her desk, calm now, types an email to Mei the CFO. The screen shows the draft: "Subject: 'Bill attribution + Sunday fixes.' Body: a clean three-column table — Feature / March cost / Projected April cost — with the offending feature dropping from $37,500 to $5,200." Mei stops by the desk with a fresh coffee for Sofia, reading over her shoulder with an expression of professional respect. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: settled accountability — bringing the receipts. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Monday morning Sofia drafted the email she wished she'd been able to send the previous Friday. Three columns: feature, March cost, projected April cost. Total projected April cost: $11,000. Mei read over her shoulder, set down a fresh coffee for Sofia, and said <em>"that, I can present to the board."</em> Sofia clicked send.</p>
+<h2 id="panel-9-the-pareto-on-the-wall">Panel 9: The Pareto on the Wall</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-09.png" data-desc-position="bottom"><img alt="" src="./panel-09.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 09. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 9 of 9. Make the characters and style consistent with the prior panel. Scene: a week later, the office wall now has a printed Pareto chart updated daily, hung in a frame next to a small placard that reads "THE FIRST DASHBOARD PAYS FOR ITSELF." Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on top of the frame holding a tiny clipboard, looking pleased. Sofia walks past with a coffee, glances up, smiles. The chart now shows a much more even distribution across features, with no single bar dominating. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: institutionalized wisdom — a habit visible to everyone. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>A week later, Sofia printed the daily Pareto chart and hung it on the wall in a frame. Underneath, a placard: <em>the first dashboard pays for itself.</em> Pemba — wandering in from the textbook with a tiny clipboard — sat on top of the frame and approved. The team never opened a billing email blind again.</p>
+<h3 id="epilogue-what-the-docuflow-team-did-right">Epilogue – What the DocuFlow Team Did Right</h3>
+<p>The DocuFlow team didn't have a token-efficiency problem so much as a <em>visibility</em> problem. The right metrics were present in every API response — they just weren't being captured. Once the data existed, the diagnosis took an afternoon and the fix took a day. The lesson scales: structured logging is a cheap insurance policy that pays off the first time anything goes wrong, which it will.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How the Team Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The $48K bill could not be attributed to anything</td>
+<td>Wrote structured logs with model, tokens, cost, feature, user, outcome</td>
+<td>If you cannot attribute cost, you cannot manage cost</td>
+</tr>
+<tr>
+<td>One feature drove 78% of spend invisibly</td>
+<td>Built a Pareto analysis from the new logs</td>
+<td>Pareto charts of LLM cost almost always have one tall bar — find it</td>
+</tr>
+<tr>
+<td>Long-context summarization had no cost guardrails</td>
+<td>Added length cap, cascade, and per-customer rate limit</td>
+<td>Any feature that can take "the whole document" needs all three</td>
+</tr>
+<tr>
+<td>The team had no early-warning system</td>
+<td>Hung a daily-updated Pareto chart on the wall</td>
+<td>Make the cost picture visible to humans, not buried in a tool</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>Open the API responses your application is already receiving from your LLM vendor. Every one of them includes input tokens, output tokens, and (probably) cached tokens. If you are not capturing those into structured logs alongside feature name and user ID, you are flying blind. Wire up the eleven fields this weekend. The next surprise bill — and there is always a next surprise bill — will answer itself.</p>
+<hr>
+<p><em>"We don't have observability. We have a bill."</em>
+— Sofia</p>
+<p><em>"That, I can present to the board."</em>
+— Mei, CFO</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Pareto_principle">Wikipedia: Pareto principle</a> — The 80/20 distribution this story's cost analysis relies on</li>
+<li><a href="https://en.wikipedia.org/wiki/Tracing_(software)#Logging">Wikipedia: Structured logging</a> — Background on structured/JSON logging as a discipline</li>
+<li><a href="https://en.wikipedia.org/wiki/Observability_(software)">Wikipedia: Observability (software)</a> — The umbrella practice this story is an instance of</li>
+<li><a href="https://docs.anthropic.com/en/api/messages">Anthropic: Token usage and pricing</a> — The response fields that should be captured in structured logs</li>
+<li><a href="../../chapters/09-structured-logging/">Chapter 9 — Structured Logging for LLM Calls</a> — The textbook chapter that motivates this story's logging schema</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../agent-that-wouldnt-stop/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. The Agent That Wouldn't Stop">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. The Agent That Wouldn't Stop
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../wrong-model-every-job/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. The Wrong Model for Every Job">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. The Wrong Model for Every Job
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A 7-panel graphic novel about a copy-generation team that estimated their cross-vendor migration with the wrong tokenizer and came in 30% over budget — and the per-vendor cost model they built so it never happened again.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/tokenizer-surprise/">
+      
+      
+        <link rel="prev" href="../missing-dashboard-dimension/">
+      
+      
+        <link rel="next" href="../audit-saved-contract/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>The Tokenizer Surprise — Same Prose, Different Tokens, Different Bill - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Tokenizer Surprise — Same Prose, Different Tokens, Different Bill - Token Efficiency">
+      
+        <meta property="og:description" content="A 7-panel graphic novel about a copy-generation team that estimated their cross-vendor migration with the wrong tokenizer and came in 30% over budget — and the per-vendor cost model they built so it never happened again.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/tokenizer-surprise/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/tokenizer-surprise/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Tokenizer Surprise — Same Prose, Different Tokens, Different Bill - Token Efficiency">
+      
+        <meta name="twitter:description" content="A 7-panel graphic novel about a copy-generation team that estimated their cross-vendor migration with the wrong tokenizer and came in 30% over budget — and the per-vendor cost model they built so it never happened again.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/tokenizer-surprise/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-tokenizer-surprise" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Tokenizer Surprise — Same Prose, Different Tokens, Different Bill
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Stories
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Story Ideas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../red-panda-chatbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. The Red-Panda Chatbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../four-thousand-token-be-helpful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. The 4,000-Token Be Helpful
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cache-that-wasnt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-that-wouldnt-stop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Agent That Wouldn't Stop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../invisible-bill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrong-model-every-job/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Wrong Model for Every Job
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-they-forgot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. The Async They Forgot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-that-wrote-itself/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skill That Wrote Itself
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eternal-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. The Eternal Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-that-lied/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. The A/B Test That Lied
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missing-dashboard-dimension/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. The Missing Dashboard Dimension
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-estimate-that-wasnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Estimate That Wasn't
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-migration-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Migration Plan
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-first-invoice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The First Invoice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Side-by-Side
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-three-hot-spots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Three Hot Spots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-rebuilt-cost-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Rebuilt Cost Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-optimization-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Optimization Wins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-procurement-footnote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Procurement Footnote
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 7: The Procurement Footnote">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-priya-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Priya Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit-saved-contract/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../capstone-quarter-discipline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-the-estimate-that-wasnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – The Estimate That Wasn't
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-migration-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Migration Plan
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-the-first-invoice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: The First Invoice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-the-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: The Side-by-Side
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-the-three-hot-spots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: The Three Hot Spots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-the-rebuilt-cost-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: The Rebuilt Cost Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-the-optimization-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: The Optimization Wins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-the-procurement-footnote" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: The Procurement Footnote
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 7: The Procurement Footnote">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-priya-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Priya Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/tokenizer-surprise/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-tokenizer-surprise">The Tokenizer Surprise</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./cover.png" data-desc-position="bottom"><img alt="" src="./cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon illustration style with clean lines and a forensic mood. Center: a single block of marketing copy is being fed into two different tokenizers, depicted as cartoon "kitchen blenders" labeled "TOKENIZER A" and "TOKENIZER B." Both produce tokens at different rates — Tokenizer B noticeably more — and the totals are visible: "A: 410 tokens" vs "B: 538 tokens." A thought bubble between the two reads "+31%." To the right, an engineer named Priya — Indian-American woman, late 30s, glasses, oversized blazer — looks at the comparison with a wry expression. Above the scene, the title text "The Tokenizer Surprise" in bold sans-serif lettering. Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Emotional tone: dry, resigned amusement — the lesson everyone learns once. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is a 7-panel educational graphic novel for the Token Optimization textbook. Setting: a fictional consumer-tech company's content/copy team migrating their copy-generation feature from one LLM vendor to another. Art style: modern flat vector cartoon illustration with clean lines and a slight forensic mood. Characters appear consistently:
+
+- **Priya** — content-platform engineering lead, Indian-American woman, late 30s, glasses, oversized blazer over a tee.
+- **Will** — junior engineer, white man, mid-20s, navy beanie, hoodie, denim jacket.
+- **Pemba** — recurring red-panda mascot. Russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail. **No clothing.** Cameos in the closing panel.
+
+Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Maintain consistent character appearances across all 7 panels.
+</details>
+
+<h3 id="prologue-the-estimate-that-wasnt">Prologue – The Estimate That Wasn't</h3>
+<p>The team was migrating their copy-generation feature from Vendor A to Vendor B for a 28% headline price reduction. Priya did the math the way a careful engineer does: she counted tokens on a representative sample of prompts using <em>Vendor A's tokenizer</em> — the one she had on her laptop — and projected the new bill. The first weekly invoice came in 30% <em>over</em> the projection. The headline price was real. The token count was not.</p>
+<h2 id="panel-1-the-migration-plan">Panel 1: The Migration Plan</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-01.png" data-desc-position="bottom"><img alt="" src="./panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 7. Scene: a planning meeting in a small conference room. Priya — Indian-American woman, late 30s, glasses, oversized blazer — stands at a whiteboard with a clean migration plan: "VENDOR A → VENDOR B. Headline price: -28%. Estimated savings: $24K/quarter. Risk: low." Will — white man, mid-20s, navy beanie, hoodie — takes notes at the table. Three other engineers nod approvingly. The whiteboard is tidy and confident. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confident planning — a careful migration with a clean ROI. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The plan was solid. Vendor B was 28% cheaper per million tokens. Priya counted tokens on a representative sample of fifty prompts using the tokenizer library she had on her laptop. <em>24,000 dollars in projected quarterly savings.</em> The team voted to migrate. Will built the integration in two weeks. They cut over on a Friday at noon.</p>
+<h2 id="panel-2-the-first-invoice">Panel 2: The First Invoice</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-02.png" data-desc-position="bottom"><img alt="" src="./panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 7. Make the characters and style consistent with the prior panel. Scene: Priya at her desk, eight days after the migration, looking at the first weekly invoice from Vendor B. The invoice line shows a number 30% larger than her projection. A small comparison sticker on the side reads "PROJECTED: $4,300 — ACTUAL: $5,590." Priya holds her chin, brow furrowed. Will, drifting in with a coffee, sees the screen and stops mid-step. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confused dismay — a careful plan running into reality. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The first weekly invoice came back $5,590 against a $4,300 projection. Thirty percent over. <em>That's not noise</em>, Priya thought. She pulled the per-call usage data from Vendor B's response objects and started running queries. By the end of the afternoon she had a hypothesis. She did not yet have receipts.</p>
+<h2 id="panel-3-the-side-by-side">Panel 3: The Side-by-Side</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-03.png" data-desc-position="bottom"><img alt="" src="./panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 7. Make the characters and style consistent with the prior panel. Scene: a Jupyter notebook on Priya's monitor running the same 50-prompt sample through *both* vendors' tokenizers. Two columns of token counts, side by side. The "Vendor A tokenizer" column averages around 410 tokens; the "Vendor B tokenizer" column averages around 538. The right column has a clear systematic bias upward — especially on prompts with emoji, code blocks, and brand names. A scatter chart at the bottom labels three outlier prompts. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: forensic clarity — the data resolving the mystery. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The notebook told a clean story. The same fifty prompts produced systematically more tokens under Vendor B's tokenizer. The outliers had a pattern: prompts heavy with emoji, with fenced code blocks, with brand names. The team's copy was <em>full</em> of those — emoji in social-media variants, code in developer-targeted copy, brand names everywhere. Vendor A's tokenizer happened to handle those efficiently. Vendor B's didn't.</p>
+<h2 id="panel-4-the-three-hot-spots">Panel 4: The Three Hot Spots</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-04.png" data-desc-position="bottom"><img alt="" src="./panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 7. Make the characters and style consistent with the prior panel. Scene: a whiteboard with three labeled hot-spots: "1. EMOJI — average 4 tokens each (vs 1 on Vendor A)," "2. CODE BLOCKS — fenced code splits aggressively," "3. BRAND NAMES — proper nouns split into more pieces." Below: three corresponding fixes: "Reduce emoji frequency in copy," "Wrap code in CDATA-style markers tested against Vendor B," "Pre-tokenize brand names with custom dictionary if vendor supports it." Will writes; Priya reads aloud, finger tracing each line. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: confident triage — three concrete moves. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The three hot spots had three matching fixes. Trim emoji where they didn't earn their place — most of them didn't. Reformat code-block markers to match Vendor B's tokenizer's preferences, which Will found documented in a community blog post nobody had thought to check before the migration. Use Vendor B's optional custom-vocabulary feature for the company's six core brand names. None of these were architectural changes. All of them were minutes of work.</p>
+<h2 id="panel-5-the-rebuilt-cost-model">Panel 5: The Rebuilt Cost Model</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-05.png" data-desc-position="bottom"><img alt="" src="./panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 7. Make the characters and style consistent with the prior panel. Scene: a clean Python notebook on a monitor implementing a `cross_vendor_cost_model.py` function that takes a prompt and returns token counts and cost projections from each vendor's *own* tokenizer. Priya runs a quick test against the 50-prompt sample, with the new "tokenizer-drift" line item visible in the output: "Vendor A: $4,210 / Vendor B: $5,120 / Drift: +21%." Will leans in, writing the file path on a sticky note for the team wiki. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: methodical repair — building the tool that should have existed all along. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The lasting fix was the cost model. Priya rewrote the migration calculator to use <em>each vendor's own tokenizer</em> on the same input sample, surface the per-vendor counts side by side, and add a <em>tokenizer-drift</em> line item to every cross-vendor proposal from then on. The tool became part of the team's standard procurement review. Two months later, it caught a 14% drift on a smaller migration before anyone signed a contract.</p>
+<h2 id="panel-6-the-optimization-wins">Panel 6: The Optimization Wins</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-06.png" data-desc-position="bottom"><img alt="" src="./panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 7. Make the characters and style consistent with the prior panel. Scene: a clean dashboard showing weekly cost over six weeks. Week 1 (Vendor A baseline): $4,300. Week 2 (post-migration, before optimizations): $5,590. Weeks 3-6: a steady decline as the three fixes ship — emoji trim, code-block reformat, brand custom vocab — settling at $3,910 by week 6. A small label reads "Final: 9% under original Vendor A cost." Priya and Will, in the foreground, raise mugs in a small toast. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: vindicated patience — the migration was fine; the estimate was the problem. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>By week six, all three fixes had shipped. The dashboard told the recovery story cleanly: Vendor A baseline at $4,300, post-migration spike to $5,590, steady decline to $3,910 — nine percent below the original Vendor A cost, with the same quality scores. The 28% headline price reduction was real. It just had to come through the right tokenizer to get to the bottom line.</p>
+<h2 id="panel-7-the-procurement-footnote">Panel 7: The Procurement Footnote</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-07.png" data-desc-position="bottom"><img alt="" src="./panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 7. Make the characters and style consistent with the prior panel. Scene: a clean one-page procurement-review template printed and pinned above Priya's desk. The template lists four required line items: "1. Headline price comparison. 2. Tokenizer-drift estimate (per vendor's own tokenizer). 3. Hot-spot review (emoji / code / brand names). 4. Pilot week before full cutover." Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on top of the printed template holding a tiny ruler with a small thought bubble that reads "count with the tool you'll ship on." Priya, in foreground, taps the template approvingly. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: settled wisdom — a checklist that survives team turnover. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Priya printed the four-line procurement template and pinned it above her desk. <em>Headline price. Tokenizer drift. Hot-spot review. Pilot week.</em> When new engineers started, they got the template and the story behind it. Pemba — wandering in with a tiny ruler — added the line that became the team's procurement motto: <em>Count with the tool you'll ship on, not the one you happen to know.</em> No vendor migration was ever planned without it again.</p>
+<h3 id="epilogue-what-priya-did-right">Epilogue – What Priya Did Right</h3>
+<p>Priya did the migration math the way a careful engineer does — and discovered that careful, with the wrong tokenizer, is still wrong. Her real win was the recovery: a per-vendor cost-modeling tool that turned a one-time embarrassment into a permanent procurement check. The lesson scales: token counts are vendor-specific, and any cross-vendor estimate built on the wrong tokenizer is a guess wearing a confidence interval.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How Priya Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Migration estimated with the wrong tokenizer came in 30% over</td>
+<td>Ran the same prompts through <em>both</em> vendors' tokenizers</td>
+<td>Token counts are not portable across vendors</td>
+</tr>
+<tr>
+<td>Hot-spots (emoji, code, brand names) tokenized very differently</td>
+<td>Trimmed emoji, reformatted code, added custom vocab for brands</td>
+<td>Audit your prompts for vendor-specific tokenization hot-spots</td>
+</tr>
+<tr>
+<td>The cost model that produced the bad estimate still existed</td>
+<td>Rewrote it as a per-vendor model with explicit drift line</td>
+<td>A cost model is a tool — keep it as carefully as you keep your code</td>
+</tr>
+<tr>
+<td>The team had no procurement checklist</td>
+<td>Wrote and pinned the four-line template</td>
+<td>Cross-vendor migrations need a checklist, every time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>Before any cross-vendor migration, run your top fifty production prompts through <em>both</em> vendors' tokenizers and record the per-prompt counts side by side. Add a <em>tokenizer-drift</em> line to your cost model. If the drift is over 5%, find the hot-spots — emoji, code, brand names, special characters — and decide whether to reformat or accept the cost. Don't sign the contract on the wrong tokenizer's count.</p>
+<hr>
+<p><em>"That's not noise."</em>
+— Priya, on the first invoice</p>
+<p><em>"Count with the tool you'll ship on, not the one you happen to know."</em>
+— Pemba</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Byte_pair_encoding">Wikipedia: Byte pair encoding</a> — The general algorithm that underlies most modern LLM tokenizers</li>
+<li><a href="https://en.wikipedia.org/wiki/Lexical_analysis">Wikipedia: Lexical analysis</a> — The classical computer-science view of tokenization</li>
+<li><a href="https://github.com/openai/tiktoken">OpenAI: tiktoken</a> — One vendor's open-source tokenizer; useful for understanding why counts differ</li>
+<li><a href="https://docs.anthropic.com/en/api/messages-count-tokens">Anthropic: Token counting</a> — Vendor docs for the dedicated token-counting endpoint that should be used for cost modeling</li>
+<li><a href="../../chapters/02-sampling-tokenization-embeddings/">Chapter 2 — Sampling, Tokenization, and Embeddings</a> — The textbook chapter that motivates this story's per-vendor tokenizer discipline</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../missing-dashboard-dimension/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 11. The Missing Dashboard Dimension">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                11. The Missing Dashboard Dimension
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../audit-saved-contract/" class="md-footer__link md-footer__link--next" aria-label="Next: 13. The Audit That Saved the Contract">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                13. The Audit That Saved the Contract
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

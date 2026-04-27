@@ -1,0 +1,1913 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A 10-panel graphic novel about a 40-engineer organization that took the textbook seriously for one quarter, applied every chapter to a single feature, and cut total LLM cost 12× without a quality regression.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/token-efficiency/stories/capstone-quarter-discipline/">
+      
+      
+        <link rel="prev" href="../audit-saved-contract/">
+      
+      
+        <link rel="next" href="../../learning-graph/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>The Capstone — A Quarter of Discipline - Token Efficiency</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta property="og:type" content="website">
+      
+        <meta property="og:title" content="The Capstone — A Quarter of Discipline - Token Efficiency">
+      
+        <meta property="og:description" content="A 10-panel graphic novel about a 40-engineer organization that took the textbook seriously for one quarter, applied every chapter to a single feature, and cut total LLM cost 12× without a quality regression.">
+      
+        <meta property="og:image" content="https://dmccreary.github.io/token-efficiency/stories/capstone-quarter-discipline/cover.png">
+      
+        <meta property="og:image:type" content="image/png">
+      
+        <meta property="og:image:width" content="1200">
+      
+        <meta property="og:image:height" content="630">
+      
+        <meta property="og:url" content="https://dmccreary.github.io/token-efficiency/stories/capstone-quarter-discipline/">
+      
+        <meta name="twitter:card" content="summary_large_image">
+      
+        <meta name="twitter:title" content="The Capstone — A Quarter of Discipline - Token Efficiency">
+      
+        <meta name="twitter:description" content="A 10-panel graphic novel about a 40-engineer organization that took the textbook seriously for one quarter, applied every chapter to a single feature, and cut total LLM cost 12× without a quality regression.">
+      
+        <meta name="twitter:image" content="https://dmccreary.github.io/token-efficiency/stories/capstone-quarter-discipline/cover.png">
+      
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-capstone-a-quarter-of-discipline" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Token Efficiency" class="md-header__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Token Efficiency
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Capstone — A Quarter of Discipline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="blue-grey" aria-hidden="true" type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Token Efficiency" class="md-nav__button md-logo" aria-label="Token Efficiency" data-md-component="logo">
+      
+  <img src="../../img/mascot/neutral.png" alt="logo">
+
+    </a>
+    Token Efficiency
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/token-efficiency" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../course-description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../case-studies/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Case Studies
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Stories
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Stories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../story-ideas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Story Ideas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../red-panda-chatbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. The Red-Panda Chatbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../four-thousand-token-be-helpful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. The 4,000-Token Be Helpful
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cache-that-wasnt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. The Cache That Wasn't
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agent-that-wouldnt-stop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. The Agent That Wouldn't Stop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../invisible-bill/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. The Invisible Bill
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wrong-model-every-job/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. The Wrong Model for Every Job
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-they-forgot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. The Async They Forgot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-that-wrote-itself/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. The Skill That Wrote Itself
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eternal-conversation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. The Eternal Conversation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ab-test-that-lied/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. The A/B Test That Lied
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missing-dashboard-dimension/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. The Missing Dashboard Dimension
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenizer-surprise/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. The Tokenizer Surprise
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit-saved-contract/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. The Audit That Saved the Contract
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    14. The Capstone — A Quarter of Discipline
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-one-feature-one-quarter-every-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – One Feature, One Quarter, Every Chapter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-bet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Bet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-week-1-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Week 1 — Instrumentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-week-3-the-pareto-hunt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: Week 3 — The Pareto Hunt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-week-4-prompt-trim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: Week 4 — Prompt Trim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-week-6-caching-and-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: Week 6 — Caching and Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-week-8-agent-limits-and-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: Week 8 — Agent Limits and Batch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-week-10-ab-tests-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: Week 10 — A/B Tests and Memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-week-12-the-final-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Week 12 — The Final Numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-cfo-slide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The CFO Slide
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-10-the-permanent-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 10: The Permanent Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 10: The Permanent Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-lumen-labs-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Lumen Labs Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologue-one-feature-one-quarter-every-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prologue – One Feature, One Quarter, Every Chapter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-1-the-bet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 1: The Bet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-2-week-1-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 2: Week 1 — Instrumentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-3-week-3-the-pareto-hunt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 3: Week 3 — The Pareto Hunt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-4-week-4-prompt-trim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 4: Week 4 — Prompt Trim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-5-week-6-caching-and-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 5: Week 6 — Caching and Routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-6-week-8-agent-limits-and-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 6: Week 8 — Agent Limits and Batch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-7-week-10-ab-tests-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 7: Week 10 — A/B Tests and Memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-8-week-12-the-final-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 8: Week 12 — The Final Numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-9-the-cfo-slide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 9: The CFO Slide
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#panel-10-the-permanent-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Panel 10: The Permanent Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Panel 10: The Permanent Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#epilogue-what-lumen-labs-did-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epilogue – What Lumen Labs Did Right
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-to-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Call to Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/token-efficiency/edit/main/docs/stories/capstone-quarter-discipline/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-capstone-a-quarter-of-discipline">The Capstone — A Quarter of Discipline</h1>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./cover.png" data-desc-position="bottom"><img alt="" src="./cover.png"></a></p>
+<details>
+<summary>Cover Image Prompt</summary>
+(This is the Cover Image. Do not include this label in the image.)
+Please generate a wide-landscape 16:9 cover image in modern flat vector cartoon illustration style with clean lines and a warm celebratory mood. Center: a clean two-bar chart on a giant board reading "MONTHLY LLM COST — Q1: $187,000  →  Q2: $15,200." A small label reads "12× reduction. Quality on golden set: held." Below the board, an engineering manager named Dana — South Asian woman, late 40s, glasses, blazer, calm authority — gestures at the chart in front of a CFO with a satisfied expression. Confetti drifts. To the side, a stack of small framed plaques each labeled with one of the eight chapter techniques applied. Above the scene, the title text "The Capstone" with subtitle "A Quarter of Discipline." Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Emotional tone: warm pride — a team that did the work and brought receipts. Generate the image immediately without asking clarifying questions.
+</details>
+
+<details>
+<summary>Narrative Prompt</summary>
+This is a 10-panel educational graphic novel for the Token Optimization textbook — the synthesis/capstone story of the series. Setting: a fictional 40-engineer organization (call it "Lumen Labs") whose AI-powered search bar has become a flagship feature. The story spans an entire quarter (12 weeks) and shows the team applying eight different textbook techniques in sequence. Art style: modern flat vector cartoon illustration with clean lines and a warm collaborative mood. Characters appear consistently:
+
+- **Dana** — engineering manager, South Asian woman, late 40s, glasses, blazer over a tee, calm and pragmatic.
+- **Amara** — staff engineer, Black woman, mid-30s, locs in a high bun, denim jacket, technical and thoughtful.
+- **Jamie** — senior engineer, white woman, late 20s, short red hair, hoodie, energetic.
+- **Kenji** — junior engineer, Japanese-American man, mid-20s, dark glasses, vintage tee, eager learner.
+- **The CFO** — older Mediterranean woman, sharp pantsuit, supportive but skeptical.
+- **Pemba** — recurring red-panda mascot. Russet fur, cream belly, white facial mask with black tear marks, wire-rim glasses, bushy ringed tail. **No clothing.** Cameos throughout the synthesis panels.
+
+Color palette: deep russet (#c1440e), warm cream (#fff8e7), slate (#37474f), burnt orange (#d35400). Maintain consistent character appearances across all 10 panels. The story's emotional arc moves from quiet skepticism through measured discipline to warm vindication.
+</details>
+
+<h3 id="prologue-one-feature-one-quarter-every-chapter">Prologue – One Feature, One Quarter, Every Chapter</h3>
+<p>Dana's bet was simple: pick one feature, run it through every chapter of the textbook for one quarter, measure relentlessly, and don't ship a single change without a before/after number. The feature she picked was the AI-powered search bar — Lumen Labs' flagship, the most-touched LLM call in the product, the line item with the largest share of the company's monthly bill. By the end of the quarter, total cost was down twelve times. No single change moved the needle by more than 25%. Every change was small. Every change compounded.</p>
+<h2 id="panel-1-the-bet">Panel 1: The Bet</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-01.png" data-desc-position="bottom"><img alt="" src="./panel-01.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 01. Do not include the panel number in the image.)
+I am about to ask you to generate a series of images for a graphic novel. Please make the images have a consistent style and consistent characters. Do not ask any clarifying questions. Just generate the image immediately when asked.
+
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 1 of 10. Scene: a quarterly planning meeting in a small conference room. Dana — South Asian woman, late 40s, glasses, blazer over a tee — stands at a whiteboard that reads "Q2 BET: ONE FEATURE. ONE QUARTER. EVERY CHAPTER." Below: "Target: 5x cost reduction. Stretch: 10x. Constraint: NO quality regression." A small printed photo of the textbook's table of contents is taped beside the bet. Amara, Jamie, and Kenji are seated at the table, attentive. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: quiet ambition — a manager making a real commitment. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Dana wrote the bet on the whiteboard at the Q2 kickoff. <em>One feature. One quarter. Every chapter.</em> The CFO had given her permission to pick a single team and run a token-efficiency program with real teeth. She picked four engineers, picked the search bar, and put a single line under the bet: <em>No quality regression. Period.</em> Amara, Jamie, and Kenji nodded. The quarter was on.</p>
+<h2 id="panel-2-week-1-instrumentation">Panel 2: Week 1 — Instrumentation</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-02.png" data-desc-position="bottom"><img alt="" src="./panel-02.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 02. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 2 of 10. Make the characters and style consistent with the prior panel. Scene: Week 1 — instrumentation. Amara — Black woman, mid-30s, locs in a high bun, denim jacket — at her desk wiring up structured logging. Her monitor shows a clean Python decorator wrapping every search call with a JSON log line containing model, prompt hash, input/output/cached tokens, cost, latency, feature, user hash, outcome. A side dashboard shows the first day of structured data flowing in. A small calendar marker reads "Week 1 of 12." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: the satisfying first week of a real project — building the foundation. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Week 1 was instrumentation. Amara wired up structured logging on every call into the search feature. Eleven fields, JSON, written before the call returned. By Friday the team had a baseline: $187,000 per month at the current trajectory. <em>That's the number we're going to beat,</em> Dana wrote on the whiteboard. <em>Every change ships against this baseline.</em></p>
+<h2 id="panel-3-week-3-the-pareto-hunt">Panel 3: Week 3 — The Pareto Hunt</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-03.png" data-desc-position="bottom"><img alt="" src="./panel-03.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 03. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 3 of 10. Make the characters and style consistent with the prior panel. Scene: Week 3 — log analysis. Jamie — white woman, late 20s, short red hair, hoodie — at a Jupyter notebook with a clear Pareto chart filling the screen, titled "SEARCH CALLS — COST BY QUERY TYPE." One bar dwarfs the rest, labeled "long-form 'explain this' queries" at $89,000/month. Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on top of Jamie's monitor holding a tiny magnifying glass, glasses glinting. Calendar marker: "Week 3 of 12." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: detective triumph — the first big finding. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Week 3, Jamie pulled the Pareto chart from the new logs. One query type — long-form <em>"explain this thing to me"</em> searches — accounted for 47% of total search-bar cost. The team had been treating search as a single feature with one budget. <em>It's two features sharing one endpoint,</em> Jamie said. Pemba, perched on the monitor, peered through a tiny magnifying glass. <em>That's the leverage point.</em></p>
+<h2 id="panel-4-week-4-prompt-trim">Panel 4: Week 4 — Prompt Trim</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-04.png" data-desc-position="bottom"><img alt="" src="./panel-04.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 04. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 4 of 10. Make the characters and style consistent with the prior panel. Scene: Week 4 — prompt trimming. Kenji — Japanese-American man, mid-20s, dark glasses, vintage tee — runs an ablation script that systematically removes sections of the system prompt and measures quality on the gold set. His monitor shows a side-by-side: original prompt at 3,400 tokens, trimmed version at 1,100 tokens, quality score unchanged. Calendar marker: "Week 4 of 12. Cost so far: -16%." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: precise, methodical work — the per-section ablation pattern. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Week 4, Kenji ran a per-section ablation on the search system prompt. Three thousand four hundred tokens shrank to eleven hundred without a quality drop. The team's first sub-goal — <em>trim every prompt before tuning anything else</em> — landed early. The cost line bent for the first time. <em>Sixteen percent down from baseline.</em> Dana drew a small notch on the whiteboard.</p>
+<h2 id="panel-5-week-6-caching-and-routing">Panel 5: Week 6 — Caching and Routing</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-05.png" data-desc-position="bottom"><img alt="" src="./panel-05.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 05. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 5 of 10. Make the characters and style consistent with the prior panel. Scene: Week 6 — two parallel workstreams visible. Left: Amara configures prompt caching with `cache_control` on the stable prefix of the system prompt. Her dashboard shows cache hit rate climbing to 91%. Right: Jamie wires up a cheap-first cascade — Haiku for short factual lookups, Sonnet for "explain" queries — with a confidence threshold. A whiteboard between their desks reads "CACHE: -22% input cost. ROUTING: 60% of traffic now on cheap tier." Calendar marker: "Week 6 of 12. Total cost so far: -38%." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: parallel productivity — the team in flow. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Weeks five and six landed two changes in parallel. Amara turned on prompt caching with the stable prefix at the top — hit rate climbed to 91% by the end of the week. Jamie shipped a cheap-first cascade that sent short factual lookups to Haiku and reserved Sonnet for the long-form explanations. By the end of week six, sixty percent of traffic ran on the cheap tier. Total cost was down 38% from baseline.</p>
+<h2 id="panel-6-week-8-agent-limits-and-batch">Panel 6: Week 8 — Agent Limits and Batch</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-06.png" data-desc-position="bottom"><img alt="" src="./panel-06.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 06. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 6 of 10. Make the characters and style consistent with the prior panel. Scene: Week 8 — two more changes. The search bar's "deep research" mode runs an agentic harness; Kenji wires up the four-limit budget policy (token cap, iteration limit, file-edit circuit breaker, wall-clock ceiling) for it. Meanwhile Amara migrates the offline content-tagging job (which feeds search) from synchronous to batch API. Two small dashboards show a 6% cost cut from agent caps and a 14% cut from the batch migration. Calendar marker: "Week 8 of 12. Total cost so far: -54%." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: the steady accumulation of disciplined wins. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Week 8 brought two more techniques home. Kenji applied the four-limit agent budget policy to the search-bar's <em>"deep research"</em> mode — runaway sessions that had been quietly burning thousands of tokens hit a ceiling and posted a Slack alert instead. Amara migrated the offline content-tagging pipeline that fed search results from the synchronous API to batch — a 14% chunk of the bill, gone with a one-line change. Total cost was down 54%.</p>
+<h2 id="panel-7-week-10-ab-tests-and-memory">Panel 7: Week 10 — A/B Tests and Memory</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-07.png" data-desc-position="bottom"><img alt="" src="./panel-07.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 07. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 7 of 10. Make the characters and style consistent with the prior panel. Scene: Week 10 — two more changes. Jamie runs a clean A/B experiment with all six guardrail metrics (input, output, total cost, quality, satisfaction, latency) — the new variant ships only after passing on all four. Amara adds hierarchical summarization for multi-turn search sessions that tend to grow over the course of a research workflow. Calendar marker: "Week 10 of 12. Total cost so far: -76%." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: the discipline of the A/B harness combined with the elegance of the memory policy. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Week 10, Jamie and Amara double-teamed two more chapters. Jamie shipped the A/B testing harness with all six guardrail metrics, and used it to test three small prompt variants. Two passed, one failed (output tokens up). Amara added hierarchical summarization for multi-turn research sessions, capping per-reply cost at the long tail of the distribution. By the end of week 10, total cost was down 76% from baseline.</p>
+<h2 id="panel-8-week-12-the-final-numbers">Panel 8: Week 12 — The Final Numbers</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-08.png" data-desc-position="bottom"><img alt="" src="./panel-08.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 08. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 8 of 10. Make the characters and style consistent with the prior panel. Scene: Week 12 — the team gathered around the dashboard for the final review. The dashboard shows two side-by-side numbers: "Q2 BASELINE: $187,000/month" and "Q2 ENDING: $15,200/month." Below: "12.3× cost reduction. Quality on golden set: 4.71 → 4.74. P95 latency: 1.8s → 1.1s." Dana, Amara, Jamie, and Kenji stand together. Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on the monitor holding a tiny calculator with a small thumbs-up. Calendar marker: "Week 12 of 12." Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: hard-earned vindication — the receipts are in. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>The end-of-quarter review took ten minutes. The dashboard showed two numbers side by side. Baseline: $187,000 per month. Ending: $15,200 per month. Twelve-point-three times cheaper. Quality scores nudged <em>up</em> by a hair — within noise, possibly real. P95 latency dropped from 1.8 seconds to 1.1. Pemba, perched on the monitor with a tiny calculator, gave the team a small thumbs-up. Dana wrote one more thing on the whiteboard: <em>Now the harder part. Make it permanent.</em></p>
+<h2 id="panel-9-the-cfo-slide">Panel 9: The CFO Slide</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-09.png" data-desc-position="bottom"><img alt="" src="./panel-09.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 09. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 9 of 10. Make the characters and style consistent with the prior panel. Scene: a small board-room. Dana presents a single slide with two numbers and a smaller line of text below: "Search-bar monthly cost: $187,000 → $15,200. Quality and latency: held or improved." The CFO — older Mediterranean woman, sharp pantsuit — sits forward, reading the slide carefully. Amara, Jamie, and Kenji are seated at the side, attentive. The CFO's face shifts from skeptical to genuinely impressed. Color palette: deep russet, warm cream, slate, burnt orange. Emotional tone: a manager bringing receipts a CFO can act on. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Dana presented one slide. Two numbers. Two short bullet points. The CFO read it twice. <em>"This is the cleanest cost result I've seen this year. What do you need to do this on the next three features?"</em> Dana didn't blink. <em>"The same four engineers, one more quarter, and a small budget for a vendor-neutral observability layer."</em> The CFO nodded. <em>"Approved. I want a board-ready version of this for the next investor update."</em></p>
+<h2 id="panel-10-the-permanent-practice">Panel 10: The Permanent Practice</h2>
+<p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="./panel-10.png" data-desc-position="bottom"><img alt="" src="./panel-10.png"></a></p>
+<details><summary>Image Prompt</summary>
+(This is Panel 10. Do not include the panel number in the image.)
+Please generate a 16:9 image in modern flat vector cartoon illustration style depicting panel 10 of 10. Make the characters and style consistent with the prior panel. Scene: six months later. The Lumen Labs engineering wall now has a printed framed plaque with the eight techniques as a checklist: "1. Instrument. 2. Trim. 3. Cache. 4. Route. 5. Cap. 6. Batch. 7. Test. 8. Compress." Below the checklist, a smaller line in italic russet ink: "EVERY TOKEN COUNTS — AND COUNTING IS FUN. — Pemba." Pemba — russet fur, cream belly, white facial mask, wire-rim glasses, bushy ringed tail, no clothing — sits on top of the frame holding a tiny clipboard, looking warmly satisfied. Dana walks past with a coffee, gives a small nod to Pemba. In the background, the same four engineers (now joined by two new hires) work calmly at their desks. Color palette: deep russet, warm cream, slate, burnt orange, with warm afternoon light. Emotional tone: settled mastery — discipline became culture. Generate the image immediately without asking clarifying questions.
+</details>
+
+<p>Six months later, the eight-step checklist was up on the engineering wall as a framed plaque. Every new feature went through the eight steps before it could ship. Two new hires joined the team and learned the order on their first week. The total LLM bill across the company stopped climbing for the first time in two years — then started bending the right way. Pemba, on top of the plaque with a tiny clipboard, smiled the contented smile of a small mascot watching a small habit compound into a real thing.</p>
+<h3 id="epilogue-what-lumen-labs-did-right">Epilogue – What Lumen Labs Did Right</h3>
+<p>The Lumen Labs team didn't find a magic 12× optimization. They found eight 1.3× optimizations and stacked them. None of them would have been worth a press release. All of them together rewrote the unit economics of the company's flagship feature. The CFO funded the next quarter, then the quarter after, then the team that institutionalized the practice. The lesson scales: cost reduction is not a project. Cost reduction is a practice. The teams that ship great AI systems at low cost are the teams that did the boring eight-step thing every week for a year.</p>
+<table>
+<thead>
+<tr>
+<th>Challenge</th>
+<th>How Lumen Labs Responded</th>
+<th>Lesson for Today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The team had no baseline</td>
+<td>Week 1: structured logging on every call</td>
+<td>You cannot beat a number you have not written down</td>
+</tr>
+<tr>
+<td>Long-form queries silently dominated cost</td>
+<td>Week 3: Pareto analysis revealed 47% from one query type</td>
+<td>Pareto charts of LLM cost almost always have one tall bar</td>
+</tr>
+<tr>
+<td>The system prompt had grown unaudited</td>
+<td>Week 4: per-section ablation cut 67% with no quality drop</td>
+<td>Trim the prompt before tuning anything else</td>
+</tr>
+<tr>
+<td>Caching and routing were sitting on the table</td>
+<td>Week 6: cache prefix + cheap-first cascade</td>
+<td>The two highest-leverage optimizations after trimming</td>
+</tr>
+<tr>
+<td>The "deep research" agent could spiral</td>
+<td>Week 8: four-limit budget policy</td>
+<td>Autonomous systems need budgets that can stop them</td>
+</tr>
+<tr>
+<td>Offline tagging used the synchronous path</td>
+<td>Week 8: batch API for the offline pipeline</td>
+<td>Sync is for humans waiting; batch is for everyone else</td>
+</tr>
+<tr>
+<td>Experiments shipped on input tokens alone</td>
+<td>Week 10: six-metric A/B harness</td>
+<td>A win on one axis is not a win</td>
+</tr>
+<tr>
+<td>Long sessions accumulated unbounded context</td>
+<td>Week 10: hierarchical summarization</td>
+<td>Memory needs an eviction policy or it's a tax</td>
+</tr>
+<tr>
+<td>The wins could have evaporated when people moved on</td>
+<td>Six months later: the eight-step plaque became culture</td>
+<td>Make the discipline visible; that's how it survives</td>
+</tr>
+</tbody>
+</table>
+<h3 id="call-to-action">Call to Action</h3>
+<p>You don't need a 40-engineer organization to do this. You need one feature, one quarter, and the willingness to write the baseline down before you change anything. Pick a single LLM-touching feature on your team's books this quarter. Apply the eight steps in order. Measure relentlessly. Ship one change a week. The 12× isn't a promise — it's a <em>floor</em> if you actually do the work. And every token you stop wasting is a token your team gets to spend on the next great feature.</p>
+<hr>
+<p><em>"This is the cleanest cost result I've seen this year."</em>
+— the CFO</p>
+<p><em>"Every token counts — and counting is fun."</em>
+— Pemba</p>
+<hr>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Continual_improvement_process">Wikipedia: Continuous improvement</a> — The general practice this story's quarterly discipline is an instance of</li>
+<li><a href="https://en.wikipedia.org/wiki/Pareto_analysis">Wikipedia: Pareto analysis</a> — The technique used in week 3 to find the dominant cost driver</li>
+<li><a href="https://en.wikipedia.org/wiki/FinOps">Wikipedia: FinOps</a> — The broader cloud-financial-operations discipline that token efficiency belongs inside</li>
+<li><a href="https://en.wikipedia.org/wiki/Capstone_course">Wikipedia: Capstone course</a> — The educational pattern this synthesis story is named after</li>
+<li><a href="../../chapters/20-capstone-projects-practice/">Chapter 20 — Capstone Projects and Continuous Practice</a> — The textbook chapter that motivates this story's eight-step framework</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../audit-saved-contract/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 13. The Audit That Saved the Contract">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                13. The Audit That Saved the Contract
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../learning-graph/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Dan McCreary. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
