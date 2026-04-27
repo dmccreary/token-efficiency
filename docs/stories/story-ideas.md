@@ -39,6 +39,7 @@ Stories were selected for:
 | **Setting** | Cedar Ridge High School, fictional U.S. public high school, present day |
 | **Theme** | Good intentions meet a runaway bill; structure beats search |
 | **Connection** | [Case Study: A Little Graph Saves a Lot of Tokens](../case-studies/little-graph/index.md), [Ch 15 — RAG Optimization](../chapters/15-rag-optimization/index.md), [Ch 11 — Log File Analysis](../chapters/11-log-file-analysis/index.md) |
+| **Panels** | **12** — already produced; full arc earns every panel |
 
 The student tech club at Cedar Ridge High builds "Pemba Bot," a friendly
 chatbot featuring their red-panda mascot, to answer questions about course
@@ -60,13 +61,14 @@ is the one you didn't retrieve.
 
 ---
 
-### 2. The 4,000-Token "Be Helpful"
+### 2. The 4,000-Token "Be Helpful" System Prompt
 
 | | |
 |---|---|
 | **Setting** | A two-year-old SaaS startup, ~30 engineers, AI feature owner under deadline |
 | **Theme** | Slow accretion is the silent cost killer |
 | **Connection** | [Ch 13 — Prompt Engineering for Token Efficiency](../chapters/13-prompt-engineering-tokens/index.md), [Ch 14 — Prompt Caching Patterns](../chapters/14-prompt-caching-patterns/index.md) |
+| **Panels** | **8** — linear discovery: bloat history → audit → rewrite → caching → result |
 
 The system prompt for "Helpr," an in-app assistant, started at 200 tokens
 and a single line: *"Be helpful."* Eighteen months later it is 4,000 tokens
@@ -92,6 +94,7 @@ ever audits them, you're paying rent on tokens that aren't doing anything.
 | **Setting** | A mid-size fintech, fraud-review team, in production six months |
 | **Theme** | Confident wrong is more expensive than honest unsure |
 | **Connection** | [Ch 14 — Prompt Caching Patterns](../chapters/14-prompt-caching-patterns/index.md), [Ch 9 — Structured Logging](../chapters/09-structured-logging/index.md) |
+| **Panels** | **8** — one mystery, one fix; the zero-hit-rate reveal is the punch |
 
 The team enables Anthropic prompt caching, ships a celebratory Slack post
 ("we just cut input cost in half!"), and goes home. Two weeks later the
@@ -116,6 +119,7 @@ stable. Measure the hit rate, or you're not caching — you're hoping.
 | **Setting** | A platform-engineering team, late on a Friday, autonomous coding harness |
 | **Theme** | Good loops and runaway loops look the same until the bill arrives |
 | **Connection** | [Ch 7 — Coding Harnesses and Agentic Loops](../chapters/07-coding-harnesses-agentic-loops/index.md), [Ch 18 — Agent Budget Policies](../chapters/18-agent-budget-policies/index.md) |
+| **Panels** | **9** — needs the weekend-spiral montage and the postmortem policy build |
 
 An engineer kicks off an agentic harness on a vague refactor request
 ("clean up the auth module") and goes home for the weekend. The agent
@@ -139,6 +143,7 @@ tell them — in tokens, in loops, in wall-clock minutes, and in retries.
 | **Setting** | A 12-person SaaS startup, no observability on LLM calls, day of the first surprise invoice |
 | **Theme** | You cannot optimize what you cannot see |
 | **Connection** | [Ch 9 — Structured Logging](../chapters/09-structured-logging/index.md), [Ch 11 — Log File Analysis and Cost Hotspots](../chapters/11-log-file-analysis/index.md) |
+| **Panels** | **9** — Pareto reveal and the "summarize 400-page PDF" smoking gun deserve real estate |
 
 The CFO forwards an Anthropic invoice for \$48,000 with the subject line
 "???". Nobody on the engineering team can attribute a single dollar of it
@@ -162,6 +167,7 @@ attribution, you're just paying the bill and hoping it gets smaller.
 | **Setting** | A customer-support automation team using one flagship model for every request |
 | **Theme** | Spend tokens like money — match the tool to the task |
 | **Connection** | [Ch 17 — Model Routing and Output Control](../chapters/17-routing-output-control/index.md) |
+| **Panels** | **7** — cascade is a clean architectural beat, not a long arc |
 
 The support team's classifier — "is this email a refund request, a bug
 report, or a sales question?" — runs on the most expensive flagship model
@@ -187,6 +193,7 @@ actually matter.
 | **Setting** | A media company running a nightly tagging job over 200,000 articles |
 | **Theme** | If a workload doesn't need an answer in seconds, it shouldn't pay for one |
 | **Connection** | [Ch 3 — Pricing, Economics, and Async APIs](../chapters/03-pricing-economics-async-apis/index.md), [Ch 19 — Batch Operations, Privacy, and Compliance](../chapters/19-batch-privacy-compliance/index.md) |
+| **Panels** | **6** — smallest story: realize SLA → switch to batch → save 50% |
 
 The nightly tagging pipeline fires off 200,000 synchronous API calls
 between 2 AM and 6 AM. It works, but the bill is enormous. An engineer
@@ -209,6 +216,7 @@ pipelines are not humans waiting.
 | **Setting** | An internal-tools team maintaining a sprawling 8,000-token Skill |
 | **Theme** | Some work belongs in prose; most work belongs in scripts |
 | **Connection** | [Ch 8 — The Skills System](../chapters/08-skills-system/index.md) |
+| **Panels** | **7** — refactor stories are inherently before/after — short, punchy arc |
 
 The team's "release-notes generator" Skill is 8,000 tokens of step-by-step
 prose: parse this format, extract these fields, sort like this, format
@@ -232,6 +240,7 @@ prompt. Models are for judgment, not for sorting.
 | **Setting** | A premium customer-support chatbot serving long, multi-turn sessions |
 | **Theme** | Conversations grow; context budgets don't |
 | **Connection** | [Ch 16 — Context Window Management](../chapters/16-context-window-management/index.md) |
+| **Panels** | **6** — single technique (hierarchical summarization); short and punchy |
 
 The support agent keeps the entire conversation history in context, no
 matter how long the session runs. By turn 30, every reply costs almost
@@ -254,6 +263,7 @@ Without one, every turn pays rent on every previous turn — forever.
 | **Setting** | A growth team A/B testing a "more concise" prompt variant |
 | **Theme** | The metric you don't measure is the one that bites you |
 | **Connection** | [Ch 12 — A/B Testing Methodology](../chapters/12-ab-testing-methodology/index.md), [Ch 10 — Observability and Dashboards](../chapters/10-observability-dashboards-alerting/index.md) |
+| **Panels** | **8** — the "skeptic finds output tokens up 62%" turn deserves its own panel |
 
 The team ships "Prompt B," which trims input by 40%. They high-five and
 declare a 40% cost win. A skeptical engineer pulls full per-call cost,
@@ -276,6 +286,7 @@ measure total cost per successful outcome — and watch the output side.
 | **Setting** | A platform team responsible for an internal AI gateway used by 12 product teams |
 | **Theme** | A single number tells you nothing; the right cuts tell you everything |
 | **Connection** | [Ch 10 — Observability, Dashboards, and Alerting](../chapters/10-observability-dashboards-alerting/index.md) |
+| **Panels** | **7** — detective story with one ah-ha; the cardinality reveal is the climax |
 
 The platform team's dashboard shows one number: total daily LLM spend.
 It's been climbing 12% week over week and nobody knows why. An engineer
@@ -298,6 +309,7 @@ on your dashboard. The dimensions are where the answer lives.
 | **Setting** | A two-vendor migration from Claude to Gemini for a copy-generation feature |
 | **Theme** | Same prose, different tokens, different bill |
 | **Connection** | [Ch 2 — Sampling, Tokenization, and Embeddings](../chapters/02-sampling-tokenization-embeddings/index.md), [Ch 6 — The Google Gemini Ecosystem](../chapters/06-google-gemini-ecosystem/index.md) |
+| **Panels** | **7** — migration → surprise → rebuild → rule. Tight. |
 
 The team estimates the migration cost using the source vendor's
 tokenizer, signs off on a budget, and migrates. The first weekly bill
@@ -321,6 +333,7 @@ the tokenizer you're going to ship on, not the one you happen to know.
 | **Setting** | A small healthtech startup serving a hospital pilot, two weeks before a HIPAA audit |
 | **Theme** | Logging is a feature; logging *carelessly* is a liability |
 | **Connection** | [Ch 9 — Structured Logging](../chapters/09-structured-logging/index.md), [Ch 19 — Batch Operations, Privacy, and Compliance](../chapters/19-batch-privacy-compliance/index.md) |
+| **Panels** | **9** — highest emotional stakes (HIPAA, contract on the line) earn the panels |
 
 The team wired up beautiful structured logging — every prompt, every
 completion, every token count — straight into a third-party
@@ -345,6 +358,7 @@ ship-blocker if you skip it. Build it on day one, not week 39.
 | **Setting** | A 40-engineer organization that took the textbook seriously for one quarter |
 | **Theme** | None of these wins are dramatic alone; together they compound |
 | **Connection** | [Ch 20 — Capstone Projects and Continuous Practice](../chapters/20-capstone-projects-practice/index.md) |
+| **Panels** | **10** — synthesis montage across 8+ chapters genuinely needs the room |
 
 A pragmatic engineering manager picks a single feature — the AI search
 bar in the company's flagship product — and runs it through every
