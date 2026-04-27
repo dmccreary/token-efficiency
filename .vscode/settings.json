@@ -16,6 +16,7 @@
         "Reranker",
         "Subword",
         "superfences",
+        "throughline",
         "Tiktoken"
     ]
 }

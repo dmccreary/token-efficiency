@@ -131,7 +131,12 @@ nav:
     #- Case Study 2: Reducing Costs in a Content Generation Pipeline: case-studies/case-study-2/index.md
     #- Case Study 3: Improving Token Efficiency in a Retrieval-Augmented Generation System: case-studies/case-study-3/index.md
 
- 
+  - Stories:
+    - List of Stories: stories/index.md
+    - Story Ideas: stories/story-ideas.md
+    - The Red-Panda Chatbot: stories/red-panda-chatbot/index.md
+
+
   - Learning Graph:
       - Introduction: learning-graph/index.md
       - Course Description Assessment: learning-graph/course-description-assessment.md
