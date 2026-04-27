@@ -116,6 +116,8 @@ Please generate a 16:9 image in modern flat vector cartoon illustration style de
 
 Over a single weekend, with Mr. Alvarez bringing donuts and asking sharp questions, the team built a Compact Knowledge Graph: 180 concepts — every course, every club, every meeting time, every prerequisite — encoded as a four-column CSV. ConceptID, Label, Dependencies, Category. The whole graph fit in 8 KB. Smaller than a single PDF page. *"This is the index,"* Maya said. *"There is no other index."*
 
+![Sample School Graph](./sample-school-graph.png)
+
 ## Panel 9: The Hybrid Router
 
 ![](./panel-09.png)
