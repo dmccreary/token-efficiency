@@ -134,7 +134,20 @@ nav:
   - Stories:
     - List of Stories: stories/index.md
     - Story Ideas: stories/story-ideas.md
-    - The Red-Panda Chatbot: stories/red-panda-chatbot/index.md
+    - 1. The Red-Panda Chatbot: stories/red-panda-chatbot/index.md
+    - 2. The 4,000-Token Be Helpful: stories/four-thousand-token-be-helpful/index.md
+    - 3. The Cache That Wasn't: stories/cache-that-wasnt/index.md
+    - 4. The Agent That Wouldn't Stop: stories/agent-that-wouldnt-stop/index.md
+    - 5. The Invisible Bill: stories/invisible-bill/index.md
+    - 6. The Wrong Model for Every Job: stories/wrong-model-every-job/index.md
+    - 7. The Async They Forgot: stories/async-they-forgot/index.md
+    - 8. The Skill That Wrote Itself: stories/skill-that-wrote-itself/index.md
+    - 9. The Eternal Conversation: stories/eternal-conversation/index.md
+    - 10. The A/B Test That Lied: stories/ab-test-that-lied/index.md
+    - 11. The Missing Dashboard Dimension: stories/missing-dashboard-dimension/index.md
+    - 12. The Tokenizer Surprise: stories/tokenizer-surprise/index.md
+    - 13. The Audit That Saved the Contract: stories/audit-saved-contract/index.md
+    - 14. The Capstone — A Quarter of Discipline: stories/capstone-quarter-discipline/index.md
 
 
   - Learning Graph:
